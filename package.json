@@ -1,0 +1,17 @@
+{
+    "name": "xql",
+    "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "start": "yarn --cwd packages/ui vite dev",
+        "gen:types": "yarn run kysely-codegen --schema luminovo",
+        "test": "yarn --cwd packages/xql test"
+    },
+    "devDependencies": {
+        "prettier": "^3.1.1"
+    }
+}

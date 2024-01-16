@@ -1,0 +1,169 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Query > find solution config 1`] = `
+{
+  "cardinality": "one",
+  "from": "solution_configuration",
+  "include": {
+    "design_items": {
+      "cardinality": "many",
+      "from": "design_item",
+      "include": {
+        "part_options": {
+          "cardinality": "many",
+          "from": "part_option",
+          "include": {
+            "custom_part": {
+              "cardinality": "maybe",
+              "from": "custom_part",
+              "include": {},
+              "lazy": undefined,
+              "limit": 1,
+              "select": {
+                "description": true,
+                "id": true,
+                "part_type": true,
+                "reach_compliant": true,
+                "rohs_compliant": true,
+              },
+              "where": {
+                "id": {
+                  "$ref": {
+                    "column": "custom_part_id",
+                    "op": "=",
+                    "table": "part_option",
+                  },
+                },
+              },
+            },
+            "generic_part": {
+              "cardinality": "maybe",
+              "from": "generic_part",
+              "include": {},
+              "lazy": undefined,
+              "limit": 1,
+              "select": {
+                "content": true,
+                "created_at": true,
+                "id": true,
+              },
+              "where": {
+                "id": {
+                  "$ref": {
+                    "column": "generic_part_id",
+                    "op": "=",
+                    "table": "part_option",
+                  },
+                },
+              },
+            },
+            "ots_part": {
+              "cardinality": "maybe",
+              "from": "public.off_the_shelf_part",
+              "include": {
+                "manufacturer": {
+                  "cardinality": "one",
+                  "from": "public.manufacturer",
+                  "include": {},
+                  "lazy": undefined,
+                  "limit": 1,
+                  "select": {
+                    "alternative_names": true,
+                    "id": true,
+                    "name": true,
+                  },
+                  "where": {
+                    "id": {
+                      "$ref": {
+                        "column": "manufacturer",
+                        "op": "=",
+                        "table": "public.off_the_shelf_part",
+                      },
+                    },
+                  },
+                },
+              },
+              "lazy": undefined,
+              "limit": 1,
+              "select": {
+                "id": true,
+                "mpn": true,
+              },
+              "where": {
+                "id": {
+                  "$ref": {
+                    "column": "off_the_shelf_part_id",
+                    "op": "=",
+                    "table": "part_option",
+                  },
+                },
+              },
+            },
+          },
+          "lazy": undefined,
+          "limit": undefined,
+          "select": {
+            "id": true,
+          },
+          "where": {
+            "design_item_id": {
+              "$ref": {
+                "column": "id",
+                "op": "=",
+                "table": "design_item",
+              },
+            },
+          },
+        },
+      },
+      "lazy": undefined,
+      "limit": undefined,
+      "select": {
+        "id": true,
+        "notes": true,
+        "part": true,
+        "quantity": true,
+      },
+      "where": {
+        "id": {
+          "$ref": {
+            "column": "design_items",
+            "op": "=",
+            "table": "solution_configuration",
+          },
+        },
+      },
+    },
+    "sourcing_scenario": {
+      "cardinality": "one",
+      "from": "sourcing_scenario",
+      "include": {},
+      "lazy": undefined,
+      "limit": 1,
+      "select": {
+        "id": true,
+        "name": true,
+        "solution_preference": true,
+      },
+      "where": {
+        "id": {
+          "$ref": {
+            "column": "sourcing_scenario",
+            "op": "=",
+            "table": "solution_configuration",
+          },
+        },
+      },
+    },
+  },
+  "lazy": undefined,
+  "limit": 1,
+  "select": {
+    "id": true,
+    "notes": true,
+  },
+  "where": {
+    "id": "some id",
+  },
+}
+`;
