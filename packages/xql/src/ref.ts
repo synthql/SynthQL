@@ -1,42 +1,52 @@
-import { DB } from "kysely-codegen"
-import { Column, Include, RefOp, Select, Table, Where } from "./types/Query"
+import { DB } from 'kysely-codegen';
+import { Column, Include, RefOp, Select, Table, Where } from './types/Query';
 
 export function table(table: keyof DB) {
-    return table
+    return table;
 }
 
-export function column<TTable extends keyof DB, TColumn extends keyof DB[TTable] & string>(table: TTable, column: TColumn): {
-    $on: `${TTable}.${TColumn}`
+export function column<
+    TTable extends keyof DB,
+    TColumn extends keyof DB[TTable] & string,
+>(
+    table: TTable,
+    column: TColumn,
+): {
+    $on: `${TTable}.${TColumn}`;
 } {
-    return { $on: `${table}.${column}` }
+    return { $on: `${table}.${column}` };
 }
 
 export function ref<DB>() {
     return {
         table: <TTable extends Table<DB>>(table: TTable) => {
             return {
-                column: <TColumn extends Column<DB, TTable>>(column: TColumn): RefOp<DB> => {
+                column: <TColumn extends Column<DB, TTable>>(
+                    column: TColumn,
+                ): RefOp<DB> => {
                     return {
                         $ref: {
                             table,
                             column,
-                            op: '='
-                        }
-                    }
+                            op: '=',
+                        },
+                    };
                 },
 
-                eqAny: <TColumn extends Column<DB, TTable>>(column: TColumn): RefOp<DB> => {
+                eqAny: <TColumn extends Column<DB, TTable>>(
+                    column: TColumn,
+                ): RefOp<DB> => {
                     return {
                         $ref: {
                             table,
                             column,
-                            op: '= any'
-                        }
-                    }
+                            op: '= any',
+                        },
+                    };
                 },
-            }
+            };
         },
-    }
+    };
 }
 
 class QueryBuilder<
@@ -46,7 +56,8 @@ class QueryBuilder<
     TCardinality extends 'one' | 'maybe' | 'many',
     TInclude extends Include<DB>,
     TSelect extends Select<DB, TTable>,
-    TLazy extends true | undefined = undefined // Step 1
+    TLazy extends true | undefined,
+    TGroupingId extends string,
 > {
     constructor(
         private _from: TTable,
@@ -55,19 +66,19 @@ class QueryBuilder<
         private _include: TInclude,
         private _limit: number | undefined,
         private _cardinality: TCardinality,
-        private _lazy: TLazy // Step 2
-    ) {
-
-    }
+        private _lazy: TLazy,
+        private _groupingId: TGroupingId,
+    ) { }
 
     private build(): {
-        from: TTable,
-        where: TWhere,
-        select: TSelect,
-        include: TInclude,
-        limit: number | undefined,
-        cardinality: TCardinality,
-        lazy: TLazy
+        from: TTable;
+        where: TWhere;
+        select: TSelect;
+        include: TInclude;
+        limit: number | undefined;
+        cardinality: TCardinality;
+        lazy: TLazy;
+        groupingId: TGroupingId;
     } {
         return {
             from: this._from,
@@ -75,54 +86,231 @@ class QueryBuilder<
             select: this._select,
             include: this._include,
             limit: this._limit,
-            cardinality: this._cardinality,
-            lazy: this._lazy
-        }
+            cardinality: this._cardinality ?? 'many',
+            lazy: this._lazy,
+            groupingId: this._groupingId,
+        };
     }
 
     // Below methods are refactored to include TLazy in their return types
     limit(limit: number) {
-        return new QueryBuilder<DB, TTable, TWhere, TCardinality, TInclude, TSelect, TLazy>(this._from, this._where, this._select, this._include, limit, this._cardinality, this._lazy);
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            limit,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
     }
 
     one() {
-        return new QueryBuilder<DB, TTable, TWhere, 'one', TInclude, TSelect, TLazy>(this._from, this._where, this._select, this._include, 1, 'one', this._lazy).build();
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            'one',
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            1,
+            'one',
+            this._lazy,
+            this._groupingId,
+        ).build();
     }
 
     many() {
-        return new QueryBuilder<DB, TTable, TWhere, 'many', TInclude, TSelect, TLazy>(this._from, this._where, this._select, this._include, this._limit, 'many', this._lazy).build();
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            'many',
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            'many',
+            this._lazy,
+            this._groupingId,
+        ).build();
     }
 
     maybe() {
-        return new QueryBuilder<DB, TTable, TWhere, 'maybe', TInclude, TSelect, TLazy>(this._from, this._where, this._select, this._include, 1, 'maybe', this._lazy).build();
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            'maybe',
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            1,
+            'maybe',
+            this._lazy,
+            this._groupingId,
+        ).build();
     }
 
     select<TSelect extends Select<DB, TTable>>(select: TSelect) {
-        return new QueryBuilder<DB, TTable, TWhere, TCardinality, TInclude, TSelect, TLazy>(this._from, this._where, select, this._include, this._limit, this._cardinality, this._lazy);
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            select,
+            this._include,
+            this._limit,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
     }
 
     include<TInclude extends Include<DB>>(include: TInclude) {
-        return new QueryBuilder<DB, TTable, TWhere, TCardinality, TInclude, TSelect, TLazy>(this._from, this._where, this._select, include, this._limit, this._cardinality, this._lazy);
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            include,
+            this._limit,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
     }
 
     where<TWhere extends Where<DB, TTable>>(where: TWhere) {
-        return new QueryBuilder<DB, TTable, TWhere, TCardinality, TInclude, TSelect, TLazy>(this._from, where, this._select, this._include, this._limit, this._cardinality, this._lazy);
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            where,
+            this._select,
+            this._include,
+            this._limit,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
     }
 
     lazy() {
-        return new QueryBuilder<DB, TTable, TWhere, TCardinality, TInclude, TSelect, true>(this._from, this._where, this._select, this._include, this._limit, this._cardinality, true);
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            true,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            this._cardinality,
+            true,
+            this._groupingId,
+        );
+    }
+
+    groupingId<TGroupingId extends string>(id: TGroupingId) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            this._cardinality,
+            this._lazy,
+            id,
+        );
     }
 }
 
-
-export function query<DB,>() {
+export function query<DB>() {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
-            return new QueryBuilder<DB, TTable, {}, 'many', {}, {}>(table, {}, {}, {}, undefined, 'many', undefined)
-        }
-    }
+            return new QueryBuilder<DB, TTable, {}, 'many', {}, {}, undefined, 'id'>(
+                table,
+                {},
+                {},
+                {},
+                undefined,
+                'many',
+                undefined,
+                'id',
+            );
+        },
+    };
 }
 
-export function maybe<TQuery>(query: TQuery): TQuery & { cardinality: 'maybe' } {
-    return { ...query, cardinality: 'maybe' as const }
+export function maybe<TQuery>(
+    query: TQuery,
+): TQuery & { cardinality: 'maybe' } {
+    return { ...query, cardinality: 'maybe' as const };
 }

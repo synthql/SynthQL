@@ -32,7 +32,7 @@ export function composeQuery({
         .select(createSelect(allQueries, db));
 
     if (subQueries.length > 0) {
-        kQuery = kQuery.groupBy(`${from.alias}.id`);
+        kQuery = kQuery.groupBy(`${from.alias}.${rootQuery.query.groupingId}`);
     }
 
     kQuery = kQuery.where(createWhere(allQueries));
@@ -89,6 +89,10 @@ function createSelect(
                 return `${field.table.alias}.${field.column} as ${field.id}`;
             }
             if (field.type === 'jsonb_agg') {
+                if (field.columns.length === 0) {
+                    return undefined
+                }
+
                 const columns = field.columns
                     .map((col) => {
                         return `'${col.column}', ${col.table.alias}.${col.column}`;
@@ -102,7 +106,7 @@ function createSelect(
                 );
             }
             throw new Error('unreachable');
-        });
+        }).filter(isPresent);
     };
 }
 

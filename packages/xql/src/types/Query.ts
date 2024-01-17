@@ -1,6 +1,9 @@
 import { BinaryOperator, ColumnType } from 'kysely';
-import { Json, JsonValue } from 'kysely-codegen';
-import { A } from 'vitest/dist/reporters-O4LBziQ_';
+//import { Json, JsonValue } from 'kysely-codegen';
+
+// The JSON type
+type JsonValue = string | number | boolean | null
+type Json = JsonValue | { [key: string]: Json } | Json[];
 
 /**
  * The name of a table in the database.
@@ -117,4 +120,5 @@ export type Query<DB, TTable extends Table<DB>> = {
     limit?: number;
     cardinality?: 'one' | 'maybe' | 'many';
     lazy?: true;
+    groupingId?: string;
 };

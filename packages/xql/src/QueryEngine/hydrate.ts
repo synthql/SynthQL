@@ -35,7 +35,7 @@ function hydrateRow(row: Row, query: AugmentedQuery): AnyQueryResult {
     // This query is mapped by iterating the jsonb_agg columns.
     for (const child of query.children) {
         for (const s of child.select) {
-            if (s.type === 'jsonb_agg') {
+            if (s.type === 'jsonb_agg' && s.columns.length > 0) {
                 const nested = assertArrayInResult(row[s.id], s.id);
                 nested.forEach((nestedItem) => hydrateNestedMutating(row, child, nestedItem));
                 result[s.includeColumn] = applyCardinality(nested, child.query.cardinality ?? 'many');
