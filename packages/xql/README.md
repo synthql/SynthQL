@@ -261,16 +261,15 @@ left join tableB on tableA.ots_part_id = tableB.ots_part_id
 
 ```json
 {
-    from: "some_generated_object",
-    where: {...}
+    from: "bom_warnings",
+    where: {...},
+    select: {}
 }
-
-
 ```
 
 ```ts
-contst queryEngine = new QueryEngine(..., virtualQueries: {
-    some_generated_object: (query) => {
+const queryEngine = new QueryEngine(..., virtualQueries: {
+    bom_warnings: (query) => {
         http('GET /some_geneated_object')
     }
 })

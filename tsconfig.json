@@ -9,7 +9,6 @@
     },
     "references": [
         { "path": "./packages/xql" },
-        { "path": "./packages/ui" },
-        { "path": "./packages/xql-luminovo" }
+        { "path": "./packages/xql-react" }
     ]
 }
