@@ -8,7 +8,6 @@
     ],
     "scripts": {
         "start": "yarn --cwd packages/ui vite dev",
-        "gen:types": "yarn run kysely-codegen --schema public",
         "test": "yarn --cwd packages/xql test"
     },
     "devDependencies": {

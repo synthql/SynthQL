@@ -38,7 +38,9 @@ function hydrateRow(row: Row, query: AugmentedQuery): AnyQueryResult {
             if (s.type === 'jsonb_agg' && s.columns.length > 0) {
                 const nested = assertArrayInResult(row[s.id], s.id);
                 nested.forEach((nestedItem) => hydrateNestedMutating(row, child, nestedItem));
-                result[s.includeColumn] = applyCardinality(nested, child.query.cardinality ?? 'many');
+                result[s.includeColumn] = applyCardinality(nested, child.query.cardinality ?? 'many', {
+                    row, query: query.query,
+                });
             }
         }
     }
@@ -54,7 +56,9 @@ function hydrateNestedMutating(row: Row, parentQuery: AugmentedQuery, result: An
 
                 const nested = assertArrayInResult(row[s.id], s.id).filter(joinPredicate);
                 nested.forEach((nestedItem) => hydrateNestedMutating(row, childQuery, nestedItem));
-                result[s.includeColumn] = applyCardinality(nested, childQuery.query.cardinality ?? 'many');
+                result[s.includeColumn] = applyCardinality(nested, childQuery.query.cardinality ?? 'many', {
+                    row, query: childQuery.query
+                });
             }
         }
     }

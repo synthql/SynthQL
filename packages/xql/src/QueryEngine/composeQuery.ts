@@ -11,6 +11,7 @@ import { AnyDb, AnyQuery, AnyTable, AugmentedQuery, OpValue, WhereBinaryOp } fro
 import { augmentQuery } from '../Query/augmentQuery';
 import { isPresent } from '../util/isPresent';
 import { iterateAugmentedQuery } from '../Query';
+import { escapeColumn } from '../escape';
 
 export function composeQuery({
     defaultSchema,
@@ -69,7 +70,9 @@ export function composeQuery({
         }
     }
 
-    kQuery = kQuery.limit(query.limit ?? 1);
+    if (query.limit !== undefined) {
+        kQuery = kQuery.limit(query.limit);
+    }
 
     return { kQuery, rootQuery };
 }
@@ -95,11 +98,11 @@ function createSelect(
 
                 const columns = field.columns
                     .map((col) => {
-                        return `'${col.column}', ${col.table.alias}.${col.column}`;
+                        return `'${col.column}', ${escapeColumn(col.table.alias)}.${escapeColumn(col.column)}`;
                     })
                     .join(', ');
 
-                const buildObject = `case when ${field.id} is null then null else jsonb_build_object(${columns}) end`;
+                const buildObject = `case when ${escapeColumn(field.id)} is null then null else jsonb_build_object(${columns}) end`;
 
                 return sql`jsonb_agg(distinct(${sql.raw(buildObject)}))`.as(
                     field.id,

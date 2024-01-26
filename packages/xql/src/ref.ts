@@ -1,5 +1,6 @@
 import { DB } from 'kysely-codegen';
 import { Column, Include, RefOp, Select, Table, Where } from './types/Query';
+import { ColumnReference } from './expression';
 
 export function table(table: keyof DB) {
     return table;
@@ -15,6 +16,30 @@ export function column<
     $on: `${TTable}.${TColumn}`;
 } {
     return { $on: `${table}.${column}` };
+}
+
+
+export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
+    const parts = ref.split('.');
+    if (parts.length === 2) {
+        return {
+            $ref: {
+                table: parts[0] as any,
+                column: parts[1] as any,
+                op: '=',
+            }
+        }
+    }
+    if (parts.length === 3) {
+        return {
+            $ref: {
+                table: `${parts[0]}.${parts[1]}` as any,
+                column: parts[2] as any,
+                op: '=',
+            }
+        }
+    }
+    throw new Error(`Invalid column reference: ${ref}`);
 }
 
 export function ref<DB>() {
@@ -49,7 +74,7 @@ export function ref<DB>() {
     };
 }
 
-class QueryBuilder<
+export class QueryBuilder<
     DB,
     TTable extends Table<DB>,
     TWhere extends Where<DB, TTable>,
@@ -218,6 +243,28 @@ class QueryBuilder<
             this._where,
             this._select,
             include,
+            this._limit,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
+    }
+
+    alsoInclude<TNewInclude extends Include<DB>>(include: TNewInclude) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TCardinality,
+            TInclude & TNewInclude,
+            TSelect,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            { ...this._include, ...include },
             this._limit,
             this._cardinality,
             this._lazy,

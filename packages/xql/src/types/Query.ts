@@ -1,9 +1,8 @@
 import { BinaryOperator, ColumnType } from 'kysely';
+import { Exp } from '../expression';
 //import { Json, JsonValue } from 'kysely-codegen';
 
-// The JSON type
-type JsonValue = string | number | boolean | null
-type Json = JsonValue | { [key: string]: Json } | Json[];
+
 
 /**
  * The name of a table in the database.
@@ -31,17 +30,19 @@ export type ColumnValue<
     TColumn extends Column<DB, TTable>,
 > =
     // Case 1: The value is a ColumnType
-    DB[TTable][TColumn] extends ColumnType<infer T, any, any>
+    DB[TTable][TColumn] extends Selectable<infer T>
     ? T
-    : // Case 2: the value is a Json
-    DB[TTable][TColumn] extends Json
-    ? JsonValue
-    : // Case 2: the value is a nullable Json
-    DB[TTable][TColumn] extends Json | null
-    ? JsonValue | null
+
+    // Case 2: The value is a nullable ColumnType
+    : DB[TTable][TColumn] extends Selectable<infer T> | null
+    ? T | null
+
     : // Else: just get the type of the column
     DB[TTable][TColumn];
 
+type Selectable<T> = {
+    readonly __select__: T;
+}
 
 /**
  * A binary operator.

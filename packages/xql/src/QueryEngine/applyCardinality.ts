@@ -5,11 +5,11 @@ type CardinalityResult<TCardinality extends Cardinality, T> =
     TCardinality extends 'one' ? T :
     TCardinality extends 'maybe' ? T | null : T[];
 
-export function applyCardinality<T, TCardinality extends Cardinality>(result: Array<T>, cardinality: TCardinality): CardinalityResult<TCardinality, T> {
+export function applyCardinality<T, TCardinality extends Cardinality>(result: Array<T>, cardinality: TCardinality, opts?: { query: AnyQuery, row: any }): CardinalityResult<TCardinality, T> {
     switch (cardinality) {
         case 'one': {
             if (result.length === 0) {
-                throw new Error('applyCardinality(result,"one"): Expected at least one result, but got none');
+                throw new CardinalityError(cardinality, opts.query, opts.row)
             }
             const first = result[0];
             return first as CardinalityResult<TCardinality, T>;
@@ -27,4 +27,12 @@ export function applyCardinality<T, TCardinality extends Cardinality>(result: Ar
     throw new Error(`applyCardinality(...,${cardinality}): Unreachable`)
 }
 
-const x = applyCardinality(['a'], 'maybe')
+class CardinalityError extends Error {
+    constructor(cardinality: Cardinality, query?: AnyQuery, row?: any) {
+        super([
+            `Expected cardinality ${cardinality} but got none.`,
+            `The query was ${JSON.stringify(query, null, 2)}`,
+            `The row was ${JSON.stringify(row, null, 2)}`
+        ].join("\n"))
+    }
+}

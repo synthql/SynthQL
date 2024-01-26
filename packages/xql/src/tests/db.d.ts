@@ -17,6 +17,11 @@ export interface Actor {
     last_update: Generated<Timestamp>;
 }
 
+export interface RottenTomatoReviews {
+    film_id: number
+    stars: number
+}
+
 export interface ActorInfo {
     actor_id: number | null;
     film_info: string | null;
@@ -288,4 +293,6 @@ export interface DB {
     staff: Staff;
     staff_list: StaffList;
     store: Store;
+
+    'virtual.rotten_tomato_reviews': RottenTomatoReviews
 }

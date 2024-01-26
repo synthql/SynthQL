@@ -1,8 +1,8 @@
 import { query, ref } from '../ref';
-import { Table, Where, WhereClause } from '../types';
+import { QueryResult, Table, Where, WhereClause } from '../types';
 import { DB } from './db';
 
-function from<TTable extends Table<DB>>(table: TTable) {
+export function from<TTable extends Table<DB>>(table: TTable) {
     return query<DB>().from(table);
 }
 
@@ -20,6 +20,12 @@ export function actor() {
 export function findActorById(actorId: number) {
     return actor().where({ actor_id: actorId }).maybe();
 }
+
+export function findActors() {
+    return actor().where({}).many();
+}
+
+
 
 export function language() {
     return from('language')

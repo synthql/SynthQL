@@ -72,7 +72,7 @@ function findPartOption() {
 }
 ```
 
-## Lazy streaming results
+## Lazy streaming queries
 
 By default the entire query will be compiled into a single large SQL join. This will give good performance for small object graphs (say 1-5 levels deep), but as the object graph grows, so will the time it takes until the query is resolved and the data is eventually sent to the client.
 
@@ -148,7 +148,7 @@ This is how queries look
 
 ```ts
 {
-    from: "public.off_the_shelf_offer",
+    from: "other_tenant.off_the_shelf_offer",
     where: {
         id: { in: '$1' },
     },
@@ -195,12 +195,37 @@ When the engine executes a query it will throw unless all the required permissio
 The following example defines a view on the users table indicating that queries
 over this view can only be executed if the user has the 'view:users' permission.
 
+## Column level security
+
 ```ts
 const users() {
     query<DB>()
         .from('users')
         .acl(['view:users'])
         .select('id','name','email')
+}
+```
+
+## Row level security
+
+Customer => read rfqs, but not all
+EMS => read all RFQs
+
+```ts
+function enforceRfqAccessPermissions(query, userType) {
+    if (userType === 'ems') {
+        return query;
+    }
+    if (userType === 'customer') {
+        return {
+            ...query,
+            where: {
+                ...query.where,
+                customer_id: user.id,
+            },
+        };
+    }
+    throw Error('unknown');
 }
 ```
 
@@ -212,10 +237,72 @@ This means queries can be composed in the client, and sent to the BE to execute.
 
 ## Caching
 
+```
 {
-['public.manufacturers'+'id']: {...},
-['public.off_the_shelf_offers'+'id']: {...}
+  ['public.manufacturers'+'id']: {...},
+  ['public.off_the_shelf_offers'+'id']: {...},
+  ['public.suppliers'+ 'a']: {...}
 }
+```
+
+Limitation: you can only make joins by IDs.
+
+```
+- OTS parts
+- Table A (references Ots parts)
+- Table B (references Ots parts)
+
+select
+from tableA
+left join tableB on tableA.ots_part_id = tableB.ots_part_id
+```
+
+## Custom providers
+
+```json
+{
+    from: "some_generated_object",
+    where: {...}
+}
+
+
+```
+
+```ts
+contst queryEngine = new QueryEngine(..., virtualQueries: {
+    some_generated_object: (query) => {
+        http('GET /some_geneated_object')
+    }
+})
+queryEngine.execute(query)
+```
+
+## What happens when you change the schema (e.g. run migrations)
+
+-   Drop table => drop FE
+-   Rename col/table => rename the XQL queries
+-   Columns added => no change needed
+-   Change structure of JSONB fields => TSC wouldn't know
+
+## Architecture
+
+```
+packages/queries <= definition of all the queries (CODEOWNERS with BE people)
+packages/app     <= frontend imports queries package
+packages/gateway <= executes queries
+```
+
+FE
+
+```ts
+useXql(bigQuery);
+```
+
+BE
+
+```
+POST /xql
+```
 
 ## Easy to integrate with React Query
 
@@ -224,7 +311,7 @@ function useXql<TTable extends Table<DB>>(
     query: Query<DB, TTable>,
     queryProps,
 ) {
-    const {} = useQuery({
+    return useQuery({
         queryKey: xqlQuery(query.table, query),
         queryFn: () => {
             return engine.execute(theQuery);
@@ -260,6 +347,10 @@ migration windows.
 
 XQL is optimized for transactional queries. Analytical loads will likely have poor performance.
 
+## DB checks / constraints are not reflected in the XQL schema
+
+-   TODO
+
 # How does XQL compare against ...?
 
 # Tomas' thoughts
@@ -291,10 +382,79 @@ XQL is optimized for transactional queries. Analytical loads will likely have po
     -   Maybe perf is not as good as I think will be
     -   Implementation taking too long
     -   Permission sync
--   Doen't hate it
--   Get more thoughts from engineers
--
+-   Doen't hate it.
+-   Get more thoughts from engineers.
 
-GET /users
+# Tok's thoughts
 
-db.users.findMany(...)
+-   Mostly for reads? yes
+-   Business logic?
+    -   I'm not opposed to having biz logic in the client.
+-   Column level security?
+-   Row level security?
+    -   fn(query) => more restricted query by adding where's
+-   How to support business logic?
+-   Kick out the BE:
+    -   ebpf: write custom modules you can import into the kernel at runtime
+    -   Examples: only allow user to fetch calculation summary:
+
+# Chris' Thoughts
+
+-   Server side rendering? This assumes client side rendering.
+-   If in a year React has server rendered components, what will the implications be?
+-   Caching layer is not compatible with server side rendering.
+-   Like Drizzle in that it compiles to a single SQL query.
+-   Exposes DB structure. What's the risk of that?
+-   Biggest risk:
+    -   Support / maintenance? => just fhur
+    -   Untried / not battle tested.
+-   Biggest gain:
+    -   Reducing the need for backend resources to implement features.
+    -   Faster iteration times.
+-   Cuts layers, less code required.
+-   What kind of demo would blow your mind?
+    -   Calculation table
+    -   Manfuacturing scenario page (http://localhost:3000/rfqs/6aecd801-2202-4802-a567-1bc2b063e671/manufacturing/20cbce03-cb5d-4b34-9258-abf8999b6629)
+-   All mutations will require logic to convert between the XQL objects into the REST APIs's DTOs.
+-   Almost innevitable that we will have duplicate logic.
+
+```tsx
+const UsersPage = () => {
+    const page = useXql(queryKey:"usersPage",usersPageQuery)
+
+    return <UserList users={page.users} />
+}
+
+function UserList({users}:{users:User[]}) {
+    return <div>{users.map(u => <UserComponent user={u} />)}</div>
+}
+
+const UserComponent = ({user}:{user:User}) => {
+    return <...>
+}
+```
+
+# Deven's thoughts
+
+-   Security of writing queries on the FE?
+-   What happens if the schema changes?
+-   Do you require BE and FE to use the same version of XQL
+
+```ts
+// on the BE
+const user = from('users').select('id', 'name', 'email');
+
+// on the FE
+const user = from('users').select('id', 'name');
+// this query should be allowed because the BE selects a wider column set.
+
+// on the FE
+const user = from('users').select('id', 'name', 'other_field');
+// this query should be reject because the BE doesn't select 'other_field'
+```
+
+-   Caching makes it interesting
+-   If it didn't need to talk to the BE
+-   Win: the fact that you don't need to write simple query endpoints
+-   What demo would you like to see?
+    -   Perf beats current solution manager page.

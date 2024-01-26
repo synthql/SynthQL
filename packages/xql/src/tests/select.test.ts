@@ -1,10 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { queryEngine } from "./queryEngine";
 import { DB } from "./db"
-import { findActorById, findCityById, movie } from "./queries";
+import { findActorById, findCityById, from, movie } from "./queries";
 import { collectFirst } from "../util/collectFirst";
 import { Query, Table } from "../types";
 import { sql } from "./postgres";
+import { format } from "sql-formatter";
 
 
 describe('select', () => {
@@ -72,6 +73,73 @@ describe('select', () => {
 
             expect(result).toEqual(expected[0])
         })
+    })
+
+    test(`select with 3 level depth:
+        store
+            one(address)
+                one(city)
+            many(inventory)
+                one(film)
+        `, async () => {
+
+
+        const expected = await sql`
+            select 
+                s.store_id,
+                jsonb_build_object(
+                    'address_id', MAX(a.address_id),
+                    'address', MAX(a.address),
+                    'city', jsonb_build_object(
+                        'city_id', MAX(c.city_id),
+                        'city', MAX(c.city)
+                    )
+                ) as address
+            from 
+                store s
+            left join 
+                address a ON s.address_id = a.address_id
+            left join
+                city c ON a.city_id = c.city_id
+            left join 
+                inventory i ON s.store_id = i.store_id
+            left join
+                film f ON i.film_id = f.film_id
+            group by
+                s.store_id;
+
+            `;
+
+
+
+        const query = from('store')
+            .select({ store_id: true })
+            .groupingId('store_id')
+            .include({
+                // address: {},
+                // inventory: {}
+            })
+            .where({})
+            .many()
+
+        const result = await run(query)
+
+        
+
+        expect(result).toMatchInlineSnapshot(`
+          [
+            {
+              "store_id": 1,
+            },
+            {
+              "store_id": 2,
+            },
+          ]
+        `)
+
+        expect(result.sort()).toEqual(expected);
+
+
     })
 
 })
