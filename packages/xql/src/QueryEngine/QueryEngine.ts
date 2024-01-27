@@ -1,35 +1,26 @@
 import {
-    AnyQuery,
-    AnyTable,
-    Query,
-    QueryPlan,
-    QueryResult,
-    Table,
-} from '../types';
-import {
-    PostgresDialect,
-    Kysely,
-    SelectExpression,
-    sql,
-    SelectQueryBuilder,
     CompiledQuery,
+    Kysely,
+    PostgresDialect,
+    SelectQueryBuilder,
 } from 'kysely';
 import { Pool } from 'pg';
-import { format } from 'sql-formatter';
-import { isQuery } from '../Query/isQuery';
+import { Query, QueryPlan, QueryResult, Table } from '../types';
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 
 export interface QueryProvider<DB, TTable extends Table<DB>> {
-    table: TTable,
-    execute: <TQuery extends Query<DB, TTable>>(query: TQuery) => Promise<QueryResult<DB, TQuery>>
+    table: TTable;
+    execute: <TQuery extends Query<DB, TTable>>(
+        query: TQuery,
+    ) => Promise<QueryResult<DB, TQuery>>;
 }
 
 export interface QueryEngineProps<DB> {
-    url: string,
-    schema?: string,
-    providers?: Array<QueryProvider<DB, any>>
-    pool?: Pool
+    url?: string;
+    schema?: string;
+    providers?: Array<QueryProvider<DB, any>>;
+    pool?: Pool;
 }
 
 export class QueryEngine<DB> {
@@ -39,11 +30,12 @@ export class QueryEngine<DB> {
     private schema: string;
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
-        this.pool = config.pool ?? new Pool({
-            connectionString: config.url,
-            max: 10,
-
-        });
+        this.pool =
+            config.pool ??
+            new Pool({
+                connectionString: config.url,
+                max: 10,
+            });
         this.dialect = new PostgresDialect({
             pool: this.pool,
         });
@@ -51,7 +43,8 @@ export class QueryEngine<DB> {
     }
 
     async *execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
-        query: TQuery, opts?: { schema?: string }
+        query: TQuery,
+        opts?: { schema?: string },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
         const defaultSchema = opts?.schema ?? this.schema;
         const { kQuery, rootQuery } = composeQuery({
@@ -59,7 +52,6 @@ export class QueryEngine<DB> {
             db: this.db,
             query,
         });
-
 
         const databaseResults = await this.tryToExecute(kQuery);
 
@@ -95,19 +87,20 @@ export class QueryEngine<DB> {
     }
 
     private async tryToExecute(query: SelectQueryBuilder<any, any, any>) {
-
-        const { sql } = query.compile()
+        const { sql } = query.compile();
         try {
-            return await query.execute()
+            return await query.execute();
         } catch (error) {
-            throw new SqlError(sql, error)
+            throw new SqlError(sql, error);
         }
     }
 }
 
-
 class SqlError extends Error {
-    constructor(public sql: string, err: Error | any) {
-        super(err?.message)
+    constructor(
+        public sql: string,
+        err: Error | any,
+    ) {
+        super(err?.message);
     }
 }

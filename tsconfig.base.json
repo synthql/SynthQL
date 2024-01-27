@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "./build",
+        "composite": true,
+        "target": "ES2018",
+        "module": "NodeNext",
+        "strict": true,
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "NodeNext",
+        "resolveJsonModule": true,
+        "incremental": true
+    }
+}

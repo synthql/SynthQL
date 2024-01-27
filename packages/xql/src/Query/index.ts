@@ -1,4 +1,3 @@
-import { T } from "vitest/dist/reporters-O4LBziQ_";
 import { Query, Table } from "../types/Query";
 import { isQuery } from "./isQuery";
 import { AugmentedQuery } from "../types";

@@ -2,3 +2,5 @@
 node_modules/
 luminovo/
 xql-luminovo/
+
+tsconfig.tsbuildinfo
