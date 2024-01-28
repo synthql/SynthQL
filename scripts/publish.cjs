@@ -1,5 +1,6 @@
 const packageJson = require('../package.json');
 const { execSync } = require('child_process');
+const fs = require('fs');
 
 function bumpMinorVersion(version) {
     const [major, minor, patch] = version.split('.');
@@ -22,7 +23,8 @@ packagesToUpdate.forEach(packageName => {
     const packageDir = packageName.replace('@synthql/', '');
     const dir = `./packages/${packageDir}`;
 
-    console.log(`Updating ${packageName} to ${nextVersion}`);
+    console.log(`🚀 Updating ${packageName} to ${nextVersion}`);
+    updateSynthqlDependencyVersions(dir, nextVersion);
 
     execSync(`yarn publish:minor --new-version ${nextVersion}`, { cwd: dir, stdio: 'inherit'});
 })
@@ -30,3 +32,19 @@ packagesToUpdate.forEach(packageName => {
 execSync(`yarn version --new-version ${nextVersion}`, {
     stdio: 'inherit'
 })
+
+
+/**
+ * Updates the version of all @synthql dependencies in the package.json file
+ */
+function updateSynthqlDependencyVersions(packagePath, version) {
+    const packageJsonPath = `${packagePath}/package.json`;
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
+    for (const dependency of Object.keys(packageJson.dependencies??{})) {
+        if (dependency.startsWith('@synthql')) {
+            packageJson.dependencies[dependency] = version;
+        }
+    }
+    packageJson.version = version;
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 4));
+}
