@@ -1,7 +1,7 @@
 {
     "name": "@synthql/root",
     "type": "module",
-    "version": "0.16.3",
+    "version": "0.17.4",
     "license": "MIT",
     "private": true,
     "workspaces": [
@@ -11,7 +11,7 @@
         "format": "yarn prettier --write \"./packages/*/src/**/*.(ts|tsx)\"",
         "checks": "yarn --cwd packages/backend checks && yarn --cwd packages/queries checks && yarn --cwd packages/react checks",
         "link-all": "yarn --cwd packages/backend link && yarn --cwd packages/queries link && yarn --cwd packages/react link",
-        "publish:minor": "node ./scripts/publish.cjs"
+        "pub": "node ./scripts/publish.cjs"
     },
     "devDependencies": {
         "prettier": "^3.1.1"
