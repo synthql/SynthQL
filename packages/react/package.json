@@ -1,6 +1,6 @@
 {
     "name": "@synthql/react",
-    "version": "0.6.0",
+    "version": "0.10.3",
     "type": "module",
     "module": "src/index.ts",
     "types": "src/index.ts",
@@ -14,6 +14,6 @@
     "scripts": {
         "test": "vitest --globals",
         "checks": "yarn vitest run && yarn tsc",
-        "publish:minor": "yarn publish --minor --access public"
+        "publish:minor": "yarn publish --access public --no-git-tag-version"
     }
 }
