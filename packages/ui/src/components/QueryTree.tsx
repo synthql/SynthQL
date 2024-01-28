@@ -7,15 +7,18 @@ import { grey } from '@mui/material/colors';
 import { countQueries } from '../model/countQueries';
 import React from 'react';
 
-export function QueryTree({ title, query }: {
-    query: AnyQuery,
-    title?: string,
+export function QueryTree({
+    title,
+    query,
+}: {
+    query: AnyQuery;
+    title?: string;
 }) {
     const node = createQueryTree(query);
     const count = countQueries(node);
     return (
         <Flex flexDirection={'column'} gap={1} padding={1}>
-            <Typography variant='h5'>{title}</Typography>
+            <Typography variant="h5">{title}</Typography>
             Queries: {count}
             <QueryTreeNode node={node} />
         </Flex>

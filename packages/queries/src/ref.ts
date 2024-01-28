@@ -1,5 +1,12 @@
-
-import { Table, ColumnReference, Select, Where, Include, RefOp, Column } from "./types"
+import {
+    Table,
+    ColumnReference,
+    Select,
+    Where,
+    Include,
+    RefOp,
+    Column,
+} from './types';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');
@@ -9,8 +16,8 @@ export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
                 table: parts[0] as any,
                 column: parts[1] as any,
                 op: '=',
-            }
-        }
+            },
+        };
     }
     if (parts.length === 3) {
         return {
@@ -18,8 +25,8 @@ export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
                 table: `${parts[0]}.${parts[1]}` as any,
                 column: parts[2] as any,
                 op: '=',
-            }
-        }
+            },
+        };
     }
     throw new Error(`Invalid column reference: ${ref}`);
 }
@@ -75,7 +82,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupingId: TGroupingId,
-    ) { }
+    ) {}
 
     private build(): {
         from: TTable;
@@ -324,16 +331,16 @@ export class QueryBuilder<
 export function query<DB>() {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
-            return new QueryBuilder<DB, TTable, {}, 'many', {}, {}, undefined, 'id'>(
-                table,
+            return new QueryBuilder<
+                DB,
+                TTable,
                 {},
-                {},
-                {},
-                undefined,
                 'many',
+                {},
+                {},
                 undefined,
-                'id',
-            );
+                'id'
+            >(table, {}, {}, {}, undefined, 'many', undefined, 'id');
         },
     };
 }

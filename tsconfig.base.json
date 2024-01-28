@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "outDir": "./build",
         "composite": true,
         "target": "ES2018",
         "module": "NodeNext",

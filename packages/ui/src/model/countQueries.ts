@@ -1,5 +1,5 @@
-import { QueryNode } from "../types";
+import { QueryNode } from '../types';
 
 export function countQueries(tree: QueryNode): number {
-    return tree.children.reduce((acc, child) => acc + countQueries(child), 1)
+    return tree.children.reduce((acc, child) => acc + countQueries(child), 1);
 }

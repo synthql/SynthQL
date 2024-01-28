@@ -1,0 +1,9 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./build",
+        "jsx": "preserve"
+    },
+    "include": ["src"],
+    "exclude": ["build", "node_modules"]
+}

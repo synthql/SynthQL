@@ -1,3 +1,17 @@
+# Packages
+
+## @xql/backend
+
+## @xql/queries
+
+## @xql/react
+
+## @xql/docs
+
+## @xql/ui
+
+Experimental UI for authoring XQL queries.
+
 # Testing
 
 ```bash

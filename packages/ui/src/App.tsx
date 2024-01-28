@@ -8,15 +8,14 @@ import { findSolutionConfig } from './queries';
 import { AnyQuery } from './types';
 import { Flex } from './components/Flex';
 
-
 function App() {
-  const query: AnyQuery = findSolutionConfig("some id");
+    const query: AnyQuery = findSolutionConfig('some id');
 
-  return (
-    <Flex alignItems={'center'} justifyContent={'center'}>
-      <QueryTree title='Find solution configuration' query={query} />
-    </Flex>
-  )
+    return (
+        <Flex alignItems={'center'} justifyContent={'center'}>
+            <QueryTree title="Find solution configuration" query={query} />
+        </Flex>
+    );
 }
 
-export default App
+export default App;

@@ -1,7 +1,7 @@
 {
     "references": [
-        { "path": "./packages/xql" },
-        { "path": "./packages/xql-react" },
+        { "path": "./packages/backend" },
+        { "path": "./packages/react" },
         { "path": "./packages/queries" }
     ],
     "extends": "./tsconfig.base.json"

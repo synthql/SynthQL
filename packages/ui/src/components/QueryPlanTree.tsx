@@ -6,21 +6,30 @@ import { Grid } from './Grid';
 import { grey } from '@mui/material/colors';
 import { countQueries } from '../model/countQueries';
 import React from 'react';
-import { QueryPlan } from "xql"
+import { QueryPlan } from 'xql';
 
-export function QueryPlanTree({ title, query }: {
-    query: QueryPlan,
-    title?: string,
+export function QueryPlanTree({
+    title,
+    query,
+}: {
+    query: QueryPlan;
+    title?: string;
 }) {
     return (
         <Flex flexDirection={'column'} gap={1} padding={1}>
-            <Typography variant='h5'>{title}</Typography>
+            <Typography variant="h5">{title}</Typography>
             <QueryTreeNode node={query.Plan} depth={0} />
         </Flex>
     );
 }
 
-function QueryTreeNode({ node, depth }: { node: QueryPlan['Plan'], depth: number }) {
+function QueryTreeNode({
+    node,
+    depth,
+}: {
+    node: QueryPlan['Plan'];
+    depth: number;
+}) {
     const [isExpanded, setExpanded] = React.useState(false);
     const nodeType = node['Node Type'];
     return (
@@ -46,11 +55,13 @@ function QueryTreeNode({ node, depth }: { node: QueryPlan['Plan'], depth: number
                 </Collapse>
             </Box>
             {node.Plans?.map((child, i) => {
-                return <QueryTreeNode
-                    key={`${depth}.${i}`}
-                    node={child}
-                    depth={depth + 1}
-                />;
+                return (
+                    <QueryTreeNode
+                        key={`${depth}.${i}`}
+                        node={child}
+                        depth={depth + 1}
+                    />
+                );
             })}
         </>
     );

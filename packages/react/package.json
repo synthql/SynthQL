@@ -1,0 +1,17 @@
+{
+    "name": "@xql/react",
+    "version": "0.0.0",
+    "module": "src/index.ts",
+    "types": "src/index.ts",
+    "license": "MIT",
+    "dependencies": {
+        "@xql/queries": "0.0.0",
+        "@tanstack/react-query": "^5.17.19",
+        "react": "^17.0.2",
+        "vitest": "^1.1.0"
+    },
+    "scripts": {
+        "test": "vitest --globals",
+        "checks": "yarn test && yarn tsc"
+    }
+}

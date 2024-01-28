@@ -8304,6 +8304,14 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
 react@^18.0.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
@@ -9871,6 +9879,11 @@ xml-js@^1.6.11:
   integrity sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==
   dependencies:
     sax "^1.2.4"
+
+xql@*:
+  version "1.4.12"
+  resolved "https://registry.yarnpkg.com/xql/-/xql-1.4.12.tgz#112805ab0e9fa6904e1589ed39e2a7bc60098729"
+  integrity sha512-h/Eu8PBS8jZ4oDBUH3k9mdbimJtrBCkQPBnnQ/pya3MmYPQhIwelAsEb2v6hQm7UDAgo/Q414EyNJsVPJF8idg==
 
 xtend@^4.0.0:
   version "4.0.2"
