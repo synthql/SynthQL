@@ -1,10 +1,5 @@
+import { JoinOp, Query } from '@xql/queries';
 import { BinaryOperator } from 'kysely';
-import { JoinOp, Query, Where } from './Query';
-
-export type * from './Query';
-export type * from './QueryPlan';
-export type * from './QueryResult';
-export { isRefOp } from './Query';
 
 export type AnyDb = Record<string, Record<string, any>>;
 export type AnyQuery = Query<AnyDb, string>;

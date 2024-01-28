@@ -1,5 +1,4 @@
-import { query, ref } from '@xql/queries';
-import { QueryResult, Table, Where, WhereClause } from '../types';
+import { Table, WhereClause, query, ref } from '@xql/queries';
 import { DB } from './db';
 
 export function from<TTable extends Table<DB>>(table: TTable) {

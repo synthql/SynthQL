@@ -5,9 +5,10 @@ import {
     SelectQueryBuilder,
 } from 'kysely';
 import { Pool } from 'pg';
-import { Query, QueryPlan, QueryResult, Table } from '../types';
+import { Query, QueryResult, Table } from "@xql/queries";
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
+import { QueryPlan } from '..';
 
 export interface QueryProvider<DB, TTable extends Table<DB>> {
     table: TTable;

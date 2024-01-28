@@ -1,4 +1,5 @@
-import { AnyQuery, Query, QueryResult, Table } from './types';
+import { Query, QueryResult, Table } from '@xql/queries';
+import { AnyQuery } from './types';
 
 export class QueryCache {
     private cache = new Map<string, QueryResult<any, any>>();
@@ -23,11 +24,11 @@ function hashKey(queryKey: AnyQuery): string {
     return JSON.stringify(queryKey, (_, val) =>
         isPlainObject(val)
             ? Object.keys(val)
-                  .sort()
-                  .reduce((result, key) => {
-                      result[key] = val[key];
-                      return result;
-                  }, {} as any)
+                .sort()
+                .reduce((result, key) => {
+                    result[key] = val[key];
+                    return result;
+                }, {} as any)
             : val,
     );
 }

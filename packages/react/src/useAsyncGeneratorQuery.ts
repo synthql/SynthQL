@@ -1,10 +1,10 @@
-import { QueryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryOptions, UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function useAyncGeneratorQuery<TData>({
     queryKey = [],
     queryFn,
     ...opts
-}: QueryOptions<AsyncGenerator<TData>>) {
+}: QueryOptions<AsyncGenerator<TData>>): UseQueryResult<TData> {
     const { setQueryData } = useQueryClient();
 
     const streamingQueryResult = useQuery({

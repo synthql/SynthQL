@@ -1,12 +1,11 @@
+import { RefOp, isRefOp } from '@xql/queries';
 import {
     AnyDb,
     AnyQuery,
     AugmentedColumn,
     AugmentedQuery,
     AugmentedTable,
-    RefOp,
     SelectionColumn,
-    isRefOp,
 } from '../types';
 import { isPresent } from '../util/isPresent';
 

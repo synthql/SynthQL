@@ -1,4 +1,4 @@
-import { Query, Table } from '../types/Query';
+import { Query, Table } from '@xql/queries';
 
 export function isQuery<DB, TTable extends Table<DB>>(
     x: unknown,

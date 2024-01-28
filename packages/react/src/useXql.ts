@@ -1,4 +1,4 @@
-import { Query, QueryResult, Table } from 'xql';
+import { Query, QueryResult, Table } from '@xql/queries';
 import { useXqlContext } from './XqlProvider';
 import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 import { xqlQueryKey } from './xqlQueryKey';

@@ -1,5 +1,6 @@
 {
     "name": "@xql/queries",
+    "type": "module",
     "version": "0.0.0",
     "module": "src/index.ts",
     "types": "src/index.ts",

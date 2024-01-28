@@ -1,5 +1,6 @@
 {
     "name": "@xql/backend",
+    "type": "module",
     "version": "0.0.0",
     "module": "src/index.ts",
     "types": "src/index.ts",
@@ -8,16 +9,16 @@
         "dotenv": "^16.3.1",
         "kysely": "^0.26.3",
         "pg": "^8.11.3",
-        "postgres": "^3.4.3",
-        "sql-formatter": "^15.0.2",
-        "vitest": "^1.1.0",
         "@xql/queries": "0.0.0"
     },
     "scripts": {
-        "test": "vitest --globals",
-        "checks": "yarn test && yarn tsc"
+        "test": "vitest",
+        "checks": "yarn vitest run && yarn tsc"
     },
     "devDependencies": {
+        "postgres": "^3.4.3",
+        "sql-formatter": "^15.0.2",
+        "vitest": "^1.1.0",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "kysely-codegen": "^0.11.0"

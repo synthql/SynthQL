@@ -1,2 +1,3 @@
 export { col, query, ref } from './ref';
-export type * from './types';
+export * from './types';
+export * from "./QueryResult"

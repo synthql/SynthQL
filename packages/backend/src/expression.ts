@@ -1,7 +1,4 @@
-import { DB } from './tests/db';
-import { sql } from './tests/postgres';
-import { from } from './tests/queries';
-import { isPresent, isString } from './util/isPresent';
+import { isString } from './util/isPresent';
 
 export const unaryOperators = ['not', '-', 'exists', 'not exists'] as const;
 
@@ -143,16 +140,16 @@ export type Exp =
     | [`fn:${string}`, ...Exp[]]
     | ['when', condition: Exp, whenTrue: Exp, whenFalse: Exp]
     | {
-          from: string;
-          where: Exp;
-          select: Exp[];
-          groupBy?: Exp[];
-          having?: Exp;
-          orderBy?: Exp[];
-          limit?: number;
-          offset?: number;
-          joins?: JoinExp[];
-      };
+        from: string;
+        where: Exp;
+        select: Exp[];
+        groupBy?: Exp[];
+        having?: Exp;
+        orderBy?: Exp[];
+        limit?: number;
+        offset?: number;
+        joins?: JoinExp[];
+    };
 
 export function compile<T extends Exp>(exp: T): string {
     if (exp === null) {
@@ -238,13 +235,12 @@ export function compile<T extends Exp>(exp: T): string {
         return [
             `select ${select.map(compile).join(', ')}`,
             `from "${from}"`,
-            `${
-                joins
-                    ?.map(
-                        ([join, table, on]) =>
-                            `${join} join "${table}" on ${compile(on)}`,
-                    )
-                    .join(' ') || ''
+            `${joins
+                ?.map(
+                    ([join, table, on]) =>
+                        `${join} join "${table}" on ${compile(on)}`,
+                )
+                .join(' ') || ''
             }`,
             where && `where ${compile(where)}`,
             `${groupBy ? `group by ${groupBy.map(compile).join(', ')}` : ''}`,
@@ -304,8 +300,8 @@ export function $(param: number): Exp {
 
 export type ColumnReference<T> = {
     [K in keyof T]: T[K] extends object
-        ? `${K & string}.${(keyof T[K] & string) | '*'}`
-        : never;
+    ? `${K & string}.${(keyof T[K] & string) | '*'}`
+    : never;
 }[keyof T];
 
 export function ref<DB>(refString: ColumnReference<DB>): Exp {

@@ -1,15 +1,16 @@
 {
     "compilerOptions": {
         "composite": true,
-        "target": "ES2018",
-        "module": "NodeNext",
+        "target": "ESNext",
+        "module": "ESNext",
         "strict": true,
         "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "NodeNext",
+        "moduleResolution": "Bundler",
         "resolveJsonModule": true,
-        "incremental": true
+        "incremental": true,
+        "baseUrl": "./"
     }
 }

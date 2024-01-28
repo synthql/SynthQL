@@ -1,4 +1,4 @@
-import { Query, Table } from '../types/Query';
+import { Query, Table } from '@xql/queries';
 import { isQuery } from './isQuery';
 import { AugmentedQuery } from '../types';
 

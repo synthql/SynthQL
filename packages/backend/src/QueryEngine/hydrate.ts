@@ -1,14 +1,7 @@
 import {
-    AnyDb,
-    AnyQuery,
-    AnyTable,
-    AugmentedQuery,
-    QueryResult,
-    isSelectionColumn,
-    isSelectionJsonbAgg,
+    AugmentedQuery
 } from '../types';
 import { assertArrayInResult } from '../util/asserts';
-import { isPresent } from '../util/isPresent';
 import { applyCardinality } from './applyCardinality';
 
 interface Row {
@@ -23,8 +16,8 @@ type AnyQueryResult =
     | undefined
     | Array<AnyQueryResult>
     | {
-          [key: string]: any;
-      };
+        [key: string]: any;
+    };
 
 export function hydrate(
     data: Array<Row>,
