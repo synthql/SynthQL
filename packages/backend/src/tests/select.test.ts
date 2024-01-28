@@ -3,7 +3,7 @@ import { queryEngine } from "./queryEngine";
 import { DB } from "./db"
 import { findActorById, findCityById, from, movie } from "./queries";
 import { collectFirst } from "../util/collectFirst";
-import { Query, Table, col } from "@xql/queries";
+import { Query, Table, col } from "@synthql/queries";
 import { sql } from "./postgres";
 import { format } from "sql-formatter";
 

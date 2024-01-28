@@ -68,7 +68,7 @@ export default function Home(): JSX.Element {
                     <h2>Installation</h2>
                     <p>
                         <CodeBlock language="bash">
-                            {`yarn install @xql/client`}
+                            {`yarn install @synthql/client`}
                         </CodeBlock>
                     </p>
                 </section>
@@ -80,7 +80,7 @@ export default function Home(): JSX.Element {
                         types run the following command:
                     </p>
                     <CodeBlock language="bash">
-                        {`yarn @xql/client generate-types --database-url DATABASE_URL`}
+                        {`yarn @synthql/client generate-types --database-url DATABASE_URL`}
                     </CodeBlock>
                 </section>
 

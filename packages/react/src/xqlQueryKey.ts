@@ -1,4 +1,4 @@
-import { Query, Table } from '@xql/queries';
+import { Query, Table } from '@synthql/queries';
 import { QueryKey } from '@tanstack/react-query';
 
 export type XqlQueryKey<

@@ -11,8 +11,6 @@ const resolveXqlAliases =
             return resolveAlias
         }, {})
 
-console.log(resolveXqlAliases)
-
 export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, "build"),
@@ -20,9 +18,6 @@ export default defineConfig({
             entry: path.resolve(__dirname, "src/index.ts"),
             fileName: "index",
             formats: ["es", "cjs"],
-        },
-        rollupOptions: {
-            external: ["pg", "kysely"]
         },
         minify: false,
     },

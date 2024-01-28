@@ -1,4 +1,4 @@
-import { RefOp, isRefOp } from '@xql/queries';
+import { RefOp, isRefOp } from '@synthql/queries';
 import {
     AnyDb,
     AnyQuery,

@@ -1,4 +1,4 @@
-import { Query, Table } from '@xql/queries';
+import { Query, Table } from '@synthql/queries';
 import { isQuery } from './isQuery';
 import { AugmentedQuery } from '../types';
 

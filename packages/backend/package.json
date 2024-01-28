@@ -13,7 +13,8 @@
     },
     "scripts": {
         "test": "vitest",
-        "checks": "yarn vitest run && yarn tsc"
+        "checks": "yarn vitest run && yarn tsc",
+        "publish:minor": "yarn publish --minor --access public"
     },
     "devDependencies": {
         "@types/node": "^20.10.5",

@@ -5,7 +5,7 @@ import {
     SelectQueryBuilder,
 } from 'kysely';
 import { Pool } from 'pg';
-import { Query, QueryResult, Table } from "@xql/queries";
+import { Query, QueryResult, Table } from "@synthql/queries";
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 import { QueryPlan } from '..';

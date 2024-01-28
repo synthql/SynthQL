@@ -13,6 +13,7 @@
     },
     "scripts": {
         "test": "vitest --globals",
-        "checks": "yarn vitest run && yarn tsc"
+        "checks": "yarn vitest run && yarn tsc",
+        "publish:minor": "yarn publish --minor --access public"
     }
 }

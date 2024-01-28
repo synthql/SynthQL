@@ -1,4 +1,4 @@
-import { Table, WhereClause, query, ref } from '@xql/queries';
+import { Table, WhereClause, query, ref } from '@synthql/queries';
 import { DB } from './db';
 
 export function from<TTable extends Table<DB>>(table: TTable) {

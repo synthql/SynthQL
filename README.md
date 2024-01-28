@@ -1,14 +1,14 @@
 # Packages
 
-## @xql/backend
+## @synthql/backend
 
-## @xql/queries
+## @synthql/queries
 
-## @xql/react
+## @synthql/react
 
-## @xql/docs
+## @synthql/docs
 
-## @xql/ui
+## @synthql/ui
 
 Experimental UI for authoring XQL queries.
 

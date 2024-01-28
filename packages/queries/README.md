@@ -1,11 +1,11 @@
-# @xql/queries
+# @synthql/queries
 
 Provides the query builder, which gives most of the DX for writing queries.
 
 This package is separate so it can be shared by client and server bundles.
 
 ```ts
-import { query } from '@xql/client';
+import { query } from '@synthql/client';
 import { from } from '@/db';
 
 const findPetsByOwner = (owner) => {

@@ -1,8 +1,13 @@
-import { Query, QueryResult, Table } from '@xql/queries';
+import { Query, QueryResult, Table } from '@synthql/queries';
 import { useXqlContext } from './XqlProvider';
 import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 import { xqlQueryKey } from './xqlQueryKey';
 import { QueryOptions, UseQueryResult } from '@tanstack/react-query';
+
+type XqlQueryOptions<DB, TTable extends Table<DB>, TQuery extends Query<DB, TTable>> = {
+    requestInit?: RequestInit;
+    reactQuery?: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'retry'>;
+}
 
 export function useXql<
     DB,
@@ -10,7 +15,7 @@ export function useXql<
     TQuery extends Query<DB, TTable>,
 >(
     query: TQuery,
-    opts: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'maxPages'> = {},
+    opts: XqlQueryOptions<DB, TTable, TQuery> = {}
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { xqlEndpoint, requestInit } = useXqlContext();
 
@@ -24,7 +29,7 @@ export function useXql<
                 requestInit,
             );
         },
-        ...opts,
+        ...opts.reactQuery,
     });
 }
 

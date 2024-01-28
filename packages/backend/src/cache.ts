@@ -1,4 +1,4 @@
-import { Query, QueryResult, Table } from '@xql/queries';
+import { Query, QueryResult, Table } from '@synthql/queries';
 import { AnyQuery } from './types';
 
 export class QueryCache {

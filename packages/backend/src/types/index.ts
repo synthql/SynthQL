@@ -1,4 +1,4 @@
-import { JoinOp, Query } from '@xql/queries';
+import { JoinOp, Query } from '@synthql/queries';
 import { BinaryOperator } from 'kysely';
 
 export type AnyDb = Record<string, Record<string, any>>;

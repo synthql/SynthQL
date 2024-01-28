@@ -1,7 +1,7 @@
 {
-    "name": "@xql/root",
+    "name": "@synthql/root",
     "type": "module",
-    "version": "0.0.0",
+    "version": "0.5.0",
     "license": "MIT",
     "private": true,
     "workspaces": [
