@@ -1,4 +1,7 @@
-async function* fetchJsonl<T = any>(
+/**
+ * Fetches a JSONL file and yields each line as a parsed JSON object.
+ */
+export async function* fetchJsonLines<T = any>(
     url: string,
     requestInit?: RequestInit,
 ): AsyncGenerator<T> {
