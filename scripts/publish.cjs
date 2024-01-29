@@ -33,6 +33,14 @@ execSync(`yarn version --new-version ${nextVersion}`, {
     stdio: 'inherit'
 })
 
+execSync(`git add .`, {
+    stdio: 'inherit'
+})
+
+execSync(`git commit --amend`, {
+    stdio: 'inherit'
+})
+
 
 /**
  * Updates the version of all @synthql dependencies in the package.json file

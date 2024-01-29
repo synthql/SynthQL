@@ -1,3 +1,4 @@
+import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 export interface XqlContext {
@@ -8,18 +9,10 @@ export interface XqlContext {
 export const xqlContext = React.createContext<XqlContext | null>(null);
 
 export function XqlProvider({
-    value = {
-        xqlEndpoint: '/xql',
-        requestInit: {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        },
-    },
+    value,
     children,
 }: {
-    value?: XqlContext;
+    value: XqlContext;
     children: React.ReactNode | any;
 }) {
     return <xqlContext.Provider value={value}>{children}</xqlContext.Provider>;

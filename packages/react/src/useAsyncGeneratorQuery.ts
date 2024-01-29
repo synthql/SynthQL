@@ -5,7 +5,7 @@ export function useAyncGeneratorQuery<TData>({
     queryFn,
     ...opts
 }: QueryOptions<AsyncGenerator<TData>>): UseQueryResult<TData> {
-    const { setQueryData } = useQueryClient();
+    const queryClient = useQueryClient();
 
     const streamingQueryResult = useQuery({
         queryKey: [...queryKey, 'streaming-query-result'],
@@ -22,7 +22,7 @@ export function useAyncGeneratorQuery<TData>({
         queryFn: async (queryProps): Promise<AsyncGenerator<TData>> => {
             const generator = await queryFn!(queryProps);
             for await (const result of generator) {
-                setQueryData([...queryKey, 'streaming-query-result'], result);
+                queryClient.setQueryData([...queryKey, 'streaming-query-result'], result);
             }
             return generator;
         },

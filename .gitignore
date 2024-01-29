@@ -6,3 +6,6 @@ xql-luminovo/
 tsconfig.tsbuildinfo
 build/
 *.log
+
+
+.nx/cache
