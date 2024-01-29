@@ -1,20 +1,20 @@
-import { beforeAll, describe, expect, it } from "vitest";
-import { fetchJsonLines } from "./fetchJsonLines"
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { fetchJsonLines } from "./fetchJsonLines";
 
-import http from "http"
-import { createEchoServer } from "./test/createEchoServer";
+import { EchoServer, createEchoServer } from "./test/createEchoServer";
 
-const port = 1234
-const url = `http://localhost:${port}`
-
-beforeAll(() => {
-
-})
 
 describe('fetchJsonl', () => {
+    let echoServer: EchoServer | undefined
+    beforeAll(async () => {
+        echoServer = await createEchoServer((reqBody) => {
+            return reqBody.lines
+        })
+    })
+    afterAll(() => {
+        echoServer?.server.close()
+    })
     it('when fetching multiple lines', async () => {
-
-        const { url } = await createEchoServer()
 
         const lines = [
             "hello world",
@@ -23,7 +23,7 @@ describe('fetchJsonl', () => {
             "and for me to write",
         ];
         const result: string[] = []
-        for await (const line of fetchJsonLines(url, {
+        for await (const line of fetchJsonLines(echoServer?.url!, {
             method: 'POST',
             body: JSON.stringify({
                 lines
@@ -36,12 +36,10 @@ describe('fetchJsonl', () => {
 
     it('when fetching zero lines', async () => {
 
-        const { url } = await createEchoServer()
-
         const lines: string[] = [
         ];
         const result: string[] = []
-        for await (const line of fetchJsonLines(url, {
+        for await (const line of fetchJsonLines(echoServer?.url!, {
             method: 'POST',
             body: JSON.stringify({
                 lines

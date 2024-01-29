@@ -11,8 +11,6 @@ const resolveXqlAliases =
             return resolveAlias
         }, {})
 
-console.log(resolveXqlAliases)
-
 export default defineConfig({
     build: {
         outDir: path.resolve(__dirname, "build"),

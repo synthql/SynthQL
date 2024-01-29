@@ -1,7 +1,12 @@
 import http from "http"
 
-export function createEchoServer(): Promise<{ url: string }> {
-    return new Promise<{ url: string }>((resolve, reject) => {
+export interface EchoServer {
+    url: string;
+    server: http.Server
+}
+
+export function createEchoServer(mapRequest: (reqBody: any) => any[]): Promise<EchoServer> {
+    return new Promise((resolve, reject) => {
 
         const server = http.createServer((req, res) => {
             // reads the body, which always has the following form
@@ -13,15 +18,18 @@ export function createEchoServer(): Promise<{ url: string }> {
             })
             req.on("end", () => {
                 const json = JSON.parse(body)
+                const lines = mapRequest(json)
                 res.writeHead(200, { "Content-Type": "application/json" })
 
-                for (const line of json.lines) {
+                for (const line of lines) {
                     res.write(JSON.stringify(line) + "\n")
                 }
                 // flush the buffer
                 res.end()
             })
-        }).listen(() => {
+        });
+
+        server.listen(() => {
             const address = server.address()
             if (typeof address === "string" || address === null) {
                 reject("Failed to get server address: " + address)
@@ -29,6 +37,7 @@ export function createEchoServer(): Promise<{ url: string }> {
             else {
                 resolve({
                     url: `http://localhost:${address.port}`,
+                    server
                 })
             }
         });
