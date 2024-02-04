@@ -42,8 +42,6 @@ describe('useSynthql', () => {
     })
 
     test('fetching 1000 results', async () => {
-
-
         const count = 1000
         const ids = Array(count).fill('0').map((_, i) => String(i))
 
