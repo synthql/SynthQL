@@ -3,20 +3,22 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'XQL',
-  tagline: 'The extreme query language',
+  title: 'synthql',
+  tagline: 'A fullstack, type-safe client for your postgresql database',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
   url: 'http://fhur.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/xql/',
+  baseUrl: '/synthql/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'fhur', // Usually your GitHub org/user name.
-  projectName: 'xql', // Usually your repo name.
+  projectName: 'synthql', // Usually your repo name.
+  deploymentBranch: 'gh-pages',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -38,14 +40,15 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/fhur/xql/tree/master/packages/docs/',
+            'https://github.com/fhur/synthql/tree/master/packages/docs/',
         },
-        blog: {
+        blog: false && {
+
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/fhur/xql/tree/master/packages/docs/',
+            'https://github.com/fhur/synthql/tree/master/packages/docs/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -58,9 +61,9 @@ const config: Config = {
     // Replace with your project's social card
     //image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'XQL',
+      title: 'synthql',
       // logo: {
-      //   alt: 'XQL Logo',
+      //   alt: 'synthql Logo',
       //   src: '/img/logo.png',
       // },
       items: [
@@ -73,7 +76,7 @@ const config: Config = {
         // TODO(fhur): Add blog support
         // { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/fhur/xql',
+          href: 'https://github.com/fhur/synthql',
           label: 'GitHub',
           position: 'right',
         },
@@ -87,7 +90,7 @@ const config: Config = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/getting-started',
             },
           ],
         },
@@ -96,7 +99,7 @@ const config: Config = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/getting-started',
             },
           ],
         },
