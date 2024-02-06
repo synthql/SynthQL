@@ -15,7 +15,7 @@ export class QueryBuilder<
     TInclude extends Include<DB>,
     TSelect extends Select<DB, TTable>,
     TLazy extends true | undefined,
-    TGroupingId extends string,
+    TGroupingId extends string[],
 > {
     constructor(
         private _from: TTable,
@@ -305,7 +305,7 @@ export class QueryBuilder<
         );
     }
 
-    groupingId<TGroupingId extends string>(id: TGroupingId) {
+    groupingId<TGroupingId extends string[]>(...id: TGroupingId) {
         return new QueryBuilder<
             DB,
             TTable,
@@ -339,8 +339,8 @@ export function query<DB>() {
                 {},
                 {},
                 undefined,
-                'id'
-            >(table, {}, {}, {}, undefined, 'many', undefined, 'id');
+                ['id']
+            >(table, {}, {}, {}, undefined, 'many', undefined, ['id']);
         },
     };
 }

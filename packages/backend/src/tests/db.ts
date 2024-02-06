@@ -1,4 +1,5 @@
 import type { ColumnType } from 'kysely';
+import { PgSchema } from '../generateSchema';
 
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
     ? ColumnType<S, I | undefined, U>
@@ -288,4 +289,7 @@ export interface DB {
     staff: Staff;
     staff_list: StaffList;
     store: Store;
+
+
+
 }

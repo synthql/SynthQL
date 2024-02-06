@@ -117,5 +117,5 @@ export type Query<DB, TTable extends Table<DB>> = {
     limit?: number;
     cardinality?: 'one' | 'maybe' | 'many';
     lazy?: true;
-    groupingId?: string;
+    groupingId?: string[];
 };

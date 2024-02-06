@@ -39,7 +39,10 @@ export function composeQuery({
         .select(createSelect(allQueries, db));
 
     if (subQueries.length > 0) {
-        kQuery = kQuery.groupBy(`${from.alias}.${rootQuery.query.groupingId}`);
+        const keys = (rootQuery.query.groupingId ?? ['id'])
+            .map(id => `${from.alias}.${id}`)
+
+        kQuery = kQuery.groupBy(keys);
     }
 
     kQuery = kQuery.where(createWhere(allQueries));
