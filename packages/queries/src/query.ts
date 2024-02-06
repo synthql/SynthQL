@@ -1,12 +1,11 @@
 
 import {
     Column,
-    ColumnReference,
     Include,
     Select,
     Table,
     Where
-} from './types';
+} from './types/types';
 
 export class QueryBuilder<
     DB,

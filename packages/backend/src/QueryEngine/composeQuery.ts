@@ -7,18 +7,17 @@ import {
     expressionBuilder,
     sql,
 } from 'kysely';
+import { augmentQuery } from '../AugmentedQuery/augmentQuery';
+import { iterateAugmentedQuery } from '../AugmentedQuery/iterateAugmentedQuery';
+import { escapeColumn } from '../escape';
 import {
     AnyDb,
     AnyQuery,
     AnyTable,
     AugmentedQuery,
-    OpValue,
-    WhereBinaryOp,
+    OpValue
 } from '../types';
-import { augmentQuery } from '../Query/augmentQuery';
 import { isPresent } from '../util/isPresent';
-import { iterateAugmentedQuery } from '../Query';
-import { escapeColumn } from '../escape';
 
 export function composeQuery({
     defaultSchema,

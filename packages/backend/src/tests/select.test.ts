@@ -141,8 +141,6 @@ describe('select', () => {
 
         const result = await run(query)
 
-
-
         expect(result).toMatchInlineSnapshot(`
           [
             {
@@ -171,8 +169,6 @@ describe('select', () => {
         `)
 
         expect(result.sort()).toEqual(expected);
-
-
     })
 
 })

@@ -3,7 +3,7 @@ import {
     ColumnReference,
     RefOp,
     Table
-} from './types';
+} from './types/types';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');
@@ -61,9 +61,3 @@ export function ref<DB>() {
 }
 
 
-
-export function maybe<TQuery>(
-    query: TQuery,
-): TQuery & { cardinality: 'maybe' } {
-    return { ...query, cardinality: 'maybe' as const };
-}

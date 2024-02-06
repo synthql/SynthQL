@@ -1,6 +1,6 @@
 import { describe, test } from "vitest";
 import { Query, QueryResult, Table, col } from ".";
-import { DB, from, } from "./test/pagila.db";
+import { Actor, DB, from, } from "./test/pagila.db";
 
 describe('queries', () => {
     function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(q: TQuery): QueryResult<DB, TQuery> {
