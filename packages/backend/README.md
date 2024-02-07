@@ -42,12 +42,8 @@ function manufacturer() {
         .select('id','name')
 }
 function otsPart() {
-    const manfuacturerId = ref<DB>()
-        .table('public.off_the_shelf_part')
-        .column('manufacturer');
-
     const manufacturer = manufacturer()
-        .where({ id: manufacturerId })
+        .where({ id: col('public.off_the_shelf_part.manufacturer') })
         .one()
 
     return query<DB>()
@@ -58,7 +54,7 @@ function otsPart() {
 
 function findPartOption() {
     const otsPart = otsPart()
-        .where({ id: ref<DB>().table('part_option').column('off_the_shelf_part_id') })
+        .where({ id: col('part_option.ots_part') })
         .many()
 
     return query<DB>()
@@ -272,7 +268,7 @@ const queryEngine = new QueryEngine(..., virtualQueries: {
     bom_warnings: (query) => {
         http('GET /some_geneated_object')
     }
-})
+});
 queryEngine.execute(query)
 ```
 
@@ -457,3 +453,73 @@ const user = from('users').select('id', 'name', 'other_field');
 -   Win: the fact that you don't need to write simple query endpoints
 -   What demo would you like to see?
     -   Perf beats current solution manager page.
+
+
+# Andi's thoughts
+
+- Custom providers are really important because there's a lot of business logic in the data-fetching.
+- Security: SQL injection => it's possible.
+- 
+
+
+
+```tsx
+import { DB } from "./db"
+import { QueryEngine, mapQuery } from "@synthql/backend";
+import { orders } from "./queries";
+
+interface ActivityConfig {
+    id: string,
+    name: string,
+}
+
+// virtual table
+interface DriverStatus {
+    activity_config_id:string
+    value: number
+    satus: "ok"|"warning"|"error"
+}
+
+interface DB {
+    ...,
+    // form an endpoint
+    drivers: Driver
+    //from the DB
+    activity_config:ActivityConfig,
+    // from the DB
+    manufacturing_scenario: { activity_config_id: string }
+}
+
+// @luminovo/queries/activities-table-query.ts
+const driverStatuses = from('driver_status')
+    .column('status','value')
+    .where({ activity_config_id: col('activity_config.id') })
+    .lazy()
+    .many();
+
+const activityConfig = from('activity_config')
+    .column('name','id')
+    .where(...)
+    .include({ driverStatuses })
+    .many()
+
+export query = from('manufacturing_scenario')
+    .column('name')
+    .where({id:someID})
+    .include({ activityConfig })
+    .many();
+
+useSynthql(q)
+
+const restrictOrdersByUser = provider<DB>()
+    .from('activity_config')
+    .execute((query, context) => {
+        return http('POST /activity-config')
+    })
+
+const queryEngine = new QueryEngine<DB>({ 
+    providers: [restrictOrdersByUser] 
+})
+
+queryEngine.registerQueries(orders)
+```
