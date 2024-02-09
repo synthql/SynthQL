@@ -9,6 +9,7 @@ import { Query, QueryResult, Table } from "@synthql/queries";
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 import { QueryPlan } from '..';
+import { generateSchema } from '../generateSchema';
 
 export interface QueryProvider<DB, TTable extends Table<DB>> {
     table: TTable;
@@ -85,6 +86,11 @@ export class QueryEngine<DB> {
             parameters as string[],
         );
         return result.rows[0]['QUERY PLAN'][0];
+    }
+
+    async introspect() {
+        const schemas = Array.from(new Set(['public', this.schema]));
+        return generateSchema(this as any, { schemas });
     }
 
     private async tryToExecute(query: SelectQueryBuilder<any, any, any>) {

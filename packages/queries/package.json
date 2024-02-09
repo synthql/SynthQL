@@ -16,7 +16,7 @@
     "dependencies": {},
     "scripts": {
         "test": "vitest --globals",
-        "checks": "yarn vitest --globals run && yarn tsc && yarn build",
+        "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version"
     },

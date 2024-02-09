@@ -1,0 +1,23 @@
+:root {
+
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body,main {
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
