@@ -6,6 +6,7 @@ import ReactJson from "react-json-view";
 import { PanelContainer } from "./Panel";
 import { useQueryResults } from "@/hooks/useQueryResults";
 import { useGlobalShortcut } from "@/hooks/useGlobalShortcut";
+import { format } from "sql-formatter"
 
 export function ResultsView() {
     useGlobalShortcut('1', () => {
@@ -14,20 +15,23 @@ export function ResultsView() {
     useGlobalShortcut('2', () => {
         setTab(1)
     })
+    useGlobalShortcut('3', () => {
+        setTab(2)
+    })
     const { data: queryResults } = useQueryResults()
 
-    console.log(queryResults)
-
-    const [tab, setTab] = useState<0 | 1>(0);
+    const [tab, setTab] = useState<0 | 1 | 2>(0);
     return <PanelContainer>
         <Tabs value={tab} onChange={(_, newValue) => setTab(newValue)}>
             <Tab id={"results"} label="Results" />
             <Tab id={'query'} label="Query" />
+            <Tab id={'sql'} label="SQL" />
         </Tabs>
 
         <Box padding={1} height={"100%"} overflow={"auto"}>
             {tab === 0 && <JsonView data={queryResults.results} />}
             {tab === 1 && <JsonView data={queryResults.query} />}
+            {tab === 2 && <pre>{format(queryResults.sql, { language: 'postgresql' })}</pre>}
 
         </Box>
 

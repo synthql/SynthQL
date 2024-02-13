@@ -1,10 +1,3 @@
-// Ignore
-import { Column, ColumnReference, Table } from "..";
-import { expressionBuilder } from "kysely"
-import { DB } from "../test/pagila.db";
-
-
-
 export type Primitive
     = string
     | number

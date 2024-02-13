@@ -5,6 +5,8 @@ import { Project, ts } from 'ts-morph';
 import fs from 'fs';
 import { executeProgram } from './executeProgram';
 import { collectFirst } from '@synthql/backend';
+import path from 'path';
+import { homedir } from 'os';
 
 export const appRouter = router({
     connect: procedure
@@ -30,24 +32,54 @@ export const appRouter = router({
 
             const query = executeProgram(input.program);
 
+            let sql = '';
+            try {
+                sql = queryEngine?.compile(query).sql ?? '';
+            } catch (e) {
+                console.error(e)
+            }
+
             if (!queryEngine) {
                 return {
                     query,
-                    result: "Error: queryEngine not initialized"
+                    result: "Error: queryEngine not initialized",
+                    sql
                 }
             }
             try {
                 return {
                     query,
-                    result: await collectFirst(queryEngine.execute(query))
+                    result: await collectFirst(queryEngine.execute(query)),
+                    sql
                 }
             }
             catch (e) {
                 return {
                     query,
-                    result: { error: String(e) }
+                    result: { error: String(e) },
+                    sql
                 }
             }
+        }),
+
+    readFile: procedure
+        .input(z.object({
+            fileName: z.string(),
+        }))
+        .query(async ({ input }) => {
+
+            const publicFolder = path.join(homedir(), 'synthql');
+            if (!fs.existsSync(publicFolder)) {
+                // create the folder if it doesn't exist
+                fs.mkdirSync(publicFolder);
+            }
+
+            const fileName = path.join(publicFolder, input.fileName);
+
+            if (!fs.existsSync(fileName)) {
+                return `// file not found at ${path.resolve(fileName)}`;
+            }
+            return fs.readFileSync(fileName).toString();
         })
 });
 

@@ -4,6 +4,7 @@ import { default as MonacoEditor, useMonaco } from '@monaco-editor/react';
 import { PanelContainer } from "../Panel";
 import { useEffect } from 'react';
 import types from "./types.json"
+import { trpc } from '@/trpc/createTrpcNext';
 
 const initialTemplate = [
     `import { query } from "@synthql/queries"`,
@@ -20,11 +21,14 @@ const initialTemplate = [
 
 export function Editor() {
     const monaco = useMonaco();
+    const {
+        data: fileContent,
+        isLoading
+    } = trpc.readFile.useQuery({ fileName: "tmp.ts" });
+    const model = monaco?.editor.getModels()[0];
 
     useEffect(() => {
-        if (monaco) {
-            const model = monaco.editor.getModels()[0];
-
+        if (model) {
             for (const type of types) {
                 monaco
                     .languages
@@ -32,18 +36,21 @@ export function Editor() {
                     .typescriptDefaults
                     .addExtraLib(`${type.types}\n declare module "@synthql/${type.module}" { export * from "src/index" }`, `node_modules/@synthql/${type.module}/index.d.ts`);
             }
-
-
-
-            model.setValue(initialTemplate);
-
         }
-    }, [monaco]);
+    }, [monaco, model]);
+
+
+    if (isLoading) {
+        return <PanelContainer>
+
+        </PanelContainer>
+    }
 
     return <PanelContainer>
         <MonacoEditor
             height={"100%"}
             defaultLanguage="typescript"
+            defaultValue={fileContent || initialTemplate}
             options={{
                 minimap: { enabled: false },
                 fontSize: 14,

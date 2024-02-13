@@ -2,6 +2,7 @@
 node_modules/
 luminovo/
 xql-luminovo/
+coverage/
 
 tsconfig.tsbuildinfo
 build/

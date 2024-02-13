@@ -58,7 +58,7 @@ type BinaryOp<
         | RefOp<DB>;
     };
 
-export type JoinOp = '=' | '= any';
+export type JoinOp = '=' | 'in';
 
 export type RefOp<DB> = {
     $ref: {

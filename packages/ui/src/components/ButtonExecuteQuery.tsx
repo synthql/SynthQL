@@ -27,12 +27,13 @@ export function ButtonExecuteQuery() {
 
         const string = model.getValue()
 
-        const { query, result } = await executeProgram({
+        const { query, result, sql } = await executeProgram({
             program: string
         });
         setQueryResults({
             query,
-            results: result
+            results: result,
+            sql
         })
     }, [monaco, executeProgram, setQueryResults]);
 

@@ -48,34 +48,23 @@ export function composeQuery({
     kQuery = kQuery.where(createWhere(allQueries));
 
     for (const subQuery of subQueries) {
-        if (subQuery.leftJoin) {
-            const { joinTable, otherColumn, ownColumn, joinOp } =
-                subQuery.leftJoin;
+        if (subQuery.join) {
+            const { type, joinTable, conditions } = subQuery.join;
 
             kQuery = kQuery.leftJoin(
                 `${joinTable.schema}.${joinTable.name} as ${joinTable.alias}`,
                 (eb) => {
-                    if (joinOp === '= any') {
-                        return eb.on(
+                    let result = eb
+                    for (const { op, ownColumn, otherColumn } of conditions) {
+                        result = result.on(
+                            sql.ref(`${ownColumn.table.alias}.${ownColumn.column}`),
+                            op,
                             sql.ref(
-                                `${ownColumn.table.alias}.${ownColumn.column}`,
-                            ),
-                            '=',
-                            eqAny(
-                                sql.ref(
-                                    `${otherColumn.table.alias}.${otherColumn.column}`,
-                                ),
+                                `${otherColumn.table.alias}.${otherColumn.column}`,
                             ),
                         );
                     }
-
-                    return eb.on(
-                        sql.ref(`${ownColumn.table.alias}.${ownColumn.column}`),
-                        joinOp,
-                        sql.ref(
-                            `${otherColumn.table.alias}.${otherColumn.column}`,
-                        ),
-                    );
+                    return result
                 },
             );
         }

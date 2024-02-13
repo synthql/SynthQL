@@ -29,7 +29,7 @@ export function augmentQuery(
         depth,
         from: table,
         id: 'root',
-        leftJoin: augmentLeftJoin(query, table, opts),
+        join: augmentJoin(query, table, opts),
         select: agumentSelect(query, table, opts),
         where: agumentWhere(query, table),
         children: Object.entries(query.include ?? {}).map(
@@ -47,37 +47,43 @@ export function augmentQuery(
     return augQuery;
 }
 
-function augmentLeftJoin(
+function augmentJoin(
     query: AnyQuery,
     table: AugmentedTable,
     opts: AugmentOpts,
-): AugmentedQuery['leftJoin'] | undefined {
+): AugmentedQuery['join'] | undefined {
     if (!opts.depth) {
         return undefined;
     }
 
-    const refOpTuple = Object.entries(query.where).find(([key, value]) => {
+    const joinConditions: Array<[column: string, RefOp<AnyDb>]> = Object.entries(query.where).filter(([key, value]) => {
         return isRefOp(value);
-    }) as undefined | [column: string, RefOp<AnyDb>];
+    });
 
-    if (!refOpTuple) {
+    if (joinConditions.length === 0) {
         return undefined;
     }
-    const [column, refOp] = refOpTuple;
+
+    const [column, refOp] = joinConditions[0];
 
     const otherTable = augmentTable(refOp.$ref.table, opts.defaultSchema);
 
     return {
         joinTable: table,
-        joinOp: refOp.$ref.op ?? '=',
-        ownColumn: {
-            table,
-            column,
-        },
-        otherColumn: {
-            table: otherTable,
-            column: refOp.$ref.column,
-        },
+        type: 'left',
+        conditions: joinConditions.map(([column, refOp]) => {
+            return {
+                ownColumn: {
+                    table,
+                    column,
+                },
+                otherColumn: {
+                    table: otherTable,
+                    column: refOp.$ref.column,
+                },
+                op: refOp.$ref.op ?? '=',
+            };
+        })
     };
 }
 

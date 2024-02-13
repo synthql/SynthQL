@@ -44,17 +44,7 @@ export function ref<DB>() {
                     };
                 },
 
-                eqAny: <TColumn extends Column<DB, TTable>>(
-                    column: TColumn,
-                ): RefOp<DB> => {
-                    return {
-                        $ref: {
-                            table,
-                            column,
-                            op: '= any',
-                        },
-                    };
-                },
+
             };
         },
     };

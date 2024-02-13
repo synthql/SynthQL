@@ -37,12 +37,15 @@ export interface AugmentedQuery {
 
     children: AugmentedQuery[];
 
-    leftJoin?: {
-        joinOp: JoinOp;
+    join?: {
+        type: 'left' | 'inner';
         joinTable: AugmentedTable;
-        ownColumn: AugmentedColumn;
-        otherColumn: AugmentedColumn;
-    };
+        conditions: Array<{
+            ownColumn: AugmentedColumn;
+            otherColumn: AugmentedColumn;
+            op: JoinOp;
+        }>
+    }
 }
 
 type WhereOp = WhereBinaryOp | WhereRefOp;

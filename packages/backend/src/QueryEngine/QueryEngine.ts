@@ -9,14 +9,9 @@ import { Query, QueryResult, Table } from "@synthql/queries";
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 import { QueryPlan } from '..';
-import { generateSchema } from '../generateSchema';
-
-export interface QueryProvider<DB, TTable extends Table<DB>> {
-    table: TTable;
-    execute: <TQuery extends Query<DB, TTable>>(
-        query: TQuery,
-    ) => Promise<QueryResult<DB, TQuery>>;
-}
+import { introspectSchema } from '../introspection/introspectSchema';
+import { QueryProvider } from '../QueryProvider';
+import { GenerateSchemaConfig, generateSchema } from '../introspection/generateSchema';
 
 export interface QueryEngineProps<DB> {
     url?: string;
@@ -88,9 +83,13 @@ export class QueryEngine<DB> {
         return result.rows[0]['QUERY PLAN'][0];
     }
 
-    async introspect() {
-        const schemas = Array.from(new Set(['public', this.schema]));
-        return generateSchema(this as any, { schemas });
+    async introspect(config?: { schemas?: string[] }) {
+        const schemas = config?.schemas ?? ['public', this.schema];
+        return introspectSchema(this as any, { schemas });
+    }
+
+    async generateSchema(config: GenerateSchemaConfig) {
+        return generateSchema(this as any, config);
     }
 
     private async tryToExecute(query: SelectQueryBuilder<any, any, any>) {
