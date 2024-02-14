@@ -1600,7 +1600,7 @@ type AllNumberTypes = {
 
 interface AllStringTypes {
     schema: 'pg_catalog',
-    name: 'text' | 'varchar' | 'bpchar' | 'bytea' | 'bpchar' | 'uuid' | 'int8'
+    name: 'text' | 'varchar' | 'bpchar' | 'bytea' | 'bpchar' | 'uuid' | 'int8' | 'tsvector'
 }
 
 interface AllBoolTypes {
