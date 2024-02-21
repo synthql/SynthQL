@@ -3,7 +3,7 @@ import { IntrospectSchemaConfig, PgSchema, TableDef, introspectSchema } from "./
 import fs from 'fs';
 
 export interface GenerateSchemaConfig extends IntrospectSchemaConfig {
-    out: string;
+    out?: string;
 }
 
 export async function generateSchema(queryEngine: QueryEngine<PgSchema>, config: GenerateSchemaConfig) {
@@ -58,7 +58,11 @@ type InferDB<T> = {
 export type DB = InferDB<typeof db>
 export const from = query<DB>().from;
 `
-    fs.writeFileSync(config.out, str)
+    if (config.out) {
+        fs.writeFileSync(config.out, str)
+        return ''
+    }
+    return str
 }
 
 function generateTable(table: TableDef): string {

@@ -1,8 +1,8 @@
 import {
     AugmentedQuery
-} from '../types';
-import { assertArrayInResult } from '../util/asserts';
-import { applyCardinality } from './applyCardinality';
+} from '../../../types';
+import { assertArrayInResult } from '../../../util/asserts';
+import { applyCardinality } from '../../../QueryEngine/applyCardinality';
 
 interface Row {
     [key: string]: any;
@@ -22,11 +22,9 @@ type AnyQueryResult =
 export function hydrate(
     data: Array<Row>,
     query: AugmentedQuery,
-): AnyQueryResult {
+): AnyQueryResult[] {
     const mapped = data.map((row) => hydrateRow(row, query));
-    return (
-        applyCardinality(mapped, query.query.cardinality ?? 'many') ?? undefined
-    );
+    return mapped
 }
 
 function hydrateRow(row: Row, query: AugmentedQuery): AnyQueryResult {

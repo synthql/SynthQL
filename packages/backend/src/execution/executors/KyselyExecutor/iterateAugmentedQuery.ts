@@ -1,5 +1,5 @@
 
-import { AugmentedQuery } from '../types';
+import { AugmentedQuery } from '../../../types';
 
 export function* iterateAugmentedQuery(
     query: AugmentedQuery,

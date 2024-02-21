@@ -6,17 +6,21 @@ import {
 } from 'kysely';
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from "@synthql/queries";
-import { composeQuery } from './composeQuery';
-import { hydrate } from './hydrate';
+import { composeQuery } from '../execution/executors/KyselyExecutor/composeQuery';
+import { hydrate } from '../execution/executors/KyselyExecutor/hydrate';
 import { QueryPlan } from '..';
 import { introspectSchema } from '../introspection/introspectSchema';
 import { QueryProvider } from '../QueryProvider';
 import { GenerateSchemaConfig, generateSchema } from '../introspection/generateSchema';
+import { execute } from '../execution/execute';
+import { QueryExecutor } from '../execution/types';
+import { QueryProviderExecutor } from '../execution/executors/QueryProviderExecutor';
+import { KyselyExecutor } from '../execution/executors/KyselyExecutor';
 
 export interface QueryEngineProps<DB> {
     url?: string;
     schema?: string;
-    providers?: Array<QueryProvider<DB, any>>;
+    providers?: Array<QueryProvider>;
     pool?: Pool;
 }
 
@@ -25,7 +29,8 @@ export class QueryEngine<DB> {
     private db: Kysely<DB>;
     private pool: Pool;
     private schema: string;
-    constructor(config: QueryEngineProps<DB>) {
+    private executors: Array<QueryExecutor> = [];
+    constructor(private config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
         this.pool =
             config.pool ??
@@ -37,22 +42,19 @@ export class QueryEngine<DB> {
             pool: this.pool,
         });
         this.db = new Kysely({ dialect: this.dialect });
+
+        const qpe = new QueryProviderExecutor(config.providers ?? []);
+        this.executors = [qpe, new KyselyExecutor(this.pool, this.schema, qpe)]
     }
 
-    async *execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
+    execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
         query: TQuery,
         opts?: { schema?: string },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        const defaultSchema = opts?.schema ?? this.schema;
-        const { kQuery, rootQuery } = composeQuery({
-            defaultSchema,
-            db: this.db,
-            query,
-        });
 
-        const databaseResults = await this.tryToExecute(kQuery);
-
-        yield hydrate(databaseResults, rootQuery) as QueryResult<DB, TQuery>;
+        return execute<DB, TTable, TQuery>(query, {
+            executors: this.executors,
+        })
     }
 
     compile<T>(

@@ -6,8 +6,8 @@ import {
     AugmentedQuery,
     AugmentedTable,
     SelectionColumn,
-} from '../types';
-import { isPresent } from '../util/isPresent';
+} from '../../../types';
+import { isPresent } from '../../../util/isPresent';
 
 interface AugmentOpts {
     defaultSchema: string;

@@ -1,8 +1,9 @@
 import { Query, QueryResult, Table } from "@synthql/queries";
+import { AnyQuery } from "./types";
 
-export interface QueryProvider<DB, TTable extends Table<DB>> {
-    table: TTable;
-    execute(query: Query<DB, TTable>): Promise<any>;
+export interface QueryProvider {
+    table: string;
+    execute(query: AnyQuery): Promise<Array<any>>;
 }
 
 export function provider<DB>() {

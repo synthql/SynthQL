@@ -1,0 +1,87 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`mapTree > identity 1`] = `
+{
+  "children": [],
+  "value": "mapped: 1",
+}
+`;
+
+exports[`mapTree > identity 2`] = `
+{
+  "children": [
+    {
+      "children": [],
+      "value": "mapped: 2",
+    },
+    {
+      "children": [],
+      "value": "mapped: 3",
+    },
+  ],
+  "value": "mapped: 1",
+}
+`;
+
+exports[`mapTree > identity 3`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "value": "mapped: 4",
+        },
+      ],
+      "value": "mapped: 2",
+    },
+    {
+      "children": [],
+      "value": "mapped: 3",
+    },
+  ],
+  "value": "mapped: 1",
+}
+`;
+
+exports[`mapTree > identity 4`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "value": "mapped: 4",
+        },
+      ],
+      "value": "mapped: 2",
+    },
+    {
+      "children": [],
+      "value": "mapped: 3",
+    },
+  ],
+  "value": "mapped: 1",
+}
+`;
+
+exports[`mapTree > identity 5`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "value": "mapped: 4",
+        },
+      ],
+      "value": "mapped: 2",
+    },
+    {
+      "children": [],
+      "value": "mapped: 3",
+    },
+  ],
+  "value": "mapped: 1",
+}
+`;

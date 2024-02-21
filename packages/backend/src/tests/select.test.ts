@@ -15,12 +15,12 @@ describe('select', () => {
     }
 
     describe('select with depth of 1', () => {
-        test.each(Array(100).fill(0).map((_, i) => i))('select an actor by ID %s ', async (actorId) => {
+        test.each(Array(100).fill(0).map((_, i) => i + 1))('select an actor by ID %s ', async (actorId) => {
             const result = await run(findActorById(actorId))
 
             const expected = await sql`SELECT * FROM actor WHERE actor_id = ${actorId}`
 
-            expect(result).toEqual(expected[0])
+            expect(result ?? undefined).toEqual(expected[0])
         })
     })
 
@@ -42,7 +42,7 @@ describe('select', () => {
             group by
                 city.city_id`
 
-            expect(result).toEqual(expected[0])
+            expect(result ?? undefined).toEqual(expected[0])
         })
     })
 
@@ -71,7 +71,7 @@ describe('select', () => {
             group by f.film_id`
 
 
-            expect(result).toEqual(expected[0])
+            expect(result ?? undefined).toEqual(expected[0])
         })
     })
 
@@ -141,7 +141,7 @@ describe('select', () => {
 
         const result = await run(query)
 
-        expect(result).toMatchInlineSnapshot(`
+        expect(result ?? undefined).toMatchInlineSnapshot(`
           [
             {
               "address": {
