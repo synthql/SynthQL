@@ -454,14 +454,11 @@ const user = from('users').select('id', 'name', 'other_field');
 -   What demo would you like to see?
     -   Perf beats current solution manager page.
 
-
 # Andi's thoughts
 
-- Custom providers are really important because there's a lot of business logic in the data-fetching.
-- Security: SQL injection => it's possible.
-- 
-
-
+-   Custom providers are really important because there's a lot of business logic in the data-fetching.
+-   Security: SQL injection => it's possible.
+-
 
 ```tsx
 import { DB } from "./db"
@@ -517,9 +514,22 @@ const restrictOrdersByUser = provider<DB>()
         return http('POST /activity-config')
     })
 
-const queryEngine = new QueryEngine<DB>({ 
-    providers: [restrictOrdersByUser] 
+const queryEngine = new QueryEngine<DB>({
+    providers: [restrictOrdersByUser]
 })
 
 queryEngine.registerQueries(orders)
 ```
+
+# Shamir's thoughts
+
+-   Lazy is the killer feature.
+-   Usability seems acceptable.
+-   Organizational concern: interdependencies.
+-   Fernando:
+    -   Dataloading:
+        -   1. Ops model
+        -   2. "joining layer" usually in routes (30% complexity), non-optimal fetch tree, double fetching.
+        -   3. Testing / iterating (routes)
+-   Not all joins are performant:
+    -   Having too many.

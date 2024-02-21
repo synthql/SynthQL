@@ -62,10 +62,13 @@ const config: Config = {
     //image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'synthql',
-      // logo: {
-      //   alt: 'synthql Logo',
-      //   src: '/img/logo.png',
-      // },
+      logo: {
+        alt: 'synthql Logo',
+        src: '/img/logo.webp',
+        style: {
+          borderRadius: '100%',
+        }
+      },
       items: [
         {
           type: 'docSidebar',

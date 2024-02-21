@@ -1,12 +1,12 @@
 import { mapTree } from "./mapTree";
 import { ExecPlanTree, ExecResultNode as ExecutionResultNode, ExecResultTree as ExecResultTree, ExecutionPlanNode } from "./types";
 
-export function executePlan(plan: ExecPlanTree): AsyncGenerator<ExecResultTree> {
-
-    return mapTree<ExecutionPlanNode, ExecutionResultNode>(plan, async (plan) => {
-        const result = await plan.executor.execute(plan.query);
+export function executePlan(planTree: ExecPlanTree): AsyncGenerator<ExecResultTree> {
+    return mapTree<ExecutionPlanNode, ExecutionResultNode>(planTree, async (planNode) => {
+        console.log('Executing planNode', planNode.query.from)
+        const result = await planNode.executor.execute(planNode.query);
         return {
-            query: plan.query,
+            query: planNode.query,
             result,
             children: []
         }

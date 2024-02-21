@@ -38,60 +38,97 @@ function HomepageHeader() {
 export default function Home(): JSX.Element {
     return (
         <Layout
-            title={`XQL: Type-safe, composable queries`}
+            title={`synthql: Type-safe, composable queries`}
             description="The type-safe, composable query language"
         >
-            <header className="container" style={{ paddingTop: 40 }}>
-                <h1>Welcome to XQL</h1>
-                <div className="row">
-                    <p className="col">
-                        A full stack, type-safe client to your postgresql
-                        database with a focus on DX and performance.
-                    </p>
-                </div>
-                <div className="row">
-                    <p className="col">
-                        XQL let's you query your database directly from the
-                        browser, helping you create large object graphs without
-                        the need for implementing custom endpoints.
-                    </p>
-                </div>
-                <div className="row">
-                    <p className="col">
-                        XQL is written in TypeScript, and runs on the browser
-                        and nodejs.
-                    </p>
+            <header style={{ minHeight: '90vh', background: '#fafafa', width: '100vw', display: 'grid', placeItems: 'center', }}>
+                <div style={{
+                    background: "url('./img/logo.webp')",
+                    height: '124px',
+                    width: '124px',
+                    backgroundSize: 'cover',
+                    borderRadius: '100%'
+                }} />
+                <div style={{ maxWidth: 600, transform: 'translateY(-20%)', padding: 20 }}>
+                    <h1 style={{ textAlign: 'center' }}>Welcome to synthql</h1>
+                    <div className="row">
+                        <p className="col">
+                            A full stack, type-safe client to your postgresql
+                            database with a focus on DX and performance.
+                        </p>
+                    </div>
+                    <div className="row">
+                        <p className="col">
+                            synthql let's you query your database directly from the
+                            browser, helping you create large object graphs without
+                            the need for implementing custom endpoints.
+                        </p>
+                    </div>
+                    <div className="row">
+                        <p className="col">
+                            synthql is written in TypeScript, and runs on the browser
+                            and nodejs.
+                        </p>
+                    </div>
+
+
+                    <Link to="/docs/getting-started">
+                        <button className="button button--primary button--lg">
+                            Get started
+                        </button>
+                    </Link>
+
                 </div>
             </header>
-            <main className="container">
-                <section>
-                    <h2>Installation</h2>
-                    <p>
-                        <CodeBlock language="bash">
-                            {`yarn install @synthql/client`}
-                        </CodeBlock>
-                    </p>
-                </section>
-                <section>
-                    <h2>End-to-end type-safety</h2>
-                    <p>
-                        XQL infers the types of your database schema, and uses
-                        them to provide end-to-end type-safety. To generate
-                        types run the following command:
-                    </p>
-                    <CodeBlock language="bash">
-                        {`yarn @synthql/client generate-types --database-url DATABASE_URL`}
-                    </CodeBlock>
+
+            <div style={{ height: 80 }} />
+
+            <main className="container"  >
+                <section style={{ minHeight: '100vh', display: 'flex', gap: 40, flexDirection: 'column', padding: 40 }}>
+                    <h2>Features</h2>
+
+                    <div className='row'>
+                        {[
+
+                            { title: 'Full-stack', description: 'synthql queries can be written both on the client and server.' },
+                            { title: 'Plain-data queries', description: 'synthql queries are plain data. They can thus be serialized, deserialized, and transformed by regular function.' },
+                            { title: 'Composable queries', description: "synthql's query language is composable, allowing you to build complex queries from simple ones." },
+                            { title: 'Lazy queries', link: '/docs/lazy-queries', description: "Lazy queries help you split large object graphs to optimize page load." },
+                            { title: 'Security', link: '/docs/security', description: "synthql provides mechanisms for whitelisting queries, restricting access to columns and restricting access to rows." },
+                            { title: 'Custom query executors', link: '/docs/custom-query-executors', description: "Queries are compiled by default to a single SQL query, query executors let you resolve queries from HTTP endpoints, files, etc." },
+                            { title: 'Type-generation', link: '/docs/generating-types', description: "synthql can automatically generate TypeScript types from your database schema." },
+                            { title: 'Denormalized cache', description: '' },
+                        ]
+                            .map(({ title, link, description }) => {
+                                return (
+                                    <div style={{ padding: 8, }} className="col col--6">
+                                        <div style={{ height: '100%', background: '#fafafa', borderRadius: 16, padding: 32 }} >
+                                            <Heading as="h3">{title}</Heading>
+                                            <p>{description}</p>
+                                            {link && <Link to={link}>
+                                                Read more
+                                            </Link>}
+                                        </div>
+                                    </div>
+                                )
+
+                            })}
+                    </div>
                 </section>
 
-                <section>
-                    <h2>Composable queries</h2>
-                    <p>
-                        XQL uses a composable query API, which allows you to
-                        build complex queries from small, reusable parts.
-                    </p>
+                <section style={{ display: 'grid', placeItems: 'center', minHeight: '60vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, transform: 'translateY(-20%)' }}>
+                        <h2>Ready to get started?</h2>
+                        <Link to="/docs/getting-started">
+                            <button className="button button--primary button--lg">
+                                Jump to the docs!
+                            </button>
+                        </Link>
+                    </div>
+
                 </section>
+
             </main>
-        </Layout>
+        </Layout >
     );
 }

@@ -4,7 +4,6 @@ import { ExecPlanTree, ExecutionPlanNode, QueryExecutor } from "./types";
 
 export function createExecutionPlan(query: AnyQuery, executors: Array<QueryExecutor>): ExecPlanTree {
     const root = assignExecutor(query, executors);
-
     return {
         root,
     }

@@ -37,7 +37,6 @@ const FeatureList: FeatureItem[] = [
             </>
         ),
     },
-    {},
 ];
 
 function Feature({ title, description }: FeatureItem) {

@@ -28,6 +28,8 @@ export class QueryProviderExecutor implements QueryExecutor {
             include: undefined
         }
 
-        return { query: queryWithoutChildren, remaining: [] };
+        const remaining: AnyQuery[] = Object.values(query.include ?? []);
+
+        return { query: queryWithoutChildren, remaining };
     }
 }

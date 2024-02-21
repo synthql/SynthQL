@@ -6,7 +6,7 @@ import { writeFileSync } from "fs";
 
 describe('generateSchema', () => {
     test('generateSchema', async () => {
-        const output = await generateSchema(queryEngine as any, { schemas: ['public'] })
+        const output = await queryEngine.generateSchema({ schemas: ['public'] })
         const options = await prettier.resolveConfig('./.prettierrc.js');
         const formatted = await prettier.format(output, { parser: 'typescript', ...options })
         writeFileSync('src/tests/generated.schema.ts', formatted)
