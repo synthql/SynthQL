@@ -11,13 +11,15 @@ import { augmentQuery } from './augmentQuery';
 import { iterateAugmentedQuery } from './iterateAugmentedQuery';
 import { escapeColumn } from '../../../escape';
 import {
-    AnyDb,
-    AnyQuery,
-    AnyTable,
     AugmentedQuery,
     OpValue
-} from '../../../types';
+} from './types';
 import { isPresent } from '../../../util/isPresent';
+import {
+    AnyDb,
+    AnyQuery,
+    AnyTable
+} from '../../../types';
 
 export function composeQuery({
     defaultSchema,

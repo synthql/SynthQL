@@ -1,4 +1,4 @@
-import { AnyQuery } from '../types';
+import { AnyQuery } from "../types";
 import { Cardinality } from '@synthql/queries';
 
 type CardinalityResult<

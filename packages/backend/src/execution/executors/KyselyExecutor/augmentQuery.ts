@@ -1,13 +1,13 @@
 import { RefOp, isRefOp } from '@synthql/queries';
 import {
-    AnyDb,
-    AnyQuery,
+
     AugmentedColumn,
     AugmentedQuery,
     AugmentedTable,
     SelectionColumn,
-} from '../../../types';
+} from './types';
 import { isPresent } from '../../../util/isPresent';
+import { AnyDb, AnyQuery } from '../../../types';
 
 interface AugmentOpts {
     defaultSchema: string;

@@ -1,6 +1,6 @@
 import {
     AugmentedQuery
-} from '../../../types';
+} from './types';
 import { assertArrayInResult } from '../../../util/asserts';
 import { applyCardinality } from '../../../QueryEngine/applyCardinality';
 

@@ -1,4 +1,4 @@
-import { AnyQuery } from "../types"
+import { AnyQuery } from "../types";
 
 /**
  * # Execution Plan
