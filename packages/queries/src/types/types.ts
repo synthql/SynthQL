@@ -1,5 +1,7 @@
 import type { BinaryOperator } from 'kysely';
 
+export type Cardinality = 'one' | 'maybe' | 'many';
+
 /**
  * The name of a table in the database.
  */

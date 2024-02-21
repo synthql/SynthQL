@@ -1,4 +1,5 @@
-import { AnyQuery, Cardinality } from '../types';
+import { AnyQuery } from '../types';
+import { Cardinality } from '@synthql/queries';
 
 type CardinalityResult<
     TCardinality extends Cardinality,
@@ -6,8 +7,8 @@ type CardinalityResult<
 > = TCardinality extends 'one'
     ? T
     : TCardinality extends 'maybe'
-      ? T | null
-      : T[];
+    ? T | null
+    : T[];
 
 export function applyCardinality<T, TCardinality extends Cardinality>(
     result: Array<T>,

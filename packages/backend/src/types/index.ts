@@ -5,8 +5,6 @@ export type AnyDb = Record<string, Record<string, any>>;
 export type AnyQuery = Query<AnyDb, string>;
 export type AnyTable = string;
 
-export type Cardinality = 'one' | 'maybe' | 'many';
-
 export interface AugmentedQuery {
     /**
      * A unique identifier for the query, inside the query tree.
