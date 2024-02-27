@@ -52,7 +52,7 @@ export class QueryEngine<DB> {
         opts?: { schema?: string },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
 
-        return execute<DB, TTable, TQuery>(query, {
+        return execute<DB, TQuery>(query, {
             executors: this.executors,
         })
     }

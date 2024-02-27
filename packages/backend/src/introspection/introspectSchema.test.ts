@@ -21,11 +21,11 @@ describe('introspectSchema', () => {
         {
           "name": "mpaa_rating",
           "values": [
-            "G",
             "NC-17",
-            "PG",
-            "PG-13",
             "R",
+            "PG-13",
+            "PG",
+            "G",
           ],
         },
       ]
@@ -198,8 +198,8 @@ describe('introspectSchema', () => {
         },
         "name": "public.film_actor",
         "primaryKey": [
-          "actor_id",
           "film_id",
+          "actor_id",
         ],
       }
     )

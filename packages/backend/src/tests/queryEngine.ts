@@ -1,10 +1,15 @@
 import dotenv from 'dotenv';
 import { QueryEngine } from '../QueryEngine/QueryEngine';
 import { DB } from './db';
+import { Pool } from 'pg';
 
 dotenv.config();
 
+export const pool = new Pool({
+    connectionString: process.env.DATABASE_URL!,
+})
+
 export const queryEngine = new QueryEngine<DB>({
-    url: process.env.DATABASE_URL!,
+    pool,
     schema: 'public',
 });

@@ -1,10 +1,14 @@
 import { Kysely, PostgresDialect, SelectQueryBuilder } from "kysely";
-import { Pool } from "pg";
+import { Pool, PoolClient } from "pg";
+import { Client } from "pg"
 import { AnyQuery } from "../../../types";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
+import { RefContext } from "../../resolveReferences";
+import { format } from "sql-formatter";
+import { SqlExecutionError } from "../SqlExecutionError";
 
 type KyselyQueryResult = {
     [key: string]: any;
@@ -12,24 +16,42 @@ type KyselyQueryResult = {
 
 export class KyselyExecutor implements QueryExecutor<KyselyQueryResult> {
 
-    private kysely: Kysely<any>;
+    private client: Promise<PoolClient>;
 
     constructor(pool: Pool, private defaultSchema: string, private qpe: QueryProviderExecutor) {
-        this.kysely = new Kysely({
-            dialect: new PostgresDialect({
-                pool
-            }),
-        });
+        this.client = pool.connect();
     }
 
-    async execute(query: AnyQuery): Promise<Array<KyselyQueryResult>> {
-        const { kQuery, rootQuery } = composeQuery({
-            db: this.kysely,
+    compile(query: AnyQuery) {
+        const { sqlBuilder } = composeQuery({ query, defaultSchema: this.defaultSchema });
+        const { sql, params } = sqlBuilder.build()
+        return {
+            sql: format(sql, { language: 'postgresql' }),
+            params
+        }
+    }
+
+    async execute(query: AnyQuery, { refContext }: { refContext: RefContext }): Promise<Array<KyselyQueryResult>> {
+        const client = await this.client;
+        const { sqlBuilder, augmentedQuery } = composeQuery({
             defaultSchema: this.defaultSchema,
             query
         });
-        const rawResults = await kQuery.execute();
-        return hydrate(rawResults, rootQuery) as Array<KyselyQueryResult>;
+        const { params, sql } = sqlBuilder.build();
+
+        try {
+            const queryResult = await client.query(sql, params);
+            const rows = queryResult.rows
+
+            return hydrate(rows, augmentedQuery) as Array<KyselyQueryResult>;
+        } catch (err) {
+            throw new SqlExecutionError({
+                err,
+                sql,
+                params,
+                query
+            })
+        }
     }
 
     canExecute(query: AnyQuery): { query: AnyQuery, remaining: AnyQuery[] } | undefined {
@@ -44,6 +66,8 @@ export class KyselyExecutor implements QueryExecutor<KyselyQueryResult> {
         return collectSupportedQueries(query, isSupported);
     }
 }
+
+
 
 function collectSupportedQueries(query: AnyQuery, isSupported: (q: AnyQuery) => boolean): { query: AnyQuery, remaining: AnyQuery[] } {
 

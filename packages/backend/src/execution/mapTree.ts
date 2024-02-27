@@ -11,7 +11,6 @@ export async function* mapTree<TInputNode extends Node, TOutputNode extends Node
     mapper: (inputNode: TInputNode, parentNode: TOutputNode | undefined) => Promise<TOutputNode>
 ): AsyncGenerator<Tree<TOutputNode>> {
     async function mapWithoutChildren(node: TInputNode, parentNode: TOutputNode | undefined): Promise<TOutputNode> {
-        console.log('Mapping node', node);
         const result = await mapper(node, parentNode);
         result.children = [];
         return result;

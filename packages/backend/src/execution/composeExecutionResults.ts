@@ -3,7 +3,7 @@ import { ExecResultNode, ExecResultTree } from "./types";
 import { applyCardinality } from "../QueryEngine/applyCardinality";
 
 export function composeExecutionResults(results: ExecResultTree): QueryResult<unknown, unknown> {
-    printExecResultTree(results)
+    //printExecResultTree(results)
     return mapExecutionResultTree(results.root)
 }
 

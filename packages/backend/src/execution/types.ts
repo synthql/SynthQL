@@ -1,4 +1,6 @@
-import { AnyQuery } from "../types";
+import { RefOp } from "@synthql/queries";
+import { AnyDb, AnyQuery } from "../types";
+import { RefContext } from "./resolveReferences";
 
 /**
  * # Execution Plan
@@ -23,6 +25,13 @@ import { AnyQuery } from "../types";
  * 
  */
 export interface ExecPlanTree {
+    /**
+     * The context that is used to resolve references in the query.
+     * 
+     * Note that at this point, the context is empty. Values will be added during the execution phase.
+     */
+    refContext: RefContext,
+
     root: ExecutionPlanNode,
 }
 
@@ -46,8 +55,9 @@ export interface ExecutionPlanNode {
 export interface QueryExecutor<T = unknown> {
     /**
      * Execute a query and return the result.
+     * Also populate the refContext with the values obtained from the query.
      */
-    execute: (query: AnyQuery) => Promise<Array<T>>
+    execute: (query: AnyQuery, { refContext }: { refContext: RefContext }) => Promise<Array<T>>
 
     /**
      * If the executor supports the query, it returns the query along with all it's supported subqueries.

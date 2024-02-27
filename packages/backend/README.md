@@ -532,4 +532,8 @@ queryEngine.registerQueries(orders)
         -   2. "joining layer" usually in routes (30% complexity), non-optimal fetch tree, double fetching.
         -   3. Testing / iterating (routes)
 -   Not all joins are performant:
-    -   Having too many.
+-   Shamir:
+    1. Testing / iterating: disagree,
+    2. Ops model: not ideal: fetchihg too little / fetching too much
+    3. Don't work enough on dataloading
+-

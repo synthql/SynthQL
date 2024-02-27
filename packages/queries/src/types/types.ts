@@ -54,7 +54,7 @@ type BinaryOp<
     TTable extends Table<DB>,
     TColumn extends Column<DB, TTable>,
 > = {
-        [op in BinaryOperator]?:
+        [op in BinaryOperator | '= any']?:
         | ColumnValue<DB, TTable, TColumn>
         | Array<ColumnValue<DB, TTable, TColumn>>
         | RefOp<DB>;
@@ -111,12 +111,13 @@ export type Include<DB> = {
     : never;
 };
 
-export type Query<DB, TTable extends Table<DB>> = {
+export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     from: TTable;
     where: Where<DB, TTable>;
     select: Select<DB, TTable>;
     include?: Include<DB>;
     limit?: number;
+    offset?: number;
     cardinality?: 'one' | 'maybe' | 'many';
     lazy?: true;
     groupingId?: string[];
