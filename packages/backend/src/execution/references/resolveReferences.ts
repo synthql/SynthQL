@@ -1,7 +1,7 @@
 import { RefOp } from "@synthql/queries";
-import { AnyDb, AnyQuery } from "../types";
-import { mapQuery } from "../util/mapQuery";
-import { mapRefs } from "../util/mapRefs";
+import { AnyDb, AnyQuery } from "../../types";
+import { mapQuery } from "../../util/mapQuery";
+import { mapRefs } from "../../util/mapRefs";
 
 /**
  * A `RefContext` maintains a record from reference IDs to their actual values. E.g. { 'person.id': [1,2] }

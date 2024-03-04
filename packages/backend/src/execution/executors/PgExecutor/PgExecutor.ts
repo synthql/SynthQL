@@ -1,20 +1,18 @@
-import { Kysely, PostgresDialect, SelectQueryBuilder } from "kysely";
 import { Pool, PoolClient } from "pg";
-import { Client } from "pg"
 import { AnyQuery } from "../../../types";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { RefContext } from "../../resolveReferences";
+import { RefContext } from "../../references/resolveReferences";
 import { format } from "sql-formatter";
 import { SqlExecutionError } from "../SqlExecutionError";
 
-type KyselyQueryResult = {
+type PgQueryResult = {
     [key: string]: any;
 }
 
-export class KyselyExecutor implements QueryExecutor<KyselyQueryResult> {
+export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
     private client: Promise<PoolClient>;
 
@@ -31,7 +29,7 @@ export class KyselyExecutor implements QueryExecutor<KyselyQueryResult> {
         }
     }
 
-    async execute(query: AnyQuery, { refContext }: { refContext: RefContext }): Promise<Array<KyselyQueryResult>> {
+    async execute(query: AnyQuery, { refContext }: { refContext: RefContext }): Promise<Array<PgQueryResult>> {
         const client = await this.client;
         const { sqlBuilder, augmentedQuery } = composeQuery({
             defaultSchema: this.defaultSchema,
@@ -43,7 +41,7 @@ export class KyselyExecutor implements QueryExecutor<KyselyQueryResult> {
             const queryResult = await client.query(sql, params);
             const rows = queryResult.rows
 
-            return hydrate(rows, augmentedQuery) as Array<KyselyQueryResult>;
+            return hydrate(rows, augmentedQuery) as Array<PgQueryResult>;
         } catch (err) {
             throw new SqlExecutionError({
                 err,

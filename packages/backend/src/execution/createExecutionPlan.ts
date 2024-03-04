@@ -1,8 +1,8 @@
 import { Query } from "@synthql/queries";
 import { AnyQuery } from "../types";
 import { ExecPlanTree, ExecutionPlanNode, QueryExecutor } from "./types";
-import { collectReferences } from "./collectReferences";
-import { createRefContext } from "./resolveReferences";
+import { collectReferences } from "./references/collectReferences";
+import { createRefContext } from "./references/resolveReferences";
 
 export function createExecutionPlan(query: AnyQuery, executors: Array<QueryExecutor>): ExecPlanTree {
     const root = assignExecutor(query, executors);

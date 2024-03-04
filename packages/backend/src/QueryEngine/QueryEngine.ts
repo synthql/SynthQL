@@ -6,8 +6,8 @@ import {
 } from 'kysely';
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from "@synthql/queries";
-import { composeQuery } from '../execution/executors/KyselyExecutor/composeQuery';
-import { hydrate } from '../execution/executors/KyselyExecutor/hydrate';
+import { composeQuery } from '../execution/executors/PgExecutor/composeQuery';
+import { hydrate } from '../execution/executors/PgExecutor/hydrate';
 import { QueryPlan } from '..';
 import { introspectSchema } from '../introspection/introspectSchema';
 import { QueryProvider } from '../QueryProvider';
@@ -15,7 +15,8 @@ import { GenerateSchemaConfig, generateSchema } from '../introspection/generateS
 import { execute } from '../execution/execute';
 import { QueryExecutor } from '../execution/types';
 import { QueryProviderExecutor } from '../execution/executors/QueryProviderExecutor';
-import { KyselyExecutor } from '../execution/executors/KyselyExecutor';
+import { PgExecutor } from '../execution/executors/PgExecutor';
+import { SqlExecutionError } from '../execution/executors/SqlExecutionError';
 
 export interface QueryEngineProps<DB> {
     url?: string;
@@ -44,7 +45,7 @@ export class QueryEngine<DB> {
         this.db = new Kysely({ dialect: this.dialect });
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
-        this.executors = [qpe, new KyselyExecutor(this.pool, this.schema, qpe)]
+        this.executors = [qpe, new PgExecutor(this.pool, this.schema, qpe)]
     }
 
     execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
@@ -59,30 +60,41 @@ export class QueryEngine<DB> {
 
     compile<T>(
         query: T extends Query<DB, infer TTable> ? T : never,
-    ): CompiledQuery {
-        const { kQuery } = composeQuery({
+    ): { sql: string, params: any[] } {
+        const { sqlBuilder } = composeQuery({
             defaultSchema: this.schema,
-            db: this.db,
             query,
         });
-        return kQuery.compile();
+
+        return sqlBuilder.build()
     }
 
     async explain<TTable extends Table<DB>>(
         query: Query<DB, TTable>,
     ): Promise<QueryPlan> {
-        const { sql, parameters } = composeQuery({
+        const { sqlBuilder } = composeQuery({
             defaultSchema: this.schema,
-            db: this.db,
             query,
-        }).kQuery.compile();
+        });
+
+        const { params, sql } = sqlBuilder.build()
+
         const explainQuery: string = `explain (analyze, buffers, verbose, settings, format json) ${sql}`;
 
-        const result = await this.pool.query(
-            explainQuery,
-            parameters as string[],
-        );
-        return result.rows[0]['QUERY PLAN'][0];
+        try {
+            const result = await this.pool.query(
+                explainQuery,
+                params
+            );
+            return result.rows[0]['QUERY PLAN'][0];
+        } catch (err) {
+            throw new SqlExecutionError({
+                err,
+                params,
+                sql,
+                query
+            })
+        }
     }
 
     async introspect(config?: { schemas?: string[] }) {
@@ -92,15 +104,6 @@ export class QueryEngine<DB> {
 
     async generateSchema(config: GenerateSchemaConfig) {
         return generateSchema(this as any, config);
-    }
-
-    private async tryToExecute(query: SelectQueryBuilder<any, any, any>) {
-        const { sql } = query.compile();
-        try {
-            return await query.execute();
-        } catch (error) {
-            throw new SqlError(sql, error);
-        }
     }
 }
 

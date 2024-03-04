@@ -1,6 +1,5 @@
-import { Query } from "pg";
 import { QueryEngine } from "..";
-import { IntrospectSchemaConfig, PgSchema, TableDef, introspectSchema } from "./introspectSchema";
+import { IntrospectSchemaConfig, PgSchema, TableDef } from "./introspectSchema";
 import fs from 'fs';
 
 export interface GenerateSchemaConfig extends IntrospectSchemaConfig {

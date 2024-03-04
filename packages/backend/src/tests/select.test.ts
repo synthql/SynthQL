@@ -141,32 +141,32 @@ describe('select', () => {
 
         const result = await run(query)
 
-        expect(result ?? undefined).toMatchInlineSnapshot(`
-          [
-            {
-              "address": {
-                "address": "47 MySakila Drive",
-                "address_id": 1,
-                "city": {
-                  "city": "Lethbridge",
-                  "city_id": 300,
+        expect(result ?? undefined).toEqual(
+            [
+                {
+                    "address": {
+                        "address": "47 MySakila Drive",
+                        "address_id": 1,
+                        "city": {
+                            "city": "Lethbridge",
+                            "city_id": 300,
+                        },
+                    },
+                    "store_id": 1,
                 },
-              },
-              "store_id": 1,
-            },
-            {
-              "address": {
-                "address": "28 MySQL Boulevard",
-                "address_id": 2,
-                "city": {
-                  "city": "Woodridge",
-                  "city_id": 576,
+                {
+                    "address": {
+                        "address": "28 MySQL Boulevard",
+                        "address_id": 2,
+                        "city": {
+                            "city": "Woodridge",
+                            "city_id": 576,
+                        },
+                    },
+                    "store_id": 2,
                 },
-              },
-              "store_id": 2,
-            },
-          ]
-        `)
+            ]
+        )
 
         expect(result.sort()).toEqual(expected);
     })

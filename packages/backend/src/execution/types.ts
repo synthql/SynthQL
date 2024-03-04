@@ -1,6 +1,6 @@
 import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../types";
-import { RefContext } from "./resolveReferences";
+import { RefContext } from "./references/resolveReferences";
 
 /**
  * # Execution Plan

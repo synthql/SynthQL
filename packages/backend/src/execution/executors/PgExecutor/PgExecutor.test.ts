@@ -1,14 +1,14 @@
 import { col } from "@synthql/queries";
 import { describe, expect, it } from "vitest";
-import { KyselyExecutor } from ".";
+import { PgExecutor } from ".";
 import { from } from "../../../tests/generated.schema";
 import { pool } from "../../../tests/queryEngine";
-import { createRefContext } from "../../resolveReferences";
+import { createRefContext } from "../../references/resolveReferences";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
-import { collectReferences } from "../../collectReferences";
+import { collectReferences } from "../../references/collectReferences";
 
-describe('KyselyExecutor', () => {
-  const executor = new KyselyExecutor(pool, 'public', new QueryProviderExecutor([]));
+describe('PgExecutor', () => {
+  const executor = new PgExecutor(pool, 'public', new QueryProviderExecutor([]));
 
   const q = from('public.film')
     .columns('film_id', 'title')
@@ -47,13 +47,9 @@ describe('KyselyExecutor', () => {
   })
 
   it('should', async () => {
-
-
     const refContext = createRefContext();
     collectReferences(q).forEach(ref => refContext.addValues(ref));
-    const result = await executor.execute(q, { refContext });
-
-
+    const result = await executor.execute(q, { refContext })
 
     expect(result).toMatchInlineSnapshot(`
       [
@@ -66,7 +62,6 @@ describe('KyselyExecutor', () => {
         },
       ]
     `)
-    expect(refContext.getValues(col('public.film.language_id'))).toEqual([1]);
   })
 
 

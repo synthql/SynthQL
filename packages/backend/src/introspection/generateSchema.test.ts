@@ -1,6 +1,5 @@
 import { describe, test } from "vitest";
 import { queryEngine } from "../tests/queryEngine";
-import { generateSchema } from "./generateSchema";
 import * as prettier from "prettier"
 import { writeFileSync } from "fs";
 

@@ -1,11 +1,9 @@
-import { BinaryOperator as KyselyBinaryOperators, RawBuilder, sql, OPERATORS } from "kysely";
+import { OPERATORS, UnaryOperator } from "kysely";
 import { AnyDb } from "../../../../types";
 import { ColumnRef, TableRef } from "./refs";
-import { JoinOp, Where, col, isRefOp } from "@synthql/queries";
+import { Where, isRefOp } from "@synthql/queries";
 import { compareJoins } from "./compareJoins";
 import { Join } from "./types";
-
-
 
 type Primitive = string | number | boolean | null | Date | Array<Primitive>
 
@@ -18,7 +16,7 @@ function isPrimitive(x: unknown): x is Primitive {
         || Array.isArray(x)
 }
 
-const ops = [...OPERATORS, '= any'] as const;
+const ops = [...OPERATORS, '= any', 'not = any'] as const;
 type BinaryOperator = typeof ops[number]
 
 
@@ -75,8 +73,14 @@ export function as(exp: Exp, alias: string): As {
     return ['as', exp, alias]
 }
 
+export function not(exp: Exp): UnaryOp {
+    return ['op:unary', 'not', exp]
+}
+
 type OpEqAny = ['op', '= any', Exp, Exp]
+type OpNotEqAny = ['op', 'not = any', Exp, Exp]
 type As = ['as', Exp, string]
+type UnaryOp = ['op:unary', UnaryOperator, Exp]
 type Op = ['op', BinaryOperator, ...Exp[]]
 type Fn = ['fn', string, ...Exp[]]
 type Const = ['const', Primitive]
@@ -86,6 +90,8 @@ type Identifier = string
 
 type Exp =
     | OpEqAny
+    | OpNotEqAny
+    | UnaryOp
     | As
     | Op
     | Fn
@@ -106,8 +112,15 @@ export function compileExp(exp: Exp): SqlBuilder {
                 const [_, op, exp1, exp2] = exp
                 return compileExp(eqAny(exp1, exp2))
             }
+            if (exp[1] === 'not = any') {
+                const [_, op, exp1, exp2] = exp
+                return compileExp(not(eqAny(exp1, exp2)))
+            }
 
             return builder.addOp(exp);
+        }
+        case 'op:unary': {
+            return builder.addUnaryOp(exp)
         }
         case 'as': {
             return builder.addAs(exp)
@@ -211,7 +224,10 @@ export class SqlBuilder {
     }
 
     addOperator(op: BinaryOperator) {
-        // TODO: validate that op is a valid operator
+        const unknownOp = op as unknown;
+        if (!OPERATORS.includes(op as any)) {
+            throw new Error(`Invalid operator: ${op}`)
+        }
         return this.add(op)
     }
 
@@ -235,6 +251,14 @@ export class SqlBuilder {
             .addInterleaved(exps.map(exp => compileExp(exp)), new SqlBuilder().addOperator(opName))
             .closeParen()
             .space()
+    }
+
+    addUnaryOp([_, op, exp]: UnaryOp) {
+        return this.add(op).space()
+            .openParen()
+            .addBuilder(compileExp(exp))
+            .closeParen()
+
     }
 
     openParen() {
@@ -397,3 +421,6 @@ export class SqlBuilder {
     }
 }
 
+new SqlBuilder()
+    .select([])
+    .addOp(['op', '=', 'a', 'b'])

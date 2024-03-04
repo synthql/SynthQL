@@ -3,8 +3,6 @@ import { QueryEngine } from "..";
 import { PgSchema, introspectSchema } from "./introspectSchema";
 import { queryEngine } from "../tests/queryEngine";
 
-
-
 describe('introspectSchema', () => {
 
   const schema = introspectSchema(

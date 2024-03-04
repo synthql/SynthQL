@@ -1,4 +1,4 @@
-import { mapTree } from "./mapTree";
+import { mapTree } from "../util/mapTree";
 import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode } from "./types";
 
 export function executePlan(planTree: ExecPlanTree): AsyncGenerator<ExecResultTree> {
