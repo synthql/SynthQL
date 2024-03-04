@@ -4,9 +4,10 @@ import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { RefContext } from "../../references/resolveReferences";
+import { RefContext, createRefContext } from "../../references/resolveReferences";
 import { format } from "sql-formatter";
 import { SqlExecutionError } from "../SqlExecutionError";
+import { ColumnRef } from "./queryBuilder/refs";
 
 type PgQueryResult = {
     [key: string]: any;
@@ -29,7 +30,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         }
     }
 
-    async execute(query: AnyQuery, { refContext }: { refContext: RefContext }): Promise<Array<PgQueryResult>> {
+    async execute(query: AnyQuery): Promise<Array<PgQueryResult>> {
         const client = await this.client;
         const { sqlBuilder, augmentedQuery } = composeQuery({
             defaultSchema: this.defaultSchema,
@@ -62,6 +63,16 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
             return !isProviderQuery && !isLazyQuery;
         }
         return collectSupportedQueries(query, isSupported);
+    }
+
+    collectRefValues(row: any, columns: ColumnRef[]): RefContext {
+        const refContext = createRefContext()
+        for (const column of columns) {
+            const value = row[column.column]
+            refContext.addValues(column, value)
+        }
+
+        return refContext;
     }
 }
 

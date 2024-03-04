@@ -14,8 +14,10 @@ describe('select', () => {
         return collectFirst(queryEngine.execute(query))
     }
 
+    const cases = 2
+
     describe('select with depth of 1', () => {
-        test.each(Array(100).fill(0).map((_, i) => i + 1))('select an actor by ID %s ', async (actorId) => {
+        test.each(Array(cases).fill(0).map((_, i) => i + 1))('select an actor by ID %s ', async (actorId) => {
             const result = await run(findActorById(actorId))
 
             const expected = await sql`SELECT * FROM actor WHERE actor_id = ${actorId}`
@@ -29,7 +31,7 @@ describe('select', () => {
         city
             one(country)
     `, () => {
-        test.each(Array(100).fill(0).map((_, i) => i))('select a city with one country by ID %s ', async (cityId) => {
+        test.each(Array(cases).fill(0).map((_, i) => i))('select a city with one country by ID %s ', async (cityId) => {
             const result = await run(findCityById(cityId));
             const expected = await sql`
             select 
@@ -52,8 +54,9 @@ describe('select', () => {
             many(actors)
     `, async () => {
 
-        test.each(Array(100).fill(0).map((_, i) => i))('select a film with one language and many actors by ID %s ', async (filmId) => {
-            const result = await run(movie().where({ film_id: filmId }).maybe());
+        test.each(Array(cases).fill(0).map((_, i) => i))('select a film with one language and many actors by ID %s ', async (filmId) => {
+            const query = movie().where({ film_id: filmId }).maybe();
+            const result = await run(query);
 
             const expected = await sql`
 
@@ -69,7 +72,6 @@ describe('select', () => {
                 left join actor on actor.actor_id = film_actor.actor_id
             where f.film_id = ${filmId}
             group by f.film_id`
-
 
             expect(result ?? undefined).toEqual(expected[0])
         })

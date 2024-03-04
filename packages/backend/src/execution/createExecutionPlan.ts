@@ -3,22 +3,22 @@ import { AnyQuery } from "../types";
 import { ExecPlanTree, ExecutionPlanNode, QueryExecutor } from "./types";
 import { collectReferences } from "./references/collectReferences";
 import { RefContext, createRefContext } from "./references/resolveReferences";
-import { TableRef } from "./executors/PgExecutor/queryBuilder/refs";
+import { ColumnRef, TableRef } from "./executors/PgExecutor/queryBuilder/refs";
 import { ExecuteProps } from "./execute";
 
-export function createExecutionPlan(query: AnyQuery, { executors, defaultSchema }: ExecuteProps): ExecPlanTree {
+export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecPlanTree {
+    const { defaultSchema } = props;
     // Create an empty ref context.
-    const refContext = createRefContext(defaultSchema);
+    const refContext = createRefContext();
 
     // Collect all references in the query, but add no values as we don't have any yet.
     // Values will be added during the execution phase.
     for (const ref of collectReferences(query)) {
-        refContext.addValues(ref);
+        const column = ColumnRef.fromRefOp(ref, defaultSchema);
+        refContext.addValues(column);
     }
 
-    const rootWithRefdColumns = selectRefdColumns(query, refContext, defaultSchema);
-
-    const root = assignExecutor(rootWithRefdColumns, executors);
+    const root = assignExecutor(query, refContext, props);
 
     return {
         root,
@@ -29,14 +29,16 @@ export function createExecutionPlan(query: AnyQuery, { executors, defaultSchema 
 /**
  * Creates the ExecutionPlanNode tree by assigning executors to the query tree.
  */
-function assignExecutor(query: AnyQuery, executors: Array<QueryExecutor>): ExecutionPlanNode {
+function assignExecutor(query: AnyQuery, refContext: RefContext, props: ExecuteProps): ExecutionPlanNode {
+    const { executors, defaultSchema } = props;
     for (const executor of executors) {
         const canExecute = executor.canExecute(query);
         if (canExecute) {
             return {
                 executor,
-                query: canExecute.query,
-                children: canExecute.remaining.map((subquery) => assignExecutor(subquery, executors)),
+                query: selectRefdColumns(canExecute.query, refContext, defaultSchema),
+                inputQuery: canExecute.query,
+                children: canExecute.remaining.map((subquery) => assignExecutor(subquery, refContext, props)),
             }
         }
     }
@@ -53,7 +55,7 @@ function selectRefdColumns(query: AnyQuery, refContext: RefContext, defaultSchem
     const refdColumns = refContext.getColumns().filter(col => col.tableRef.equals(table));
 
     // Make a copy of the select object, so we don't mutate the original query.
-    const select = { ...query.select };
+    const select = structuredClone(query.select ?? {});
 
     // Add all referenced columns to the select object.
     for (const column of refdColumns) {
@@ -64,7 +66,7 @@ function selectRefdColumns(query: AnyQuery, refContext: RefContext, defaultSchem
     }
 
     // Recursively select refd columns in the include object.
-    const include = (query.include ?? {})
+    const include = { ...query.include }
     for (const [key, subquery] of Object.entries(include)) {
         include[key] = selectRefdColumns(subquery, refContext, defaultSchema);
     }

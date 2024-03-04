@@ -181,7 +181,7 @@ function findTableSchema(config: IntrospectSchemaConfig) {
 
 function findEnums(config: IntrospectSchemaConfig) {
     return from('pg_catalog.pg_type')
-        .columns('typname')
+        .columns('typname', 'oid')
         .include({
             enumValues: from('pg_catalog.pg_enum')
                 .columns('enumlabel')
@@ -190,6 +190,6 @@ function findEnums(config: IntrospectSchemaConfig) {
                 })
                 .many()
         })
-        .groupingId('typname')
+        .groupingId('typname', 'oid')
         .many()
 }

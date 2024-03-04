@@ -1,4 +1,4 @@
-import { RefOp } from "@synthql/queries";
+import { RefOp, col } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../../types";
 import { mapQuery } from "../../util/mapQuery";
 import { mapRefs } from "../../util/mapRefs";
@@ -19,14 +19,18 @@ import { ColumnRef, TableRef } from "../executors/PgExecutor/queryBuilder/refs";
  * contained in the `RefContext`.
  */
 export interface RefContext {
-    getValues(ref: RefOp<AnyDb>): any[]
-    addValues(ref: RefOp<AnyDb>, ...values: any[]): any[]
+    getValues(ref: ColumnRef): any[]
+    addValues(ref: ColumnRef, ...values: any[]): any[]
     getColumns(): ColumnRef[]
+
+
+    merge(other: RefContext): void;
+    getEntries(): [ColumnRef, any[]][]
 }
 
-export function createRefContext(defaultSchema: string): RefContext {
+export function createRefContext(): RefContext {
     const refs = new Map<string, any[]>()
-    const hash = (ref: RefOp<AnyDb>) => `${ref.$ref.column}.${ref.$ref.table}`;
+    const hash = (ref: ColumnRef) => `${ref.tableRef.schema}.${ref.tableRef.table}.${ref.column}`
 
     return {
         getValues(ref) {
@@ -44,8 +48,21 @@ export function createRefContext(defaultSchema: string): RefContext {
         getColumns() {
             const keys = Array.from(refs.keys());
             return keys.map(key => {
-                return ColumnRef.parse(key, defaultSchema)
+                const [schema, table, column] = key.split('.');
+                return new TableRef(schema, table).column(column)
             })
+        },
+        getEntries() {
+            return Array.from(refs.entries()).map(([key, values]) => {
+                const [schema, table, column] = key.split('.');
+                return [new TableRef(schema, table).column(column), values]
+            })
+        },
+        merge(other: RefContext) {
+            for (const [ref, values] of other.getEntries()) {
+                this.addValues(ref, ...values)
+            }
+            return this;
         }
     }
 }
@@ -80,18 +97,16 @@ export function createRefContext(defaultSchema: string): RefContext {
  * @param query the query to resolve references for
  * @param refContext A record from reference IDs to their actual values. E.g. { 'person.id': [1,2] }
  */
-export function resolveReferences(query: AnyQuery, refContext: RefContext) {
-    return mapQuery(query, (query) => {
-        return {
-            ...query,
-            where: resolveReferencesInWhere(query.where, refContext)
-        }
-    })
+export function resolveReferences(query: AnyQuery, refContext: RefContext, defaultSchema: string) {
+    return {
+        ...query,
+        where: resolveReferencesInWhere(query.where, refContext, defaultSchema)
+    }
 }
 
-function resolveReferencesInWhere(where: AnyQuery['where'], context: RefContext) {
+function resolveReferencesInWhere(where: AnyQuery['where'], context: RefContext, defaultSchema: string) {
     return mapRefs(where, (ref) => {
-        const referencedValues = context.getValues(ref)
+        const referencedValues = context.getValues(ColumnRef.fromRefOp(ref, defaultSchema))
         return {
             in: referencedValues
         }

@@ -35,7 +35,7 @@ export async function* execute<DB, TQuery extends Query<DB>>(
 ): AsyncGenerator<QueryResult<DB, TQuery>> {
     const plan = createExecutionPlan(query, props);
 
-    for await (const resultTree of executePlan(plan)) {
+    for await (const resultTree of executePlan(plan, props)) {
         yield composeExecutionResults(resultTree);
     }
 }

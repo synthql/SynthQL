@@ -1,6 +1,7 @@
 import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../types";
 import { RefContext } from "./references/resolveReferences";
+import { ColumnRef } from "./executors/PgExecutor/queryBuilder/refs";
 
 /**
  * # Execution Plan
@@ -37,7 +38,13 @@ export interface ExecPlanTree {
 
 export interface ExecutionPlanNode {
     /**
-     * The query associated with this node.
+     * The query that was given as input to the planner.
+     */
+    inputQuery: AnyQuery
+
+    /**
+     * The query that will be executed. This query is derived from the input query. In particular, 
+     * it might have more columns selected.
      */
     query: AnyQuery
 
@@ -55,9 +62,13 @@ export interface ExecutionPlanNode {
 export interface QueryExecutor<T = unknown> {
     /**
      * Execute a query and return the result.
-     * Also populate the refContext with the values obtained from the query.
      */
-    execute: (query: AnyQuery, { refContext }: { refContext: RefContext }) => Promise<Array<T>>
+    execute: (query: AnyQuery) => Promise<Array<T>>
+
+    /**
+     * Collects the values of the references in the row.
+     */
+    collectRefValues(row: T, columns: ColumnRef[]): RefContext
 
     /**
      * If the executor supports the query, it returns the query along with all it's supported subqueries.
@@ -79,7 +90,10 @@ export interface ExecResultTree {
 }
 
 export interface ExecResultNode {
-    query: AnyQuery,
+    /**
+     * The original query that was executed.
+     */
+    inputQuery: AnyQuery,
     result: any[],
     children: ExecResultNode[]
 }

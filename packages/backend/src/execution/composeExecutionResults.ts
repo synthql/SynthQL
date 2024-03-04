@@ -1,6 +1,7 @@
 import { QueryResult } from "@synthql/queries";
 import { ExecResultNode, ExecResultTree } from "./types";
 import { applyCardinality } from "../QueryEngine/applyCardinality";
+import { AnyQuery } from "../types";
 
 export function composeExecutionResults(results: ExecResultTree): QueryResult<unknown, unknown> {
     //printExecResultTree(results)
@@ -8,17 +9,26 @@ export function composeExecutionResults(results: ExecResultTree): QueryResult<un
 }
 
 function mapExecutionResultTree(node: ExecResultNode): QueryResult<unknown, unknown> {
+    const withSelectionApplied = selectColumns(node.result, node.inputQuery);
 
-    return applyCardinality(node.result, node.query.cardinality ?? 'many') as QueryResult<unknown, unknown>;
+    return applyCardinality(withSelectionApplied, node.inputQuery.cardinality ?? 'many') as QueryResult<unknown, unknown>;
 }
 
-function printExecResultTree(tree: ExecResultTree) {
-    const queue = [{ node: tree.root, depth: 0 }];
-    console.log('----')
-    while (queue.length > 0) {
-        const { node, depth } = queue.shift()!;
-        console.log('-'.repeat(depth * 4) + "> query: ", node.query.from, node.query.select);
-        console.log('-'.repeat(depth * 4) + "> result: ", node.result);
-        queue.push(...node.children.map((node) => ({ node, depth: depth + 1 })));
+function selectColumns(rows: Array<{ [k: string]: unknown }>, query: AnyQuery) {
+    const selectedColumns = Object.keys(query.select);
+
+    for (const [includeKey, include] of Object.entries(query.include ?? {})) {
+        if (Object.keys(include.select).length > 0) {
+            selectedColumns.push(includeKey)
+        }
     }
+
+    return rows.map(row => {
+        const newRow: { [k: string]: unknown } = {}
+        for (const key of selectedColumns) {
+
+            newRow[key] = (row)[key]
+        }
+        return newRow
+    })
 }

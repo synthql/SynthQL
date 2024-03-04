@@ -1,6 +1,8 @@
 import { QueryProvider } from "../../QueryProvider";
 import { AnyQuery } from "../../types";
-import { ExecResultTree, QueryExecutor } from "../types"
+import { RefContext, createRefContext } from "../references/resolveReferences";
+import { QueryExecutor } from "../types";
+import { ColumnRef } from "./PgExecutor/queryBuilder/refs";
 
 export class QueryProviderExecutor implements QueryExecutor {
     private providersByTable: Map<string, QueryProvider>;
@@ -31,5 +33,15 @@ export class QueryProviderExecutor implements QueryExecutor {
         const remaining: AnyQuery[] = Object.values(query.include ?? []);
 
         return { query: queryWithoutChildren, remaining };
+    }
+
+    collectRefValues(row: any, columns: ColumnRef[]): RefContext {
+        const refContext = createRefContext()
+        for (const column of columns) {
+            const value = row[column.column]
+            refContext.addValues(column, value)
+        }
+
+        return refContext;
     }
 }
