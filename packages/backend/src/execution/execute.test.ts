@@ -14,6 +14,7 @@ interface DbWithVirtualTables extends DB {
 }
 
 const from = query<DbWithVirtualTables>().from;
+const defaultSchema = 'public';
 
 describe('execute', () => {
 
@@ -81,7 +82,10 @@ describe('execute', () => {
             .where({ actor_id: 1 })
             .one();
 
-        const result = await collectLast(execute<DbWithVirtualTables, 'public.actor', typeof q>(q, { executors: [actorProvider] }));
+        const result = await collectLast(execute<DbWithVirtualTables, typeof q>(q, {
+            executors: [actorProvider],
+            defaultSchema
+        }));
         expect(result).toMatchInlineSnapshot(`
           {
             "actor_id": 1,
@@ -108,7 +112,7 @@ describe('execute', () => {
 
         const q = findFilmWithRating(1);
 
-        expect(createExecutionPlan(q, [filmProvider, filmRatingProvider]).root)
+        expect(createExecutionPlan(q, { executors: [filmProvider, filmRatingProvider], defaultSchema }).root)
             .toMatchObject({
                 executor: filmProvider,
                 children: [{
@@ -118,7 +122,7 @@ describe('execute', () => {
 
             })
 
-        const result = await collectLast(execute<DbWithVirtualTables, 'public.film', typeof q>(q, { executors: [filmProvider, filmRatingProvider] }));
+        const result = await collectLast(execute<DbWithVirtualTables, typeof q>(q, { executors: [filmProvider, filmRatingProvider], defaultSchema }));
         expect(result).toEqual({
             film_id: 1,
             title: 'The Matrix',
@@ -128,7 +132,7 @@ describe('execute', () => {
         })
 
         const q2 = findFilmWithRating(2);
-        const result2 = await collectLast(execute<DbWithVirtualTables, 'public.film', typeof q2>(q2, { executors: [filmProvider, filmRatingProvider] }));
+        const result2 = await collectLast(execute<DbWithVirtualTables, typeof q2>(q2, { executors: [filmProvider, filmRatingProvider], defaultSchema }));
         expect(result2).toEqual({
             film_id: 2,
             title: 'The Matrix Reloaded',

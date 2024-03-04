@@ -47,7 +47,7 @@ describe('PgExecutor', () => {
   })
 
   it('should', async () => {
-    const refContext = createRefContext();
+    const refContext = createRefContext('public');
     collectReferences(q).forEach(ref => refContext.addValues(ref));
     const result = await executor.execute(q, { refContext })
 

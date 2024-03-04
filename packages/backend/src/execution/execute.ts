@@ -6,6 +6,7 @@ import { QueryExecutor } from './types';
 
 export interface ExecuteProps {
     executors: Array<QueryExecutor>;
+    defaultSchema: string;
 }
 
 /**
@@ -30,9 +31,9 @@ export interface ExecuteProps {
  */
 export async function* execute<DB, TQuery extends Query<DB>>(
     query: TQuery,
-    { executors }: ExecuteProps,
+    props: ExecuteProps,
 ): AsyncGenerator<QueryResult<DB, TQuery>> {
-    const plan = createExecutionPlan(query, executors);
+    const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan)) {
         yield composeExecutionResults(resultTree);

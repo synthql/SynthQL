@@ -55,6 +55,7 @@ export class QueryEngine<DB> {
 
         return execute<DB, TQuery>(query, {
             executors: this.executors,
+            defaultSchema: opts?.schema ?? this.schema,
         })
     }
 

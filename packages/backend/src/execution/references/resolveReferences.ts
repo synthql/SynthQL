@@ -2,6 +2,7 @@ import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../../types";
 import { mapQuery } from "../../util/mapQuery";
 import { mapRefs } from "../../util/mapRefs";
+import { ColumnRef, TableRef } from "../executors/PgExecutor/queryBuilder/refs";
 
 /**
  * A `RefContext` maintains a record from reference IDs to their actual values. E.g. { 'person.id': [1,2] }
@@ -20,12 +21,12 @@ import { mapRefs } from "../../util/mapRefs";
 export interface RefContext {
     getValues(ref: RefOp<AnyDb>): any[]
     addValues(ref: RefOp<AnyDb>, ...values: any[]): any[]
-    getKeys(): string[]
+    getColumns(): ColumnRef[]
 }
 
-export function createRefContext(): RefContext {
+export function createRefContext(defaultSchema: string): RefContext {
     const refs = new Map<string, any[]>()
-    const hash = (ref: RefOp<AnyDb>) => `${ref.$ref.column}::${ref.$ref.table}`;
+    const hash = (ref: RefOp<AnyDb>) => `${ref.$ref.column}.${ref.$ref.table}`;
 
     return {
         getValues(ref) {
@@ -40,8 +41,11 @@ export function createRefContext(): RefContext {
             result.push(...values);
             return result;
         },
-        getKeys() {
-            return Array.from(refs.keys());
+        getColumns() {
+            const keys = Array.from(refs.keys());
+            return keys.map(key => {
+                return ColumnRef.parse(key, defaultSchema)
+            })
         }
     }
 }

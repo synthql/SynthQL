@@ -12,13 +12,17 @@ export class TableRef {
     }
 
     static parse(ref: string, defaultSchema: string): TableRef {
-        const parts = ref.split(".")
-        if (parts.length === 1) {
-            return new TableRef(defaultSchema, parts[0])
-        } else if (parts.length === 2) {
-            return new TableRef(parts[0], parts[1])
-        } else {
-            throw new Error(`Invalid table reference ${ref}`)
+        try {
+            const parts = ref.split(".")
+            if (parts.length === 1) {
+                return new TableRef(defaultSchema, parts[0])
+            } else if (parts.length === 2) {
+                return new TableRef(parts[0], parts[1])
+            } else {
+                throw new Error(`Invalid table reference ${ref}`)
+            }
+        } catch (e) {
+            throw new Error(`Failed to parse ${ref} into a table using default schema ${defaultSchema}`)
         }
     }
 
@@ -53,6 +57,10 @@ export class TableRef {
     aliasQuoted() {
         return `"${this.alias()}"`;
     }
+
+    equals(other: TableRef): boolean {
+        return this.schema === other.schema && this.table === other.table
+    }
 }
 
 export class ColumnRef {
@@ -74,5 +82,19 @@ export class ColumnRef {
     static fromRefOp(op: RefOp<AnyDb>, defaultSchema: string): ColumnRef {
         const table = TableRef.parse(op.$ref.table, defaultSchema);
         return table.column(op.$ref.column);
+    }
+
+    static parse(ref: string, defaultSchema: string): ColumnRef {
+        const parts = ref.split(".")
+        if (parts.length === 1) {
+            throw new Error(`Invalid column reference ${ref}`)
+        } else if (parts.length === 2) {
+            const [table, column] = parts;
+            return TableRef.parse(table, defaultSchema).column(column)
+        } else if (parts.length === 3) {
+            const [schema, table, column] = parts;
+            return new TableRef(schema, table).column(column)
+        }
+        throw new Error(`Invalid column reference ${ref}`)
     }
 }

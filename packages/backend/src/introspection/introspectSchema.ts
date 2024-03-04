@@ -1,4 +1,4 @@
-import { QueryEngine, collectFirst } from "@synthql/backend"
+import { QueryEngine, collectFirst } from "../"
 import { col, query } from "@synthql/queries"
 
 export interface PgSchema {
