@@ -53,7 +53,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         }
     }
 
-    canExecute(query: AnyQuery): { query: AnyQuery, remaining: AnyQuery[] } | undefined {
+    canExecute(query: AnyQuery): { query: AnyQuery, remaining: AnyQuery[], includeKey: string | undefined } | undefined {
         if (this.qpe.canExecute(query)) {
             return undefined
         }
@@ -62,7 +62,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
             const isLazyQuery = q.lazy;
             return !isProviderQuery && !isLazyQuery;
         }
-        return collectSupportedQueries(query, isSupported);
+        return collectSupportedQueries(query, isSupported, undefined);
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {
@@ -78,14 +78,18 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
 
 
-function collectSupportedQueries(query: AnyQuery, isSupported: (q: AnyQuery) => boolean): { query: AnyQuery, remaining: AnyQuery[] } {
+function collectSupportedQueries(
+    query: AnyQuery,
+    isSupported: (q: AnyQuery) => boolean,
+    includeKey: string | undefined
+): { query: AnyQuery, remaining: AnyQuery[], includeKey: string | undefined } {
 
     const remaining: AnyQuery[] = []
 
     const include: AnyQuery['include'] = {}
     for (const [key, subQuery] of Object.entries(query.include ?? {})) {
         if (isSupported(subQuery)) {
-            include[key] = collectSupportedQueries(subQuery, isSupported).query
+            include[key] = collectSupportedQueries(subQuery, isSupported, includeKey).query
         }
         else {
             remaining.push(subQuery)
@@ -93,10 +97,12 @@ function collectSupportedQueries(query: AnyQuery, isSupported: (q: AnyQuery) => 
     }
 
     return {
+        includeKey,
         query: {
             ...query,
             include
-        }, remaining
+        },
+        remaining
     }
 }
 

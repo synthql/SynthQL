@@ -1,4 +1,4 @@
-# Synthql
+# What is Synthql
 
 A full stack, type-safe client to your postgresql database with a focus on DX and performance.
 

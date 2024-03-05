@@ -1,3 +1,16 @@
+# Getting started
+
+First, make sure you have node, yarn and docker installed.
+
+```
+# Install dependencies
+yarn install
+
+# Run tests, lint, format
+# Make sure you setup tests correctly. See the "how to run tests" section below.
+yarn checks
+```
+
 # How to run tests
 
 The tests assume you have a copy of the pagila database running locally on port 5432.

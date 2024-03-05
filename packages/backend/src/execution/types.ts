@@ -50,6 +50,8 @@ export interface ExecutionPlanNode {
 
     executor: QueryExecutor
 
+    includeKey: string | undefined
+
     children: ExecutionPlanNode[]
 }
 
@@ -59,7 +61,7 @@ export interface ExecutionPlanNode {
  * 1. It checks if it can execute a query (see {@link QueryExecutor.canExecute}).
  * 2. It execute queries (see {@link QueryExecutor.execute}).
  */
-export interface QueryExecutor<T = unknown> {
+export interface QueryExecutor<T extends ResultRow = ResultRow> {
     /**
      * Execute a query and return the result.
      */
@@ -75,6 +77,7 @@ export interface QueryExecutor<T = unknown> {
      * If the executor does not support the query, it returns undefined.
      */
     canExecute(query: AnyQuery): {
+        includeKey: string | undefined,
         query: AnyQuery,
         remaining: AnyQuery[]
     } | undefined
@@ -89,12 +92,44 @@ export interface ExecResultTree {
     root: ExecResultNode
 }
 
+export type ResultRow = { [k: string]: number | string | boolean | null | ResultRow[] | ResultRow }
+
 export interface ExecResultNode {
+    /**
+     * The path describes the location in the query result where the `result` rows should be written to.
+     * 
+     * Example:
+     * - A path of `[]` points to the root of the query result.
+     * - A path of `[{ type: 'anyIndex' },'users']` indicates that at every item in the root, a `users` key should be added.
+     *   Example:
+     *   ```
+     *   [{id:1}, {id:2}] => [{id:1, users: [..]}, {id:2, users: [..]}]
+     *   ```
+     */
+    path: Path,
+
+    /**
+     * A `path` tells us where to write, but it doesn't tell us which `result` rows to write to the query result.
+     * 
+     * The `filters` array tells us which rows to write.
+     * 
+     * The `parentColumn` is the column in the parent row that we need to match.
+     * The `childColumn` is the column in the result row that we need to match.
+     * 
+     * Example:
+     * - `[{ op: '=', parentColumn: 'id', childColumn: 'user_id' }]` means that we need to match the `id` column in the parent row with the `user_id` column in the result row.
+     * - `[{ op: '=', parentColumn: 'id', childColumn: 'user_id' }, { op: '=', parentColumn: 'type', childColumn: 'user_type' }]` means that we need to match the `id` column in the parent row with the `user_id` column in the result row, and the `type` column in the parent row with the `user_type` column in the result row.
+     */
+    filters: Array<{ op: '=', parentColumn: string, childColumn: string }>
+    /**
+     * The rows that were returned by the executor.
+     */
+    result: ResultRow[],
     /**
      * The original query that was executed.
      */
     inputQuery: AnyQuery,
-    result: any[],
     children: ExecResultNode[]
 }
 
+export type Path = Array<string | number | { type: 'anyIndex' }>

@@ -35,6 +35,7 @@ function assignExecutor(query: AnyQuery, refContext: RefContext, props: ExecuteP
         const canExecute = executor.canExecute(query);
         if (canExecute) {
             return {
+                includeKey: canExecute.includeKey,
                 executor,
                 query: selectRefdColumns(canExecute.query, refContext, defaultSchema),
                 inputQuery: canExecute.query,
@@ -47,18 +48,20 @@ function assignExecutor(query: AnyQuery, refContext: RefContext, props: ExecuteP
 }
 
 /**
- * Maps every query in the tree by also selecting the columns that are referenced in the ref context.
+ * Maps every query in the tree by also selecting the columns that are referenced in the ref context and the where clause.
  */
 function selectRefdColumns(query: AnyQuery, refContext: RefContext, defaultSchema: string): AnyQuery {
     const table = TableRef.fromQuery(defaultSchema, query);
 
-    const refdColumns = refContext.getColumns().filter(col => col.tableRef.equals(table));
+    const refdColumns: ColumnRef[] = refContext.getColumns().filter(col => col.tableRef.equals(table));
+    const whereColumns: ColumnRef[] = getColumnsInWhere(query, defaultSchema);
+    const autoSelectColumns: ColumnRef[] = [...refdColumns, ...whereColumns];
 
     // Make a copy of the select object, so we don't mutate the original query.
     const select = structuredClone(query.select ?? {});
 
     // Add all referenced columns to the select object.
-    for (const column of refdColumns) {
+    for (const column of autoSelectColumns) {
         if (select[column.column]) {
             continue;
         }
@@ -76,4 +79,10 @@ function selectRefdColumns(query: AnyQuery, refContext: RefContext, defaultSchem
         select,
         include,
     }
+}
+
+function getColumnsInWhere(query: AnyQuery, defaultSchema: string): ColumnRef[] {
+    return Object.keys(query.where).map((column) => {
+        return TableRef.fromQuery(defaultSchema, query).column(column);
+    })
 }
