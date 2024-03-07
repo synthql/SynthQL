@@ -15,24 +15,24 @@ const query = from('films')
 
 const { data } = useSynthql(query);
 
-console.log(data);
-/* Will return [
+// data will resolve to
+[
     {
-        id:1,
-        title: "The Lord of the Rings: The Fellowship of the Ring",
-        year: "2001"
+        id: 1,
+        title: 'The Lord of the Rings: The Fellowship of the Ring',
+        year: '2001',
     },
     {
-        id:2,
-        title: "The Lord of the Rings: The Two Towers",
-        year: "2002"
+        id: 2,
+        title: 'The Lord of the Rings: The Two Towers',
+        year: '2002',
     },
     {
-        id:3,
-        title: "The Lord of the Rings: The Return of the King",
-        year: "2003"
-    }
-]*/
+        id: 3,
+        title: 'The Lord of the Rings: The Return of the King',
+        year: '2003',
+    },
+];
 ```
 
 ## Links
