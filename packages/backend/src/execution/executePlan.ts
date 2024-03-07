@@ -10,6 +10,9 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
         // Replace refs with values
         const query = resolveReferences(planNode.query, executionContext.refContext, defaultSchema);
 
+        const entries = executionContext.refContext.getEntries();
+        console.log(entries)
+
         // Execute the query
         const rows = await planNode.executor.execute(query);
 
@@ -34,7 +37,7 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
 
 function calculatePath(planNode: ExecutionPlanNode, parentNode?: ExecutionResultNode): Path {
     if (!parentNode) {
-        return []
+        return [{ type: 'anyIndex' }]
     }
     const parentPath = Array.from(parentNode.path)
     if (planNode.inputQuery.cardinality === 'many') {

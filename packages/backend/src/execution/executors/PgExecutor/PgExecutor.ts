@@ -1,13 +1,16 @@
 import { Pool, PoolClient } from "pg";
+import { format } from "sql-formatter";
 import { AnyQuery } from "../../../types";
+import { QueryNode } from "../../../util/createQueryTree";
+import { RefContext, createRefContext } from "../../references/resolveReferences";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
+import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { RefContext, createRefContext } from "../../references/resolveReferences";
-import { format } from "sql-formatter";
-import { SqlExecutionError } from "../SqlExecutionError";
 import { ColumnRef } from "./queryBuilder/refs";
+import { splitTreeAtBoundary } from "../../../util/splitTreeAtBoundary";
+import { assertPresent } from "../../../util/assertPresent";
 
 type PgQueryResult = {
     [key: string]: any;
@@ -53,16 +56,23 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         }
     }
 
-    canExecute(query: AnyQuery): { query: AnyQuery, remaining: AnyQuery[], includeKey: string | undefined } | undefined {
+    canExecute(query: QueryNode): { query: QueryNode, remaining: QueryNode[] } | undefined {
         if (this.qpe.canExecute(query)) {
             return undefined
         }
-        const isSupported = (q: AnyQuery) => {
+        const isSupported = (q: QueryNode) => {
             const isProviderQuery = this.qpe.canExecute(q);
-            const isLazyQuery = q.lazy;
+            const isLazyQuery = q.query.lazy;
             return !isProviderQuery && !isLazyQuery;
         }
-        return collectSupportedQueries(query, isSupported, undefined);
+
+        const { tree, remaining } = splitTreeAtBoundary(query, isSupported, (parent, child) => {
+            assertPresent(child.includeKey);
+            assertPresent(parent.query.include);
+            const includeKey = child.includeKey
+            delete parent.query.include[includeKey]
+        })
+        return { query: tree, remaining }
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {
@@ -78,31 +88,5 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
 
 
-function collectSupportedQueries(
-    query: AnyQuery,
-    isSupported: (q: AnyQuery) => boolean,
-    includeKey: string | undefined
-): { query: AnyQuery, remaining: AnyQuery[], includeKey: string | undefined } {
 
-    const remaining: AnyQuery[] = []
-
-    const include: AnyQuery['include'] = {}
-    for (const [key, subQuery] of Object.entries(query.include ?? {})) {
-        if (isSupported(subQuery)) {
-            include[key] = collectSupportedQueries(subQuery, isSupported, includeKey).query
-        }
-        else {
-            remaining.push(subQuery)
-        }
-    }
-
-    return {
-        includeKey,
-        query: {
-            ...query,
-            include
-        },
-        remaining
-    }
-}
 

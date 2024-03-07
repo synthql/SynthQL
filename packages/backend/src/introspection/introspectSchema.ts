@@ -151,7 +151,7 @@ function findPrimaryKeyConstraints(config: IntrospectSchemaConfig) {
         .include({
             keys
         })
-        .groupingId('constraint_schema', 'constraint_name', 'table_schema', 'table_name')
+        .groupingId('constraint_schema', 'constraint_name', 'table_schema', 'table_name', 'constraint_type')
         .many()
 }
 

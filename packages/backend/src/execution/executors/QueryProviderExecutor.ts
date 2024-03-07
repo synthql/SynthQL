@@ -1,5 +1,7 @@
+
 import { QueryProvider } from "../../QueryProvider";
 import { AnyQuery } from "../../types";
+import { QueryNode } from "../../util/createQueryTree";
 import { RefContext, createRefContext } from "../references/resolveReferences";
 import { QueryExecutor } from "../types";
 import { ColumnRef } from "./PgExecutor/queryBuilder/refs";
@@ -18,21 +20,19 @@ export class QueryProviderExecutor implements QueryExecutor {
         return provider.execute(query);
     }
 
-    canExecute(query: AnyQuery): { query: AnyQuery, remaining: AnyQuery[] } | undefined {
-        const isSupported = this.providersByTable.has(query.from);
+    canExecute(query: QueryNode) {
+        const isSupported = this.providersByTable.has(query.query.from);
 
         if (!isSupported) {
             return undefined;
         }
 
-        const queryWithoutChildren: AnyQuery = {
+        const queryWithoutChildren: QueryNode = {
             ...query,
-            include: undefined
+            children: []
         }
 
-        const remaining: AnyQuery[] = Object.values(query.include ?? []);
-
-        return { query: queryWithoutChildren, remaining };
+        return { query: queryWithoutChildren, remaining: query.children };
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {

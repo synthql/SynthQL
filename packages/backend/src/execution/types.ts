@@ -2,6 +2,7 @@ import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../types";
 import { RefContext } from "./references/resolveReferences";
 import { ColumnRef } from "./executors/PgExecutor/queryBuilder/refs";
+import { QueryNode } from "../util/createQueryTree";
 
 /**
  * # Execution Plan
@@ -76,10 +77,9 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
      * If the executor supports the query, it returns the query along with all it's supported subqueries.
      * If the executor does not support the query, it returns undefined.
      */
-    canExecute(query: AnyQuery): {
-        includeKey: string | undefined,
-        query: AnyQuery,
-        remaining: AnyQuery[]
+    canExecute(query: QueryNode): {
+        query: QueryNode,
+        remaining: QueryNode[]
     } | undefined
 }
 

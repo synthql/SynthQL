@@ -5,6 +5,7 @@ import { collectReferences } from "./references/collectReferences";
 import { RefContext, createRefContext } from "./references/resolveReferences";
 import { ColumnRef, TableRef } from "./executors/PgExecutor/queryBuilder/refs";
 import { ExecuteProps } from "./execute";
+import { createQueryTree, QueryNode } from "../util/createQueryTree";
 
 export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecPlanTree {
     const { defaultSchema } = props;
@@ -18,7 +19,9 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
         refContext.addValues(column);
     }
 
-    const root = assignExecutor(query, refContext, props);
+    const queryTree = createQueryTree(query);
+
+    const root = assignExecutor(queryTree, refContext, props);
 
     return {
         root,
@@ -29,16 +32,16 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
 /**
  * Creates the ExecutionPlanNode tree by assigning executors to the query tree.
  */
-function assignExecutor(query: AnyQuery, refContext: RefContext, props: ExecuteProps): ExecutionPlanNode {
+function assignExecutor(queryNode: QueryNode, refContext: RefContext, props: ExecuteProps): ExecutionPlanNode {
     const { executors, defaultSchema } = props;
     for (const executor of executors) {
-        const canExecute = executor.canExecute(query);
+        const canExecute = executor.canExecute(queryNode);
         if (canExecute) {
             return {
-                includeKey: canExecute.includeKey,
+                includeKey: canExecute.query.includeKey,
                 executor,
-                query: selectRefdColumns(canExecute.query, refContext, defaultSchema),
-                inputQuery: canExecute.query,
+                query: selectRefdColumns(canExecute.query.query, refContext, defaultSchema),
+                inputQuery: canExecute.query.query,
                 children: canExecute.remaining.map((subquery) => assignExecutor(subquery, refContext, props)),
             }
         }

@@ -95,7 +95,7 @@ describe('execute', () => {
         `)
     });
 
-    test.only('public.film with virtual.film_rating', async () => {
+    test('public.film with virtual.film_rating', async () => {
         function findFilmWithRating(filmId: number) {
             return from('public.film')
                 .columns('film_id', 'title')
