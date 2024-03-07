@@ -29,21 +29,27 @@ export interface RefContext {
 }
 
 export function createRefContext(): RefContext {
-    const refs = new Map<string, any[]>()
+    const refs = new Map<string, Set<any>>()
     const hash = (ref: ColumnRef) => `${ref.tableRef.schema}.${ref.tableRef.table}.${ref.column}`
+
+    const getOrDefault = (ref: ColumnRef): Set<any> => {
+        const hasedRef = hash(ref);
+        if (!refs.has(hasedRef)) {
+            refs.set(hasedRef, new Set())
+        }
+        return refs.get(hasedRef)!
+    }
 
     return {
         getValues(ref) {
-            const hasedRef = hash(ref);
-            if (!refs.has(hasedRef)) {
-                refs.set(hasedRef, [])
-            }
-            return refs.get(hasedRef)!
+            return Array.from(getOrDefault(ref))
         },
         addValues(ref, ...values) {
-            const result = this.getValues(ref);
-            result.push(...values);
-            return result;
+            const set = getOrDefault(ref);
+            for (const value of values) {
+                set.add(value)
+            }
+            return Array.from(set)
         },
         getColumns() {
             const keys = Array.from(refs.keys());
@@ -55,7 +61,7 @@ export function createRefContext(): RefContext {
         getEntries() {
             return Array.from(refs.entries()).map(([key, values]) => {
                 const [schema, table, column] = key.split('.');
-                return [new TableRef(schema, table).column(column), values]
+                return [new TableRef(schema, table).column(column), Array.from(values)]
             })
         },
         merge(other: RefContext) {

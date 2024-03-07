@@ -8,7 +8,7 @@ describe('resolveReferences', () => {
     test('should resolve references', async () => {
         const columnLangId = ColumnRef.parse("public.film.language_id", 'public');
         const refContext = createRefContext();
-        refContext.addValues(columnLangId, 1, 2, 3)
+        refContext.addValues(columnLangId, 1, 2, 3, 1, 2, 3)
 
         const q = from('public.language')
             .columns('name')
