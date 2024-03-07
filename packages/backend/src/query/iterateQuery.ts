@@ -1,7 +1,7 @@
 import { Path } from "../execution/types";
 import { AnyQuery } from "../types";
-import { setIn } from "./tree/setIn"
-import { getIn } from "./tree/getIn"
+import { setIn } from "../util/tree/setIn"
+import { getIn } from "../util/tree/getIn"
 
 interface QueryIterItem {
     /**

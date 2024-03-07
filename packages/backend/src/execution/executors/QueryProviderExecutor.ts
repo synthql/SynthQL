@@ -1,7 +1,7 @@
 
 import { QueryProvider } from "../../QueryProvider";
 import { AnyQuery } from "../../types";
-import { QueryNode } from "../../util/createQueryTree";
+import { QueryNode } from "../../query/createQueryTree";
 import { RefContext, createRefContext } from "../references/resolveReferences";
 import { QueryExecutor } from "../types";
 import { ColumnRef } from "./PgExecutor/queryBuilder/refs";

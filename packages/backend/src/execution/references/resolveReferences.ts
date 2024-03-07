@@ -1,5 +1,5 @@
 import { AnyQuery } from "../../types";
-import { mapRefs } from "../../util/mapRefs";
+import { mapRefs } from "../../query/mapRefs";
 import { ColumnRef, TableRef } from "../executors/PgExecutor/queryBuilder/refs";
 
 /**

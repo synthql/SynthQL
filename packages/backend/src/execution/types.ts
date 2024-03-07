@@ -2,7 +2,7 @@ import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../types";
 import { RefContext } from "./references/resolveReferences";
 import { ColumnRef } from "./executors/PgExecutor/queryBuilder/refs";
-import { QueryNode } from "../util/createQueryTree";
+import { QueryNode } from "../query/createQueryTree";
 
 /**
  * # Execution Plan

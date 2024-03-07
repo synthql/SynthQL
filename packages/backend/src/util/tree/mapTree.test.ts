@@ -1,8 +1,8 @@
 import { describe, expect, it, test } from 'vitest';
-import { mapTree } from './tree/mapTree';
-import { collectAsync } from './generators/collectAsync';
-import { NumNode, StrNode, n, s } from '../tests/numNode';
-import { collectLast } from '..';
+import { mapTree } from './mapTree';
+import { collectAsync } from '../generators/collectAsync';
+import { NumNode, StrNode, n, s } from '../../tests/numNode';
+import { collectLast } from '../..';
 
 describe('mapTree', () => {
     test('identity', async () => {

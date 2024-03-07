@@ -1,4 +1,3 @@
-import { Node } from "./mapTree";
 
 export function splitTreeAtBoundary<T extends {
     children: T[]

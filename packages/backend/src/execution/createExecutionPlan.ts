@@ -5,7 +5,7 @@ import { collectReferences } from "./references/collectReferences";
 import { RefContext, createRefContext } from "./references/resolveReferences";
 import { ColumnRef, TableRef } from "./executors/PgExecutor/queryBuilder/refs";
 import { ExecuteProps } from "./execute";
-import { createQueryTree, QueryNode } from "../util/createQueryTree";
+import { createQueryTree, QueryNode } from "../query/createQueryTree";
 
 export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecPlanTree {
     const { defaultSchema } = props;

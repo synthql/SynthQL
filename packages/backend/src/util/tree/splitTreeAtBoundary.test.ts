@@ -1,9 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { Node } from "./mapTree";
-import { splitTreeAtBoundary } from "./splitTreeAtBoundary";
 import { NumNode, n } from "../../tests/numNode";
-
-
+import { splitTreeAtBoundary } from "./splitTreeAtBoundary";
 
 function generateRandomTree(value: number): NumNode {
     const shouldContinue = Math.random() > 0.5;
@@ -16,10 +13,6 @@ function generateRandomTree(value: number): NumNode {
 }
 
 describe('splitAtBoundary', () => {
-
-
-
-
 
     const shouldSplit = (node: NumNode) => node.value === 0;
 

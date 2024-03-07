@@ -1,6 +1,6 @@
 import { JoinOp, Where, isRefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../../../../types";
-import { collectFromQuery } from "../../../../util/collectFromQuery";
+import { collectFromQuery } from "../../../../query/collectFromQuery";
 import { SelectionColumn } from "./SelectionColumn";
 import { SelectionJsonbAgg } from "./SelectionJsonbAgg";
 import { ColumnRef, TableRef } from "./refs";

@@ -1,7 +1,7 @@
 import { Pool, PoolClient } from "pg";
 import { format } from "sql-formatter";
 import { AnyQuery } from "../../../types";
-import { QueryNode } from "../../../util/createQueryTree";
+import { QueryNode } from "../../../query/createQueryTree";
 import { RefContext, createRefContext } from "../../references/resolveReferences";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";

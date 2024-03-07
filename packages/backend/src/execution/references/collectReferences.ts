@@ -1,7 +1,7 @@
 import { RefOp } from "@synthql/queries";
 import { AnyDb, AnyQuery } from "../../types";
-import { collectFromQuery } from "../../util/collectFromQuery";
-import { mapRefs } from "../../util/mapRefs";
+import { collectFromQuery } from "../../query/collectFromQuery";
+import { mapRefs } from "../../query/mapRefs";
 
 /**
  * Recursively collects all references in a query and its children.
