@@ -1,63 +1,16 @@
-import { describe, expect, test } from 'vitest';
-import { QueryEngine, collectLast } from '..';
-import { QueryProvider } from '../QueryProvider';
-import { DB, from } from './generated.schema';
-import { pool } from './queryEngine';
 import { Where, col } from '@synthql/queries';
+import { describe, expect, test } from 'vitest';
+import { collectLast } from '..';
 import { execute } from '../execution/execute';
 import { QueryProviderExecutor } from '../execution/executors/QueryProviderExecutor';
+import { DB, from } from './generated.schema';
+import { provideFilm } from './provideFilm';
+import { provideLanguage } from './provideLanguage';
 
-type Language = DB['public.language'];
-type Film = Pick<DB['public.film'], 'film_id' | 'title' | 'language_id'>;
+
 
 describe('single-joins', () => {
   test('n x 1 join from n(film) -> 1(language)', async () => {
-    const provideLanguage: QueryProvider = {
-      table: 'public.language',
-      execute: async (q): Promise<Language[]> => {
-        const langIds = q.where.language_id.in;
-        return [
-          {
-            language_id: 1,
-            name: 'English',
-            last_update: new Date(),
-          },
-          {
-            language_id: 2,
-            name: 'French',
-            last_update: new Date(),
-          },
-        ].filter((l) => langIds.includes(l.language_id));
-      },
-    };
-
-    const provideFilm: QueryProvider = {
-      table: 'public.film',
-      execute: async (q): Promise<Film[]> => {
-        return [
-          {
-            film_id: 4,
-            title: 'Amelie',
-            language_id: 2,
-          },
-          {
-            film_id: 1,
-            title: 'The Matrix',
-            language_id: 1,
-          },
-          {
-            film_id: 2,
-            title: 'The Matrix Reloaded',
-            language_id: 1,
-          },
-          {
-            film_id: 3,
-            title: 'The Matrix Revolutions',
-            language_id: 1,
-          },
-        ];
-      },
-    };
 
     function findFilm(where: Where<DB, 'public.film'>) {
       const lang = from('public.language')
@@ -82,7 +35,7 @@ describe('single-joins', () => {
       execute<DB, typeof q>(q, {
         defaultSchema: 'public',
         executors: [
-          new QueryProviderExecutor([provideLanguage, provideFilm]),
+          new QueryProviderExecutor([provideLanguage(), provideFilm()]),
         ],
       }),
     );

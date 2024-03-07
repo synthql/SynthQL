@@ -8,6 +8,13 @@ interface QueryIterItem {
      * The query being iterated over
      */
     query: AnyQuery;
+
+    /**
+     * The parent query of the current query
+     */
+    parentQuery?: AnyQuery;
+
+    includeKey?: string;
     /**
      * The insertion path.
      * 
@@ -39,6 +46,8 @@ export function* iterateQuery(query: AnyQuery): Generator<QueryIterItem> {
             stack.push({
                 query: subQuery,
                 insertionPath: [...insertionPath, includeKey, { type: 'anyIndex' }],
+                parentQuery: query,
+                includeKey
             });
         }
     }
