@@ -1,6 +1,7 @@
 import { OPERATORS, UnaryOperator } from "kysely";
 import { AnyDb } from "../../../../types";
-import { ColumnRef, TableRef } from "./refs";
+import { TableRef } from "../../../../refs/TableRef";
+import { ColumnRef } from "../../../../refs/ColumnRef";
 import { Where, isRefOp } from "@synthql/queries";
 import { compareJoins } from "./compareJoins";
 import { Join } from "./types";

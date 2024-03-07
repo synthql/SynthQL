@@ -1,5 +1,5 @@
 import { QueryResult } from "@synthql/queries";
-import { applyCardinality } from "../QueryEngine/applyCardinality";
+import { applyCardinality } from "../query/applyCardinality";
 import { AnyDb, AnyQuery, AnyTable } from "../types";
 import { assertHasKey } from "../util/asserts/assertHasKey";
 import { setIn } from "../util/tree/setIn";

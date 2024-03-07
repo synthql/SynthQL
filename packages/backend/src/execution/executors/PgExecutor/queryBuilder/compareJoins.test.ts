@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { compareJoins } from "./compareJoins";
 import { Join } from "./types";
-import { TableRef } from "./refs";
+import { TableRef } from "../../../../refs/TableRef";
 
 describe('compareJoins', () => {
     test('ordering', () => {

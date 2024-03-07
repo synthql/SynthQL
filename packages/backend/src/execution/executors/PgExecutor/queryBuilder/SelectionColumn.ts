@@ -1,6 +1,7 @@
 import { AnyQuery } from "packages/backend/src/types";
 import { Selection } from "./types";
-import { ColumnRef, TableRef } from "./refs";
+import { TableRef } from "../../../../refs/TableRef";
+import { ColumnRef } from "../../../../refs/ColumnRef";
 import { SqlBuilder } from "./exp";
 
 export class SelectionColumn implements Selection {

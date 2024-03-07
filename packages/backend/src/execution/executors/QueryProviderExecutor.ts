@@ -2,9 +2,9 @@
 import { QueryProvider } from "../../QueryProvider";
 import { AnyQuery } from "../../types";
 import { QueryNode } from "../../query/createQueryTree";
-import { RefContext, createRefContext } from "../references/resolveReferences";
+import { RefContext, createRefContext } from "../../refs/RefContext";
 import { QueryExecutor } from "../types";
-import { ColumnRef } from "./PgExecutor/queryBuilder/refs";
+import { ColumnRef } from "../../refs/ColumnRef";
 
 export class QueryProviderExecutor implements QueryExecutor {
     private providersByTable: Map<string, QueryProvider>;

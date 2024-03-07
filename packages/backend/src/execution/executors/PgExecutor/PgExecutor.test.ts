@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { PgExecutor } from ".";
 import { from } from "../../../tests/generated.schema";
 import { pool } from "../../../tests/queryEngine";
-import { createRefContext } from "../../references/resolveReferences";
+import { createRefContext } from "../../../refs/RefContext";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
-import { collectReferences } from "../../references/collectReferences";
+import { collectColumnReferences } from "../../../query/collectColumnReferences";
 
 describe('PgExecutor', () => {
   const executor = new PgExecutor(pool, 'public', new QueryProviderExecutor([]));

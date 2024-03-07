@@ -1,9 +1,10 @@
 import { Query } from "@synthql/queries";
 import { AnyQuery } from "../types";
 import { ExecPlanTree, ExecutionPlanNode, QueryExecutor } from "./types";
-import { collectReferences } from "./references/collectReferences";
-import { RefContext, createRefContext } from "./references/resolveReferences";
-import { ColumnRef, TableRef } from "./executors/PgExecutor/queryBuilder/refs";
+import { collectColumnReferences } from "../query/collectColumnReferences";
+import { RefContext, createRefContext } from "../refs/RefContext";
+import { TableRef } from "../refs/TableRef";
+import { ColumnRef } from "../refs/ColumnRef";
 import { ExecuteProps } from "./execute";
 import { createQueryTree, QueryNode } from "../query/createQueryTree";
 
@@ -14,8 +15,7 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
 
     // Collect all references in the query, but add no values as we don't have any yet.
     // Values will be added during the execution phase.
-    for (const ref of collectReferences(query)) {
-        const column = ColumnRef.fromRefOp(ref, defaultSchema);
+    for (const column of collectColumnReferences(query, defaultSchema)) {
         refContext.addValues(column);
     }
 

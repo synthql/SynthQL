@@ -1,8 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { createRefContext, resolveReferences } from "./resolveReferences";
-import { ColumnRef } from "../executors/PgExecutor/queryBuilder/refs";
-import { from } from "../../tests/generated.schema";
+import { createRefContext } from "../refs/RefContext";
+import { ColumnRef } from "../refs/ColumnRef";
+import { from } from "../tests/generated.schema";
 import { col } from "@synthql/queries";
+import { resolveReferences } from "./resolveReferences";
 
 describe('resolveReferences', () => {
     test('should resolve references', async () => {

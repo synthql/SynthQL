@@ -1,5 +1,6 @@
 import { SqlBuilder } from "./exp"
-import { ColumnRef, TableRef } from "./refs"
+import { TableRef } from "../../../../refs/TableRef"
+import { ColumnRef } from "../../../../refs/ColumnRef"
 import { JoinOp } from "@synthql/queries"
 
 export interface Selection {

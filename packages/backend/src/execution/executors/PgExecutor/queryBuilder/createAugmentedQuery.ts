@@ -3,7 +3,8 @@ import { AnyDb, AnyQuery } from "../../../../types";
 import { collectFromQuery } from "../../../../query/collectFromQuery";
 import { SelectionColumn } from "./SelectionColumn";
 import { SelectionJsonbAgg } from "./SelectionJsonbAgg";
-import { ColumnRef, TableRef } from "./refs";
+import { TableRef } from "../../../../refs/TableRef";
+import { ColumnRef } from "../../../../refs/ColumnRef";
 import { Join, Selection } from "./types";
 
 export interface AugmentedQuery {

@@ -59,6 +59,19 @@ describe('iterateQuery', () => {
                     { query: from('public.language').many(), insertionPath: [anyIndex, 'actors', anyIndex, 'lang', anyIndex] },
                     { query: from('public.language').many(), insertionPath: [anyIndex, 'lang', anyIndex] },
                 ]
+            },
+
+            {
+                input: {
+                    from: 'public.film',
+                    select: {},
+                    where: {
+                        film_id: 1
+                    },
+                },
+                expected: [
+                    { query: { from: 'public.film', select: {}, where: { film_id: 1 } }, insertionPath: [anyIndex] }
+                ]
             }
         ];
 

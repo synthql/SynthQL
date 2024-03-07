@@ -2,13 +2,13 @@ import { Pool, PoolClient } from "pg";
 import { format } from "sql-formatter";
 import { AnyQuery } from "../../../types";
 import { QueryNode } from "../../../query/createQueryTree";
-import { RefContext, createRefContext } from "../../references/resolveReferences";
+import { RefContext, createRefContext } from "../../../refs/RefContext";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { ColumnRef } from "./queryBuilder/refs";
+import { ColumnRef } from "../../../refs/ColumnRef";
 import { splitTreeAtBoundary } from "../../../util/tree/splitTreeAtBoundary";
 import { assertPresent } from "../../../util/asserts/assertPresent";
 

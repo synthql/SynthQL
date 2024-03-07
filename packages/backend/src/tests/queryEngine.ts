@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { QueryEngine } from '../QueryEngine/QueryEngine';
+import { QueryEngine } from '../QueryEngine';
 import { DB } from './db';
 import { Pool } from 'pg';
 

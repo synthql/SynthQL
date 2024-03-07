@@ -6,17 +6,17 @@ import {
 } from 'kysely';
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from "@synthql/queries";
-import { composeQuery } from '../execution/executors/PgExecutor/composeQuery';
-import { hydrate } from '../execution/executors/PgExecutor/hydrate';
-import { QueryPlan } from '..';
-import { introspectSchema } from '../introspection/introspectSchema';
-import { QueryProvider } from '../QueryProvider';
-import { GenerateSchemaConfig, generateSchema } from '../introspection/generateSchema';
-import { execute } from '../execution/execute';
-import { QueryExecutor } from '../execution/types';
-import { QueryProviderExecutor } from '../execution/executors/QueryProviderExecutor';
-import { PgExecutor } from '../execution/executors/PgExecutor';
-import { SqlExecutionError } from '../execution/executors/SqlExecutionError';
+import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
+import { hydrate } from './execution/executors/PgExecutor/hydrate';
+import { QueryPlan } from '.';
+import { introspectSchema } from './introspection/introspectSchema';
+import { QueryProvider } from './QueryProvider';
+import { GenerateSchemaConfig, generateSchema } from './introspection/generateSchema';
+import { execute } from './execution/execute';
+import { QueryExecutor } from './execution/types';
+import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { PgExecutor } from './execution/executors/PgExecutor';
+import { SqlExecutionError } from './execution/executors/SqlExecutionError';
 
 export interface QueryEngineProps<DB> {
     url?: string;
