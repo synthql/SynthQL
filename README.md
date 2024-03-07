@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="/packages/docs/static/img/logo.webp" width="88" alt="synthql" style="border-radius:100%" />
+<img src="/assets/logo.png" width="88" alt="synthql"  />
 <h1 style="margin-top:16px">synthql</h1>
 <p>A full stack, type-safe client to your postgresql database with a focus on DX and performance.</p>
 </div>
