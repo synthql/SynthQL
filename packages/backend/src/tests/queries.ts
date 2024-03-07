@@ -1,4 +1,4 @@
-import { Table, WhereClause, query, ref } from '@synthql/queries';
+import { Table, WhereClause, col, query, ref } from '@synthql/queries';
 import { DB } from './db';
 
 export function from<TTable extends Table<DB>>(table: TTable) {
@@ -95,4 +95,17 @@ export function city() {
 
 export function findCityById(id: WhereClause<DB, 'city', 'city_id'>) {
     return city().where({ city_id: id }).maybe();
+}
+
+
+
+export function findFilm() {
+    return from('film')
+        .columns('film_id', 'title', 'description', 'release_year')
+        .where({
+            release_year: 2006,
+        })
+        .include({
+            lang: findLanguageById(col('film.language_id')).one(),
+        })
 }

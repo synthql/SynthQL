@@ -1,6 +1,6 @@
 import { describe, expect, it, test } from 'vitest';
-import { mapTree } from './mapTree';
-import { collectAsync } from './collectAsync';
+import { mapTree } from './tree/mapTree';
+import { collectAsync } from './generators/collectAsync';
 import { NumNode, StrNode, n, s } from '../tests/numNode';
 import { collectLast } from '..';
 

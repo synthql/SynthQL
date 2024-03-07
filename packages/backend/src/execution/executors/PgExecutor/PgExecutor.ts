@@ -9,8 +9,8 @@ import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
 import { ColumnRef } from "./queryBuilder/refs";
-import { splitTreeAtBoundary } from "../../../util/splitTreeAtBoundary";
-import { assertPresent } from "../../../util/assertPresent";
+import { splitTreeAtBoundary } from "../../../util/tree/splitTreeAtBoundary";
+import { assertPresent } from "../../../util/asserts/assertPresent";
 
 type PgQueryResult = {
     [key: string]: any;

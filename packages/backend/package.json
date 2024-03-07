@@ -14,7 +14,8 @@
     "scripts": {
         "test": "vitest",
         "checks": "yarn vitest run && yarn tsc",
-        "publish:minor": "yarn publish --access public --no-git-tag-version"
+        "publish:minor": "yarn publish --access public --no-git-tag-version",
+        "cov": "open coverage/index.html"
     },
     "devDependencies": {
         "@types/node": "^20.10.5",

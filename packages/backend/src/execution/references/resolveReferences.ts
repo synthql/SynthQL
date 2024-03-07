@@ -1,6 +1,4 @@
-import { RefOp, col } from "@synthql/queries";
-import { AnyDb, AnyQuery } from "../../types";
-import { mapQuery } from "../../util/mapQuery";
+import { AnyQuery } from "../../types";
 import { mapRefs } from "../../util/mapRefs";
 import { ColumnRef, TableRef } from "../executors/PgExecutor/queryBuilder/refs";
 

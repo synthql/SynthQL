@@ -68,7 +68,7 @@ function findPartOption() {
 }
 ```
 
-## Lazy streaming queries
+## Lazy queries
 
 By default the entire query will be compiled into a single large SQL join. This will give good performance for small object graphs (say 1-5 levels deep), but as the object graph grows, so will the time it takes until the query is resolved and the data is eventually sent to the client.
 

@@ -1,4 +1,4 @@
-import { Path } from "../execution/types";
+import { Path } from "../../execution/types";
 
 export function assertArrayAtPath(obj: unknown, path: Path): asserts obj is unknown[] {
     if (!Array.isArray(obj)) {

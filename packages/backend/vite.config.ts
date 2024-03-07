@@ -29,5 +29,15 @@ export default defineConfig({
     },
     test: {
         globals: true,
+        coverage: {
+            provider: 'v8',
+            all: true,
+            clean: true,
+            enabled: true,
+            reportsDirectory: 'coverage',
+            reportOnFailure: true,
+            reporter: ['html-spa'],
+            include: ['src/**/*'],
+        }
     },
 })

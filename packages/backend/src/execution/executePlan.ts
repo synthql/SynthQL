@@ -1,4 +1,4 @@
-import { mapTree } from "../util/mapTree";
+import { mapTree } from "../util/tree/mapTree";
 import { ExecuteProps } from "./execute";
 import { TableRef } from "./executors/PgExecutor/queryBuilder/refs";
 import { resolveReferences } from "./references/resolveReferences";
@@ -9,9 +9,6 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
     return mapTree<ExecutionPlanNode, ExecutionResultNode>(planTree, async (planNode, parentNode): Promise<ExecutionResultNode> => {
         // Replace refs with values
         const query = resolveReferences(planNode.query, executionContext.refContext, defaultSchema);
-
-        const entries = executionContext.refContext.getEntries();
-        console.log(entries)
 
         // Execute the query
         const rows = await planNode.executor.execute(query);

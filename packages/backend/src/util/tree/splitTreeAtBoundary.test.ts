@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { Node } from "./mapTree";
 import { splitTreeAtBoundary } from "./splitTreeAtBoundary";
-import { NumNode, n } from "../tests/numNode";
+import { NumNode, n } from "../../tests/numNode";
 
 
 

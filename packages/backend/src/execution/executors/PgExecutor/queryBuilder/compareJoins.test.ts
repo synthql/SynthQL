@@ -23,11 +23,20 @@ describe('compareJoins', () => {
                 ownColumn: pet.column('owner_id'),
                 otherColumn: person.column('id')
             }]
+        },
+        {
+            table: pet,
+            conditions: [{
+                op: '=',
+                ownColumn: pet.column('owner_id'),
+                otherColumn: person.column('id')
+            }]
         }]
 
         const shuffled = shuffle(joins)
 
         expect(Array.from(shuffled).sort(compareJoins)).toEqual(joins);
+        expect(Array.from(shuffled).sort((a, b) => compareJoins(b, a))).toEqual(Array.from(joins).reverse());
     })
 })
 
@@ -44,3 +53,4 @@ function shuffle<T>(array: T[]): T[] {
 
     return result;
 }
+

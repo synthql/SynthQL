@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { setIn } from "./setIn";
-import { Path } from "../execution/types";
+import { Path } from "../../execution/types";
 
 describe("setIn", (i) => {
 
@@ -51,6 +51,17 @@ describe("setIn", (i) => {
             output: [
                 { a: [{ a: 1, b: thingToWrite }, { a: 2, b: thingToWrite }] },
                 { a: [{ a: 3, b: thingToWrite }, { a: 4, b: thingToWrite }] }
+            ]
+        },
+        {
+            input: [
+                { a: [{ a: 1 }, { a: 2 }] },
+                { a: [{ a: 3 }, { a: 4 }] }
+            ],
+            path: [anyIndex, 'a', anyIndex],
+            output: [
+                { a: [thingToWrite, thingToWrite] },
+                { a: [thingToWrite, thingToWrite] }
             ]
         }
     ]

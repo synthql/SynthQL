@@ -1,9 +1,9 @@
 import { QueryResult } from "@synthql/queries";
 import { applyCardinality } from "../QueryEngine/applyCardinality";
 import { AnyDb, AnyQuery, AnyTable } from "../types";
-import { assertHasKey } from "../util/assertHasKey";
-import { setIn } from "../util/setIn";
-import { ExecResultNode, ExecResultTree, ResultRow } from "./types";
+import { assertHasKey } from "../util/asserts/assertHasKey";
+import { setIn } from "../util/tree/setIn";
+import { ExecResultNode, ExecResultTree, Path, ResultRow } from "./types";
 
 export function composeExecutionResults(tree: ExecResultTree): QueryResult<AnyDb, AnyTable> {
     const queryResult: ResultRow[] = tree.root.result
@@ -38,13 +38,3 @@ function composeExecutionResultsRecursively(node: ExecResultNode, queryResult: R
     }
 }
 
-function applySelection(rows: ResultRow[], query: AnyQuery) {
-    return rows.map(row => {
-        const newRow: ResultRow = {};
-        const columns = Object.keys(query.select).concat(Object.keys(query.include ?? {}));
-        for (const column of columns) {
-            newRow[column] = row[column];
-        }
-        return newRow;
-    })
-}

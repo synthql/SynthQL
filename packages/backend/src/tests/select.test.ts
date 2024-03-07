@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { queryEngine } from "./queryEngine";
 import { DB } from "./db"
 import { findActorById, findCityById, from, movie } from "./queries";
-import { collectFirst } from "../util/collectFirst";
+import { collectFirst } from "../util/generators/collectFirst";
 import { Query, Table, col } from "@synthql/queries";
 import { sql } from "./postgres";
 import { format } from "sql-formatter";

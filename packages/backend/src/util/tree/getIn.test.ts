@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { getIn } from "./getIn";
-import { Path } from "../execution/types";
+import { Path } from "../../execution/types";
 
 describe("getIn", (i) => {
 
@@ -85,6 +85,11 @@ describe("getIn", (i) => {
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }
             ]
+        },
+        {
+            input: undefined,
+            path: [],
+            output: [undefined]
         }
     ]
 

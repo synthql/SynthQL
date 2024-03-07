@@ -1,6 +1,6 @@
-import { Path } from "../execution/types";
-import { assertArrayAtPath } from "./assertArrayAtPath";
-import { assertObject } from "./assertObject";
+import { Path } from "../../execution/types";
+import { assertArrayAtPath } from "../asserts/assertArrayAtPath";
+import { assertObject } from "../asserts/assertObject";
 import { getIn } from "./getIn";
 
 /**
@@ -17,7 +17,7 @@ import { getIn } from "./getIn";
  * 
  * const updated = setIn(value, ['a', 'b', { type: 'anyIndex' },'c'], () => 'thing')
  * 
- * console.log(updated) // { a: { b: [ { c: 'thing' }, { c: 'thing' }, { c: 'thing' } ] } }
+ * // { a: { b: [ { c: 'thing' }, { c: 'thing' }, { c: 'thing' } ] } }
  * ```
  */
 export function setIn<TTree>(tree: TTree, path: Path, getValue: (parent: unknown) => unknown): TTree {
@@ -40,7 +40,7 @@ export function setIn<TTree>(tree: TTree, path: Path, getValue: (parent: unknown
             for (let i = 0; i < parent.length; i++) {
                 parent[i] = child;
             }
-        }
+        } /* v8 ignore next 3 */
         else {
             throw new Error(`Unknown path segment: ${JSON.stringify(lastSegment)}`)
         }
