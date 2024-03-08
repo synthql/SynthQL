@@ -20,19 +20,21 @@ export class QueryProviderExecutor implements QueryExecutor {
         return provider.execute(query);
     }
 
-    canExecute(query: QueryNode) {
-        const isSupported = this.providersByTable.has(query.query.from);
+    canExecute<TQuery extends AnyQuery>(query: TQuery): { query: TQuery, remaining: TQuery[] } | undefined {
+        const isSupported = this.providersByTable.has(query.from);
 
         if (!isSupported) {
             return undefined;
         }
 
-        const queryWithoutChildren: QueryNode = {
+        const queryWithoutChildren: TQuery = {
             ...query,
-            children: []
+            include: {}
         }
 
-        return { query: queryWithoutChildren, remaining: query.children };
+        const remaining = Object.values(query.include ?? {}) as TQuery[];
+
+        return { query: queryWithoutChildren, remaining };
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {

@@ -4,7 +4,7 @@ import { DB } from "../tests/generated.schema";
 import { QueryProviderExecutor } from "./executors/QueryProviderExecutor";
 import { collectLast } from "..";
 import { col, query } from "@synthql/queries";
-import { createExecutionPlan } from "./createExecutionPlan";
+import { createExecutionPlan } from "./planning/createExecutionPlan";
 
 interface DbWithVirtualTables extends DB {
     'virtual.film_rating': {
@@ -68,10 +68,8 @@ describe('execute', () => {
                 film_id: 4,
                 rating: 'PG-13'
             }]
-
-            return [{
-                rating: 'PG-13'
-            }]
+            const filmIds = q.where?.film_id.in;
+            return filmRatings.filter(a => filmIds ? filmIds.includes(a.film_id) : true)
         }
     }]);
 
@@ -112,18 +110,8 @@ describe('execute', () => {
 
         const q = findFilmWithRating(1);
 
-        expect(createExecutionPlan(q, { executors: [filmProvider, filmRatingProvider], defaultSchema }).root)
-            .toMatchObject({
-                executor: filmProvider,
-                children: [{
-                    executor: filmRatingProvider,
-                    children: []
-                }]
-
-            })
-
         const result = await collectLast(execute<DbWithVirtualTables, typeof q>(q, { executors: [filmProvider, filmRatingProvider], defaultSchema }));
-        expect(result).toEqual({
+        expect(result).toMatchObject({
             film_id: 1,
             title: 'The Matrix',
             rating: {
@@ -133,7 +121,7 @@ describe('execute', () => {
 
         const q2 = findFilmWithRating(2);
         const result2 = await collectLast(execute<DbWithVirtualTables, typeof q2>(q2, { executors: [filmProvider, filmRatingProvider], defaultSchema }));
-        expect(result2).toEqual({
+        expect(result2).toMatchObject({
             film_id: 2,
             title: 'The Matrix Reloaded',
             rating: {

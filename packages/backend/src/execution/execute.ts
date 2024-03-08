@@ -1,6 +1,6 @@
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeExecutionResults } from './composeExecutionResults';
-import { createExecutionPlan } from './createExecutionPlan';
+import { createExecutionPlan } from './planning/createExecutionPlan';
 import { executePlan } from './executePlan';
 import { QueryExecutor } from './types';
 

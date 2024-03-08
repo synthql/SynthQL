@@ -2,9 +2,9 @@ import { AnyQuery } from "../types";
 import { assertPresent } from "../util/asserts/assertPresent";
 import { iterateQuery } from "./iterateQuery";
 
-export function splitQueryAtBoundary(q: AnyQuery, shouldSplit: (q: AnyQuery) => boolean): { query: AnyQuery, remaining: AnyQuery[] } {
+export function splitQueryAtBoundary<TQuery extends AnyQuery>(q: TQuery, shouldSplit: (q: TQuery) => boolean): { query: TQuery, remaining: TQuery[] } {
     const clone = structuredClone(q);
-    const remaining: AnyQuery[] = [];
+    const remaining: TQuery[] = [];
     for (const { query, parentQuery, includeKey } of iterateQuery(clone)) {
         const isRoot = parentQuery === undefined || includeKey === undefined;
 

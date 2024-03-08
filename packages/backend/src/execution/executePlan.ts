@@ -40,8 +40,9 @@ function calculatePath(planNode: ExecutionPlanNode, parentNode?: ExecutionResult
     if (planNode.inputQuery.cardinality === 'many') {
         parentPath.push({ type: 'anyIndex' })
     }
-    if (planNode.includeKey !== undefined) {
-        parentPath.push(planNode.includeKey)
+    const { includeKey } = planNode.query
+    if (includeKey !== undefined) {
+        parentPath.push(includeKey)
     }
     return parentPath
 }

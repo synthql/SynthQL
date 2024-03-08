@@ -1,5 +1,4 @@
 import { describe, expect, test, } from "vitest";
-import { assertObject } from "./assertObject";
 import { assertPresent } from "./assertPresent";
 
 describe('assertPresent', () => {

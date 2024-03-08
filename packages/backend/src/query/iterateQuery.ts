@@ -3,16 +3,16 @@ import { AnyQuery } from "../types";
 import { setIn } from "../util/tree/setIn"
 import { getIn } from "../util/tree/getIn"
 
-interface QueryIterItem {
+interface QueryIterItem<TQuery extends AnyQuery> {
     /**
      * The query being iterated over
      */
-    query: AnyQuery;
+    query: TQuery;
 
     /**
      * The parent query of the current query
      */
-    parentQuery?: AnyQuery;
+    parentQuery?: TQuery;
 
     includeKey?: string;
     /**
@@ -34,8 +34,8 @@ interface QueryIterItem {
  * 
  * 
  */
-export function* iterateQuery(query: AnyQuery): Generator<QueryIterItem> {
-    const stack: QueryIterItem[] = [{ query, insertionPath: [{ type: 'anyIndex' }] }];
+export function* iterateQuery<TQuery extends AnyQuery>(query: TQuery): Generator<QueryIterItem<TQuery>> {
+    const stack: QueryIterItem<TQuery>[] = [{ query, insertionPath: [{ type: 'anyIndex' }] }];
 
     while (stack.length > 0) {
         const { query, insertionPath, includeKey, parentQuery } = stack.pop()!;
@@ -44,7 +44,7 @@ export function* iterateQuery(query: AnyQuery): Generator<QueryIterItem> {
 
         for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
             stack.push({
-                query: subQuery,
+                query: subQuery as TQuery,
                 insertionPath: [...insertionPath, includeKey, { type: 'anyIndex' }],
                 parentQuery: query,
                 includeKey

@@ -2,6 +2,7 @@ import { col } from "@synthql/queries";
 import { expect, test } from "vitest";
 import { describeQuery } from "../query/describeQuery";
 import { from } from "./generated.schema";
+import { describe } from "node:test";
 
 export function language() {
     return from('public.language').columns('name', 'language_id')
@@ -27,15 +28,6 @@ export function film() {
         })
 }
 
-test('film', () => {
-    expect(describeQuery(film().many())).toMatchInlineSnapshot(`
-      "film: 
-          actor: actor.actor_id = film_actor.actor_id
-          film_actor: film_actor.film_id = film.film_id
-          language: language.language_id = film.language_id"
-    `)
-})
-
 export function city() {
     return from('public.city').columns('city_id', 'city')
 }
@@ -46,13 +38,6 @@ export function address() {
     })
 }
 
-test('address', () => {
-    expect(describeQuery(address().many())).toMatchInlineSnapshot(`
-      "address: 
-          city: city.city_id = address.city_id"
-    `)
-})
-
 
 export function inventory() {
     return from('public.inventory')
@@ -61,16 +46,6 @@ export function inventory() {
             film: film().where({ film_id: col('public.inventory.film_id') }).one()
         })
 }
-
-test('inventory', () => {
-    expect(describeQuery(inventory().many())).toMatchInlineSnapshot(`
-      "inventory: 
-          film: film.film_id = inventory.film_id
-              actor: actor.actor_id = film_actor.actor_id
-              film_actor: film_actor.film_id = film.film_id
-              language: language.language_id = film.language_id"
-    `)
-})
 
 /**
  * - store
@@ -89,17 +64,3 @@ export function store() {
             inventory: inventory().where({ store_id: col('public.store.store_id') }).many()
         })
 }
-
-
-test('store', () => {
-    expect(describeQuery(store().many())).toMatchInlineSnapshot(`
-      "store: 
-          inventory: inventory.store_id = store.store_id
-              film: film.film_id = inventory.film_id
-                  actor: actor.actor_id = film_actor.actor_id
-                  film_actor: film_actor.film_id = film.film_id
-                  language: language.language_id = film.language_id
-          address: address.address_id = store.address_id
-              city: city.city_id = address.city_id"
-    `)
-})

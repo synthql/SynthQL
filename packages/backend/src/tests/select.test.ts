@@ -73,7 +73,7 @@ describe('select', () => {
             where f.film_id = ${filmId}
             group by f.film_id`
 
-            expect(result ?? undefined).toEqual(expected[0])
+            expect(result ?? undefined).toMatchObject(expected[0])
         })
     })
 

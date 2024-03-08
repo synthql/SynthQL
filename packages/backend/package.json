@@ -13,6 +13,7 @@
     },
     "scripts": {
         "test": "vitest",
+        "t": "vitest --ui",
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "cov": "open coverage/index.html"

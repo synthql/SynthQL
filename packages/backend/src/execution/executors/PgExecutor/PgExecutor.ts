@@ -1,16 +1,14 @@
 import { Pool, PoolClient } from "pg";
 import { format } from "sql-formatter";
-import { AnyQuery } from "../../../types";
-import { QueryNode } from "../../../query/createQueryTree";
+import { splitQueryAtBoundary } from "../../../query/splitQueryAtBoundary";
+import { ColumnRef } from "../../../refs/ColumnRef";
 import { RefContext, createRefContext } from "../../../refs/RefContext";
+import { AnyQuery } from "../../../types";
 import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { ColumnRef } from "../../../refs/ColumnRef";
-import { splitTreeAtBoundary } from "../../../util/tree/splitTreeAtBoundary";
-import { assertPresent } from "../../../util/asserts/assertPresent";
 
 type PgQueryResult = {
     [key: string]: any;
@@ -56,23 +54,17 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         }
     }
 
-    canExecute(query: QueryNode): { query: QueryNode, remaining: QueryNode[] } | undefined {
+    canExecute<TQuery extends AnyQuery>(query: TQuery): { query: TQuery, remaining: TQuery[] } | undefined {
         if (this.qpe.canExecute(query)) {
             return undefined
         }
-        const isSupported = (q: QueryNode) => {
-            const isProviderQuery = this.qpe.canExecute(q);
-            const isLazyQuery = q.query.lazy;
-            return !isProviderQuery && !isLazyQuery;
+        const shouldSplit = (q: TQuery): boolean => {
+            const isProviderQuery = Boolean(this.qpe.canExecute(q));
+            const isLazyQuery = Boolean(q.lazy);
+            return isProviderQuery || isLazyQuery;
         }
 
-        const { tree, remaining } = splitTreeAtBoundary(query, isSupported, (parent, child) => {
-            assertPresent(child.includeKey);
-            assertPresent(parent.query.include);
-            const includeKey = child.includeKey
-            delete parent.query.include[includeKey]
-        })
-        return { query: tree, remaining }
+        return splitQueryAtBoundary(query, shouldSplit)
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {

@@ -34,6 +34,11 @@ export function provideFilm(films = defaultFilms): QueryProvider {
         execute: async (q): Promise<Film[]> => {
             assertHasKey(q.where, 'film_id')
             const film_id = q.where.film_id;
+
+            if (typeof film_id === 'number') {
+                return films.filter((f) => f.film_id === film_id);
+            }
+
             assertHasKey(film_id, 'in')
             const ids = film_id.in;
             assertArray(ids)

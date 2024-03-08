@@ -47,13 +47,16 @@ export interface ExecutionPlanNode {
      * The query that will be executed. This query is derived from the input query. In particular, 
      * it might have more columns selected.
      */
-    query: AnyQuery
+    query: PlanningQuery
 
     executor: QueryExecutor
 
-    includeKey: string | undefined
-
     children: ExecutionPlanNode[]
+}
+
+export interface PlanningQuery extends AnyQuery {
+    includeKey: string | undefined
+    parentQuery: AnyQuery | undefined
 }
 
 /**
@@ -77,9 +80,9 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
      * If the executor supports the query, it returns the query along with all it's supported subqueries.
      * If the executor does not support the query, it returns undefined.
      */
-    canExecute(query: QueryNode): {
-        query: QueryNode,
-        remaining: QueryNode[]
+    canExecute<TQuery extends AnyQuery>(query: TQuery): {
+        query: TQuery,
+        remaining: TQuery[]
     } | undefined
 }
 

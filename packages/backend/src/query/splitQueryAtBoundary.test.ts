@@ -3,6 +3,7 @@ import { film, store } from "../tests/queries.v2";
 import { describeQuery } from "./describeQuery";
 import { splitQueryAtBoundary } from "./splitQueryAtBoundary";
 import { removeIndentation } from "../tests/removeIndentation";
+import { AnyQuery } from "../types";
 
 describe('splitQueryAtBoundary', () => {
     test('film', () => {
@@ -16,7 +17,7 @@ describe('splitQueryAtBoundary', () => {
               language: language.language_id = film.language_id
         `))
 
-        const { query, remaining } = splitQueryAtBoundary(q, q => q.from === 'public.film_actor');
+        const { query, remaining } = splitQueryAtBoundary<AnyQuery>(q, q => q.from === 'public.film_actor');
         expect(describeQuery(query)).toEqual(removeIndentation(`
           film: 
               actor: actor.actor_id = film_actor.actor_id
@@ -40,7 +41,7 @@ describe('splitQueryAtBoundary', () => {
                   city: city.city_id = address.city_id"
         `))
 
-        const { query, remaining } = splitQueryAtBoundary(q, q => q.from === 'public.film');
+        const { query, remaining } = splitQueryAtBoundary<AnyQuery>(q, q => q.from === 'public.film');
 
         expect(describeQuery(query)).toEqual(removeIndentation(`
           "store: 
