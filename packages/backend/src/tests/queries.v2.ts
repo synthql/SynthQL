@@ -95,11 +95,11 @@ test('store', () => {
     expect(describeQuery(store().many())).toMatchInlineSnapshot(`
       "store: 
           inventory: inventory.store_id = store.store_id
-          address: address.address_id = store.address_id
               film: film.film_id = inventory.film_id
-              city: city.city_id = address.city_id
                   actor: actor.actor_id = film_actor.actor_id
                   film_actor: film_actor.film_id = film.film_id
-                  language: language.language_id = film.language_id"
+                  language: language.language_id = film.language_id
+          address: address.address_id = store.address_id
+              city: city.city_id = address.city_id"
     `)
 })

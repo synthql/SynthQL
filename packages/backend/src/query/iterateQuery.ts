@@ -38,9 +38,9 @@ export function* iterateQuery(query: AnyQuery): Generator<QueryIterItem> {
     const stack: QueryIterItem[] = [{ query, insertionPath: [{ type: 'anyIndex' }] }];
 
     while (stack.length > 0) {
-        const { query, insertionPath } = stack.pop()!;
+        const { query, insertionPath, includeKey, parentQuery } = stack.pop()!;
 
-        yield { query, insertionPath };
+        yield { query, insertionPath, includeKey, parentQuery };
 
         for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
             stack.push({

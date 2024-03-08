@@ -19,7 +19,6 @@ export function describeQuery(q: AnyQuery): string {
         lines.push({ depth: insertionPath.length - 1, table, join });
     }
     return lines
-        .sort((a, b) => a.depth - b.depth)
         .map(
             ({ depth, table, join }) => `${'  '.repeat(depth)}${table}: ${join}`,
         )

@@ -76,6 +76,6 @@ describe('iterateQuery', () => {
         ];
 
     test.each(cases)('iterateQuery #%#', ({ input, expected }) => {
-        expect(Array.from(iterateQuery(input))).toEqual(expected);
+        expect(Array.from(iterateQuery(input))).toMatchObject(expected);
     })
 })
