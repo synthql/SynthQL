@@ -3,21 +3,29 @@ import { TableRef } from "../refs/TableRef";
 import { ColumnRef } from "../refs/ColumnRef";
 import { AnyQuery } from "../types";
 import { collectFromQuery } from "./collectFromQuery";
+import { Path } from "../execution/types";
+
+type ColumnWithPath = {
+    column: ColumnRef;
+    path: Path;
+}
 
 /**
  * Recursively collects all unique columns referenced in the query.
  */
-export function collectColumnReferences(query: AnyQuery, defaultSchema: string): Array<ColumnRef> {
-    const array = collectFromQuery(query, q => {
+export function collectColumnReferences(query: AnyQuery, defaultSchema: string): Array<ColumnWithPath> {
+    const array = collectFromQuery(query, (q, { insertionPath: path }) => {
         const table = TableRef.fromQuery(defaultSchema, q);
         return collectRefsFromWhere(q, table)
-            .concat(collectRefsFromRefOp(q, defaultSchema))
+            .concat(collectRefsFromRefOp(q, defaultSchema)).map(column => {
+                return { column, path }
+            })
     })
 
-    const map = new Map<string, ColumnRef>();
+    const map = new Map<string, ColumnWithPath>();
 
-    array.forEach(ref => {
-        map.set(ref.column, ref)
+    array.forEach(col => {
+        map.set(col.column.canonical(), col)
     })
 
     return Array.from(map.values())

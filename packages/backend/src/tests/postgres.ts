@@ -1,3 +1,8 @@
+import { config } from 'dotenv';
 import pg from 'postgres';
 
-export const sql = pg(process.env.DATABASE_URL!);
+config();
+
+
+
+export const sql = pg(process.env.DATABASE_URL ?? 'postgres://postgres:postgres@localhost:5432/pagila');

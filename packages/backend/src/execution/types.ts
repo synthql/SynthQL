@@ -74,7 +74,7 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
     /**
      * Collects the values of the references in the row.
      */
-    collectRefValues(row: T, columns: ColumnRef[]): RefContext
+    collectRefValues(row: T, columns: ColumnRef[], query: AnyQuery): RefContext
 
     /**
      * If the executor supports the query, it returns the query along with all it's supported subqueries.

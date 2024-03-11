@@ -1,8 +1,8 @@
-import { resolveReferences } from "../query/resolveReferences";
-import { mapTree } from "../util/tree/mapTree";
-import { ExecuteProps } from "./execute";
-import { TableRef } from "../refs/TableRef";
-import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode, Path } from "./types";
+import { resolveReferences } from "../../query/resolveReferences";
+import { mapTree } from "../../util/tree/mapTree";
+import { ExecuteProps } from "../execute";
+import { TableRef } from "../../refs/TableRef";
+import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode, Path } from "../types";
 
 export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecuteProps): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext }
@@ -18,7 +18,7 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
         const columns = executionContext.refContext.getColumns().filter(c => c.tableRef.equals(table));
 
         for (const row of rows) {
-            const refContext = planNode.executor.collectRefValues(row, columns);
+            const refContext = planNode.executor.collectRefValues(row, columns, planNode.inputQuery);
             executionContext.refContext.merge(refContext);
         }
 

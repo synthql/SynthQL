@@ -14,7 +14,7 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
 
     // Collect all references in the query, but add no values as we don't have any yet.
     // Values will be added during the execution phase.
-    for (const column of allColumns) {
+    for (const { column } of allColumns) {
         refContext.addValues(column);
     }
 
@@ -26,7 +26,7 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
         }
     })
 
-    const root = assignExecutors(planningQuery, allColumns, props)
+    const root = assignExecutors(planningQuery, allColumns.map(c => c.column), props)
 
     return {
         root,

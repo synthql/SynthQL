@@ -1,8 +1,9 @@
+import { col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { from } from '../tests/generated.schema';
-import { collectColumnReferences } from './collectColumnReferences';
+import { city } from '../tests/queries.v2';
 import { AnyQuery } from '../types';
-import { col } from '@synthql/queries';
+import { collectColumnReferences } from './collectColumnReferences';
 
 describe('collectColumnReferences', () => {
     describe('collectColumnReferences', () => {
@@ -49,6 +50,14 @@ describe('collectColumnReferences', () => {
                         'public.film.film_id',
                     ],
                 },
+
+                {
+                    query: city().where({ city_id: col('public.address.city_id') }).many(),
+                    expected: [
+                        'public.city.city_id',
+                        'public.address.city_id',
+                    ],
+                }
             ];
 
         test.each(cases)(
@@ -58,9 +67,9 @@ describe('collectColumnReferences', () => {
                 expect(
                     refs.map((ref) => {
                         return [
-                            ref.tableRef.schema,
-                            ref.tableRef.table,
-                            ref.column,
+                            ref.column.tableRef.schema,
+                            ref.column.tableRef.table,
+                            ref.column.column,
                         ].join('.');
                     }),
                 ).toEqual(expected);

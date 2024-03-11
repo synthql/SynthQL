@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { provideFilm } from "../../tests/provideFilm";
 import { provideLanguage } from "../../tests/provideLanguage";
-import { film } from "../../tests/queries.v2";
+import { film, store } from "../../tests/queries.v2";
 import { pool } from "../../tests/queryEngine";
 import { createExecutionPlan } from "./createExecutionPlan";
 import { PgExecutor } from "../executors/PgExecutor";
@@ -14,12 +14,14 @@ import { height } from "../../util/tree/height";
 import { mapTree } from "../../util/tree/mapTree";
 import { collectLast } from "../..";
 import { describeQuery } from "../../query/describeQuery";
+import { collectFromQuery } from "../../query/collectFromQuery";
 
 function simplifyPlan(plan: ExecPlanTree) {
     return collectLast(mapTree(plan, async (node) => {
+        const tables = collectFromQuery(node.query, q => [q.from])
         return {
             executor: node.executor.constructor.name,
-            from: node.query.from,
+            from: tables.join(', '),
             children: node.children
         }
     }))
@@ -86,12 +88,58 @@ describe('createExecutionPlan', () => {
                     "children": [
                     ],
                     "executor": "PgExecutor",
-                    "from": "public.film",
+                    "from": "public.film, public.actor, public.film_actor, public.language",
                 },
             }
         )
+    })
 
+    test('store', async () => {
+        const q = store().where({ store_id: 1 }).maybe()
 
+        const qpe = new QueryProviderExecutor([]);
+        const pgExecutor = new PgExecutor(pool, 'public', qpe);
+        const plan = createExecutionPlan(q, {
+            defaultSchema: 'public',
+            executors: [pgExecutor, qpe]
+        })
+
+        const simplified = await simplifyPlan(plan)
+        expect(simplified).toMatchInlineSnapshot(`
+          {
+            "root": {
+              "children": [
+                {
+                  "children": [],
+                  "executor": "PgExecutor",
+                  "from": "public.film",
+                },
+                {
+                  "children": [],
+                  "executor": "PgExecutor",
+                  "from": "public.actor",
+                },
+                {
+                  "children": [],
+                  "executor": "PgExecutor",
+                  "from": "public.film_actor",
+                },
+                {
+                  "children": [],
+                  "executor": "PgExecutor",
+                  "from": "public.language",
+                },
+                {
+                  "children": [],
+                  "executor": "PgExecutor",
+                  "from": "public.city",
+                },
+              ],
+              "executor": "PgExecutor",
+              "from": "public.store, public.inventory, public.address",
+            },
+          }
+        `)
     })
 
 })

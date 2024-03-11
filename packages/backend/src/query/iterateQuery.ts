@@ -27,6 +27,11 @@ interface QueryIterItem<TQuery extends AnyQuery> {
      * ```
      */
     insertionPath: Path;
+
+    /**
+     * The depth of the query in the query tree. The root query has a depth of 0.
+     */
+    depth: number;
 }
 
 /**
@@ -35,19 +40,20 @@ interface QueryIterItem<TQuery extends AnyQuery> {
  * 
  */
 export function* iterateQuery<TQuery extends AnyQuery>(query: TQuery): Generator<QueryIterItem<TQuery>> {
-    const stack: QueryIterItem<TQuery>[] = [{ query, insertionPath: [{ type: 'anyIndex' }] }];
+    const stack: QueryIterItem<TQuery>[] = [{ query, insertionPath: [{ type: 'anyIndex' }], depth: 0 }];
 
     while (stack.length > 0) {
-        const { query, insertionPath, includeKey, parentQuery } = stack.pop()!;
+        const { query, insertionPath, includeKey, parentQuery, depth } = stack.pop()!;
 
-        yield { query, insertionPath, includeKey, parentQuery };
+        yield { query, insertionPath, includeKey, parentQuery, depth };
 
         for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
             stack.push({
                 query: subQuery as TQuery,
                 insertionPath: [...insertionPath, includeKey, { type: 'anyIndex' }],
                 parentQuery: query,
-                includeKey
+                includeKey,
+                depth: depth + 1
             });
         }
     }

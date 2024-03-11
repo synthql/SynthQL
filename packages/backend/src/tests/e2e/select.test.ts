@@ -1,11 +1,10 @@
-import { describe, expect, test } from "vitest";
-import { queryEngine } from "./queryEngine";
-import { DB } from "./db"
-import { findActorById, findCityById, from, movie } from "./queries";
-import { collectFirst } from "../util/generators/collectFirst";
 import { Query, Table, col } from "@synthql/queries";
-import { sql } from "./postgres";
-import { format } from "sql-formatter";
+import { describe, expect, test } from "vitest";
+import { collectFirst } from "../../util/generators/collectFirst";
+import { DB } from "../db";
+import { sql } from "../postgres";
+import { findActorById, findCityById, from, movie } from "../queries";
+import { queryEngine } from "../queryEngine";
 
 
 describe('select', () => {
@@ -77,7 +76,7 @@ describe('select', () => {
         })
     })
 
-    test(`select with 3 level depth:
+    test.only(`select with 3 level depth:
         store
             one(address)
                 one(city)

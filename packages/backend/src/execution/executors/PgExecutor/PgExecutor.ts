@@ -1,14 +1,15 @@
 import { Pool, PoolClient } from "pg";
-import { format } from "sql-formatter";
+import { format, formatDialect } from "sql-formatter";
 import { splitQueryAtBoundary } from "../../../query/splitQueryAtBoundary";
 import { ColumnRef } from "../../../refs/ColumnRef";
 import { RefContext, createRefContext } from "../../../refs/RefContext";
 import { AnyQuery } from "../../../types";
-import { QueryExecutor } from "../../types";
+import { Path, QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
+import { getIn } from "packages/backend/src/util/tree/getIn";
 
 type PgQueryResult = {
     [key: string]: any;
@@ -40,6 +41,8 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         const { params, sql } = sqlBuilder.build();
 
         try {
+            console.log(format(sql, { language: 'postgresql' }))
+
             const queryResult = await client.query(sql, params);
             const rows = queryResult.rows
 
@@ -58,9 +61,12 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         if (this.qpe.canExecute(query)) {
             return undefined
         }
-        const shouldSplit = (q: TQuery): boolean => {
+        const shouldSplit = (q: TQuery, { depth }: { depth: number }): boolean => {
             const isProviderQuery = Boolean(this.qpe.canExecute(q));
             const isLazyQuery = Boolean(q.lazy);
+            if (depth >= 2) {
+                return true
+            }
             return isProviderQuery || isLazyQuery;
         }
 
