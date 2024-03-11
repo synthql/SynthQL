@@ -1,4 +1,4 @@
-import { Path } from "../execution/types";
+import { Path, star } from "../execution/types";
 import { AnyQuery } from "../types";
 import { setIn } from "../util/tree/setIn"
 import { getIn } from "../util/tree/getIn"
@@ -23,7 +23,7 @@ interface QueryIterItem<TQuery extends AnyQuery> {
      * Example:
      * 
      * ```
-     * [anyIndex, 'actors', anyIndex, 'lang', anyIndex]
+     * [star, 'actors', star, 'lang', star]
      * ```
      */
     insertionPath: Path;
@@ -40,7 +40,7 @@ interface QueryIterItem<TQuery extends AnyQuery> {
  * 
  */
 export function* iterateQuery<TQuery extends AnyQuery>(query: TQuery): Generator<QueryIterItem<TQuery>> {
-    const stack: QueryIterItem<TQuery>[] = [{ query, insertionPath: [{ type: 'anyIndex' }], depth: 0 }];
+    const stack: QueryIterItem<TQuery>[] = [{ query, insertionPath: [star], depth: 0 }];
 
     while (stack.length > 0) {
         const { query, insertionPath, includeKey, parentQuery, depth } = stack.pop()!;
@@ -50,7 +50,7 @@ export function* iterateQuery<TQuery extends AnyQuery>(query: TQuery): Generator
         for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
             stack.push({
                 query: subQuery as TQuery,
-                insertionPath: [...insertionPath, includeKey, { type: 'anyIndex' }],
+                insertionPath: [...insertionPath, includeKey, star],
                 parentQuery: query,
                 includeKey,
                 depth: depth + 1

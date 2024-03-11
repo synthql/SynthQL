@@ -1,6 +1,7 @@
 import { Path } from "../../execution/types";
 import { assertArrayAtPath } from "../asserts/assertArrayAtPath";
 import { assertObject } from "../asserts/assertObject";
+import { isAnyIndex } from "../path/isAnyIndex";
 
 export function getIn(tree: unknown, path: Path): unknown[] {
     if (path.length === 0) {
@@ -59,7 +60,7 @@ function resolvePathSegment(path: Path, tree: unknown): Array<string | number> {
     if (typeof segment === 'string') {
         return [segment];
     }
-    if (typeof segment === "object" && segment.type === 'anyIndex') {
+    if (isAnyIndex(segment)) {
         assertArrayAtPath(tree, path);
         return tree.map((_, i) => i);
     } /* v8 ignore next 2 */

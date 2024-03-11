@@ -1,10 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { getIn } from "./getIn";
-import { Path } from "../../execution/types";
+import { Path, star } from "../../execution/types";
 
 describe("getIn", (i) => {
 
-    const anyIndex = { type: "anyIndex" } as const
     const cases: Array<{ input: any, path: Path, output: any }> = [
         {
             input: {},
@@ -48,7 +47,7 @@ describe("getIn", (i) => {
         },
         {
             input: [{ a: 1 }, { a: 2 }, { a: 3 }],
-            path: [anyIndex, 'a'],
+            path: [star, 'a'],
             output: [1, 2, 3]
         },
         {
@@ -56,7 +55,7 @@ describe("getIn", (i) => {
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }
             ],
-            path: [anyIndex, 'a', anyIndex, 'b'],
+            path: [star, 'a', star, 'b'],
             output: [1234, 2345, 3456, 4567]
         },
         {
@@ -64,7 +63,7 @@ describe("getIn", (i) => {
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }
             ],
-            path: [anyIndex, 'a', anyIndex, 'c'],
+            path: [star, 'a', star, 'c'],
             output: []
         },
         {
@@ -72,7 +71,7 @@ describe("getIn", (i) => {
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }
             ],
-            path: [anyIndex, 'z'],
+            path: [star, 'z'],
             output: []
         },
         {
@@ -80,7 +79,7 @@ describe("getIn", (i) => {
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }
             ],
-            path: [anyIndex],
+            path: [star],
             output: [
                 { a: [{ a: 1, b: 1234 }, { a: 2, b: 2345 }] },
                 { a: [{ a: 3, b: 3456 }, { a: 4, b: 4567 }] }

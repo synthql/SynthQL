@@ -76,7 +76,7 @@ describe('select', () => {
         })
     })
 
-    test.only(`select with 3 level depth:
+    test(`select with 3 level depth:
         store
             one(address)
                 one(city)

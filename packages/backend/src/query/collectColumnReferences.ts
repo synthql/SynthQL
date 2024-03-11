@@ -16,10 +16,14 @@ type ColumnWithPath = {
 export function collectColumnReferences(query: AnyQuery, defaultSchema: string): Array<ColumnWithPath> {
     const array = collectFromQuery(query, (q, { insertionPath: path }) => {
         const table = TableRef.fromQuery(defaultSchema, q);
-        return collectRefsFromWhere(q, table)
-            .concat(collectRefsFromRefOp(q, defaultSchema)).map(column => {
-                return { column, path }
-            })
+        const columns = collectRefsFromWhere(q, table)
+            .concat(collectRefsFromRefOp(q, defaultSchema))
+        return columns.map(column => {
+            return {
+                column,
+                path: [...path, column.column]
+            }
+        })
     })
 
     const map = new Map<string, ColumnWithPath>();

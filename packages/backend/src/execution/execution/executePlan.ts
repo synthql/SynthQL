@@ -2,7 +2,8 @@ import { resolveReferences } from "../../query/resolveReferences";
 import { mapTree } from "../../util/tree/mapTree";
 import { ExecuteProps } from "../execute";
 import { TableRef } from "../../refs/TableRef";
-import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode, Path } from "../types";
+import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode, Path, star } from "../types";
+import { iterateResultRows } from "../../query/iterateResultRow";
 
 export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecuteProps): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext }
@@ -14,12 +15,8 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
         const rows = await planNode.executor.execute(query);
 
         // Collect refs from the result
-        const table = TableRef.fromQuery(defaultSchema, query);
-        const columns = executionContext.refContext.getColumns().filter(c => c.tableRef.equals(table));
-
-        for (const row of rows) {
-            const refContext = planNode.executor.collectRefValues(row, columns, planNode.inputQuery);
-            executionContext.refContext.merge(refContext);
+        for (const { column, values: value } of iterateResultRows(rows, query, defaultSchema)) {
+            executionContext.refContext.addValues(column, ...value)
         }
 
         return {
@@ -34,11 +31,11 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
 
 function calculatePath(planNode: ExecutionPlanNode, parentNode?: ExecutionResultNode): Path {
     if (!parentNode) {
-        return [{ type: 'anyIndex' }]
+        return [star]
     }
     const parentPath = Array.from(parentNode.path)
     if (planNode.inputQuery.cardinality === 'many') {
-        parentPath.push({ type: 'anyIndex' })
+        parentPath.push(star)
     }
     const { includeKey } = planNode.query
     if (includeKey !== undefined) {

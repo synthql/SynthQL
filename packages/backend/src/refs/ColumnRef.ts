@@ -2,6 +2,7 @@ import { RefOp } from "@synthql/queries";
 import { escapeRef } from "./escapeRef";
 import { AnyDb } from "../types";
 import { TableRef } from "./TableRef";
+import { ResultRow } from "../execution/types";
 
 export class ColumnRef {
     public readonly tableRef: TableRef;
@@ -21,6 +22,14 @@ export class ColumnRef {
 
     canonical() {
         return this.tableRef.canonical() + '.' + `"${this.column}"`;
+    }
+
+    getValue(row: ResultRow) {
+        const value = row[this.column]
+        if (value === undefined) {
+            throw new Error(`Column ${this.canonical()} not found in row`);
+        }
+        return value;
     }
 
     static fromRefOp(op: RefOp<AnyDb>, defaultSchema: string): ColumnRef {

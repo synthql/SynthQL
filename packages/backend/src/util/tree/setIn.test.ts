@@ -1,11 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { setIn } from "./setIn";
-import { Path } from "../../execution/types";
+import { Path, star } from "../../execution/types";
 
 describe("setIn", (i) => {
 
     const thingToWrite = "!@#$"
-    const anyIndex = { type: "anyIndex" } as const
     const cases: Array<{ input: any, path: Path, output: any }> = [
         {
             input: {},
@@ -19,7 +18,7 @@ describe("setIn", (i) => {
         },
         {
             input: [{}, {}, {}],
-            path: [anyIndex, 'a'],
+            path: [star, 'a'],
             output: [{ a: thingToWrite }, { a: thingToWrite }, { a: thingToWrite }]
         },
         {
@@ -39,7 +38,7 @@ describe("setIn", (i) => {
         },
         {
             input: [{ a: 1 }, { a: 2 }, { a: 3 }],
-            path: [anyIndex, 'b'],
+            path: [star, 'b'],
             output: [{ a: 1, b: thingToWrite }, { a: 2, b: thingToWrite }, { a: 3, b: thingToWrite }]
         },
         {
@@ -47,7 +46,7 @@ describe("setIn", (i) => {
                 { a: [{ a: 1 }, { a: 2 }] },
                 { a: [{ a: 3 }, { a: 4 }] }
             ],
-            path: [anyIndex, 'a', anyIndex, 'b'],
+            path: [star, 'a', star, 'b'],
             output: [
                 { a: [{ a: 1, b: thingToWrite }, { a: 2, b: thingToWrite }] },
                 { a: [{ a: 3, b: thingToWrite }, { a: 4, b: thingToWrite }] }
@@ -58,7 +57,7 @@ describe("setIn", (i) => {
                 { a: [{ a: 1 }, { a: 2 }] },
                 { a: [{ a: 3 }, { a: 4 }] }
             ],
-            path: [anyIndex, 'a', anyIndex],
+            path: [star, 'a', star],
             output: [
                 { a: [thingToWrite, thingToWrite] },
                 { a: [thingToWrite, thingToWrite] }

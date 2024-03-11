@@ -1,9 +1,11 @@
-import { col } from '@synthql/queries';
+import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { from } from '../tests/generated.schema';
-import { city } from '../tests/queries.v2';
+import { DB, from } from '../tests/generated.schema';
+import { city, film } from '../tests/queries.v2';
 import { AnyQuery } from '../types';
 import { collectColumnReferences } from './collectColumnReferences';
+import { printPath } from '../util/path/printPath';
+import { getIn } from '../util/tree/getIn';
 
 describe('collectColumnReferences', () => {
     describe('collectColumnReferences', () => {
@@ -76,4 +78,27 @@ describe('collectColumnReferences', () => {
             },
         );
     });
+
+    test('paths', () => {
+        const q = city().where({ city_id: col('public.address.city_id') }).many();
+
+        const queryResult: QueryResult<DB, typeof q> = [
+            { city: "Bogota", city_id: 1 },
+            { city: "Cali", city_id: 2 },
+            { city: "Medellin", city_id: 3 },
+        ]
+
+        const result = collectColumnReferences(q, 'public').map(({ column }) => {
+            return column.canonical()
+        })
+
+        expect(result).toMatchInlineSnapshot(`
+          [
+            ""public"."city"."city_id"",
+            ""public"."address"."city_id"",
+          ]
+        `)
+
+
+    })
 });

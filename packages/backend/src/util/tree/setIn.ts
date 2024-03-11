@@ -1,6 +1,7 @@
 import { Path } from "../../execution/types";
 import { assertArrayAtPath } from "../asserts/assertArrayAtPath";
 import { assertObject } from "../asserts/assertObject";
+import { isAnyIndex } from "../path/isAnyIndex";
 import { getIn } from "./getIn";
 
 /**
@@ -35,7 +36,7 @@ export function setIn<TTree>(tree: TTree, path: Path, getValue: (parent: unknown
             assertObject(parent, slice);
             parent[lastSegment] = child;
         }
-        else if (typeof lastSegment === 'object' && lastSegment.type === "anyIndex") {
+        else if (isAnyIndex(lastSegment)) {
             assertArrayAtPath(parent, slice);
             for (let i = 0; i < parent.length; i++) {
                 parent[i] = child;
