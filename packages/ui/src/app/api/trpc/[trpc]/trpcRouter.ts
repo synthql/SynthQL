@@ -4,7 +4,7 @@ import { initQueryEngine, queryEngine } from '../../queryEngine';
 import { Project, ts } from 'ts-morph';
 import fs from 'fs';
 import { executeProgram } from './executeProgram';
-import { collectFirst } from '@synthql/backend';
+import { collectLast } from '@synthql/backend';
 import path from 'path';
 import { homedir } from 'os';
 
@@ -50,7 +50,7 @@ export const appRouter = router({
             try {
                 return {
                     query,
-                    result: await collectFirst(queryEngine.execute(query)),
+                    result: await collectLast(queryEngine.execute(query)),
                     sql,
                 };
             } catch (e) {

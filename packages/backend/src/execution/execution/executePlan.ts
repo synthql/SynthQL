@@ -14,7 +14,7 @@ import {
 export function executePlan(
     planTree: ExecPlanTree,
     { defaultSchema }: ExecuteProps,
-): AsyncGenerator<ExecResultTree, ExecResultTree, ExecResultTree> {
+): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext };
     return mapTree<ExecutionPlanNode, ExecutionResultNode>(
         planTree,

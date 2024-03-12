@@ -1,13 +1,10 @@
 import { Query, Table, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { collectFirst } from '../../util/generators/collectFirst';
+import { collectLast } from '../..';
 import { DB } from '../db';
 import { sql } from '../postgres';
 import { findActorById, findCityById, from, movie } from '../queries';
 import { queryEngine } from '../queryEngine';
-import { collectLast } from '../..';
-import { createPlanningQuery } from '../../execution/planning/createPlanningQuery';
-import { AnyQuery } from '../../types';
 
 describe('select', () => {
     function run<TTable extends Table<DB>, T extends Query<DB, TTable>>(

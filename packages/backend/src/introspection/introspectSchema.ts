@@ -1,4 +1,4 @@
-import { QueryEngine, collectFirst } from '../';
+import { QueryEngine, collectLast } from '../';
 import { col, query } from '@synthql/queries';
 
 export interface PgSchema {
@@ -85,9 +85,9 @@ export async function introspectSchema(
     enums: EnumDef[];
 }> {
     const [tables, primaryKeys, enums] = await Promise.all([
-        collectFirst(queryEngine.execute(findTableSchema(config))),
-        collectFirst(queryEngine.execute(findPrimaryKeyConstraints(config))),
-        collectFirst(queryEngine.execute(findEnums(config))),
+        collectLast(queryEngine.execute(findTableSchema(config))),
+        collectLast(queryEngine.execute(findPrimaryKeyConstraints(config))),
+        collectLast(queryEngine.execute(findEnums(config))),
     ]);
 
     return {
