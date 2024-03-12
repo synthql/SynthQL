@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
+import { Path } from '../../execution/types';
 import { setIn } from './setIn';
-import { Path, star } from '../../execution/types';
 
 describe('setIn', (i) => {
     const thingToWrite = '!@#$';
@@ -17,7 +17,7 @@ describe('setIn', (i) => {
         },
         {
             input: [{}, {}, {}],
-            path: [star, 'a'],
+            path: ['a'],
             output: [
                 { a: thingToWrite },
                 { a: thingToWrite },
@@ -30,18 +30,8 @@ describe('setIn', (i) => {
             output: { a: { b: thingToWrite } },
         },
         {
-            input: { a: { b: [1, 2, 3] } },
-            path: ['a', 'b', 1],
-            output: { a: { b: [1, thingToWrite, 3] } },
-        },
-        {
-            input: { a: { b: [1, 2, 3] } },
-            path: ['a', 'b', 3],
-            output: { a: { b: [1, 2, 3, thingToWrite] } },
-        },
-        {
             input: [{ a: 1 }, { a: 2 }, { a: 3 }],
-            path: [star, 'b'],
+            path: ['b'],
             output: [
                 { a: 1, b: thingToWrite },
                 { a: 2, b: thingToWrite },
@@ -50,7 +40,7 @@ describe('setIn', (i) => {
         },
         {
             input: [{ a: [{ a: 1 }, { a: 2 }] }, { a: [{ a: 3 }, { a: 4 }] }],
-            path: [star, 'a', star, 'b'],
+            path: ['a', 'b'],
             output: [
                 {
                     a: [
@@ -68,15 +58,23 @@ describe('setIn', (i) => {
         },
         {
             input: [{ a: [{ a: 1 }, { a: 2 }] }, { a: [{ a: 3 }, { a: 4 }] }],
-            path: [star, 'a', star],
+            path: ['a'],
             output: [
-                { a: [thingToWrite, thingToWrite] },
-                { a: [thingToWrite, thingToWrite] },
+                { a: thingToWrite },
+                { a: thingToWrite },
+            ],
+        },
+        {
+            input: [{ a: [{ a: 1 }, { a: 2 }] }, { a: [{ a: 3 }, { a: 4 }] }],
+            path: ['a', 'a'],
+            output: [
+                { a: [{ a: thingToWrite }, { a: thingToWrite }] },
+                { a: [{ a: thingToWrite }, { a: thingToWrite }] },
             ],
         },
     ];
 
-    test.each(cases)('setIn %p', ({ input, path, output }) => {
+    test.each(cases)('setIn #%#', ({ input, path, output }) => {
         const actual = setIn(
             structuredClone(input),
             path,

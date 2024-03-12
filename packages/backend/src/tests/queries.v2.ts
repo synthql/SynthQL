@@ -29,7 +29,7 @@ export function film() {
         .include({
             language: language()
                 .where({ language_id: col('public.film.language_id') })
-                .one(),
+                .maybe(),
             filmActor: filmActor()
                 .where({ film_id: col('public.film.film_id') })
                 .many(),

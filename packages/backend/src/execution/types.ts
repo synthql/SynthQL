@@ -86,9 +86,9 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
         query: TQuery,
     ):
         | {
-              query: TQuery;
-              remaining: TQuery[];
-          }
+            query: TQuery;
+            remaining: TQuery[];
+        }
         | undefined;
 }
 
@@ -143,5 +143,5 @@ export interface ExecResultNode {
     children: ExecResultNode[];
 }
 
-export const star: ['*'] = ['*'];
-export type Path = Array<string | number | typeof star>;
+
+export type Path = Array<string>;

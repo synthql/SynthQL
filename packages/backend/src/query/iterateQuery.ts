@@ -1,4 +1,4 @@
-import { Path, star } from '../execution/types';
+import { Path } from '../execution/types';
 import { AnyQuery } from '../types';
 import { setIn } from '../util/tree/setIn';
 import { getIn } from '../util/tree/getIn';
@@ -43,7 +43,7 @@ export function* iterateQuery<TQuery extends AnyQuery>(
     query: TQuery,
 ): Generator<QueryIterItem<TQuery>> {
     const stack: QueryIterItem<TQuery>[] = [
-        { query, insertionPath: [star], depth: 0 },
+        { query, insertionPath: [], depth: 0 },
     ];
 
     while (stack.length > 0) {
@@ -56,9 +56,6 @@ export function* iterateQuery<TQuery extends AnyQuery>(
             query.include ?? {},
         )) {
             const newPath = [...insertionPath, includeKey];
-            if (subQuery.cardinality === 'many') {
-                newPath.push(star);
-            }
 
             stack.push({
                 query: subQuery as TQuery,

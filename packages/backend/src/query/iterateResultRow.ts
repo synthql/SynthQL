@@ -18,7 +18,7 @@ export function* iterateResultRows(
     for (const { query: subQuery, insertionPath } of iterateQuery(query)) {
         const cols = columns(subQuery, defaultSchema);
         for (const col of cols) {
-            const path: Path = [...insertionPath, col.column];
+            const path = [...insertionPath, col.column];
 
             try {
                 yield {
@@ -31,6 +31,8 @@ export function* iterateResultRows(
         }
     }
 }
+
+
 
 interface IterateResultRowsErrorProps {
     rows: ResultRow[];

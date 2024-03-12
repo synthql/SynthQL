@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { getIn } from './getIn';
-import { Path, star } from '../../execution/types';
+import { Path } from '../../execution/types';
 
-describe('getIn', (i) => {
+describe('getIn', () => {
     const cases: Array<{ input: any; path: Path; output: any }> = [
         {
             input: {},
@@ -12,7 +12,12 @@ describe('getIn', (i) => {
         {
             input: [],
             path: [],
-            output: [[]],
+            output: [],
+        },
+        {
+            input: [1, 2],
+            path: [],
+            output: [1, 2],
         },
         {
             input: { a: 1 },
@@ -32,21 +37,11 @@ describe('getIn', (i) => {
         {
             input: { a: { b: [1, 2, 3] } },
             path: ['a', 'b'],
-            output: [[1, 2, 3]],
-        },
-        {
-            input: { a: { b: [1, 2, 3] } },
-            path: ['a', 'b', 1],
-            output: [2],
-        },
-        {
-            input: { a: { b: [1, 2, 3] } },
-            path: ['a', 'b', 3],
-            output: [],
+            output: [1, 2, 3],
         },
         {
             input: [{ a: 1 }, { a: 2 }, { a: 3 }],
-            path: [star, 'a'],
+            path: ['a'],
             output: [1, 2, 3],
         },
         {
@@ -64,7 +59,7 @@ describe('getIn', (i) => {
                     ],
                 },
             ],
-            path: [star, 'a', star, 'b'],
+            path: ['a', 'b'],
             output: [1234, 2345, 3456, 4567],
         },
         {
@@ -82,7 +77,7 @@ describe('getIn', (i) => {
                     ],
                 },
             ],
-            path: [star, 'a', star, 'c'],
+            path: ['a', 'c'],
             output: [],
         },
         {
@@ -100,14 +95,14 @@ describe('getIn', (i) => {
                     ],
                 },
             ],
-            path: [star, 'z'],
+            path: ['z'],
             output: [],
         },
         {
             input: [
                 {
                     a: [
-                        { a: 1, b: 1234 },
+                        { a: 1, b: 12340000 },
                         { a: 2, b: 2345 },
                     ],
                 },
@@ -118,11 +113,11 @@ describe('getIn', (i) => {
                     ],
                 },
             ],
-            path: [star],
+            path: [],
             output: [
                 {
                     a: [
-                        { a: 1, b: 1234 },
+                        { a: 1, b: 12340000 },
                         { a: 2, b: 2345 },
                     ],
                 },
@@ -141,7 +136,7 @@ describe('getIn', (i) => {
         },
     ];
 
-    test.each(cases)('getIn %p', ({ input, path, output }) => {
+    test.each(cases)('getIn #%#', ({ input, path, output }) => {
         const actual = getIn(input, path);
         expect(actual).toEqual(output);
     });

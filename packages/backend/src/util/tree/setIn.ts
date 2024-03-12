@@ -1,7 +1,6 @@
 import { Path } from '../../execution/types';
 import { assertArrayAtPath } from '../asserts/assertArrayAtPath';
 import { assertObject } from '../asserts/assertObject';
-import { isAnyIndex } from '../path/isAnyIndex';
 import { getIn } from './getIn';
 
 /**
@@ -32,23 +31,30 @@ export function setIn<TTree>(
     for (const parent of parents) {
         const child = getValue(parent);
         const lastSegment = path[path.length - 1];
-        if (typeof lastSegment === 'number') {
-            assertArrayAtPath(parent, slice);
-            parent[lastSegment] = child;
-        } else if (typeof lastSegment === 'string') {
-            assertObject(parent, slice);
-            parent[lastSegment] = child;
-        } else if (isAnyIndex(lastSegment)) {
-            assertArrayAtPath(parent, slice);
-            for (let i = 0; i < parent.length; i++) {
-                parent[i] = child;
+
+        if (Array.isArray(parent)) {
+            for (const parentItem of parent) {
+                setOnObject(parentItem, slice, lastSegment, child);
             }
-        } /* v8 ignore next 3 */ else {
-            throw new Error(
-                `Unknown path segment: ${JSON.stringify(lastSegment)}`,
-            );
+        }
+        else {
+            setOnObject(parent, slice, lastSegment, child)
         }
     }
 
     return tree;
+}
+
+function setOnObject(parent: unknown, pathToParent: Path, lastSegment: Path[number], child: unknown) {
+    if (typeof lastSegment === 'number') {
+        assertArrayAtPath(parent, pathToParent);
+        parent[lastSegment] = child;
+    } else if (typeof lastSegment === 'string') {
+        assertObject(parent, pathToParent);
+        parent[lastSegment] = child;
+    } /* v8 ignore next 3 */ else {
+        throw new Error(
+            `Unknown path segment: ${JSON.stringify(lastSegment)}`,
+        );
+    }
 }

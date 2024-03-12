@@ -41,23 +41,23 @@ describe('execute', () => {
                         'film_id' | 'title'
                     >
                 > = [
-                    {
-                        film_id: 1,
-                        title: 'The Matrix',
-                    },
-                    {
-                        film_id: 2,
-                        title: 'The Matrix Reloaded',
-                    },
-                    {
-                        film_id: 3,
-                        title: 'The Matrix Revolutions',
-                    },
-                    {
-                        film_id: 4,
-                        title: 'The fifth element',
-                    },
-                ];
+                        {
+                            film_id: 1,
+                            title: 'The Matrix',
+                        },
+                        {
+                            film_id: 2,
+                            title: 'The Matrix Reloaded',
+                        },
+                        {
+                            film_id: 3,
+                            title: 'The Matrix Revolutions',
+                        },
+                        {
+                            film_id: 4,
+                            title: 'The fifth element',
+                        },
+                    ];
 
                 const filmId = q.where?.film_id;
                 return films.filter((a) =>
@@ -77,23 +77,23 @@ describe('execute', () => {
                         'film_id' | 'rating'
                     >
                 > = [
-                    {
-                        film_id: 1,
-                        rating: 'PG-13',
-                    },
-                    {
-                        film_id: 2,
-                        rating: 'R',
-                    },
-                    {
-                        film_id: 3,
-                        rating: 'R',
-                    },
-                    {
-                        film_id: 4,
-                        rating: 'PG-13',
-                    },
-                ];
+                        {
+                            film_id: 1,
+                            rating: 'PG-13',
+                        },
+                        {
+                            film_id: 2,
+                            rating: 'R',
+                        },
+                        {
+                            film_id: 3,
+                            rating: 'R',
+                        },
+                        {
+                            film_id: 4,
+                            rating: 'PG-13',
+                        },
+                    ];
                 const filmIds = q.where?.film_id.in;
                 return filmRatings.filter((a) =>
                     filmIds ? filmIds.includes(a.film_id) : true,
@@ -115,13 +115,13 @@ describe('execute', () => {
                 defaultSchema,
             }),
         );
-        expect(result).toMatchInlineSnapshot(`
-          {
-            "actor_id": 1,
-            "first_name": "John",
-            "last_name": "Doe",
-          }
-        `);
+        expect(result).toEqual(
+            {
+                "actor_id": 1,
+                "first_name": "John",
+                "last_name": "Doe",
+            }
+        );
     });
 
     test('public.film with virtual.film_rating', async () => {

@@ -29,16 +29,19 @@ function composeExecutionResultsRecursively(
     setIn(queryResult, path, (parent) => {
         const predicate = (row: ResultRow) => {
             for (const filter of filters) {
-                assertHasKey(row, filter.childColumn);
                 assertHasKey(parent, filter.parentColumn);
-                if (row[filter.childColumn] !== parent[filter.parentColumn]) {
+                const parentValue = parent[filter.parentColumn];
+
+                assertHasKey(row, filter.childColumn);
+                const childValue = row[filter.childColumn];
+                if (parentValue !== childValue) {
                     return false;
                 }
             }
             return true;
         };
         const rows = result.filter((row) => predicate(row));
-        return applyCardinality(rows, inputQuery.cardinality ?? 'many');
+        return applyCardinality(rows, inputQuery.cardinality ?? 'many', { query: inputQuery, row: rows });
     });
 
     for (const child of node.children) {

@@ -13,53 +13,53 @@ describe('collectColumnReferences', () => {
             query: AnyQuery;
             expected: Array<string>;
         }> = [
-            {
-                query: from('public.actor').where({ actor_id: 1 }).many(),
-                expected: ['public.actor.actor_id'],
-            },
+                {
+                    query: from('public.actor').where({ actor_id: 1 }).many(),
+                    expected: ['public.actor.actor_id'],
+                },
 
-            {
-                query: from('public.actor')
-                    .where({
-                        actor_id: 1,
-                        first_name: col('public.country.country_id'),
-                    })
-                    .many(),
-                expected: [
-                    'public.actor.actor_id',
-                    'public.actor.first_name',
-                    'public.country.country_id',
-                ],
-            },
+                {
+                    query: from('public.actor')
+                        .where({
+                            actor_id: 1,
+                            first_name: col('public.country.country_id'),
+                        })
+                        .many(),
+                    expected: [
+                        'public.actor.actor_id',
+                        'public.actor.first_name',
+                        'public.country.country_id',
+                    ],
+                },
 
-            {
-                query: from('public.actor')
-                    .where({
-                        actor_id: 1,
-                        first_name: col('public.country.country_id'),
-                    })
-                    .include({
-                        foo: from('public.country')
-                            .where({ country: col('public.film.film_id') })
-                            .many(),
-                    })
-                    .many(),
-                expected: [
-                    'public.actor.actor_id',
-                    'public.actor.first_name',
-                    'public.country.country_id',
-                    'public.country.country',
-                    'public.film.film_id',
-                ],
-            },
+                {
+                    query: from('public.actor')
+                        .where({
+                            actor_id: 1,
+                            first_name: col('public.country.country_id'),
+                        })
+                        .include({
+                            foo: from('public.country')
+                                .where({ country: col('public.film.film_id') })
+                                .many(),
+                        })
+                        .many(),
+                    expected: [
+                        'public.actor.actor_id',
+                        'public.actor.first_name',
+                        'public.country.country_id',
+                        'public.country.country',
+                        'public.film.film_id',
+                    ],
+                },
 
-            {
-                query: city()
-                    .where({ city_id: col('public.address.city_id') })
-                    .many(),
-                expected: ['public.city.city_id', 'public.address.city_id'],
-            },
-        ];
+                {
+                    query: city()
+                        .where({ city_id: col('public.address.city_id') })
+                        .many(),
+                    expected: ['public.city.city_id', 'public.address.city_id'],
+                },
+            ];
 
         test.each(cases)(
             'collectColumnReferences #%#',
@@ -95,11 +95,11 @@ describe('collectColumnReferences', () => {
             },
         );
 
-        expect(result).toMatchInlineSnapshot(`
-          [
-            ""public"."city"."city_id"",
-            ""public"."address"."city_id"",
-          ]
-        `);
+        expect(result).toEqual(
+            [
+                `"public"."city"."city_id"`,
+                `"public"."address"."city_id"`,
+            ]
+        );
     });
 });
