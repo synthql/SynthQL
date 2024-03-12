@@ -44,11 +44,11 @@ describe('select', () => {
         )('select a city with one country by ID %s ', async (cityId) => {
             const result = await run(findCityById(cityId));
             const expected = await sql`
-            select 
+            select
                 city.*,
                 jsonb_agg(co) #> '{0}' as country
             from city
-            left join country co 
+            left join country co
                 on co.country_id = city.country_id
             where city.city_id = ${cityId}
             group by
@@ -93,13 +93,13 @@ describe('select', () => {
         );
     });
 
-    test.only(`select with 3 level depth:
+    test(`select with 3 level depth:
         store
             one(address)
                 one(city)
         `, async () => {
         const expected: Array<{ store_id: number }> = await sql`
-            select 
+            select
                 s.store_id,
                 jsonb_build_object(
                     'address_id', MAX(a.address_id),
@@ -109,13 +109,13 @@ describe('select', () => {
                         'city', MAX(c.city)
                     )
                 ) as address
-            from 
+            from
                 store s
-            left join 
+            left join
                 address a ON s.address_id = a.address_id
             left join
                 city c ON a.city_id = c.city_id
-            left join 
+            left join
                 inventory i ON s.store_id = i.store_id
             left join
                 film f ON i.film_id = f.film_id
