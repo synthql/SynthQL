@@ -1,8 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useGlobalState } from "./useGlobalState";
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useGlobalState } from './useGlobalState';
 
-type LayoutDirection = 'vertical' | 'horizontal'
+type LayoutDirection = 'vertical' | 'horizontal';
 
 export function useLayoutDirection() {
-    return useGlobalState<LayoutDirection>('app.layoutDirection', 'vertical')
+    return useGlobalState<LayoutDirection>('app.layoutDirection', 'vertical');
 }

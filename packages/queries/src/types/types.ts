@@ -16,8 +16,8 @@ export type Column<DB, TTable extends Table<DB>> = keyof DB[TTable] & string;
 
 export type ColumnReference<DB> = {
     [TTable in keyof DB]: DB[TTable] extends object
-    ? `${TTable & string}.${(keyof DB[TTable] & string) | '*'}`
-    : never;
+        ? `${TTable & string}.${(keyof DB[TTable] & string) | '*'}`
+        : never;
 }[keyof DB];
 
 /**
@@ -35,12 +35,12 @@ export type ColumnValue<
 > =
     // Case 1: The value is a ColumnType
     DB[TTable][TColumn] extends Selectable<infer T>
-    ? T
-    : // Case 2: The value is a nullable ColumnType
-    DB[TTable][TColumn] extends Selectable<infer T> | null
-    ? T | null
-    : // Else: just get the type of the column
-    DB[TTable][TColumn];
+        ? T
+        : // Case 2: The value is a nullable ColumnType
+          DB[TTable][TColumn] extends Selectable<infer T> | null
+          ? T | null
+          : // Else: just get the type of the column
+            DB[TTable][TColumn];
 
 type Selectable<T> = {
     readonly __select__: T;
@@ -54,11 +54,11 @@ type BinaryOp<
     TTable extends Table<DB>,
     TColumn extends Column<DB, TTable>,
 > = {
-        [op in BinaryOperator | '= any']?:
+    [op in BinaryOperator | '= any']?:
         | ColumnValue<DB, TTable, TColumn>
         | Array<ColumnValue<DB, TTable, TColumn>>
         | RefOp<DB>;
-    };
+};
 
 export type JoinOp = '=' | 'in';
 
@@ -103,12 +103,12 @@ export type Where<DB, TTable extends Table<DB>> = {
 
 export type Select<DB, TTable extends Table<DB>> =
     // Include only the specified columns
-    | { [TColumn in Column<DB, TTable>]?: true }
+    { [TColumn in Column<DB, TTable>]?: true };
 
 export type Include<DB> = {
     [k in string]: Query<DB, Table<DB>> extends Query<DB, infer TTable>
-    ? Query<DB, TTable>
-    : never;
+        ? Query<DB, TTable>
+        : never;
 };
 
 export type Query<DB, TTable extends Table<DB> = Table<DB>> = {

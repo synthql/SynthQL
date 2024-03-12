@@ -1,10 +1,9 @@
-import { MainPanels } from "@/components/MainPanels";
-
+import { MainPanels } from '@/components/MainPanels';
 
 export default function Home() {
-  return (
-    <main >
-      <MainPanels />
-    </main>
-  );
+    return (
+        <main>
+            <MainPanels />
+        </main>
+    );
 }

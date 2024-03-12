@@ -41,15 +41,31 @@ export default function Home(): JSX.Element {
             title={`synthql: Type-safe, composable queries`}
             description="The type-safe, composable query language"
         >
-            <header style={{ minHeight: '90vh', background: '#fafafa', width: '100vw', display: 'grid', placeItems: 'center', }}>
-                <div style={{
-                    background: "url('./img/logo.webp')",
-                    height: '124px',
-                    width: '124px',
-                    backgroundSize: 'cover',
-                    borderRadius: '100%'
-                }} />
-                <div style={{ maxWidth: 600, transform: 'translateY(-20%)', padding: 20 }}>
+            <header
+                style={{
+                    minHeight: '90vh',
+                    background: '#fafafa',
+                    width: '100vw',
+                    display: 'grid',
+                    placeItems: 'center',
+                }}
+            >
+                <div
+                    style={{
+                        background: "url('./img/logo.webp')",
+                        height: '124px',
+                        width: '124px',
+                        backgroundSize: 'cover',
+                        borderRadius: '100%',
+                    }}
+                />
+                <div
+                    style={{
+                        maxWidth: 600,
+                        transform: 'translateY(-20%)',
+                        padding: 20,
+                    }}
+                >
                     <h1 style={{ textAlign: 'center' }}>Welcome to synthql</h1>
                     <div className="row">
                         <p className="col">
@@ -59,65 +75,123 @@ export default function Home(): JSX.Element {
                     </div>
                     <div className="row">
                         <p className="col">
-                            synthql let's you query your database directly from the
-                            browser, helping you create large object graphs without
-                            the need for implementing custom endpoints.
+                            synthql let's you query your database directly from
+                            the browser, helping you create large object graphs
+                            without the need for implementing custom endpoints.
                         </p>
                     </div>
                     <div className="row">
                         <p className="col">
-                            synthql is written in TypeScript, and runs on the browser
-                            and nodejs.
+                            synthql is written in TypeScript, and runs on the
+                            browser and nodejs.
                         </p>
                     </div>
-
 
                     <Link to="/docs/getting-started">
                         <button className="button button--primary button--lg">
                             Get started
                         </button>
                     </Link>
-
                 </div>
             </header>
 
             <div style={{ height: 80 }} />
 
-            <main className="container"  >
-                <section style={{ minHeight: '100vh', display: 'flex', gap: 40, flexDirection: 'column', padding: 40 }}>
+            <main className="container">
+                <section
+                    style={{
+                        minHeight: '100vh',
+                        display: 'flex',
+                        gap: 40,
+                        flexDirection: 'column',
+                        padding: 40,
+                    }}
+                >
                     <h2>Features</h2>
 
-                    <div className='row'>
+                    <div className="row">
                         {[
-
-                            { title: 'Full-stack', description: 'synthql queries can be written both on the client and server.' },
-                            { title: 'Plain-data queries', description: 'synthql queries are plain data. They can thus be serialized, deserialized, and transformed by regular function.' },
-                            { title: 'Composable queries', description: "synthql's query language is composable, allowing you to build complex queries from simple ones." },
-                            { title: 'Lazy queries', link: '/docs/lazy-queries', description: "Lazy queries help you split large object graphs to optimize page load." },
-                            { title: 'Security', link: '/docs/security', description: "synthql provides mechanisms for whitelisting queries, restricting access to columns and restricting access to rows." },
-                            { title: 'Custom query executors', link: '/docs/custom-query-executors', description: "Queries are compiled by default to a single SQL query, query executors let you resolve queries from HTTP endpoints, files, etc." },
-                            { title: 'Type-generation', link: '/docs/generating-types', description: "synthql can automatically generate TypeScript types from your database schema." },
+                            {
+                                title: 'Full-stack',
+                                description:
+                                    'synthql queries can be written both on the client and server.',
+                            },
+                            {
+                                title: 'Plain-data queries',
+                                description:
+                                    'synthql queries are plain data. They can thus be serialized, deserialized, and transformed by regular function.',
+                            },
+                            {
+                                title: 'Composable queries',
+                                description:
+                                    "synthql's query language is composable, allowing you to build complex queries from simple ones.",
+                            },
+                            {
+                                title: 'Lazy queries',
+                                link: '/docs/lazy-queries',
+                                description:
+                                    'Lazy queries help you split large object graphs to optimize page load.',
+                            },
+                            {
+                                title: 'Security',
+                                link: '/docs/security',
+                                description:
+                                    'synthql provides mechanisms for whitelisting queries, restricting access to columns and restricting access to rows.',
+                            },
+                            {
+                                title: 'Custom query executors',
+                                link: '/docs/custom-query-executors',
+                                description:
+                                    'Queries are compiled by default to a single SQL query, query executors let you resolve queries from HTTP endpoints, files, etc.',
+                            },
+                            {
+                                title: 'Type-generation',
+                                link: '/docs/generating-types',
+                                description:
+                                    'synthql can automatically generate TypeScript types from your database schema.',
+                            },
                             { title: 'Denormalized cache', description: '' },
-                        ]
-                            .map(({ title, link, description }) => {
-                                return (
-                                    <div style={{ padding: 8, }} className="col col--6">
-                                        <div style={{ height: '100%', background: '#fafafa', borderRadius: 16, padding: 32 }} >
-                                            <Heading as="h3">{title}</Heading>
-                                            <p>{description}</p>
-                                            {link && <Link to={link}>
-                                                Read more
-                                            </Link>}
-                                        </div>
+                        ].map(({ title, link, description }) => {
+                            return (
+                                <div
+                                    style={{ padding: 8 }}
+                                    className="col col--6"
+                                >
+                                    <div
+                                        style={{
+                                            height: '100%',
+                                            background: '#fafafa',
+                                            borderRadius: 16,
+                                            padding: 32,
+                                        }}
+                                    >
+                                        <Heading as="h3">{title}</Heading>
+                                        <p>{description}</p>
+                                        {link && (
+                                            <Link to={link}>Read more</Link>
+                                        )}
                                     </div>
-                                )
-
-                            })}
+                                </div>
+                            );
+                        })}
                     </div>
                 </section>
 
-                <section style={{ display: 'grid', placeItems: 'center', minHeight: '60vh' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, transform: 'translateY(-20%)' }}>
+                <section
+                    style={{
+                        display: 'grid',
+                        placeItems: 'center',
+                        minHeight: '60vh',
+                    }}
+                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 16,
+                            transform: 'translateY(-20%)',
+                        }}
+                    >
                         <h2>Ready to get started?</h2>
                         <Link to="/docs/getting-started">
                             <button className="button button--primary button--lg">
@@ -125,10 +199,8 @@ export default function Home(): JSX.Element {
                             </button>
                         </Link>
                     </div>
-
                 </section>
-
             </main>
-        </Layout >
+        </Layout>
     );
 }

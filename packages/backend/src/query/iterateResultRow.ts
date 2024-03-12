@@ -2,6 +2,7 @@ import { Path, ResultRow } from '../execution/types';
 import { ColumnRef } from '../refs/ColumnRef';
 import { AnyQuery } from '../types';
 import { printPath } from '../util/path/printPath';
+import { printObj } from '../util/printObj';
 import { getIn } from '../util/tree/getIn';
 import { columns } from './columns';
 import { iterateQuery } from './iterateQuery';
@@ -55,7 +56,7 @@ function composeMessage(props: IterateResultRowsErrorProps): string {
             : String(props.err),
         '',
         'Rows:',
-        JSON.stringify(props.rows, null, 2),
+        printObj(props.rows),
         '',
         'Path:',
         printPath(props.path),

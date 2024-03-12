@@ -13,61 +13,62 @@ export const appRouter = router({
         .input(
             z.object({
                 url: z.string(),
-                schema: z.string()
+                schema: z.string(),
             }),
         )
         .mutation(async ({ input }) => {
             const queryEngine = await initQueryEngine(input.url, input.schema);
-            const introspection = (await queryEngine.introspect())
+            const introspection = await queryEngine.introspect();
             return {
-                introspection
+                introspection,
             };
         }),
 
     executeProgram: procedure
-        .input(z.object({
-            program: z.string()
-        }))
+        .input(
+            z.object({
+                program: z.string(),
+            }),
+        )
         .mutation(async ({ input }) => {
-
             const query = executeProgram(input.program);
 
             let sql = '';
             try {
                 sql = queryEngine?.compile(query).sql ?? '';
             } catch (e) {
-                console.error(e)
+                console.error(e);
             }
 
             if (!queryEngine) {
                 return {
                     query,
-                    result: "Error: queryEngine not initialized",
-                    sql
-                }
+                    result: 'Error: queryEngine not initialized',
+                    sql,
+                };
             }
             try {
                 return {
                     query,
                     result: await collectFirst(queryEngine.execute(query)),
-                    sql
-                }
-            }
-            catch (e) {
+                    sql,
+                };
+            } catch (e) {
                 return {
                     query,
                     result: { error: String(e) },
-                    sql
-                }
+                    sql,
+                };
             }
         }),
 
     readFile: procedure
-        .input(z.object({
-            fileName: z.string(),
-        }))
+        .input(
+            z.object({
+                fileName: z.string(),
+            }),
+        )
         .query(async ({ input }) => {
-
             const publicFolder = path.join(homedir(), 'synthql');
             if (!fs.existsSync(publicFolder)) {
                 // create the folder if it doesn't exist
@@ -80,7 +81,7 @@ export const appRouter = router({
                 return `// file not found at ${path.resolve(fileName)}`;
             }
             return fs.readFileSync(fileName).toString();
-        })
+        }),
 });
 
 // export type definition of API

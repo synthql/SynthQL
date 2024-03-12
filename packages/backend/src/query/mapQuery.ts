@@ -24,15 +24,18 @@ export function mapQuery<T extends AnyQuery>(
     const rootContext: Context<T> = {
         parentQuery: undefined,
         includeKey: undefined,
-        childPath: [star],
+        childPath: query.cardinality === 'many' ? [star] : [],
     };
     const mapped = mapFn(query, context ?? rootContext);
     const include = { ...query.include };
     for (const [includeKey, subQuery] of Object.entries(include)) {
-        const parentPath = (context ?? rootContext)
-            .childPath;
+        const parentPath = (context ?? rootContext).childPath;
 
-        const childPath = calculatePath(parentPath, subQuery.cardinality ?? 'many', includeKey);
+        const childPath = calculatePath(
+            parentPath,
+            subQuery.cardinality ?? 'many',
+            includeKey,
+        );
 
         const childContext: Context<T> = {
             parentQuery: mapped,
@@ -48,9 +51,13 @@ export function mapQuery<T extends AnyQuery>(
     };
 }
 
-function calculatePath(parentPath: Path, childCardinality: Cardinality, includeKey: string) {
+function calculatePath(
+    parentPath: Path,
+    childCardinality: Cardinality,
+    includeKey: string,
+) {
     // Case: the parent is the root query
-    if (parentPath.length === 1) {
+    if (parentPath.length <= 1) {
         return [...parentPath, includeKey];
     }
     if (childCardinality === 'many') {

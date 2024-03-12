@@ -17,7 +17,7 @@
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "cov": "open coverage/index.html",
-        "format": "yarn prettier --write \"./src/**/*.(ts|tsx)\""
+        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
         "@types/node": "^20.10.5",

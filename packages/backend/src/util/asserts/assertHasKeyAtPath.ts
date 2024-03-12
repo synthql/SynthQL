@@ -1,5 +1,6 @@
 import { Path } from '../../execution/types';
 import { hasKey } from '../hasKey';
+import { printObj } from '../printObj';
 
 export function assertHasKeyAtPath(
     obj: unknown,
@@ -8,7 +9,7 @@ export function assertHasKeyAtPath(
 ): asserts obj is { [k: string]: unknown } {
     if (!hasKey(obj, key)) {
         throw new Error(
-            `Expected an object with key ${key} at path: ${JSON.stringify(path)} but got: ${JSON.stringify(obj)}`,
+            `Expected an object with key ${key} at path: ${JSON.stringify(path)} but got: ${printObj(obj)}`,
         );
     }
 }

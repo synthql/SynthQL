@@ -1,5 +1,6 @@
 import { Path } from '../../execution/types';
 import { hasKey } from '../hasKey';
+import { printObj } from '../printObj';
 
 export function assertHasKey<T extends string>(
     obj: unknown,
@@ -7,7 +8,7 @@ export function assertHasKey<T extends string>(
 ): asserts obj is { [k in T]: unknown } {
     if (!hasKey(obj, key)) {
         throw new Error(
-            `Expected an object to have key ${key} but got: ${JSON.stringify(obj)}`,
+            `Expected an object to have key ${key} but got: ${printObj(obj)}`,
         );
     }
 }

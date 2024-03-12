@@ -24,10 +24,10 @@ describe('n x m', () => {
         const queryResult = await collectLast(gen);
 
         expect(queryResult).toMatchInlineSnapshot(`
-      {
-        "address_id": 1,
-        "store_id": 1,
-      }
-    `);
+          {
+            "address_id": 1,
+            "store_id": 1,
+          }
+        `);
     });
 });

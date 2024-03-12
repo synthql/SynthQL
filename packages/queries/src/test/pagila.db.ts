@@ -2,9 +2,10 @@ import type { ColumnType } from 'kysely';
 import { Table, query } from '..';
 import { Exp } from '../expression/Expression';
 
-export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
-    ? ColumnType<S, I | undefined, U>
-    : ColumnType<T, T | undefined, T>;
+export type Generated<T> =
+    T extends ColumnType<infer S, infer I, infer U>
+        ? ColumnType<S, I | undefined, U>
+        : ColumnType<T, T | undefined, T>;
 
 export type MpaaRating = 'G' | 'NC-17' | 'PG' | 'PG-13' | 'R';
 
@@ -296,4 +297,4 @@ export const from = query<DB>().from;
 
 export function exp<Context>(exp: Exp<Context>): Exp<Context> {
     return exp;
-} 
+}

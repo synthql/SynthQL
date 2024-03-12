@@ -14,7 +14,11 @@ export function SynthqlProvider({
     value: SynthqlContext;
     children: React.ReactNode | any;
 }) {
-    return <synthqlContext.Provider value={value}>{children}</synthqlContext.Provider>;
+    return (
+        <synthqlContext.Provider value={value}>
+            {children}
+        </synthqlContext.Provider>
+    );
 }
 
 export function useSynthqlContext(): SynthqlContext {

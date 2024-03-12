@@ -1,15 +1,15 @@
-import { useEffect } from "react"
+import { useEffect } from 'react';
 
 export function useGlobalShortcut(key: string, callback: () => void) {
     useEffect(() => {
         const handler = (event: KeyboardEvent) => {
             if (event.key === key && event.ctrlKey) {
-                callback()
+                callback();
             }
-        }
-        window.addEventListener('keydown', handler)
+        };
+        window.addEventListener('keydown', handler);
         return () => {
-            window.removeEventListener('keydown', handler)
-        }
-    }, [key, callback])
+            window.removeEventListener('keydown', handler);
+        };
+    }, [key, callback]);
 }

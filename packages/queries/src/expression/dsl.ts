@@ -1,7 +1,10 @@
-import { Column, Table } from "..";
-import { Exp, Primitive } from "./Expression";
+import { Column, Table } from '..';
+import { Exp, Primitive } from './Expression';
 
-export function equals<Context>(exp1: Exp<Context>, exp2: Exp<Context>): Exp<Context> {
+export function equals<Context>(
+    exp1: Exp<Context>,
+    exp2: Exp<Context>,
+): Exp<Context> {
     return ['=', exp1, exp2];
 }
 
@@ -17,8 +20,11 @@ export function isZero<Context>(exp: Exp<Context>): Exp<Context> {
     return ['=', exp, 0];
 }
 
-export function coalesce<Context>(exp: Exp<Context>, def: Exp<Context>): Exp<Context> {
-    return ['>invoke','coalesce', exp, def];
+export function coalesce<Context>(
+    exp: Exp<Context>,
+    def: Exp<Context>,
+): Exp<Context> {
+    return ['>invoke', 'coalesce', exp, def];
 }
 
 export function isNotNull<Context>(exp: Exp<Context>): Exp<Context> {
@@ -33,15 +39,23 @@ export function sum<Context>(exp: Exp<Context>): Exp<Context> {
     return ['>invoke', 'sum', exp];
 }
 
-export function param<Context, TParam extends Primitive>(param: TParam): Exp<Context> {
-    return ['>param', param]
+export function param<Context, TParam extends Primitive>(
+    param: TParam,
+): Exp<Context> {
+    return ['>param', param];
 }
 
-export function literal<Context, TParam extends Primitive>(param: TParam): Exp<Context> {
-    return ['>literal', param]
+export function literal<Context, TParam extends Primitive>(
+    param: TParam,
+): Exp<Context> {
+    return ['>literal', param];
 }
 
-export function when<Context, TReturn>(condition: Exp<Context>, whenTrue: Exp<Context>, whenFalse: Exp<Context>): Exp<Context> {
+export function when<Context, TReturn>(
+    condition: Exp<Context>,
+    whenTrue: Exp<Context>,
+    whenFalse: Exp<Context>,
+): Exp<Context> {
     return ['>when', condition, whenTrue, whenFalse];
 }
 
@@ -65,7 +79,7 @@ export const json = {
         return ['->', exp, literal<Context, string>(key)];
     },
     getAsText: <Context>(exp: Exp<Context>, key: string): Exp<Context> => {
-        return ['->>', exp, literal<Context,string>(key)];
+        return ['->>', exp, literal<Context, string>(key)];
     },
     getAsNumeric: <Context>(exp: Exp<Context>, key: string): Exp<Context> => {
         const jsonText = json.getAsText(exp, key);
@@ -97,7 +111,10 @@ export const jsonb = {
     },
 };
 
-export function chain<Context>(exp: Exp<Context>, ...fns: Array<<Context>(exp: Exp<Context>) => Exp<Context>>): Exp<Context> {
+export function chain<Context>(
+    exp: Exp<Context>,
+    ...fns: Array<<Context>(exp: Exp<Context>) => Exp<Context>>
+): Exp<Context> {
     return fns.reduce((acc, fn): Exp<Context> => {
         return fn(acc);
     }, exp);

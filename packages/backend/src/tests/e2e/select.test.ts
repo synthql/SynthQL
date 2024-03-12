@@ -155,10 +155,11 @@ describe('select', () => {
 
         const result = await run(query);
 
+        const comparator = (a: { store_id: number }, b: { store_id: number }) =>
+            a.store_id - b.store_id;
 
-
-        const comparator = (a: { store_id: number }, b: { store_id: number }) => a.store_id - b.store_id;
-
-        expect(Array.from(result).sort(comparator)).toMatchObject(Array.from(expected).sort(comparator));
+        expect(Array.from(result).sort(comparator)).toMatchObject(
+            Array.from(expected).sort(comparator),
+        );
     });
 });

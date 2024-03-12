@@ -8,7 +8,6 @@ import { from } from '../../tests/generated.schema';
 import { col } from '@synthql/queries';
 
 describe('createPlanningQuery', () => {
-
     function simplifyQuery(q: PlanningQuery): {
         path: string;
         from: string;
@@ -103,85 +102,91 @@ describe('createPlanningQuery', () => {
             .where({})
             .many();
 
-        expect(simplifyQuery(createPlanningQuery(query))).toEqual(
-            {
-                "children": [
-                    {
-                        "children": [
-                            {
-                                "children": [],
-                                "from": "public.city",
-                                "path": "*.address.city",
-                            },
-                        ],
-                        "from": "public.address",
-                        "path": "*.address",
-                    },
-                ],
-                "from": "public.store",
-                "path": "*",
-            }
-        )
-    })
+        expect(simplifyQuery(createPlanningQuery(query))).toEqual({
+            children: [
+                {
+                    children: [
+                        {
+                            children: [],
+                            from: 'public.city',
+                            path: '*.address.city',
+                        },
+                    ],
+                    from: 'public.address',
+                    path: '*.address',
+                },
+            ],
+            from: 'public.store',
+            path: '*',
+        });
+    });
 
     test('store with no children', () => {
-        const q = createPlanningQuery(from('public.store').many())
-        const simplified = simplifyQuery(q)
+        const q = createPlanningQuery(from('public.store').many());
+        const simplified = simplifyQuery(q);
 
-        expect(simplified).toEqual(
-            {
-                "children": [],
-                "from": "public.store",
-                "path": "*",
-            }
-        )
-    })
+        expect(simplified).toEqual({
+            children: [],
+            from: 'public.store',
+            path: '*',
+        });
+    });
 
     test('store -> many(addresses)', () => {
-        const q = createPlanningQuery(from('public.store').include({
-            addresses: from('public.address').many(),
-        }).many())
-        const simplified = simplifyQuery(q)
+        const q = createPlanningQuery(
+            from('public.store')
+                .include({
+                    addresses: from('public.address').many(),
+                })
+                .many(),
+        );
+        const simplified = simplifyQuery(q);
 
-        expect(simplified).toEqual(
-            {
-                "from": "public.store",
-                "path": "*",
-                "children": [{
-                    "from": "public.address",
-                    "path": "*.addresses",
-                    "children": []
-                }],
-
-            }
-        )
-    })
+        expect(simplified).toEqual({
+            from: 'public.store',
+            path: '*',
+            children: [
+                {
+                    from: 'public.address',
+                    path: '*.addresses',
+                    children: [],
+                },
+            ],
+        });
+    });
 
     test('store -> many(addresses) -> many(cities)', () => {
-        const q = createPlanningQuery(from('public.store').include({
-            addresses: from('public.address').include({
-                cities: from('public.city').many(),
-            }).many(),
-        }).many())
-        const simplified = simplifyQuery(q)
+        const q = createPlanningQuery(
+            from('public.store')
+                .include({
+                    addresses: from('public.address')
+                        .include({
+                            cities: from('public.city').many(),
+                        })
+                        .many(),
+                })
+                .many(),
+        );
+        const simplified = simplifyQuery(q);
 
-        expect(simplified).toEqual(
-            {
-                "from": "public.store",
-                "path": "*",
-                "children": [{
-                    "from": "public.address",
-                    "path": "*.addresses",
-                    "children": [{
-                        "from": "public.city",
-                        "path": "*.addresses.*.cities",
-                        "children": []
-                    }]
-                }],
-
-            }
-        )
-    })
+        expect(simplified).toEqual({
+            from: 'public.store',
+            path: '*',
+            children: [
+                {
+                    from: 'public.address',
+                    path: '*.addresses',
+                    children: [
+                        {
+                            from: 'public.city',
+                            path: '*.addresses.*.cities',
+                            children: [],
+                        },
+                    ],
+                },
+            ],
+        });
+    });
 
     test('store -> many(addresses) -> maybe(city) -> maybe(language)', () => {
         const language = from('public.language').maybe();
@@ -189,28 +194,65 @@ describe('createPlanningQuery', () => {
         const addresses = from('public.address').include({ city }).many();
         const store = from('public.store').include({ addresses }).many();
 
-        const q = createPlanningQuery(store)
-        const simplified = simplifyQuery(q)
+        const q = createPlanningQuery(store);
+        const simplified = simplifyQuery(q);
 
-        expect(simplified).toEqual(
-            {
-                "from": "public.store",
-                "path": "*",
-                "children": [{
-                    "from": "public.address",
-                    "path": "*.addresses",
-                    "children": [{
-                        "from": "public.city",
-                        "path": "*.addresses.city",
-                        "children": [{
-                            "from": "public.language",
-                            "path": "*.addresses.city.language",
-                            "children": []
-                        }]
-                    }]
-                }],
+        expect(simplified).toEqual({
+            from: 'public.store',
+            path: '*',
+            children: [
+                {
+                    from: 'public.address',
+                    path: '*.addresses',
+                    children: [
+                        {
+                            from: 'public.city',
+                            path: '*.addresses.city',
+                            children: [
+                                {
+                                    from: 'public.language',
+                                    path: '*.addresses.city.language',
+                                    children: [],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        });
+    });
 
-            }
-        )
-    })
+    test('maybe(store) -> many(addresses) -> maybe(city) -> maybe(language)', () => {
+        const language = from('public.language').maybe();
+        const city = from('public.city').include({ language }).maybe();
+        const addresses = from('public.address').include({ city }).many();
+        const store = from('public.store').include({ addresses }).maybe();
+
+        const q = createPlanningQuery(store);
+        const simplified = simplifyQuery(q);
+
+        expect(simplified).toEqual({
+            from: 'public.store',
+            path: '',
+            children: [
+                {
+                    from: 'public.address',
+                    path: 'addresses',
+                    children: [
+                        {
+                            from: 'public.city',
+                            path: 'addresses.city',
+                            children: [
+                                {
+                                    from: 'public.language',
+                                    path: 'addresses.city.language',
+                                    children: [],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        });
+    });
 });

@@ -1,11 +1,4 @@
-
-import {
-    Column,
-    Include,
-    Select,
-    Table,
-    Where
-} from './types/types';
+import { Column, Include, Select, Table, Where } from './types/types';
 
 export class QueryBuilder<
     DB,
@@ -26,7 +19,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupingId: TGroupingId,
-    ) { }
+    ) {}
 
     private build(): {
         from: TTable;
@@ -77,7 +70,7 @@ export class QueryBuilder<
 
     /**
      * Builds a query that returns exactly one row. Will throw an error if the query returns 0.
-     * 
+     *
      * Also sets the limit to 1.
      */
     one() {
@@ -176,12 +169,12 @@ export class QueryBuilder<
 
     /**
      * Select specific columns from the table. `columns` is a shorthand for `select`. Example:
-     * 
+     *
      * ```ts
      * const q = from('actor')
      *   .columns('actor_id', 'last_name')
      *   .many()
-     * 
+     *
      * // is equivalent to
      * const q = from('actor')
      *   .select({

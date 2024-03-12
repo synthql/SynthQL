@@ -10,16 +10,18 @@ export type SynthqlQueryKey<
     DB = any,
     TTable extends Table<DB> = any,
     TQuery extends Query<DB, TTable> = Query<DB, TTable>,
->
-    = readonly ['synthql', TQuery]
-    | readonly ['synthql', TQuery, SynthqlQueryOptions]
-
+> =
+    | readonly ['synthql', TQuery]
+    | readonly ['synthql', TQuery, SynthqlQueryOptions];
 
 export function synthqlQueryKey<
     DB,
     TTable extends Table<DB>,
     TQuery extends Query<DB, TTable>,
->(query: TQuery, opts?: SynthqlQueryOptions): SynthqlQueryKey<DB, TTable, TQuery> {
+>(
+    query: TQuery,
+    opts?: SynthqlQueryOptions,
+): SynthqlQueryKey<DB, TTable, TQuery> {
     if (opts) {
         return ['synthql', query, opts];
     }

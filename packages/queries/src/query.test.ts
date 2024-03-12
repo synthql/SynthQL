@@ -1,75 +1,86 @@
-import { describe, test } from "vitest";
-import { Query, QueryResult, Table, col } from ".";
-import { Actor, DB, from, } from "./test/pagila.db";
+import { describe, test } from 'vitest';
+import { Query, QueryResult, Table, col } from '.';
+import { Actor, DB, from } from './test/pagila.db';
 
 describe('queries', () => {
-    function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(q: TQuery): QueryResult<DB, TQuery> {
+    function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(
+        q: TQuery,
+    ): QueryResult<DB, TQuery> {
         return {} as any;
     }
 
     test('Find one actor', () => {
-        const q = from('actor')
-            .columns('actor_id', 'first_name')
-            .one();
+        const q = from('actor').columns('actor_id', 'first_name').one();
 
-        const result = fakeQueryResult(q)
-        result satisfies { actor_id: number, first_name: string }
+        const result = fakeQueryResult(q);
+        result satisfies { actor_id: number; first_name: string };
     });
 
     test('Find many actors', () => {
-        const q = from('actor')
-            .columns('actor_id', 'first_name')
-            .many();
+        const q = from('actor').columns('actor_id', 'first_name').many();
 
-        const result = fakeQueryResult(q)
-        result satisfies Array<{ actor_id: number, first_name: string }>
+        const result = fakeQueryResult(q);
+        result satisfies Array<{ actor_id: number; first_name: string }>;
     });
 
     test('Find maybe actor', () => {
-        const q = from('actor')
-            .columns('actor_id', 'first_name')
-            .maybe();
+        const q = from('actor').columns('actor_id', 'first_name').maybe();
 
-        const result = fakeQueryResult(q)
-        result satisfies { actor_id: number, first_name: string } | null
+        const result = fakeQueryResult(q);
+        result satisfies { actor_id: number; first_name: string } | null;
     });
 
     test('Find one actor by ID', () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name', 'last_update')
             .where({
-                actor_id: 1
+                actor_id: 1,
             })
             .one();
 
-        const result = fakeQueryResult(q)
-        result satisfies { actor_id: number, first_name: string, last_name: string, last_update: Date }
+        const result = fakeQueryResult(q);
+        result satisfies {
+            actor_id: number;
+            first_name: string;
+            last_name: string;
+            last_update: Date;
+        };
     });
 
     test('Find one actor by ID', () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
             .where({
-                actor_id: 1
+                actor_id: 1,
             })
             .one();
 
-        const result = fakeQueryResult(q)
+        const result = fakeQueryResult(q);
         // @ts-expect-error
-        result satisfies { actor_id: number, first_name: string, last_name: string, last_update: Date }
+        result satisfies {
+            actor_id: number;
+            first_name: string;
+            last_name: string;
+            last_update: Date;
+        };
     });
 
     test('Find one actor by ID', () => {
         const q = from('actor')
             .columns()
             .where({
-                actor_id: 1
+                actor_id: 1,
             })
             .one();
 
-        const result = fakeQueryResult(q)
+        const result = fakeQueryResult(q);
         // @ts-expect-error
-        result satisfies { actor_id: number, first_name: string, last_name: string, last_update: Date }
+        result satisfies {
+            actor_id: number;
+            first_name: string;
+            last_name: string;
+            last_update: Date;
+        };
     });
 
     test('Find film with language and actors', () => {
@@ -93,23 +104,23 @@ describe('queries', () => {
             .include({
                 language,
                 filmActor,
-                actors
+                actors,
             })
             .one();
 
-        const result = fakeQueryResult(q)
+        const result = fakeQueryResult(q);
 
         result satisfies {
-            film_id: number,
+            film_id: number;
             language: {
-                language_id: number,
-                name: string
-            },
+                language_id: number;
+                name: string;
+            };
             actors: Array<{
-                actor_id: number,
-                first_name: string,
-                last_name: string
-            }>
-        }
+                actor_id: number;
+                first_name: string;
+                last_name: string;
+            }>;
+        };
     });
-})
+});

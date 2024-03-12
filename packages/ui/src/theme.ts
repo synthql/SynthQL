@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material';
 
 export function synthqlTheme() {
     return createTheme({
@@ -6,20 +6,20 @@ export function synthqlTheme() {
             MuiButton: {
                 defaultProps: {
                     disableElevation: true,
-                    size: "small",
-                    variant: 'contained'
-                }
+                    size: 'small',
+                    variant: 'contained',
+                },
             },
             MuiTextField: {
                 defaultProps: {
-                    size: "small"
-                }
+                    size: 'small',
+                },
             },
             MuiCard: {
                 defaultProps: {
-                    variant: 'outlined'
-                }
-            }
-        }
-    })
+                    variant: 'outlined',
+                },
+            },
+        },
+    });
 }

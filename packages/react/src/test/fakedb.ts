@@ -1,10 +1,10 @@
 export interface DB {
     users: {
-        id: string,
-        name: string
-    }
+        id: string;
+        name: string;
+    };
 }
 
-import { query } from "@synthql/queries"
+import { query } from '@synthql/queries';
 
-export const from = query<DB>().from
+export const from = query<DB>().from;

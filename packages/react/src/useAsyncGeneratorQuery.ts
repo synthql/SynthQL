@@ -1,4 +1,9 @@
-import { QueryOptions, UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+    QueryOptions,
+    UseQueryResult,
+    useQuery,
+    useQueryClient,
+} from '@tanstack/react-query';
 
 export function useAyncGeneratorQuery<TData>({
     queryKey = [],
@@ -24,9 +29,12 @@ export function useAyncGeneratorQuery<TData>({
         queryFn: async (queryProps): Promise<AsyncGenerator<TData>> => {
             const generator = await queryFn!(queryProps);
             for await (const line of generator) {
-                queryClient.setQueryData(streamingQueryKey, (oldData: TData[] | undefined = []) => {
-                    return [...oldData, line];
-                });
+                queryClient.setQueryData(
+                    streamingQueryKey,
+                    (oldData: TData[] | undefined = []) => {
+                        return [...oldData, line];
+                    },
+                );
             }
             return generator;
         },

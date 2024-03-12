@@ -1,9 +1,4 @@
-import {
-    Column,
-    ColumnReference,
-    RefOp,
-    Table
-} from './types/types';
+import { Column, ColumnReference, RefOp, Table } from './types/types';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');
@@ -43,11 +38,7 @@ export function ref<DB>() {
                         },
                     };
                 },
-
-
             };
         },
     };
 }
-
-
