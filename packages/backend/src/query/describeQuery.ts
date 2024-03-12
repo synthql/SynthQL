@@ -1,6 +1,7 @@
 import { isRefOp } from '@synthql/queries';
 import { AnyQuery } from '../types';
 import { iterateQuery } from './iterateQuery';
+import { isAnyIndex } from '../util/path/isAnyIndex';
 
 export function describeQuery(q: AnyQuery): string {
     const lines: { depth: number; table: string; join: string }[] = [];
@@ -16,7 +17,7 @@ export function describeQuery(q: AnyQuery): string {
             })
             .join(' and ');
 
-        lines.push({ depth: insertionPath.length - 1, table, join });
+        lines.push({ depth: insertionPath.filter((p) => !isAnyIndex(p)).length * 2, table, join });
     }
     return lines
         .map(

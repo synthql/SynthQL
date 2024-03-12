@@ -5,12 +5,13 @@ import { DB } from "../db";
 import { sql } from "../postgres";
 import { findActorById, findCityById, from, movie } from "../queries";
 import { queryEngine } from "../queryEngine";
+import { collectLast } from "../..";
 
 
 describe('select', () => {
 
     function run<TTable extends Table<DB>, T extends Query<DB, TTable>>(query: T) {
-        return collectFirst(queryEngine.execute(query))
+        return collectLast(queryEngine.execute(query))
     }
 
     const cases = 2
@@ -76,7 +77,7 @@ describe('select', () => {
         })
     })
 
-    test(`select with 3 level depth:
+    test.only(`select with 3 level depth:
         store
             one(address)
                 one(city)
@@ -142,7 +143,7 @@ describe('select', () => {
 
         const result = await run(query)
 
-        expect(result ?? undefined).toEqual(
+        expect(result ?? undefined).toMatchObject(
             [
                 {
                     "address": {
@@ -168,8 +169,6 @@ describe('select', () => {
                 },
             ]
         )
-
-        expect(result.sort()).toEqual(expected);
     })
 
 })

@@ -1,15 +1,14 @@
 import { Pool, PoolClient } from "pg";
-import { format, formatDialect } from "sql-formatter";
+import { format } from "sql-formatter";
 import { splitQueryAtBoundary } from "../../../query/splitQueryAtBoundary";
 import { ColumnRef } from "../../../refs/ColumnRef";
 import { RefContext, createRefContext } from "../../../refs/RefContext";
 import { AnyQuery } from "../../../types";
-import { Path, QueryExecutor } from "../../types";
+import { QueryExecutor } from "../../types";
 import { QueryProviderExecutor } from "../QueryProviderExecutor";
 import { SqlExecutionError } from "../SqlExecutionError";
 import { composeQuery } from "./composeQuery";
 import { hydrate } from "./hydrate";
-import { getIn } from "packages/backend/src/util/tree/getIn";
 
 type PgQueryResult = {
     [key: string]: any;

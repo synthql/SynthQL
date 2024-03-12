@@ -57,6 +57,7 @@ export interface ExecutionPlanNode {
 export interface PlanningQuery extends AnyQuery {
     includeKey: string | undefined
     parentQuery: AnyQuery | undefined
+    path: Path
 }
 
 /**

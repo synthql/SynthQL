@@ -18,11 +18,12 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
         refContext.addValues(column);
     }
 
-    const planningQuery = mapQuery(query, (q, parent): PlanningQuery => {
+    const planningQuery = mapQuery<PlanningQuery>(query, (q, parent): PlanningQuery => {
         return {
             ...q,
             includeKey: parent?.includeKey,
-            parentQuery: parent?.query
+            parentQuery: parent?.parentQuery,
+            path: parent?.childPath ?? []
         }
     })
 

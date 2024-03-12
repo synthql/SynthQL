@@ -45,12 +45,20 @@ export function* iterateQuery<TQuery extends AnyQuery>(query: TQuery): Generator
     while (stack.length > 0) {
         const { query, insertionPath, includeKey, parentQuery, depth } = stack.pop()!;
 
+
+
         yield { query, insertionPath, includeKey, parentQuery, depth };
 
         for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
+            const newPath = [...insertionPath, includeKey];
+            if (subQuery.cardinality === 'many') {
+                newPath.push(star);
+            }
+
+
             stack.push({
                 query: subQuery as TQuery,
-                insertionPath: [...insertionPath, includeKey, star],
+                insertionPath: newPath,
                 parentQuery: query,
                 includeKey,
                 depth: depth + 1

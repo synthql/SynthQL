@@ -1,9 +1,10 @@
+import { isRefOp } from "@synthql/queries";
+import { iterateResultRows } from "../../query/iterateResultRow";
 import { resolveReferences } from "../../query/resolveReferences";
+import { isPresent } from "../../util/isPresent";
 import { mapTree } from "../../util/tree/mapTree";
 import { ExecuteProps } from "../execute";
-import { TableRef } from "../../refs/TableRef";
-import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode, Path, star } from "../types";
-import { iterateResultRows } from "../../query/iterateResultRow";
+import { ExecPlanTree, ExecResultTree, ExecutionPlanNode, ExecResultNode as ExecutionResultNode } from "../types";
 
 export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecuteProps): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext }
@@ -20,8 +21,8 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
         }
 
         return {
-            path: calculatePath(planNode, parentNode),
-            filters: [],
+            path: planNode.query.path,
+            filters: createFilters(planNode),
             inputQuery: planNode.inputQuery,
             result: rows,
             children: [],
@@ -29,17 +30,14 @@ export function executePlan(planTree: ExecPlanTree, { defaultSchema }: ExecutePr
     })
 }
 
-function calculatePath(planNode: ExecutionPlanNode, parentNode?: ExecutionResultNode): Path {
-    if (!parentNode) {
-        return [star]
-    }
-    const parentPath = Array.from(parentNode.path)
-    if (planNode.inputQuery.cardinality === 'many') {
-        parentPath.push(star)
-    }
-    const { includeKey } = planNode.query
-    if (includeKey !== undefined) {
-        parentPath.push(includeKey)
-    }
-    return parentPath
+function createFilters(planNode: ExecutionPlanNode): ExecutionResultNode['filters'] {
+    return Object.entries(planNode.inputQuery.where).map(([childColumn, whereClause]) => {
+        if (isRefOp(whereClause)) {
+            return {
+                op: '=' as const,
+                childColumn,
+                parentColumn: whereClause.$ref.column
+            }
+        }
+    }).filter(isPresent)
 }

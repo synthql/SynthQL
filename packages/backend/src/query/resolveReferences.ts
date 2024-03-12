@@ -33,10 +33,12 @@ import { mapRefs } from "./mapRefs"
  * @param query the query to resolve references for
  * @param refContext A record from reference IDs to their actual values. E.g. { 'person.id': [1,2] }
  */
-export function resolveReferences(query: AnyQuery, refContext: RefContext, defaultSchema: string) {
+export function resolveReferences(query: AnyQuery, refContext: RefContext, defaultSchema: string): AnyQuery {
     return {
         ...query,
-        where: resolveReferencesInWhere(query.where, refContext, defaultSchema)
+        where: resolveReferencesInWhere(query.where, refContext, defaultSchema),
+        // Remove the limit, since we don't know how many rows the references will resolve to
+        limit: undefined
     }
 }
 
