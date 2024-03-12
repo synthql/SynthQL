@@ -13,7 +13,7 @@ describe('select', () => {
         return collectLast(queryEngine.execute(query));
     }
 
-    const cases = 2;
+    const cases = 15;
 
     describe('select with depth of 1', () => {
         test.each(
