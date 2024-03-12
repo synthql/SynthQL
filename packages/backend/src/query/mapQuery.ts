@@ -1,3 +1,4 @@
+import { Cardinality } from '@synthql/queries';
 import { Path, star } from '../execution/types';
 import { AnyQuery } from '../types';
 
@@ -28,18 +29,15 @@ export function mapQuery<T extends AnyQuery>(
     const mapped = mapFn(query, context ?? rootContext);
     const include = { ...query.include };
     for (const [includeKey, subQuery] of Object.entries(include)) {
-        const parentPath = (context ?? { ...rootContext, childPath: [] })
+        const parentPath = (context ?? rootContext)
             .childPath;
 
-        const path =
-            subQuery.cardinality === 'many'
-                ? [...parentPath, star, includeKey]
-                : [...parentPath, includeKey];
+        const childPath = calculatePath(parentPath, subQuery.cardinality ?? 'many', includeKey);
 
         const childContext: Context<T> = {
             parentQuery: mapped,
             includeKey,
-            childPath: path,
+            childPath,
         };
 
         include[includeKey] = mapQuery(subQuery, mapFn, childContext);
@@ -48,4 +46,15 @@ export function mapQuery<T extends AnyQuery>(
         ...mapped,
         include,
     };
+}
+
+function calculatePath(parentPath: Path, childCardinality: Cardinality, includeKey: string) {
+    // Case: the parent is the root query
+    if (parentPath.length === 1) {
+        return [...parentPath, includeKey];
+    }
+    if (childCardinality === 'many') {
+        return [...parentPath, star, includeKey];
+    }
+    return [...parentPath, includeKey];
 }

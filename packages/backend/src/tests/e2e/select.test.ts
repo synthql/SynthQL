@@ -6,6 +6,8 @@ import { sql } from '../postgres';
 import { findActorById, findCityById, from, movie } from '../queries';
 import { queryEngine } from '../queryEngine';
 import { collectLast } from '../..';
+import { createPlanningQuery } from '../../execution/planning/createPlanningQuery';
+import { AnyQuery } from '../../types';
 
 describe('select', () => {
     function run<TTable extends Table<DB>, T extends Query<DB, TTable>>(
@@ -96,7 +98,7 @@ describe('select', () => {
             one(address)
                 one(city)
         `, async () => {
-        const expected = await sql`
+        const expected: Array<{ store_id: number }> = await sql`
             select 
                 s.store_id,
                 jsonb_build_object(
@@ -132,7 +134,7 @@ describe('select', () => {
             .one();
 
         const address = from('address')
-            .select({ address_id: true, address: true, city: city })
+            .select({ address_id: true, address: true, city: true })
             .groupingId('address_id')
             .where({
                 address_id: col('store.address_id'),
@@ -153,29 +155,10 @@ describe('select', () => {
 
         const result = await run(query);
 
-        expect(result ?? undefined).toMatchObject([
-            {
-                address: {
-                    address: '47 MySakila Drive',
-                    address_id: 1,
-                    city: {
-                        city: 'Lethbridge',
-                        city_id: 300,
-                    },
-                },
-                store_id: 1,
-            },
-            {
-                address: {
-                    address: '28 MySQL Boulevard',
-                    address_id: 2,
-                    city: {
-                        city: 'Woodridge',
-                        city_id: 576,
-                    },
-                },
-                store_id: 2,
-            },
-        ]);
+
+
+        const comparator = (a: { store_id: number }, b: { store_id: number }) => a.store_id - b.store_id;
+
+        expect(Array.from(result).sort(comparator)).toMatchObject(Array.from(expected).sort(comparator));
     });
 });
