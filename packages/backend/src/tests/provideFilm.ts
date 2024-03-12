@@ -1,7 +1,7 @@
-import { QueryProvider } from "../QueryProvider";
-import { assertArray } from "../util/asserts/assertArray";
-import { assertHasKey } from "../util/asserts/assertHasKey";
-import { DB } from "./generated.schema";
+import { QueryProvider } from '../QueryProvider';
+import { assertArray } from '../util/asserts/assertArray';
+import { assertHasKey } from '../util/asserts/assertHasKey';
+import { DB } from './generated.schema';
 
 type Film = Pick<DB['public.film'], 'film_id' | 'title' | 'language_id'>;
 
@@ -26,24 +26,24 @@ const defaultFilms: Film[] = [
         title: 'The Matrix Revolutions',
         language_id: 1,
     },
-]
+];
 
 export function provideFilm(films = defaultFilms): QueryProvider {
     return {
         table: 'public.film',
         execute: async (q): Promise<Film[]> => {
-            assertHasKey(q.where, 'film_id')
+            assertHasKey(q.where, 'film_id');
             const film_id = q.where.film_id;
 
             if (typeof film_id === 'number') {
                 return films.filter((f) => f.film_id === film_id);
             }
 
-            assertHasKey(film_id, 'in')
+            assertHasKey(film_id, 'in');
             const ids = film_id.in;
-            assertArray(ids)
+            assertArray(ids);
 
             return films.filter((f) => ids.includes(f.film_id));
         },
-    }
-};
+    };
+}

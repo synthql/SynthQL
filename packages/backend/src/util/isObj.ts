@@ -1,7 +1,4 @@
-
-
-
-export function isObj(obj: unknown): obj is { [k: string]: unknown; } {
+export function isObj(obj: unknown): obj is { [k: string]: unknown } {
     if (Array.isArray(obj)) {
         return false;
     }

@@ -6,14 +6,23 @@ interface Tree<TNode extends Node> {
     root: TNode;
 }
 
-export async function* mapTree<TInputNode extends Node, TOutputNode extends Node>(
+export async function* mapTree<
+    TInputNode extends Node,
+    TOutputNode extends Node,
+>(
     inputTree: Tree<TInputNode>,
-    mapper: (inputNode: TInputNode, parentNode: TOutputNode | undefined) => Promise<TOutputNode>
+    mapper: (
+        inputNode: TInputNode,
+        parentNode: TOutputNode | undefined,
+    ) => Promise<TOutputNode>,
 ): AsyncGenerator<Tree<TOutputNode>> {
-    async function mapWithoutChildren(node: TInputNode, parentNode: TOutputNode | undefined): Promise<TOutputNode> {
+    async function mapWithoutChildren(
+        node: TInputNode,
+        parentNode: TOutputNode | undefined,
+    ): Promise<TOutputNode> {
         const result = await mapper(node, parentNode);
 
-        // We need to clear the children because `yield` the tree from time to time, 
+        // We need to clear the children because `yield` the tree from time to time,
         // and we don't want to yield the tree with children that are not processed yet.
         result.children = [];
         return result;
@@ -35,7 +44,6 @@ export async function* mapTree<TInputNode extends Node, TOutputNode extends Node
     queue.push({ originalNode: inputTree.root, mappedNode: mappedRoot });
 
     while (queue.length > 0) {
-
         const { originalNode, mappedNode } = queue.shift()!;
 
         // Process all children concurrently.
@@ -44,9 +52,12 @@ export async function* mapTree<TInputNode extends Node, TOutputNode extends Node
                 const originalNode = child as TInputNode;
                 return {
                     originalNode,
-                    mappedNode: await mapWithoutChildren(originalNode, mappedNode),
-                }
-            })
+                    mappedNode: await mapWithoutChildren(
+                        originalNode,
+                        mappedNode,
+                    ),
+                };
+            }),
         );
 
         // After mapping, update the children of the current mapped node.
@@ -61,4 +72,3 @@ export async function* mapTree<TInputNode extends Node, TOutputNode extends Node
 
     // The function implicitly returns when the generator completes.
 }
-

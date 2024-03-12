@@ -1,15 +1,21 @@
-import { ColumnRef } from "../../refs/ColumnRef";
-import { TableRef } from "../../refs/TableRef";
-import { AnyQuery } from "../../types";
+import { ColumnRef } from '../../refs/ColumnRef';
+import { TableRef } from '../../refs/TableRef';
+import { AnyQuery } from '../../types';
 
 /**
  * Recursively select all referenced columns in the query.
  */
-export function selectRefdColumns<TQuery extends AnyQuery>(query: TQuery, allColumns: ColumnRef[], defaultSchema: string): TQuery {
+export function selectRefdColumns<TQuery extends AnyQuery>(
+    query: TQuery,
+    allColumns: ColumnRef[],
+    defaultSchema: string,
+): TQuery {
     const table = TableRef.fromQuery(defaultSchema, query);
 
     // Filter to only columns from the same table as the query.
-    const refdColumns: ColumnRef[] = allColumns.filter(col => col.tableRef.equals(table));
+    const refdColumns: ColumnRef[] = allColumns.filter((col) =>
+        col.tableRef.equals(table),
+    );
 
     // Make a copy of the select object, so we don't mutate the original query.
     const select = structuredClone(query.select ?? {});

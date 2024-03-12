@@ -1,20 +1,23 @@
-import { AnyQuery } from "../types";
+import { AnyQuery } from '../types';
 
 export interface QueryNode {
-    includeKey: string | undefined
-    query: AnyQuery,
-    children: QueryNode[]
+    includeKey: string | undefined;
+    query: AnyQuery;
+    children: QueryNode[];
 }
 
-export function createQueryTree(query: AnyQuery, includeKey: string | undefined = undefined): QueryNode {
+export function createQueryTree(
+    query: AnyQuery,
+    includeKey: string | undefined = undefined,
+): QueryNode {
     const result: QueryNode = {
         includeKey,
         query,
-        children: []
-    }
+        children: [],
+    };
 
     for (const [includeKey, subQuery] of Object.entries(query.include ?? {})) {
-        result.children.push(createQueryTree(subQuery, includeKey))
+        result.children.push(createQueryTree(subQuery, includeKey));
     }
-    return result
+    return result;
 }

@@ -13,54 +13,53 @@ describe('collectColumnReferences', () => {
             query: AnyQuery;
             expected: Array<string>;
         }> = [
-                {
-                    query: from('public.actor').where({ actor_id: 1 }).many(),
-                    expected: ['public.actor.actor_id'],
-                },
+            {
+                query: from('public.actor').where({ actor_id: 1 }).many(),
+                expected: ['public.actor.actor_id'],
+            },
 
-                {
-                    query: from('public.actor')
-                        .where({
-                            actor_id: 1,
-                            first_name: col('public.country.country_id'),
-                        })
-                        .many(),
-                    expected: [
-                        'public.actor.actor_id',
-                        'public.actor.first_name',
-                        'public.country.country_id',
-                    ],
-                },
+            {
+                query: from('public.actor')
+                    .where({
+                        actor_id: 1,
+                        first_name: col('public.country.country_id'),
+                    })
+                    .many(),
+                expected: [
+                    'public.actor.actor_id',
+                    'public.actor.first_name',
+                    'public.country.country_id',
+                ],
+            },
 
-                {
-                    query: from('public.actor')
-                        .where({
-                            actor_id: 1,
-                            first_name: col('public.country.country_id'),
-                        })
-                        .include({
-                            foo: from('public.country')
-                                .where({ country: col('public.film.film_id') })
-                                .many(),
-                        })
-                        .many(),
-                    expected: [
-                        'public.actor.actor_id',
-                        'public.actor.first_name',
-                        'public.country.country_id',
-                        'public.country.country',
-                        'public.film.film_id',
-                    ],
-                },
+            {
+                query: from('public.actor')
+                    .where({
+                        actor_id: 1,
+                        first_name: col('public.country.country_id'),
+                    })
+                    .include({
+                        foo: from('public.country')
+                            .where({ country: col('public.film.film_id') })
+                            .many(),
+                    })
+                    .many(),
+                expected: [
+                    'public.actor.actor_id',
+                    'public.actor.first_name',
+                    'public.country.country_id',
+                    'public.country.country',
+                    'public.film.film_id',
+                ],
+            },
 
-                {
-                    query: city().where({ city_id: col('public.address.city_id') }).many(),
-                    expected: [
-                        'public.city.city_id',
-                        'public.address.city_id',
-                    ],
-                }
-            ];
+            {
+                query: city()
+                    .where({ city_id: col('public.address.city_id') })
+                    .many(),
+                expected: ['public.city.city_id', 'public.address.city_id'],
+            },
+        ];
 
         test.each(cases)(
             'collectColumnReferences #%#',
@@ -80,25 +79,27 @@ describe('collectColumnReferences', () => {
     });
 
     test('paths', () => {
-        const q = city().where({ city_id: col('public.address.city_id') }).many();
+        const q = city()
+            .where({ city_id: col('public.address.city_id') })
+            .many();
 
         const queryResult: QueryResult<DB, typeof q> = [
-            { city: "Bogota", city_id: 1 },
-            { city: "Cali", city_id: 2 },
-            { city: "Medellin", city_id: 3 },
-        ]
+            { city: 'Bogota', city_id: 1 },
+            { city: 'Cali', city_id: 2 },
+            { city: 'Medellin', city_id: 3 },
+        ];
 
-        const result = collectColumnReferences(q, 'public').map(({ column }) => {
-            return column.canonical()
-        })
+        const result = collectColumnReferences(q, 'public').map(
+            ({ column }) => {
+                return column.canonical();
+            },
+        );
 
         expect(result).toMatchInlineSnapshot(`
           [
             ""public"."city"."city_id"",
             ""public"."address"."city_id"",
           ]
-        `)
-
-
-    })
+        `);
+    });
 });

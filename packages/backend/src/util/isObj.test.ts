@@ -1,7 +1,7 @@
-import { describe, expect, test, } from "vitest";
-import { assertObject } from "./asserts/assertObject";
-import { assertPresent } from "./asserts/assertPresent";
-import { isObj } from "./isObj";
+import { describe, expect, test } from 'vitest';
+import { assertObject } from './asserts/assertObject';
+import { assertPresent } from './asserts/assertPresent';
+import { isObj } from './isObj';
 
 describe('isObj', () => {
     test('isObj', () => {
@@ -14,7 +14,6 @@ describe('isObj', () => {
         expect(isObj(true)).toBe(false);
         expect(isObj(false)).toBe(false);
         expect(isObj(Symbol())).toBe(false);
-        expect(isObj(() => { })).toBe(false);
-
-    })
-})
+        expect(isObj(() => {})).toBe(false);
+    });
+});

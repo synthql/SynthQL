@@ -1,4 +1,4 @@
-import { Path } from "../../execution/types";
+import { Path } from '../../execution/types';
 
 export function isAnyIndex(segment: Path[number]): segment is ['*'] {
     if (!Array.isArray(segment)) {

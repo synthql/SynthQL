@@ -1,16 +1,25 @@
-import { describeQuery } from "../../query/describeQuery";
-import { iterateQuery } from "../../query/iterateQuery";
-import { ColumnRef } from "../../refs/ColumnRef";
-import { AnyQuery } from "../../types";
-import { ExecuteProps } from "../execute";
-import { ExecutionPlanNode, PlanningQuery } from "../types";
-import { selectRefdColumns } from "./selectRefdColumns";
+import { describeQuery } from '../../query/describeQuery';
+import { iterateQuery } from '../../query/iterateQuery';
+import { ColumnRef } from '../../refs/ColumnRef';
+import { AnyQuery } from '../../types';
+import { ExecuteProps } from '../execute';
+import { ExecutionPlanNode, PlanningQuery } from '../types';
+import { selectRefdColumns } from './selectRefdColumns';
 
-export function assignExecutors(q: PlanningQuery, allColumns: ColumnRef[], props: ExecuteProps): ExecutionPlanNode {
+export function assignExecutors(
+    q: PlanningQuery,
+    allColumns: ColumnRef[],
+    props: ExecuteProps,
+): ExecutionPlanNode {
     const { defaultSchema } = props;
 
-    const { executor, inputQuery, query, remaining } = getExecutorOrThrow(q, props);
-    const children = remaining.map(child => assignExecutors(child, allColumns, props));
+    const { executor, inputQuery, query, remaining } = getExecutorOrThrow(
+        q,
+        props,
+    );
+    const children = remaining.map((child) =>
+        assignExecutors(child, allColumns, props),
+    );
     return {
         executor,
         inputQuery,
@@ -18,8 +27,6 @@ export function assignExecutors(q: PlanningQuery, allColumns: ColumnRef[], props
         children,
     };
 }
-
-
 
 function getExecutorOrThrow(query: PlanningQuery, props: ExecuteProps) {
     const { executors } = props;
@@ -30,7 +37,7 @@ function getExecutorOrThrow(query: PlanningQuery, props: ExecuteProps) {
                 executor,
                 inputQuery: query,
                 query: canExecute.query,
-                remaining: canExecute.remaining
+                remaining: canExecute.remaining,
             };
         }
     } /* v8 ignore next 2 */

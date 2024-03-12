@@ -1,50 +1,48 @@
-import { Path, star } from "../execution/types";
-import { AnyQuery } from "../types";
+import { Path, star } from '../execution/types';
+import { AnyQuery } from '../types';
 
 type Context<TQuery> = {
-    parentQuery?: TQuery,
-    includeKey?: string,
+    parentQuery?: TQuery;
+    includeKey?: string;
     /**
      * The path to the visited query, not the parent query.
      */
-    childPath: Path
+    childPath: Path;
 };
 
 type MapFn<TQuery extends AnyQuery> = (
     inputQuery: AnyQuery,
-    context?: Context<TQuery>
+    context: Context<TQuery>,
 ) => TQuery;
 
 export function mapQuery<T extends AnyQuery>(
     query: AnyQuery,
     mapFn: MapFn<T>,
-    context?: Context<T>
+    context?: Context<T>,
 ): T {
     const rootContext: Context<T> = {
         parentQuery: undefined,
         includeKey: undefined,
-        childPath: [star]
-    }
+        childPath: [star],
+    };
     const mapped = mapFn(query, context ?? rootContext);
-    const include = { ...mapped.include };
+    const include = { ...query.include };
     for (const [includeKey, subQuery] of Object.entries(include)) {
-        const parentPath = (context ?? rootContext).childPath
+        const parentPath = (context ?? { ...rootContext, childPath: [] })
+            .childPath;
 
-        const path = subQuery.cardinality === 'many'
-            ? [...parentPath, star, includeKey]
-            : [...parentPath, includeKey]
+        const path =
+            subQuery.cardinality === 'many'
+                ? [...parentPath, star, includeKey]
+                : [...parentPath, includeKey];
 
         const childContext: Context<T> = {
             parentQuery: mapped,
             includeKey,
-            childPath: path
+            childPath: path,
         };
 
-        include[includeKey] = mapQuery(
-            subQuery,
-            mapFn,
-            childContext
-        );
+        include[includeKey] = mapQuery(subQuery, mapFn, childContext);
     }
     return {
         ...mapped,

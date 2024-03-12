@@ -1,8 +1,8 @@
-import { RefOp } from "@synthql/queries";
-import { escapeRef } from "./escapeRef";
-import { AnyDb } from "../types";
-import { TableRef } from "./TableRef";
-import { ResultRow } from "../execution/types";
+import { RefOp } from '@synthql/queries';
+import { escapeRef } from './escapeRef';
+import { AnyDb } from '../types';
+import { TableRef } from './TableRef';
+import { ResultRow } from '../execution/types';
 
 export class ColumnRef {
     public readonly tableRef: TableRef;
@@ -25,7 +25,7 @@ export class ColumnRef {
     }
 
     getValue(row: ResultRow) {
-        const value = row[this.column]
+        const value = row[this.column];
         if (value === undefined) {
             throw new Error(`Column ${this.canonical()} not found in row`);
         }
@@ -38,7 +38,7 @@ export class ColumnRef {
     }
 
     static parse(ref: string, defaultSchema: string): ColumnRef {
-        const parts = ref.split(".");
+        const parts = ref.split('.');
         if (parts.length === 1) {
             throw new Error(`Invalid column reference ${ref}`);
         } else if (parts.length === 2) {

@@ -1,5 +1,5 @@
-import { QueryEngine, collectFirst } from "../"
-import { col, query } from "@synthql/queries"
+import { QueryEngine, collectFirst } from '../';
+import { col, query } from '@synthql/queries';
 
 export interface PgSchema {
     'information_schema.tables': {
@@ -40,7 +40,7 @@ export interface PgSchema {
     'pg_catalog.pg_type': {
         typname: string;
         oid: number;
-    },
+    };
 
     'pg_catalog.pg_enum': {
         enumtypid: number;
@@ -51,17 +51,16 @@ export interface PgSchema {
 }
 
 export type IntrospectSchemaConfig = {
-    schemas: string[]
-}
+    schemas: string[];
+};
 
 const from = query<PgSchema>().from;
-
 
 export interface TableDef {
     name: string;
     columns: {
-        [columnName: string]: ColumnDef
-    },
+        [columnName: string]: ColumnDef;
+    };
     primaryKey: string[];
 }
 export interface ColumnDef {
@@ -69,7 +68,7 @@ export interface ColumnDef {
     type: {
         name: string;
         schema: string;
-    }
+    };
     nullable: boolean;
 }
 
@@ -78,23 +77,29 @@ export interface EnumDef {
     values: string[];
 }
 
-export async function introspectSchema(queryEngine: QueryEngine<PgSchema>, config: IntrospectSchemaConfig): Promise<{
-    tables: TableDef[],
-    enums: EnumDef[]
+export async function introspectSchema(
+    queryEngine: QueryEngine<PgSchema>,
+    config: IntrospectSchemaConfig,
+): Promise<{
+    tables: TableDef[];
+    enums: EnumDef[];
 }> {
-
     const [tables, primaryKeys, enums] = await Promise.all([
         collectFirst(queryEngine.execute(findTableSchema(config))),
         collectFirst(queryEngine.execute(findPrimaryKeyConstraints(config))),
-        collectFirst(queryEngine.execute(findEnums(config)))
-    ])
+        collectFirst(queryEngine.execute(findEnums(config))),
+    ]);
 
     return {
-        tables: (tables).map((table): TableDef => {
-
-            const primaryKey = primaryKeys.filter(k => {
-                return k.table_schema === table.table_schema && k.table_name === table.table_name
-            }).map(k => k.keys.map(k => k.column_name))[0]
+        tables: tables.map((table): TableDef => {
+            const primaryKey = primaryKeys
+                .filter((k) => {
+                    return (
+                        k.table_schema === table.table_schema &&
+                        k.table_name === table.table_name
+                    );
+                })
+                .map((k) => k.keys.map((k) => k.column_name))[0];
 
             const columns = table.columns.map((col): ColumnDef => {
                 return {
@@ -102,65 +107,91 @@ export async function introspectSchema(queryEngine: QueryEngine<PgSchema>, confi
                     nullable: col.is_nullable === 'YES',
                     type: {
                         name: col.udt_name,
-                        schema: col.udt_schema
-                    }
-                }
+                        schema: col.udt_schema,
+                    },
+                };
             });
 
-            const columnsByName = columns.reduce((acc: TableDef['columns'], col) => {
-                acc[col.name] = col;
-                return acc;
-            }, {})
+            const columnsByName = columns.reduce(
+                (acc: TableDef['columns'], col) => {
+                    acc[col.name] = col;
+                    return acc;
+                },
+                {},
+            );
 
             return {
                 name: table.table_schema + '.' + table.table_name,
                 columns: columnsByName,
                 primaryKey,
-            }
+            };
         }),
         enums: enums
-            .filter(e => e.enumValues.length > 0)
-            .map(e => {
+            .filter((e) => e.enumValues.length > 0)
+            .map((e) => {
                 return {
                     name: e.typname,
-                    values: e.enumValues.map(e => e.enumlabel)
-                }
-            })
-    }
+                    values: e.enumValues.map((e) => e.enumlabel),
+                };
+            }),
+    };
 }
 
 function findPrimaryKeyConstraints(config: IntrospectSchemaConfig) {
     const keys = from('information_schema.key_column_usage')
         .columns('column_name', 'table_name')
         .where({
-            constraint_schema: col('information_schema.table_constraints.constraint_schema'),
-            constraint_name: col('information_schema.table_constraints.constraint_name'),
-            table_schema: col('information_schema.table_constraints.table_schema'),
-            table_name: col('information_schema.table_constraints.table_name')
+            constraint_schema: col(
+                'information_schema.table_constraints.constraint_schema',
+            ),
+            constraint_name: col(
+                'information_schema.table_constraints.constraint_name',
+            ),
+            table_schema: col(
+                'information_schema.table_constraints.table_schema',
+            ),
+            table_name: col('information_schema.table_constraints.table_name'),
         })
-        .many()
+        .many();
 
     return from('information_schema.table_constraints')
-        .columns('table_schema', 'table_name', 'constraint_schema', 'constraint_name')
+        .columns(
+            'table_schema',
+            'table_name',
+            'constraint_schema',
+            'constraint_name',
+        )
         .where({
             constraint_type: 'PRIMARY KEY',
             table_schema: {
-                in: config.schemas
-            }
+                in: config.schemas,
+            },
         })
         .include({
-            keys
+            keys,
         })
-        .groupingId('constraint_schema', 'constraint_name', 'table_schema', 'table_name', 'constraint_type')
-        .many()
+        .groupingId(
+            'constraint_schema',
+            'constraint_name',
+            'table_schema',
+            'table_name',
+            'constraint_type',
+        )
+        .many();
 }
 
 function findTableSchema(config: IntrospectSchemaConfig) {
     const columns = from('information_schema.columns')
-        .columns('column_name', 'data_type', 'is_nullable', 'udt_name', 'udt_schema')
+        .columns(
+            'column_name',
+            'data_type',
+            'is_nullable',
+            'udt_name',
+            'udt_schema',
+        )
         .where({
             table_schema: col('information_schema.tables.table_schema'),
-            table_name: col('information_schema.tables.table_name')
+            table_name: col('information_schema.tables.table_name'),
         })
         .many();
 
@@ -171,12 +202,12 @@ function findTableSchema(config: IntrospectSchemaConfig) {
         })
         .where({
             table_schema: {
-                'in': config.schemas
-            }
+                in: config.schemas,
+            },
         })
         .groupingId('table_schema', 'table_name')
-        .many()
-    return q
+        .many();
+    return q;
 }
 
 function findEnums(config: IntrospectSchemaConfig) {
@@ -186,10 +217,10 @@ function findEnums(config: IntrospectSchemaConfig) {
             enumValues: from('pg_catalog.pg_enum')
                 .columns('enumlabel')
                 .where({
-                    enumtypid: col('pg_catalog.pg_type.oid')
+                    enumtypid: col('pg_catalog.pg_type.oid'),
                 })
-                .many()
+                .many(),
         })
         .groupingId('typname', 'oid')
-        .many()
+        .many();
 }

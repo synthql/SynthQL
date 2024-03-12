@@ -1,4 +1,4 @@
-import { collectAsync } from "./collectAsync";
+import { collectAsync } from './collectAsync';
 
 export async function collectLast<T>(gen: AsyncGenerator<T>): Promise<T> {
     const list = await collectAsync(gen);

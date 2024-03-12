@@ -1,52 +1,58 @@
-import { Path, ResultRow } from "../execution/types";
-import { ColumnRef } from "../refs/ColumnRef";
-import { AnyQuery } from "../types";
-import { printPath } from "../util/path/printPath";
-import { getIn } from "../util/tree/getIn";
-import { columns } from "./columns";
-import { iterateQuery } from "./iterateQuery";
+import { Path, ResultRow } from '../execution/types';
+import { ColumnRef } from '../refs/ColumnRef';
+import { AnyQuery } from '../types';
+import { printPath } from '../util/path/printPath';
+import { getIn } from '../util/tree/getIn';
+import { columns } from './columns';
+import { iterateQuery } from './iterateQuery';
 
-export function* iterateResultRows(rows: ResultRow[], query: AnyQuery, defaultSchema: string): Generator<{
-    column: ColumnRef,
-    values: unknown[],
+export function* iterateResultRows(
+    rows: ResultRow[],
+    query: AnyQuery,
+    defaultSchema: string,
+): Generator<{
+    column: ColumnRef;
+    values: unknown[];
 }> {
     for (const { query: subQuery, insertionPath } of iterateQuery(query)) {
-        const cols = columns(subQuery, defaultSchema)
+        const cols = columns(subQuery, defaultSchema);
         for (const col of cols) {
-            const path: Path = [...insertionPath, col.column]
+            const path: Path = [...insertionPath, col.column];
 
             try {
                 yield {
                     column: col,
-                    values: getIn(rows, path)
-                }
+                    values: getIn(rows, path),
+                };
             } catch (err) {
-                throw new IterateResultRowsError({ rows, path, err })
+                throw new IterateResultRowsError({ rows, path, err });
             }
         }
     }
 }
 
 interface IterateResultRowsErrorProps {
-    rows: ResultRow[],
-    path: Path,
-    err: any
+    rows: ResultRow[];
+    path: Path;
+    err: any;
 }
 
 class IterateResultRowsError extends Error {
     constructor(props: IterateResultRowsErrorProps) {
-        super(composeMessage(props))
+        super(composeMessage(props));
 
-        Error.captureStackTrace(this, IterateResultRowsError)
+        Error.captureStackTrace(this, IterateResultRowsError);
 
-        this.name = 'IterateResultRowsError'
+        this.name = 'IterateResultRowsError';
     }
 }
 
 function composeMessage(props: IterateResultRowsErrorProps): string {
     const lines: string[] = [
         'Failed to iterate result rows',
-        props.err instanceof Error ? [props.err.message, props.err.stack].join("\n") : String(props.err),
+        props.err instanceof Error
+            ? [props.err.message, props.err.stack].join('\n')
+            : String(props.err),
         '',
         'Rows:',
         JSON.stringify(props.rows, null, 2),
@@ -54,7 +60,7 @@ function composeMessage(props: IterateResultRowsErrorProps): string {
         'Path:',
         printPath(props.path),
         '',
-    ]
+    ];
 
-    return lines.join("\n")
+    return lines.join('\n');
 }

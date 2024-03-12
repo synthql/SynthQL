@@ -1,5 +1,5 @@
 import { TableRef } from './TableRef';
-import { ColumnRef } from "./ColumnRef";
+import { ColumnRef } from './ColumnRef';
 
 /**
  * A `RefContext` maintains a record from reference IDs to their actual values. E.g. { 'person.id': [1,2] }

@@ -1,4 +1,6 @@
-export function* interateTree<T extends { children: T[] }>(tree: T): Generator<T> {
+export function* interateTree<T extends { children: T[] }>(
+    tree: T,
+): Generator<T> {
     const stack: T[] = [tree];
 
     while (stack.length > 0) {

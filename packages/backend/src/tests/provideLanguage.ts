@@ -1,5 +1,5 @@
-import { QueryProvider } from "../QueryProvider";
-import { DB } from "./generated.schema";
+import { QueryProvider } from '../QueryProvider';
+import { DB } from './generated.schema';
 
 export type Language = DB['public.language'];
 
@@ -14,14 +14,18 @@ const defaultLanguages = [
         name: 'French',
         last_update: new Date(),
     },
-]
+];
 
-export function provideLanguage(languages: Language[] = defaultLanguages): QueryProvider {
+export function provideLanguage(
+    languages: Language[] = defaultLanguages,
+): QueryProvider {
     return {
         table: 'public.language',
         execute: async (q): Promise<Language[]> => {
             const langIds = q.where.language_id.in;
-            return defaultLanguages.filter((l) => langIds.includes(l.language_id));
+            return defaultLanguages.filter((l) =>
+                langIds.includes(l.language_id),
+            );
         },
-    }
-};
+    };
+}

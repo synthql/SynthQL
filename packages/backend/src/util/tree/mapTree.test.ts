@@ -147,7 +147,11 @@ describe('mapTree', () => {
             },
             {
                 input: n(1, n(2, n(3), n(4), n(5)), n(6)),
-                expected: s('1', s('1.2', s('1.2.3'), s('1.2.4'), s('1.2.5')), s('1.6')),
+                expected: s(
+                    '1',
+                    s('1.2', s('1.2.3'), s('1.2.4'), s('1.2.5')),
+                    s('1.6'),
+                ),
             },
 
             {
@@ -156,14 +160,19 @@ describe('mapTree', () => {
             },
 
             {
-                input: n(1, n(2, n(3), n(3), n(3)), n(2, n(3), n(3), n(3)), n(2, n(3), n(3), n(3))),
+                input: n(
+                    1,
+                    n(2, n(3), n(3), n(3)),
+                    n(2, n(3), n(3), n(3)),
+                    n(2, n(3), n(3), n(3)),
+                ),
                 expected: s(
                     '1',
                     s('1.2', s('1.2.3'), s('1.2.3'), s('1.2.3')),
                     s('1.2', s('1.2.3'), s('1.2.3'), s('1.2.3')),
                     s('1.2', s('1.2.3'), s('1.2.3'), s('1.2.3')),
                 ),
-            }
+            },
         ];
 
         test.each(cases)('case %#', async ({ input, expected }) => {
@@ -172,8 +181,6 @@ describe('mapTree', () => {
                 mapTree<NumNode, StrNode>(
                     tree,
                     async (inputNode, parentNode) => {
-
-
                         return s(
                             [parentNode?.value, inputNode.value]
                                 .filter(Boolean)

@@ -1,15 +1,14 @@
-
-import { QueryProvider } from "../../QueryProvider";
-import { AnyQuery } from "../../types";
-import { QueryNode } from "../../query/createQueryTree";
-import { RefContext, createRefContext } from "../../refs/RefContext";
-import { QueryExecutor } from "../types";
-import { ColumnRef } from "../../refs/ColumnRef";
+import { QueryProvider } from '../../QueryProvider';
+import { AnyQuery } from '../../types';
+import { QueryNode } from '../../query/createQueryTree';
+import { RefContext, createRefContext } from '../../refs/RefContext';
+import { QueryExecutor } from '../types';
+import { ColumnRef } from '../../refs/ColumnRef';
 
 export class QueryProviderExecutor implements QueryExecutor {
     private providersByTable: Map<string, QueryProvider>;
     constructor(providers: QueryProvider[]) {
-        this.providersByTable = new Map(providers.map(p => [p.table, p]));
+        this.providersByTable = new Map(providers.map((p) => [p.table, p]));
     }
 
     execute(query: AnyQuery): Promise<Array<any>> {
@@ -20,7 +19,9 @@ export class QueryProviderExecutor implements QueryExecutor {
         return provider.execute(query);
     }
 
-    canExecute<TQuery extends AnyQuery>(query: TQuery): { query: TQuery, remaining: TQuery[] } | undefined {
+    canExecute<TQuery extends AnyQuery>(
+        query: TQuery,
+    ): { query: TQuery; remaining: TQuery[] } | undefined {
         const isSupported = this.providersByTable.has(query.from);
 
         if (!isSupported) {
@@ -29,8 +30,8 @@ export class QueryProviderExecutor implements QueryExecutor {
 
         const queryWithoutChildren: TQuery = {
             ...query,
-            include: {}
-        }
+            include: {},
+        };
 
         const remaining = Object.values(query.include ?? {}) as TQuery[];
 
@@ -38,10 +39,10 @@ export class QueryProviderExecutor implements QueryExecutor {
     }
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {
-        const refContext = createRefContext()
+        const refContext = createRefContext();
         for (const column of columns) {
-            const value = row[column.column]
-            refContext.addValues(column, value)
+            const value = row[column.column];
+            refContext.addValues(column, value);
         }
 
         return refContext;

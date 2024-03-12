@@ -1,2 +1,2 @@
-export { generateSchema } from "./generateSchema";
-export { introspectSchema } from "./introspectSchema"
+export { generateSchema } from './generateSchema';
+export { introspectSchema } from './introspectSchema';

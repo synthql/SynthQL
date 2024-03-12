@@ -1,5 +1,4 @@
-import { AugmentedQuery } from "./queryBuilder/createAugmentedQuery";
-
+import { AugmentedQuery } from './queryBuilder/createAugmentedQuery';
 
 interface Row {
     [key: string]: any;
@@ -13,15 +12,15 @@ type AnyQueryResult =
     | undefined
     | Array<AnyQueryResult>
     | {
-        [key: string]: any;
-    };
+          [key: string]: any;
+      };
 
 export function hydrate(
     data: Array<Row>,
     query: AugmentedQuery,
 ): AnyQueryResult[] {
     const mapped = data.map((row) => hydrateRow(row, query));
-    return mapped
+    return mapped;
 }
 
 function hydrateRow(row: Row, query: AugmentedQuery): AnyQueryResult {
@@ -32,4 +31,3 @@ function hydrateRow(row: Row, query: AugmentedQuery): AnyQueryResult {
     }
     return result;
 }
-

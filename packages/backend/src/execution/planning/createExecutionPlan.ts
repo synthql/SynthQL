@@ -1,12 +1,16 @@
-import { collectColumnReferences } from "../../query/collectColumnReferences";
-import { mapQuery } from "../../query/mapQuery";
-import { createRefContext } from "../../refs/RefContext";
-import { AnyQuery } from "../../types";
-import { ExecuteProps } from "../execute";
-import { ExecPlanTree, PlanningQuery } from "../types";
-import { assignExecutors } from "./assignExecutors";
+import { collectColumnReferences } from '../../query/collectColumnReferences';
+import { mapQuery } from '../../query/mapQuery';
+import { createRefContext } from '../../refs/RefContext';
+import { AnyQuery } from '../../types';
+import { ExecuteProps } from '../execute';
+import { ExecPlanTree, PlanningQuery } from '../types';
+import { assignExecutors } from './assignExecutors';
+import { createPlanningQuery } from './createPlanningQuery';
 
-export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecPlanTree {
+export function createExecutionPlan(
+    query: AnyQuery,
+    props: ExecuteProps,
+): ExecPlanTree {
     const { defaultSchema } = props;
     // Create an empty ref context.
     const refContext = createRefContext();
@@ -18,22 +22,16 @@ export function createExecutionPlan(query: AnyQuery, props: ExecuteProps): ExecP
         refContext.addValues(column);
     }
 
-    const planningQuery = mapQuery<PlanningQuery>(query, (q, parent): PlanningQuery => {
-        return {
-            ...q,
-            includeKey: parent?.includeKey,
-            parentQuery: parent?.parentQuery,
-            path: parent?.childPath ?? []
-        }
-    })
+    const planningQuery = createPlanningQuery(query);
 
-    const root = assignExecutors(planningQuery, allColumns.map(c => c.column), props)
+    const root = assignExecutors(
+        planningQuery,
+        allColumns.map((c) => c.column),
+        props,
+    );
 
     return {
         root,
-        refContext
-    }
+        refContext,
+    };
 }
-
-
-

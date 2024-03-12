@@ -14,18 +14,18 @@ export interface ExecuteProps {
  *
  * ## {@link createExecutionPlan Create an execution plan}
  * This step takes a query tree as input and does the following:
- * 
+ *
  * ### Executor assignment
  * This step assigns an executor to sub-trees of the query tree.
- * 
+ *
  * ### Reference collection
- * This step collects refs that need to be extracted from the query tree. 
- * 
+ * This step collects refs that need to be extracted from the query tree.
+ *
  * ## {@link executePlan Execute the plan}
  * Once every query has an executor assigned, we can start executing them. The tree structure
- * defines the order in which we execute the queries. A child can only be executed after its 
+ * defines the order in which we execute the queries. A child can only be executed after its
  * parent, siblings can be executed in parallel.
- * 
+ *
  * ## {@link composeExecutionResults Compose the results}
  * The results of the execution are a tree of results. We need to compose them into a single result.
  */

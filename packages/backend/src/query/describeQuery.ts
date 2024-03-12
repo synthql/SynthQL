@@ -11,17 +11,24 @@ export function describeQuery(q: AnyQuery): string {
         const join = Object.entries(query.where)
             .flatMap(([k, v]) => {
                 if (isRefOp(v)) {
-                    return [`${table}.${k} = ${v.$ref.table.replace("public.", '')}.${v.$ref.column}`];
+                    return [
+                        `${table}.${k} = ${v.$ref.table.replace('public.', '')}.${v.$ref.column}`,
+                    ];
                 }
                 return [];
             })
             .join(' and ');
 
-        lines.push({ depth: insertionPath.filter((p) => !isAnyIndex(p)).length * 2, table, join });
+        lines.push({
+            depth: insertionPath.filter((p) => !isAnyIndex(p)).length * 2,
+            table,
+            join,
+        });
     }
     return lines
         .map(
-            ({ depth, table, join }) => `${'  '.repeat(depth)}${table}: ${join}`,
+            ({ depth, table, join }) =>
+                `${'  '.repeat(depth)}${table}: ${join}`,
         )
         .join('\n');
 }
