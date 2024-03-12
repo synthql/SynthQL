@@ -305,7 +305,7 @@ export class QueryBuilder<
         );
     }
 
-    groupingId<TGroupingId extends string[]>(...id: TGroupingId) {
+    groupingId<TGroupingId extends Column<DB, TTable>[]>(...id: TGroupingId) {
         return new QueryBuilder<
             DB,
             TTable,
