@@ -1,6 +1,10 @@
 {
     "name": "@synthql/queries",
     "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:fhur/synthql.git"
+    },
     "author": {
         "name": "fhur",
         "url": "https://github.com/fhur"
