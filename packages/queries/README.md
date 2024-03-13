@@ -1,26 +1,19 @@
 # @synthql/queries
 
-Provides the query builder, which gives most of the DX for writing queries.
-
-This package is separate so it can be shared by client and server bundles.
+DSL for writing synthql queries.
 
 ```ts
-import { query } from '@synthql/client';
-import { from } from '@/db';
+import { from } from "./generated.schema"
 
-const findPetsByOwner = (owner) => {
-    return from('pets')
-        .select({ id: true, name: true })
-        .where({ owner })
-        .many();
-};
-
-const findUserById = (id: string) => {
-    const pets = findPetsByOwner(col('users.id'));
-    return from('users')
-        .select({ id: true, name: true })
-        .where({ id })
-        .include({ pets })
-        .maybe();
-};
+const query = from('users')
+    .columns('id','first_name')
+    .where({id:1})
+    .many();
 ```
+
+## Links
+
+-   [Website](https://fhur.github.io/synthql/)
+-   [Docs](https://fhur.github.io/synthql/docs/getting-started)
+-   [X/Twitter](https://twitter.com/fernandohur)
+-   [Github](https://github.com/fhur/synthql)
