@@ -1,9 +1,15 @@
 import { Column, ColumnValue, Query, Table } from './types';
 
-export type QueryResult<DB, TQuery> =
+export type QueryResult<DB, TQuery> = Simplify<
     TQuery extends Query<DB, infer TTable>
-        ? ApplyCardinality<DB, TTable, TQuery>
-        : never;
+    ? ApplyCardinality<DB, TTable, TQuery>
+    : never>;
+
+type Simplify<T> =
+    T extends Array<infer U> ? Simplify<U>[]
+    : T extends Date ? T
+    : T extends object ? { [K in keyof T]: Simplify<T[K]> }
+    : T;
 
 type QueryResultInner<
     DB,
@@ -17,12 +23,12 @@ type QueryResultFromSelect<
     TTable extends Table<DB>,
     TQuery extends Query<DB, TTable>,
 > = {
-    [TCol in SelectedColumns<DB, TTable, TQuery>]: ColumnValue<
-        DB,
-        TTable,
-        TCol
-    >;
-};
+        [TCol in SelectedColumns<DB, TTable, TQuery>]: ColumnValue<
+            DB,
+            TTable,
+            TCol
+        >;
+    };
 
 type SelectedColumns<
     DB,
@@ -30,9 +36,9 @@ type SelectedColumns<
     TQuery extends Query<DB, TTable>,
 > = TQuery['select'] extends true
     ? // Select all columns
-      Column<DB, TTable>
+    Column<DB, TTable>
     : // Select only the specified columns
-      Column<DB, TTable> & keyof TQuery['select'];
+    Column<DB, TTable> & keyof TQuery['select'];
 
 type IncludedColumns<
     DB,
@@ -45,11 +51,11 @@ type QueryResultFromInclude<
     TTable extends Table<DB>,
     TQuery extends Query<DB, TTable>,
 > = {
-    [TCol in IncludedColumns<DB, TTable, TQuery>]: QueryResult<
-        DB,
-        TQuery['include'][TCol]
-    >;
-};
+        [TCol in IncludedColumns<DB, TTable, TQuery>]: QueryResult<
+            DB,
+            TQuery['include'][TCol]
+        >;
+    };
 
 type LazyQueryResult<
     DB,
@@ -79,15 +85,15 @@ type ApplyCardinality<
 > =
     // Case 1: lazy query
     TQuery extends { lazy: true }
-        ? LazyQueryResult<DB, TTable, TQuery>
-        : // Case 2: many
-          TQuery extends { cardinality: 'many' }
-          ? ManyQueryResult<DB, TTable, TQuery>
-          : // Case 2: one
-            TQuery extends { cardinality: 'one' }
-            ? QueryResultInner<DB, TTable, TQuery>
-            : // Case 2: maybe
-              TQuery extends { cardinality: 'maybe' }
-              ? MaybeQueryResult<DB, TTable, TQuery>
-              : // Else
-                never;
+    ? LazyQueryResult<DB, TTable, TQuery>
+    : // Case 2: many
+    TQuery extends { cardinality: 'many' }
+    ? ManyQueryResult<DB, TTable, TQuery>
+    : // Case 2: one
+    TQuery extends { cardinality: 'one' }
+    ? QueryResultInner<DB, TTable, TQuery>
+    : // Case 2: maybe
+    TQuery extends { cardinality: 'maybe' }
+    ? MaybeQueryResult<DB, TTable, TQuery>
+    : // Else
+    never;
