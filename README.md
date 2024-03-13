@@ -1,7 +1,3 @@
-![@synthql/react version](https://img.shields.io/npm/v/%40synthql%2Freact?label=%40synthql%2Freact)
-![@synthql/backend version](https://img.shields.io/npm/v/%40synthql%2Fbackend?label=%40synthql%2Fbackend)
-![@synthql/queries version](https://img.shields.io/npm/v/%40synthql%2Fqueries?label=%40synthql%2Fqueries)
-
 <div align="center">
 
 <img src="/assets/logo.png" width="88" alt="synthql"  />
