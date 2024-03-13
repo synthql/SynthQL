@@ -39,3 +39,6 @@ export async function* execute<DB, TQuery extends Query<DB>>(
         yield composeExecutionResults(resultTree);
     }
 }
+
+
+

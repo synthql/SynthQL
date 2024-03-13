@@ -50,14 +50,13 @@ describe('createPlanningQuery', () => {
                                     path: 'inventory.film.language',
                                 },
                                 {
-                                    children: [],
                                     from: 'public.film_actor',
                                     path: 'inventory.film.filmActor',
-                                },
-                                {
-                                    children: [],
-                                    from: 'public.actor',
-                                    path: 'inventory.film.actors',
+                                    children: [{
+                                        children: [],
+                                        from: 'public.actor',
+                                        path: 'inventory.film.filmActor.actors',
+                                    }],
                                 },
                             ],
                             from: 'public.film',
@@ -111,12 +110,11 @@ describe('createPlanningQuery', () => {
                                     {
                                         "from": "public.film_actor",
                                         "path": "inventory.film.filmActor",
-                                        "children": [],
-                                    },
-                                    {
-                                        "from": "public.actor",
-                                        "path": "inventory.film.actors",
-                                        "children": [],
+                                        "children": [{
+                                            "from": "public.actor",
+                                            "path": "inventory.film.filmActor.actors",
+                                            "children": [],
+                                        }],
                                     },
                                 ],
 

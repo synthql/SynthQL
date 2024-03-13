@@ -32,10 +32,13 @@ export function film() {
                 .maybe(),
             filmActor: filmActor()
                 .where({ film_id: col('public.film.film_id') })
+                .include({
+                    actors: actor()
+                        .where({ actor_id: col('public.film_actor.actor_id') })
+                        .many(),
+                })
                 .many(),
-            actors: actor()
-                .where({ actor_id: col('public.film_actor.actor_id') })
-                .many(),
+
         });
 }
 
