@@ -2,8 +2,15 @@
 
 <img src="/assets/logo.png" width="88" alt="synthql"  />
 <h1 style="margin-top:16px">synthql</h1>
-<p>A full stack, type-safe client to your postgresql database with a focus on DX and performance.</p>
+<p>A full-stack, type-safe client to your Postgresql database with a focus on DX and performance.</p>
 </div>
+
+![@synthql/react version](https://img.shields.io/npm/v/%40synthql%2Freact?label=%40synthql%2Freact)
+![@synthql/backend version](https://img.shields.io/npm/v/%40synthql%2Fbackend?label=%40synthql%2Fbackend)
+![@synthql/queries version](https://img.shields.io/npm/v/%40synthql%2Fqueries?label=%40synthql%2Fqueries)
+
+
+
 
 ## Show me some code
 
