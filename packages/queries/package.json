@@ -12,7 +12,7 @@
     "homepage": "https://github.com/fhur/synthql#readme",
     "type": "module",
     "private": false,
-    "version": "0.24.4",
+    "version": "0.25.4",
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "src/index.ts",
