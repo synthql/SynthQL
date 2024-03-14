@@ -11,7 +11,7 @@ type SynthqlQueryOptions<
     TQuery extends Query<DB, TTable>,
 > = {
     requestInit?: RequestInit;
-    reactQuery?: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'retry'>;
+    reactQuery?: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'retry' | 'structuralSharing'>;
 };
 
 export function useSynthql<
