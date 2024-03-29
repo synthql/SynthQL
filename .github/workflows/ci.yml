@@ -1,0 +1,48 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up database
+      run: |
+        chmod +x ./setup-db.bash
+        ./setup-db.bash
+
+    - name: Cache yarn dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          **/node_modules
+          .yarn/cache
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run CI tasks
+      run: yarn ci
