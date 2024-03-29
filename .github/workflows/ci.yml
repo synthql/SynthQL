@@ -29,7 +29,11 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Install dependencies
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: yarn install
 
     - name: Run CI tasks
+      env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: yarn ci
