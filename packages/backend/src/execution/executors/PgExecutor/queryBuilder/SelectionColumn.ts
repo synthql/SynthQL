@@ -1,4 +1,4 @@
-import { AnyQuery } from 'packages/backend/src/types';
+import { AnyQuery } from '../../../../types';
 import { Selection } from './types';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';

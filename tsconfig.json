@@ -4,5 +4,14 @@
         { "path": "./packages/react" },
         { "path": "./packages/queries" }
     ],
-    "extends": "./tsconfig.base.json"
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "build",
+        "jsx": "react"
+    },
+    "include": [
+        "packages/backend/src",
+        "packages/queries/src",
+        "packages/react/src",
+    ]
 }

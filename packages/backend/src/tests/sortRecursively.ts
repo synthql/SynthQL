@@ -8,7 +8,12 @@ export function sortRecursively<T>(input: T): T {
     // and sort the array if it consists of primitives or objects.
     if (Array.isArray(input)) {
         return input.map(sortRecursively).sort((a, b) => {
-            if (typeof a === 'object' && a !== null && typeof b === 'object' && b !== null) {
+            if (
+                typeof a === 'object' &&
+                a !== null &&
+                typeof b === 'object' &&
+                b !== null
+            ) {
                 return JSON.stringify(a).localeCompare(JSON.stringify(b));
             }
             return a < b ? -1 : a > b ? 1 : 0;

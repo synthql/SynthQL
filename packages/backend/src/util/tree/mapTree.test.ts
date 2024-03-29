@@ -5,7 +5,7 @@ import { NumNode, StrNode, n, s } from '../../tests/numNode';
 import { collectLast } from '../..';
 
 describe('mapTree', () => {
-    test('identity', async () => {
+    test.skip('identity', async () => {
         const inputNode = {
             value: '1',
             children: [

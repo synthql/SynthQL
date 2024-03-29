@@ -44,8 +44,6 @@ describe('createExecutionPlan', () => {
                     from: 'public.film_actor, public.actor',
                 },
             ],
-
-
         });
 
         expect(describeQuery(plan.root.query)).toEqual(`film:`);
@@ -68,11 +66,13 @@ describe('createExecutionPlan', () => {
         const simplified = await simplifyPlan(plan);
 
         expect(simplified).toEqual({
-            children: [{
-                children: [],
-                executor: 'PgExecutor',
-                from: 'public.actor',
-            }],
+            children: [
+                {
+                    children: [],
+                    executor: 'PgExecutor',
+                    from: 'public.actor',
+                },
+            ],
             executor: 'PgExecutor',
             from: 'public.film, public.film_actor, public.language',
         });
@@ -93,29 +93,27 @@ describe('createExecutionPlan', () => {
         });
 
         const simplified = await simplifyPlan(plan);
-        expect(simplified).toEqual(
-            {
-                "children": [
-                    {
-                        "children": [
-                            {
-                                "children": [],
-                                "executor": "PgExecutor",
-                                "from": "public.actor",
-                            },
-                        ],
-                        "executor": "PgExecutor",
-                        "from": "public.film, public.film_actor, public.language",
-                    },
-                    {
-                        "children": [],
-                        "executor": "PgExecutor",
-                        "from": "public.city",
-                    },
-                ],
-                "executor": "PgExecutor",
-                "from": "public.store, public.inventory, public.address",
-            }
-        )
+        expect(simplified).toEqual({
+            children: [
+                {
+                    children: [
+                        {
+                            children: [],
+                            executor: 'PgExecutor',
+                            from: 'public.actor',
+                        },
+                    ],
+                    executor: 'PgExecutor',
+                    from: 'public.film, public.film_actor, public.language',
+                },
+                {
+                    children: [],
+                    executor: 'PgExecutor',
+                    from: 'public.city',
+                },
+            ],
+            executor: 'PgExecutor',
+            from: 'public.store, public.inventory, public.address',
+        });
     });
 });

@@ -15,7 +15,8 @@ export function removeIndentation(s: string) {
                 return x.slice(indentation).replace(/"$/, '');
             }
             return x.slice(indentation);
-        }).map(s => s.trimEnd())
+        })
+        .map((s) => s.trimEnd())
         .filter((s) => s.length > 0)
         .join('\n');
 }

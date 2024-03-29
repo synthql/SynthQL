@@ -53,16 +53,14 @@ describe('PgExecutor', () => {
     it('should', async () => {
         const result = await executor.execute(q);
 
-        expect(result).toEqual(
-            [
-                {
-                    "film_id": 2,
-                    "lang": {
-                        "name": "English             ",
-                    },
-                    "title": "ACE GOLDFINGER",
+        expect(result).toEqual([
+            {
+                film_id: 2,
+                lang: {
+                    name: 'English             ',
                 },
-            ]
-        );
+                title: 'ACE GOLDFINGER',
+            },
+        ]);
     });
 });

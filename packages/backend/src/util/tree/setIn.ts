@@ -36,16 +36,20 @@ export function setIn<TTree>(
             for (const parentItem of parent) {
                 setOnObject(parentItem, slice, lastSegment, child);
             }
-        }
-        else {
-            setOnObject(parent, slice, lastSegment, child)
+        } else {
+            setOnObject(parent, slice, lastSegment, child);
         }
     }
 
     return tree;
 }
 
-function setOnObject(parent: unknown, pathToParent: Path, lastSegment: Path[number], child: unknown) {
+function setOnObject(
+    parent: unknown,
+    pathToParent: Path,
+    lastSegment: Path[number],
+    child: unknown,
+) {
     if (typeof lastSegment === 'number') {
         assertArrayAtPath(parent, pathToParent);
         parent[lastSegment] = child;
@@ -53,8 +57,6 @@ function setOnObject(parent: unknown, pathToParent: Path, lastSegment: Path[numb
         assertObject(parent, pathToParent);
         parent[lastSegment] = child;
     } /* v8 ignore next 3 */ else {
-        throw new Error(
-            `Unknown path segment: ${JSON.stringify(lastSegment)}`,
-        );
+        throw new Error(`Unknown path segment: ${JSON.stringify(lastSegment)}`);
     }
 }

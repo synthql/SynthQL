@@ -13,30 +13,29 @@ import { sortRecursively } from '../sortRecursively';
 
 // Skipping for now, not sure why this isn't working
 describe.skip('e2e', () => {
-
     const payments = from('public.payment')
         .groupingId('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
         .where({ customer_id: col('public.customer.customer_id') })
-        .many()
+        .many();
 
     const customers = from('public.customer')
         .groupingId('customer_id')
         .columns('email', 'customer_id')
         .where({ store_id: col('public.store.store_id'), customer_id: 367 })
         .include({
-            payments
+            payments,
         })
-        .many()
+        .many();
 
     const q = store()
         .columns('store_id')
         .include({
-            customers
+            customers,
         })
         .where({ store_id: { in: [1] } })
         .groupingId('store_id')
-        .one()
+        .one();
 
     const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
@@ -45,10 +44,8 @@ describe.skip('e2e', () => {
     });
     const execProps = {
         defaultSchema: 'public',
-        executors: [
-            pgExecutor
-        ]
-    }
+        executors: [pgExecutor],
+    };
 
     test(`${describeQuery(q)}`, async () => {
         const rows: QueryResult<DB, typeof q>[] = await sql`
@@ -74,21 +71,24 @@ describe.skip('e2e', () => {
         JOIN public.customer c ON s.store_id = c.store_id
         WHERE s.store_id IN (1)
         GROUP BY s.store_id
-        `
+        `;
 
-        const result = await collectLast(
-            execute<DB, typeof q>(q, execProps)
-        )
+        const result = await collectLast(execute<DB, typeof q>(q, execProps));
         assertPresent(result);
-        const expected = rows[0]
+        const expected = rows[0];
         expect(result.store_id).toEqual(expected.store_id);
 
         const sliceIndex = 1;
 
-        const expectedInventory = sortRecursively(expected.customers).slice(0, sliceIndex);
-        const resultInventory = sortRecursively(result.customers).slice(0, sliceIndex);
+        const expectedInventory = sortRecursively(expected.customers).slice(
+            0,
+            sliceIndex,
+        );
+        const resultInventory = sortRecursively(result.customers).slice(
+            0,
+            sliceIndex,
+        );
 
         expect(resultInventory).toMatchObject(expectedInventory);
     });
 });
-

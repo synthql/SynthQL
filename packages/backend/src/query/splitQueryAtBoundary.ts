@@ -13,21 +13,17 @@ export function splitQueryAtBoundary<TQuery extends AnyQuery>(
     for (const { query, parentQuery, includeKey, depth } of iterateQuery(
         clone,
     )) {
-
         const isRoot = parentQuery === undefined || includeKey === undefined;
 
         if (partOfSplitSubtree.has(parentQuery)) {
-
             // don't split if the parent query is already part of the split
             partOfSplitSubtree.add(query);
             continue;
         }
         if (isRoot || !shouldSplit(query, { depth })) {
-
             // never split the root
             continue;
         }
-
 
         assertPresent(parentQuery.include);
         delete parentQuery.include[includeKey];

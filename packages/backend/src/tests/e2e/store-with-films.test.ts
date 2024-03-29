@@ -7,34 +7,45 @@ import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
 import { DB } from '../generated.schema';
 import { sql } from '../postgres';
-import { address, inventory, store, film, filmActor, actor } from '../queries.v2';
+import {
+    address,
+    inventory,
+    store,
+    film,
+    filmActor,
+    actor,
+} from '../queries.v2';
 import { pool } from '../queryEngine';
 import { QueryResult, col } from '@synthql/queries';
 import { createExecutionPlan } from '../../execution/planning/createExecutionPlan';
 import { simplifyPlan } from '../../execution/planning/simplifyPlan';
 
 describe('e2e', () => {
-
     const actors = filmActor()
         .include({
-            actor: actor().where({ actor_id: col('public.film_actor.actor_id') }).one()
+            actor: actor()
+                .where({ actor_id: col('public.film_actor.actor_id') })
+                .one(),
         })
         .where({ film_id: col('public.film.film_id') })
         .many();
 
     const inventories = inventory()
         .include({
-            film: film().include({ actors }).where({ film_id: col('public.inventory.film_id') }).one()
+            film: film()
+                .include({ actors })
+                .where({ film_id: col('public.inventory.film_id') })
+                .one(),
         })
         .where({ store_id: col('public.store.store_id') })
         .many();
 
     const q = store()
         .include({
-            inventories
+            inventories,
         })
         .where({ store_id: { in: [1] } })
-        .one()
+        .one();
 
     const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
@@ -43,10 +54,8 @@ describe('e2e', () => {
     });
     const execProps = {
         defaultSchema: 'public',
-        executors: [
-            pgExecutor
-        ]
-    }
+        executors: [pgExecutor],
+    };
 
     test(`${describeQuery(q)}`, async () => {
         const rows: QueryResult<DB, typeof q>[] = await sql`
@@ -71,18 +80,20 @@ describe('e2e', () => {
         WHERE s.store_id = 1
         GROUP BY
             s.store_id
-        `
+        `;
 
-        const result = await collectLast(
-            execute<DB, typeof q>(q, execProps)
-        )
+        const result = await collectLast(execute<DB, typeof q>(q, execProps));
         assertPresent(result);
-        const expected = rows[0]
+        const expected = rows[0];
         expect(result.store_id).toEqual(expected.store_id);
 
         const sliceIndex = 50;
-        const expectedInventory = Array.from(expected.inventories).sort(compareInventory).slice(0, sliceIndex);
-        const resultInventory = Array.from(result.inventories).sort(compareInventory).slice(0, sliceIndex);
+        const expectedInventory = Array.from(expected.inventories)
+            .sort(compareInventory)
+            .slice(0, sliceIndex);
+        const resultInventory = Array.from(result.inventories)
+            .sort(compareInventory)
+            .slice(0, sliceIndex);
 
         expect(resultInventory).toMatchObject(expectedInventory);
     });

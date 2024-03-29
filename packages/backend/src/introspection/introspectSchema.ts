@@ -84,14 +84,13 @@ export async function introspectSchema(
     tables: TableDef[];
     enums: EnumDef[];
 }> {
-    console.time('introspecting schema')
+    console.time('introspecting schema');
     const [tables, primaryKeys, enums] = await Promise.all([
         collectLast(queryEngine.execute(findTableSchema(config))),
         collectLast(queryEngine.execute(findPrimaryKeyConstraints(config))),
         collectLast(queryEngine.execute(findEnums(config))),
     ]);
-    console.timeEnd('introspecting schema')
-
+    console.timeEnd('introspecting schema');
 
     return {
         tables: tables.map((table): TableDef => {

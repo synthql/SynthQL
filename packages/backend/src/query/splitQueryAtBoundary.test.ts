@@ -29,16 +29,18 @@ describe('splitQueryAtBoundary', () => {
         `),
         );
         expect(remaining.length).toBe(1);
-        expect(describeQuery(remaining[0])).toEqual(removeIndentation(`
+        expect(describeQuery(remaining[0])).toEqual(
+            removeIndentation(`
             film_actor: film_actor.film_id = film.film_id
-                actor: actor.actor_id = film_actor.actor_id`,
-        ));
+                actor: actor.actor_id = film_actor.actor_id`),
+        );
     });
 
     test('store', () => {
         const q = store().where({ store_id: 1 }).maybe();
 
-        expect(describeQuery(q)).toEqual(removeIndentation(`
+        expect(describeQuery(q)).toEqual(
+            removeIndentation(`
           "store:
               inventory: inventory.store_id = store.store_id
                   film: film.film_id = inventory.film_id
@@ -47,7 +49,8 @@ describe('splitQueryAtBoundary', () => {
                       language: language.language_id = film.language_id
               address: address.address_id = store.address_id
                   city: city.city_id = address.city_id"
-        `))
+        `),
+        );
 
         const { query, remaining } = splitQueryAtBoundary<AnyQuery>(
             q,
@@ -78,7 +81,8 @@ describe('splitQueryAtBoundary', () => {
     test('store split with depth', () => {
         const q = store().where({ store_id: 1 }).maybe();
 
-        expect(describeQuery(q)).toEqual(removeIndentation(`
+        expect(describeQuery(q)).toEqual(
+            removeIndentation(`
           "store:
               inventory: inventory.store_id = store.store_id
                   film: film.film_id = inventory.film_id
@@ -87,7 +91,8 @@ describe('splitQueryAtBoundary', () => {
                       language: language.language_id = film.language_id
               address: address.address_id = store.address_id
                   city: city.city_id = address.city_id"
-        `))
+        `),
+        );
 
         const { query, remaining } = splitQueryAtBoundary<AnyQuery>(
             q,

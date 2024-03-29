@@ -1,0 +1,11 @@
+{
+  "entryPoints": [
+      "packages/queries/src/index.ts",
+      "packages/backend/src/index.ts",
+      "packages/react/src/index.ts"
+  ],
+  "out": "docs",
+  "name": "synthql docs",
+  "theme": "default",
+  "htmlLang": "en",
+}

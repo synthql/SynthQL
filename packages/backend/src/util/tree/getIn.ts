@@ -4,10 +4,12 @@ import { assertObject } from '../asserts/assertObject';
 
 export function getIn(tree: unknown, path: Path): unknown[] {
     if (path.length === 0) {
-        return Array.isArray(tree) ? tree : [tree]
+        return Array.isArray(tree) ? tree : [tree];
     }
 
-    const queue: Array<{ parent: unknown, pathIndex: number }> = [{ parent: tree, pathIndex: -1 }];
+    const queue: Array<{ parent: unknown; pathIndex: number }> = [
+        { parent: tree, pathIndex: -1 },
+    ];
     const result: unknown[] = [];
 
     while (queue.length > 0) {
@@ -19,16 +21,24 @@ export function getIn(tree: unknown, path: Path): unknown[] {
             continue;
         }
 
-        const valuesAtPath = getNext(parent, path.slice(0, nextPathIndex + 1), path[nextPathIndex]);
+        const valuesAtPath = getNext(
+            parent,
+            path.slice(0, nextPathIndex + 1),
+            path[nextPathIndex],
+        );
 
-        queue.push(...valuesAtPath.map((nestedValue) => {
-            return ({
-                parent: nestedValue,
-                pathIndex: nextPathIndex
-            });
-        }).filter(({ parent }) => parent !== undefined));
+        queue.push(
+            ...valuesAtPath
+                .map((nestedValue) => {
+                    return {
+                        parent: nestedValue,
+                        pathIndex: nextPathIndex,
+                    };
+                })
+                .filter(({ parent }) => parent !== undefined),
+        );
     }
-    return result
+    return result;
 }
 
 function getNext(
@@ -40,10 +50,10 @@ function getNext(
         return [tree];
     }
     if (tree === undefined) {
-        return []
+        return [];
     }
     if (Array.isArray(tree)) {
-        return tree.flatMap((item) => getNext(item, path, pathSegment))
+        return tree.flatMap((item) => getNext(item, path, pathSegment));
     }
     if (typeof pathSegment === 'number') {
         assertArrayAtPath(tree, path);

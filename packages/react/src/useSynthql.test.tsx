@@ -5,7 +5,6 @@ import { useSynthql } from '.';
 import { DB, from } from './test/fakedb';
 import { Providers } from './test/Providers';
 import React from 'react';
-import { fetchJsonLines } from './fetchJsonLines';
 
 describe('useSynthql', () => {
     let echoServer: EchoServer | undefined;

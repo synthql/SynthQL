@@ -16,31 +16,24 @@ describe('iterateResultRow', () => {
             { city: 'Medellin', city_id: 3 },
         ];
 
-        expect(Array.from(iterateResultRows(queryResult, q, 'public')).map(({ column, values }) => {
-            return {
-                column: column.canonical(),
-                values
-            }
-        }))
-            .toEqual(
-                [
-                    {
-                        "column": `"public"."city"."city_id"`,
-                        "values": [
-                            1,
-                            2,
-                            3,
-                        ],
-                    },
-                    {
-                        "column": `"public"."city"."city"`,
-                        "values": [
-                            "Bogota",
-                            "Cali",
-                            "Medellin",
-                        ],
-                    },
-                ]
-            );
+        expect(
+            Array.from(iterateResultRows(queryResult, q, 'public')).map(
+                ({ column, values }) => {
+                    return {
+                        column: column.canonical(),
+                        values,
+                    };
+                },
+            ),
+        ).toEqual([
+            {
+                column: `"public"."city"."city_id"`,
+                values: [1, 2, 3],
+            },
+            {
+                column: `"public"."city"."city"`,
+                values: ['Bogota', 'Cali', 'Medellin'],
+            },
+        ]);
     });
 });

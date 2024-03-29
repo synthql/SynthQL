@@ -32,8 +32,6 @@ export function* iterateResultRows(
     }
 }
 
-
-
 interface IterateResultRowsErrorProps {
     rows: ResultRow[];
     path: Path;

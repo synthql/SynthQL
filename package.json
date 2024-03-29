@@ -1,19 +1,23 @@
 {
-    "name": "@synthql/root",
-    "type": "module",
-    "version": "0.26.4",
-    "license": "MIT",
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "format": "yarn prettier --write \"./packages/*/src/**/*.(ts|tsx)\"",
-        "checks": "yarn --cwd packages/backend checks && yarn --cwd packages/queries checks && yarn --cwd packages/react checks",
-        "link-all": "yarn --cwd packages/backend link && yarn --cwd packages/queries link && yarn --cwd packages/react link",
-        "pub": "node ./scripts/publish.cjs"
-    },
-    "devDependencies": {
-        "prettier": "^3.1.1"
-    }
+  "name": "@synthql/root",
+  "type": "module",
+  "version": "0.26.4",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "format": "yarn nx run-many -t format",
+    "typecheck": "yarn nx run-many -t typecheck",
+    "test": "yarn nx run-many -t test:ci",
+    "build": "yarn nx run-many -t build",
+    "ci": "yarn nx run-many -t format typecheck test:ci build",
+    "link-all": "yarn --cwd packages/backend link && yarn --cwd packages/queries link && yarn --cwd packages/react link",
+    "pub": "node ./scripts/publish.cjs"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "nx": "18.2.1"
+  }
 }

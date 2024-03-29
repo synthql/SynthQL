@@ -38,7 +38,6 @@ export function film() {
                         .many(),
                 })
                 .many(),
-
         });
 }
 

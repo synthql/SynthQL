@@ -59,10 +59,7 @@ describe('setIn', (i) => {
         {
             input: [{ a: [{ a: 1 }, { a: 2 }] }, { a: [{ a: 3 }, { a: 4 }] }],
             path: ['a'],
-            output: [
-                { a: thingToWrite },
-                { a: thingToWrite },
-            ],
+            output: [{ a: thingToWrite }, { a: thingToWrite }],
         },
         {
             input: [{ a: [{ a: 1 }, { a: 2 }] }, { a: [{ a: 3 }, { a: 4 }] }],

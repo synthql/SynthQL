@@ -1,28 +1,31 @@
 {
-    "name": "@synthql/introspect",
-    "description": "",
-    "author": {
-        "name": "fhur",
-        "url": "https://github.com/fhur"
-    },
-    "homepage": "https://github.com/fhur/synthql#readme",
-    "type": "module",
-    "private": false,
-    "version": "0.22.4",
-    "main": "src/index.ts",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
-    "license": "MIT",
-    "dependencies": {
-        "pg-structure": "^7.15.2"
-    },
-    "scripts": {
-        "test": "vitest --globals",
-        "checks": "yarn vitest --globals run && yarn build && yarn tsc",
-        "build": "vite build --mode production",
-        "publish:minor": "yarn publish --access public --no-git-tag-version"
-    },
-    "devDependencies": {
-        "vitest": "^1.1.0"
-    }
+  "name": "@synthql/introspect",
+  "description": "",
+  "author": {
+    "name": "fhur",
+    "url": "https://github.com/fhur"
+  },
+  "homepage": "https://github.com/fhur/synthql#readme",
+  "type": "module",
+  "private": false,
+  "version": "0.22.4",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "pg-structure": "^7.15.2"
+  },
+  "scripts": {
+    "test": "vitest --globals",
+    "typecheck": "tsc",
+    "test:ci": "CI=1 vitest run --globals",
+    "checks": "yarn vitest --globals run && yarn build && yarn tsc",
+    "build": "vite build --mode production",
+    "publish:minor": "yarn publish --access public --no-git-tag-version",
+    "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+  },
+  "devDependencies": {
+    "vitest": "^1.1.0"
+  }
 }

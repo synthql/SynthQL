@@ -52,11 +52,13 @@ describe('createPlanningQuery', () => {
                                 {
                                     from: 'public.film_actor',
                                     path: 'inventory.film.filmActor',
-                                    children: [{
-                                        children: [],
-                                        from: 'public.actor',
-                                        path: 'inventory.film.filmActor.actors',
-                                    }],
+                                    children: [
+                                        {
+                                            children: [],
+                                            from: 'public.actor',
+                                            path: 'inventory.film.filmActor.actors',
+                                        },
+                                    ],
                                 },
                             ],
                             from: 'public.film',
@@ -77,56 +79,52 @@ describe('createPlanningQuery', () => {
             .where({ store_id: { in: [1, 2, 3] } })
             .maybe();
 
-        expect(simplifyQuery(createPlanningQuery(q))).toEqual(
-            {
-                "from": "public.store",
-                "path": "",
-                "children": [
-                    {
-                        "from": "public.address",
-                        "path": "address",
-                        "children": [
-                            {
-                                "children": [],
-                                "from": "public.city",
-                                "path": "address.city",
-                            },
-                        ],
-
-                    },
-                    {
-                        "from": "public.inventory",
-                        "path": "inventory",
-                        "children": [
-                            {
-                                "from": "public.film",
-                                "path": "inventory.film",
-                                "children": [
-                                    {
-                                        "from": "public.language",
-                                        "path": "inventory.film.language",
-                                        "children": [],
-                                    },
-                                    {
-                                        "from": "public.film_actor",
-                                        "path": "inventory.film.filmActor",
-                                        "children": [{
-                                            "from": "public.actor",
-                                            "path": "inventory.film.filmActor.actors",
-                                            "children": [],
-                                        }],
-                                    },
-                                ],
-
-                            },
-                        ],
-
-                    },
-                ],
-
-            }
-        )
-    })
+        expect(simplifyQuery(createPlanningQuery(q))).toEqual({
+            from: 'public.store',
+            path: '',
+            children: [
+                {
+                    from: 'public.address',
+                    path: 'address',
+                    children: [
+                        {
+                            children: [],
+                            from: 'public.city',
+                            path: 'address.city',
+                        },
+                    ],
+                },
+                {
+                    from: 'public.inventory',
+                    path: 'inventory',
+                    children: [
+                        {
+                            from: 'public.film',
+                            path: 'inventory.film',
+                            children: [
+                                {
+                                    from: 'public.language',
+                                    path: 'inventory.film.language',
+                                    children: [],
+                                },
+                                {
+                                    from: 'public.film_actor',
+                                    path: 'inventory.film.filmActor',
+                                    children: [
+                                        {
+                                            from: 'public.actor',
+                                            path: 'inventory.film.filmActor.actors',
+                                            children: [],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        });
+    });
 
     test('sore => address => city', () => {
         const city = from('public.city')

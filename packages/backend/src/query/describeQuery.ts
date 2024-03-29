@@ -25,9 +25,8 @@ export function describeQuery(q: AnyQuery): string {
         });
     }
     return lines
-        .map(
-            ({ depth, table, join }) =>
-                `${'  '.repeat(depth)}${table}: ${join}`.trimEnd(),
+        .map(({ depth, table, join }) =>
+            `${'  '.repeat(depth)}${table}: ${join}`.trimEnd(),
         )
         .join('\n');
 }

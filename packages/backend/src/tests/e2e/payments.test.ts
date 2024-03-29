@@ -1,32 +1,28 @@
-import { describe, expect, test } from "vitest";
-import { DB, from } from "../generated.schema";
-import { describeQuery } from "../../query/describeQuery";
-import { PgExecutor } from "../../execution/executors/PgExecutor";
-import { pool } from "../queryEngine";
-import { execute } from "../../execution/execute";
-import { collectLast } from "../..";
-import { sql } from "../postgres";
+import { describe, expect, test } from 'vitest';
+import { DB, from } from '../generated.schema';
+import { describeQuery } from '../../query/describeQuery';
+import { PgExecutor } from '../../execution/executors/PgExecutor';
+import { pool } from '../queryEngine';
+import { execute } from '../../execution/execute';
+import { collectLast } from '../..';
+import { sql } from '../postgres';
 
 describe('e2e', () => {
     const q = from('public.payment')
         .columns('payment_id', 'amount', 'payment_date')
         .groupingId('payment_id', 'payment_date')
-        .many()
+        .many();
 
     test(describeQuery(q), async () => {
         const pgExecutor = new PgExecutor({
             defaultSchema: 'public',
             logging: true,
-            pool
+            pool,
         });
         const execProps = {
             defaultSchema: 'public',
-            executors: [
-                pgExecutor
-            ]
-        }
-
-
+            executors: [pgExecutor],
+        };
 
         const result = await collectLast(execute<DB, typeof q>(q, execProps));
 
@@ -40,10 +36,8 @@ describe('e2e', () => {
             GROUP BY
                 payment_id,
                 payment_date
-        `
+        `;
 
         expect(result).toEqual(expected);
-    })
-})
-
-
+    });
+});

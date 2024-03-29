@@ -41,7 +41,10 @@ function composeExecutionResultsRecursively(
             return true;
         };
         const rows = result.filter((row) => predicate(row));
-        return applyCardinality(rows, inputQuery.cardinality ?? 'many', { query: inputQuery, row: rows });
+        return applyCardinality(rows, inputQuery.cardinality ?? 'many', {
+            query: inputQuery,
+            row: rows,
+        });
     });
 
     for (const child of node.children) {

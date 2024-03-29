@@ -193,21 +193,19 @@ describe('introspectSchema', () => {
             .map((col) => `${col.type.schema}.${col.type.name}`);
 
         const uniques = [...new Set(allTypes)].sort();
-        expect(uniques).toEqual(
-            [
-                "pg_catalog._text",
-                "pg_catalog.bool",
-                "pg_catalog.bpchar",
-                "pg_catalog.bytea",
-                "pg_catalog.date",
-                "pg_catalog.int2",
-                "pg_catalog.int4",
-                "pg_catalog.numeric",
-                "pg_catalog.text",
-                "pg_catalog.timestamptz",
-                "pg_catalog.tsvector",
-                "public.mpaa_rating",
-            ]
-        );
+        expect(uniques).toEqual([
+            'pg_catalog._text',
+            'pg_catalog.bool',
+            'pg_catalog.bpchar',
+            'pg_catalog.bytea',
+            'pg_catalog.date',
+            'pg_catalog.int2',
+            'pg_catalog.int4',
+            'pg_catalog.numeric',
+            'pg_catalog.text',
+            'pg_catalog.timestamptz',
+            'pg_catalog.tsvector',
+            'public.mpaa_rating',
+        ]);
     });
 });
