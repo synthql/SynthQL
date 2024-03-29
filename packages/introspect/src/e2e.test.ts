@@ -5,7 +5,7 @@ describe('e2e', () => {
     test('generate from pagila', () => {
         introspect({
             connectionString:
-                'postgres://postgres:password@localhost:5432/pagila',
+                'postgres://postgres:password@localhost:5432/postgres',
         });
     });
 });
