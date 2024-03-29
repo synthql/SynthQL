@@ -4,8 +4,14 @@
       "packages/backend/src/index.ts",
       "packages/react/src/index.ts"
   ],
-  "out": "docs",
-  "name": "synthql docs",
+  "out": "./packages/docs/static/reference",
+  "name": "SynthQL docs",
   "theme": "default",
   "htmlLang": "en",
+  "tsconfig": "tsconfig.json",
+  "sort": [
+    "kind",
+    "alphabetical"
+  ],
+  "gitRevision": "master",
 }

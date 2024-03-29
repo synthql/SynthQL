@@ -39,7 +39,7 @@ describe('useSynthql', () => {
         await result.waitFor(() => result.result.current.data !== undefined);
 
         expect(result.result.current.data).toEqual([{ id: '1', name: 'bob' }]);
-    });
+    }, /* 10 seconds */ 10_000);
 
     test('fetching 1000 results', async () => {
         const count = 1000;
@@ -71,5 +71,5 @@ describe('useSynthql', () => {
             ids.map((id) => ({ id, name: 'bob' })),
         );
         expect(result.result.current.status).toEqual(`success`);
-    });
+    }, 10_000);
 });

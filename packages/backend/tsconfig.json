@@ -1,9 +1,9 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "outFile": "./build/types.d.ts",
+        "outDir": "./build/types",
         "emitDeclarationOnly": true,
     },
     "include": ["src/**/*"],
-    "exclude": ["build", "node_modules"]
+    "exclude": ["./build/*", "./node_modules/*"]
 }

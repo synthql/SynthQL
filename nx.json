@@ -19,9 +19,16 @@
       ],
       "cache": true
     },
+    "build:typedoc": {
+      "dependsOn": ["^build"],
+      "cache": true,
+      "outputs": [
+        "{projectRoot}/static/reference"
+      ]
+    },
     "build": {
       "dependsOn": [
-        "^build", "test:ci", "lint", "format"
+        "^build","build:typedoc", "test:ci", "lint", "format"
       ],
       "outputs": [
         "{projectRoot}/build"
