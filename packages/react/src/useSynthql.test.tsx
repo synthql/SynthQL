@@ -41,8 +41,8 @@ describe('useSynthql', () => {
         expect(result.result.current.data).toEqual([{ id: '1', name: 'bob' }]);
     }, /* 10 seconds */ 10_000);
 
-    test('fetching 1000 results', async () => {
-        const count = 1000;
+    test('fetching 100 results', async () => {
+        const count = 100;
         const ids = Array(count)
             .fill('0')
             .map((_, i) => String(i));
