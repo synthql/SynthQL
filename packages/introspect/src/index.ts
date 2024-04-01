@@ -1,1 +1,1 @@
-export * from './introspect';
+export * from './generate';

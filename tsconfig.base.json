@@ -12,6 +12,6 @@
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "incremental": true,
-        "baseUrl": "./"
+        "baseUrl": "./",
     }
 }

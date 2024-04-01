@@ -14,7 +14,8 @@
   "types": "src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "pg-structure": "^7.15.2"
+    "extract-pg-schema": "^5.1.1",
+    "json-schema-to-typescript": "^13.1.2"
   },
   "scripts": {
     "test": "vitest --globals",

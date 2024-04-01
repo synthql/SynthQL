@@ -1,11 +1,14 @@
 import { describe, test } from 'vitest';
-import { introspect } from '.';
+import { generate } from '.';
 
 describe('e2e', () => {
-    test('generate from pagila', () => {
-        introspect({
+    test('generate from pagila', async () => {
+        await generate({
             connectionString:
-                'postgres://postgres:password@localhost:5432/postgres',
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: './src/generated',
         });
-    });
+    }, 100_000);
 });
