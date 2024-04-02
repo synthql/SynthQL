@@ -5,11 +5,6 @@
 <p>A full-stack, type-safe client to your Postgresql database with a focus on DX and performance.</p>
 </div>
 
-
-
-
-
-
 ## Show me some code
 
 ```ts
@@ -42,7 +37,8 @@ const { data } = useSynthql(query);
 
 ## Links
 
--   [Website](https://fhur.github.io/synthql/)
--   [Docs](https://fhur.github.io/synthql/docs/getting-started)
+-   [Website](https://synthql.github.io/synthql/)
+-   [Docs](https://synthql.github.io/synthql/docs/getting-started)
+-   [API](https://synthql.github.io/synthql/reference)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [Github](https://github.com/fhur/synthql)
+-   [Github](https://github.com/synthql/synthql)
