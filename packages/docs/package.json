@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.1.0",
+    "@docusaurus/plugin-google-gtag": "3.1.0",
     "@docusaurus/tsconfig": "3.1.0",
     "@docusaurus/types": "3.1.0",
     "typescript": "~5.2.2"
