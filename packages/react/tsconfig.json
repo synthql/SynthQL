@@ -3,8 +3,8 @@
     "compilerOptions": {
         "outDir": "./build/types",
         "emitDeclarationOnly": true,
-        "jsx": "preserve"
+        "jsx": "preserve",
     },
     "include": ["src"],
-    "exclude": ["./build/*", "./node_modules/*"]
+    "exclude": ["./build/*", "./node_modules/*"],
 }

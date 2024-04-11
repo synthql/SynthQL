@@ -1,47 +1,38 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "targetDefaults": {
-    "test:ci": {
-      "dependsOn": [
-        "^test:ci"
-      ],
-      "cache": true
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+        "test:ci": {
+            "dependsOn": ["^test:ci"],
+            "cache": true
+        },
+        "lint": {
+            "dependsOn": ["^lint"],
+            "cache": true
+        },
+        "format": {
+            "dependsOn": ["^format"],
+            "cache": true
+        },
+        "build:typedoc": {
+            "dependsOn": ["^build"],
+            "cache": true,
+            "outputs": ["{projectRoot}/static/reference"]
+        },
+        "build": {
+            "dependsOn": [
+                "^build",
+                "build:typedoc",
+                "test:ci",
+                "lint",
+                "format"
+            ],
+            "outputs": ["{projectRoot}/build"],
+            "cache": true
+        },
+        "typecheck": {
+            "dependsOn": ["^typecheck"],
+            "cache": true
+        }
     },
-    "lint": {
-      "dependsOn": [
-        "^lint"
-      ],
-      "cache": true
-    },
-    "format": {
-      "dependsOn": [
-        "^format"
-      ],
-      "cache": true
-    },
-    "build:typedoc": {
-      "dependsOn": ["^build"],
-      "cache": true,
-      "outputs": [
-        "{projectRoot}/static/reference"
-      ]
-    },
-    "build": {
-      "dependsOn": [
-        "^build","build:typedoc", "test:ci", "lint", "format"
-      ],
-      "outputs": [
-        "{projectRoot}/build"
-      ],
-      "cache": true
-    },
-    "typecheck": {
-      "dependsOn": [
-        "^typecheck"
-      ],
-      "cache": true
-    }
-
-  },
-  "defaultBase": "master"
+    "defaultBase": "master"
 }

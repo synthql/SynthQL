@@ -1,39 +1,39 @@
 name: Continuous Integration
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v2
 
-    - name: Set up database
-      run: |
-        chmod +x ./setup-db.bash
-        ./setup-db.bash
+            - name: Set up database
+              run: |
+                  chmod +x ./setup-db.bash
+                  ./setup-db.bash
 
-    - name: Cache yarn dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          **/node_modules
-          .yarn/cache
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
+            - name: Cache yarn dependencies
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      **/node_modules
+                      .yarn/cache
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
-    - name: Install dependencies
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: yarn install
+            - name: Install dependencies
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn install
 
-    - name: Run CI tasks
-      env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: yarn ci
+            - name: Run CI tasks
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn ci

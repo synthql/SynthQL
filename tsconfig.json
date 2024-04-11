@@ -5,19 +5,15 @@
         "paths": {
             "@synthql/react/*": ["./packages/react/src/*"],
             "@synthql/backend/*": ["./packages/backend/src/*"],
-            "@synthql/queries/*": ["./packages/queries/src/*"]
+            "@synthql/queries/*": ["./packages/queries/src/*"],
         },
         "outDir": "./build",
-        "jsx": "preserve"
+        "jsx": "preserve",
     },
     "include": [
         "./packages/react/src",
         "./packages/backend/src",
-        "./packages/queries/src"
+        "./packages/queries/src",
     ],
-    "exclude": [
-        "./node_modules",
-        "**/*.spec.ts"
-    ]
+    "exclude": ["./node_modules", "**/*.spec.ts"],
 }
-

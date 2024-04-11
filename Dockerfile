@@ -1,4 +1,3 @@
-
 FROM postgres:15
 
 # Set environment variables
@@ -12,4 +11,3 @@ COPY pagila/pagila-data.sql /docker-entrypoint-initdb.d/2-data.sql
 
 # Expose port 5432 to access the database
 EXPOSE 5432
-

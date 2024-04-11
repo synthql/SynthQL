@@ -1,4 +1,5 @@
 # Architecture
+
 This is a brief, high level guide that documents `synthql`s architecture.
 
 ## Package structure
@@ -7,7 +8,7 @@ Synthql is composed of 3 packages:
 
 1. `@synthql/queries`: contains the query builder and common types. This package can be used both in client and server code.
 2. `@synthql/backend`: contains the `QueryEngine`, which executes queries.
-2. `@synthql/react`: is the client that communicates with the query engine.
+3. `@synthql/react`: is the client that communicates with the query engine.
 
 These are the dependencies between the packages.
 

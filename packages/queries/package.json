@@ -1,33 +1,33 @@
 {
-  "name": "@synthql/queries",
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:fhur/synthql.git"
-  },
-  "author": {
-    "name": "fhur",
-    "url": "https://github.com/fhur"
-  },
-  "homepage": "https://github.com/fhur/synthql#readme",
-  "type": "module",
-  "private": false,
-  "version": "0.26.4",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
-  "license": "MIT",
-  "dependencies": {},
-  "scripts": {
-    "test": "vitest --globals",
-    "typecheck": "tsc",
-    "test:ci": "CI=1 vitest run --globals",
-    "checks": "yarn vitest --globals run && yarn build && yarn tsc",
-    "build": "vite build --mode production",
-    "publish:minor": "yarn publish --access public --no-git-tag-version",
-    "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
-  },
-  "devDependencies": {
-    "vitest": "^1.1.0"
-  }
+    "name": "@synthql/queries",
+    "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:synthql/synthql.git"
+    },
+    "author": {
+        "name": "fhur",
+        "url": "https://github.com/fhur"
+    },
+    "homepage": "https://github.com/synthql/synthql#readme",
+    "type": "module",
+    "private": false,
+    "version": "0.26.4",
+    "main": "src/index.ts",
+    "module": "src/index.ts",
+    "types": "src/index.ts",
+    "license": "MIT",
+    "dependencies": {},
+    "scripts": {
+        "test": "vitest --globals",
+        "typecheck": "tsc",
+        "test:ci": "CI=1 vitest run --globals",
+        "checks": "yarn vitest --globals run && yarn build && yarn tsc",
+        "build": "vite build --mode production",
+        "publish:minor": "yarn publish --access public --no-git-tag-version",
+        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+    },
+    "devDependencies": {
+        "vitest": "^1.1.0"
+    }
 }

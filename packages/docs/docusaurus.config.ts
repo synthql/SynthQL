@@ -53,7 +53,6 @@ const config: Config = {
                         'https://github.com/synthql/synthql/tree/master/packages/docs/',
                 },
                 blog: false && {
-
                     showReadingTime: true,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
@@ -71,13 +70,13 @@ const config: Config = {
         // Replace with your project's social card
         //image: 'img/docusaurus-social-card.jpg',
         navbar: {
-            title: 'synthql',
+            title: 'SynthQl',
             logo: {
-                alt: 'synthql Logo',
+                alt: 'SynthQL Logo',
                 src: '/img/logo.webp',
                 style: {
                     borderRadius: '100%',
-                }
+                },
             },
             items: [
                 {
@@ -91,7 +90,7 @@ const config: Config = {
                 {
                     href: 'https://synthql.github.io/synthql/reference',
                     label: 'API',
-                    position: 'right'
+                    position: 'right',
                 },
                 {
                     href: 'https://github.com/synthql/synthql',
@@ -125,7 +124,7 @@ const config: Config = {
                     title: 'Community',
                     items: [
                         {
-                            label: 'Github issues',
+                            label: 'GitHub issues',
                             href: 'https://github.com/synthql/synthql/issues',
                         },
                         {
@@ -138,7 +137,7 @@ const config: Config = {
                     title: 'Contact',
                     items: [
                         {
-                            label: 'github',
+                            label: 'GitHub',
                             to: 'https://github.com/fhur',
                         },
                         {

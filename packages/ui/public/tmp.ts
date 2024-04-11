@@ -1,6 +1,6 @@
-import { query,col } from "@synthql/queries"
+import { query, col } from '@synthql/queries';
 
-interface DB { 
+interface DB {
     'information_schema.tables': {
         // all columns
         table_name: string;
@@ -39,7 +39,7 @@ interface DB {
     'pg_catalog.pg_type': {
         typname: string;
         oid: number;
-    },
+    };
 
     'pg_catalog.pg_enum': {
         enumtypid: number;
@@ -47,28 +47,42 @@ interface DB {
         enumsortorder: number;
         oid: number;
     };
- }
+}
 
 const from = query<DB>().from;
 
 const keys = from('information_schema.key_column_usage')
-    .columns('column_name','table_name')
+    .columns('column_name', 'table_name')
     .where({
-        constraint_schema: col('information_schema.table_constraints.constraint_schema'),
-        constraint_name: col('information_schema.table_constraints.constraint_name'),
+        constraint_schema: col(
+            'information_schema.table_constraints.constraint_schema',
+        ),
+        constraint_name: col(
+            'information_schema.table_constraints.constraint_name',
+        ),
         table_schema: col('information_schema.table_constraints.table_schema'),
-        table_name: col('information_schema.table_constraints.table_name')
+        table_name: col('information_schema.table_constraints.table_name'),
     })
-    .many()
+    .many();
 
 export default from('information_schema.table_constraints')
-    .columns('table_schema','table_name','constraint_schema','constraint_name')
+    .columns(
+        'table_schema',
+        'table_name',
+        'constraint_schema',
+        'constraint_name',
+    )
     .where({
         constraint_type: 'PRIMARY KEY',
-        table_schema: 'public'
+        table_schema: 'public',
     })
     .include({
-        keys
+        keys,
     })
-    .groupingId('constraint_schema','constraint_name','table_schema','table_name')
-    .many()
+    .groupingId(
+        'constraint_schema',
+        'constraint_name',
+        'table_schema',
+        'table_name',
+    )
+    .many();

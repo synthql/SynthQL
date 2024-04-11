@@ -10,14 +10,14 @@ Pagila has been tested against PostgreSQL 12 and above.
 All the tables, data, views, and functions have been ported; some of the
 changes made were:
 
-- Changed char(1) true/false fields to true boolean fields
-- The last_update columns were set with triggers to update them
-- Added foreign keys
-- Removed 'DEFAULT 0' on foreign keys since it's pointless with real FK's
-- Used PostgreSQL built-in fulltext searching for fulltext index.
-  Removed the need for the film_text table.
-- The rewards_report function was ported to a simple SRF
-- Added JSONB data
+-   Changed char(1) true/false fields to true boolean fields
+-   The last_update columns were set with triggers to update them
+-   Added foreign keys
+-   Removed 'DEFAULT 0' on foreign keys since it's pointless with real FK's
+-   Used PostgreSQL built-in fulltext searching for fulltext index.
+    Removed the need for the film_text table.
+-   The rewards_report function was ported to a simple SRF
+-   Added JSONB data
 
 The pagila database is made available under PostgreSQL license.
 
@@ -51,7 +51,7 @@ in the main schema file.
 
 Example usage:
 
-SELECT * FROM film WHERE fulltext @@ to_tsquery('fate&india');
+SELECT \* FROM film WHERE fulltext @@ to_tsquery('fate&india');
 
 pgAdmin is included in the docker-compose.
 
@@ -85,43 +85,43 @@ pg_restore /usr/share/pagila/pagila-data-apt-jsonb.sql -U postgres -d pagila
 
 Version 3.0.0
 
-- Add JSONB sample data (based on the packages at apt.postgresql.org and yum.postgresql.org)
-- Add docker compose support ( contributed by https://github.com/theothermattm ) https://github.com/devrimgunduz/pagila/pull/16
-- Add steps to create pagila database on docker by @dedeco in https://github.com/devrimgunduz/pagila/pull/13
-- Add missing user argument by @zOxta in https://github.com/devrimgunduz/pagila/pull/14
-- Update dates to 2022
-- Fix various issues reported in Github
+-   Add JSONB sample data (based on the packages at apt.postgresql.org and yum.postgresql.org)
+-   Add docker compose support ( contributed by https://github.com/theothermattm ) https://github.com/devrimgunduz/pagila/pull/16
+-   Add steps to create pagila database on docker by @dedeco in https://github.com/devrimgunduz/pagila/pull/13
+-   Add missing user argument by @zOxta in https://github.com/devrimgunduz/pagila/pull/14
+-   Update dates to 2022
+-   Fix various issues reported in Github
 
 Version 2.1.0
 
-- Replace varchar(n) with text (David Fetter)
-- Match foreign key and primary key data type in some tables (Ganeshan Venkataraman)
-- Change CREATE TABLE statement for customer table to use
-  DEFAULT nextval('customer_customer_id_seq'::regclass) for customer_id
-  field instead of SERIAL (Adrian Klaver).
+-   Replace varchar(n) with text (David Fetter)
+-   Match foreign key and primary key data type in some tables (Ganeshan Venkataraman)
+-   Change CREATE TABLE statement for customer table to use
+    DEFAULT nextval('customer_customer_id_seq'::regclass) for customer_id
+    field instead of SERIAL (Adrian Klaver).
 
 Version 2.0
 
-- Update schema for newer PostgreSQL versions
-- Remove RULE for partitioning, add trigger support.
-- Update years in sample data.
-- Remove ARTICLES section from README, all links are dead.
+-   Update schema for newer PostgreSQL versions
+-   Remove RULE for partitioning, add trigger support.
+-   Update years in sample data.
+-   Remove ARTICLES section from README, all links are dead.
 
 Version 0.10.1
 
-- Add pagila-data-insert.sql file, added articles section
+-   Add pagila-data-insert.sql file, added articles section
 
 Version 0.10
 
-- Support for built-in fulltext. Add enum example
+-   Support for built-in fulltext. Add enum example
 
 Version 0.9
 
-- Add table partitioning example
+-   Add table partitioning example
 
 Version 0.8
 
-- First release of pagila
+-   First release of pagila
 
 ## CREATE DATABASE ON [DOCKER](https://docs.docker.com/)
 

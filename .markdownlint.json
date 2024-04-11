@@ -1,0 +1,13 @@
+{
+    "first-line-h1": false,
+    "no-inline-html": false,
+    "line-length": {
+        "line_length": 250
+    },
+    "list-marker-space": {
+        "ol_single": 3,
+        "ol_multi": 3,
+        "ul_single": 3,
+        "ul_multi": 3
+    }
+}
