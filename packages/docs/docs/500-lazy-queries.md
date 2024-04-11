@@ -1,6 +1,7 @@
 # Lazy queries
 
 ## The bigger the query, the longer the latency
+
 One of the disadvantages of large query trees is that they result in proportionally longer latencies. The reason is simple: you have to wait for the entire query tree to load before you can send the response back to the client. So the bigger the query, the longer the wait.
 
 To mitigate this issue, `synthql` let's you mark parts of your query tree as `lazy`. A lazy boundary will split your query into two and will tell the QueryEngine to flush results to the client in sequences.
@@ -15,18 +16,15 @@ To improve the latency of this page you can mark the `products` query as `.lazy(
 
 ```tsx
 const products = from('products')
-    .column('id','price','name')
+    .column('id', 'price', 'name')
     .lazy() // <======= this marks the products query as lazy
-    .many()
+    .many();
 
+const query = from('store').column('id', 'store_name', 'store_owner').include({
+    products,
+});
 
-const query = from('store')
-    .column('id','store_name','store_owner')
-    .include({
-        products
-    })
-
-useSynthql(query)
+useSynthql(query);
 ```
 
 Marking the `products` subquery as lazy will result in the query client first fetching the `store`, and then re-rendering the component when eventually the data from the `products` comes in.
@@ -41,6 +39,3 @@ When the `QueryEngine` executes a query it will flush results to the client when
 // Once the products have loaded
 {id: '123', 'store_name': 'Toys Inc.', store_owner: 'Bill', products: {status:'done', data: [...]}}
 ```
-
-
-

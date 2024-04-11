@@ -10,3 +10,6 @@ build/
 
 
 .nx/cache
+
+#macOS
+.DS_Store

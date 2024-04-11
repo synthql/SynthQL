@@ -43,7 +43,6 @@ const config: Config = {
                         'https://github.com/synthql/synthql/tree/master/packages/docs/',
                 },
                 blog: false && {
-
                     showReadingTime: true,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
@@ -67,7 +66,7 @@ const config: Config = {
                 src: '/img/logo.webp',
                 style: {
                     borderRadius: '100%',
-                }
+                },
             },
             items: [
                 {
@@ -81,7 +80,7 @@ const config: Config = {
                 {
                     href: 'https://synthql.github.io/synthql/reference',
                     label: 'API',
-                    position: 'right'
+                    position: 'right',
                 },
                 {
                     href: 'https://github.com/synthql/synthql',

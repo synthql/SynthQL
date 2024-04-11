@@ -2,7 +2,7 @@
 
 <img src="/assets/logo.png" width="88" alt="synthql"  />
 <h1 style="margin-top:16px">synthql</h1>
-<p>A full-stack, type-safe client to your Postgresql database with a focus on DX and performance.</p>
+<p>A full-stack, type-safe client to your PostgreSQL database with a focus on DX and performance.</p>
 </div>
 
 ## Show me some code
@@ -15,7 +15,7 @@ const query = from('films')
 
 const { data } = useSynthql(query);
 
-// data will resolve to
+// `data` will resolve to
 [
     {
         id: 1,

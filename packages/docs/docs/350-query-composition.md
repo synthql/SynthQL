@@ -5,6 +5,7 @@ In my opinion one of the bigger issues with SQL is the fact that you cannot comp
 Synthql is design for composition and let's you achieve this in several ways. Let's see a few examples
 
 ## Defining views
+
 The first step towards reusable queries is to be able to give a name to a table + columns. I call these `views` and they can be defined as follows
 
 ```ts

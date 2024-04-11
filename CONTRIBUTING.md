@@ -18,21 +18,26 @@ yarn ci
 ## Notes for contributors
 
 ### Priorities
-- Prioritize Luminovo features over everything else until we get to v1.0.0. This means we don't really care about 
-other databases (e.g. MySQL), or extensibility/configuration scenarios outside of what Luminovo needs.
-- Loss of focus is the enemy. Laser-sharp focus is your friend.
+
+-   Prioritize Luminovo features over everything else until we get to v1.0.0. This means we don't really care about
+    other databases (e.g. MySQL), or extensibility/configuration scenarios outside of what Luminovo needs.
+-   Loss of focus is the enemy. Laser-sharp focus is your friend.
 
 ### On security
-- Security is a critically important job. A serious security bug can kill this project.
+
+-   Security is a critically important job. A serious security bug can kill this project.
 
 ### On query builder
-- Query builder should map very closely to SQL. If you know SQL you should know `synthql`.
-- Query builder should allow for arbitrarily complex SQL expressions.
-- Sane defaults everywhere. Convention over configuration.
+
+-   Query builder should map very closely to SQL. If you know SQL you should know `synthql`.
+-   Query builder should allow for arbitrarily complex SQL expressions.
+-   Sane defaults everywhere. Convention over configuration.
 
 ### On custom executors
-- Custom executors should feel like native citicens, not weird foreign entities.
+
+-   Custom executors should feel like native citicens, not weird foreign entities.
 
 ### On documentation
-- Documentation is just as important as code. Users won't use what they can't understand.
-- Provide lot's of examples. Developers are used to copying code. Good examples enable them to quickly get going.
+
+-   Documentation is just as important as code. Users won't use what they can't understand.
+-   Provide lot's of examples. Developers are used to copying code. Good examples enable them to quickly get going.

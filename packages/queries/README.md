@@ -3,12 +3,9 @@
 DSL for writing synthql queries.
 
 ```ts
-import { from } from "./generated.schema"
+import { from } from './generated.schema';
 
-const query = from('users')
-    .columns('id','first_name')
-    .where({id:1})
-    .many();
+const query = from('users').columns('id', 'first_name').where({ id: 1 }).many();
 ```
 
 ## Links

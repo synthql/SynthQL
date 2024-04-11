@@ -3,10 +3,8 @@
     "compilerOptions": {
         "outFile": "./build/types.d.ts",
         "emitDeclarationOnly": true,
-        "types": [
-            "vitest/importMeta"
-        ]
+        "types": ["vitest/importMeta"],
     },
     "include": ["src"],
-    "exclude": ["build", "node_modules"]
+    "exclude": ["build", "node_modules"],
 }

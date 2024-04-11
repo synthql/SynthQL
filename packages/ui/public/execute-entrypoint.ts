@@ -1,3 +1,3 @@
-import query from "./tmp";
+import query from './tmp';
 
-console.log(JSON.stringify(query))
+console.log(JSON.stringify(query));

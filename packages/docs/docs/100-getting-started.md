@@ -4,6 +4,7 @@
 # Getting started
 
 ## Install the NPM package
+
 Start by installing the XQL package.
 
 ```bash
@@ -11,6 +12,7 @@ yarn install xql
 ```
 
 ## Generate types
+
 Then generate the types from your database.
 
 ```bash
@@ -24,11 +26,9 @@ This will generate a file at `src/db.ts`
 ## Write your first query
 
 ```ts
-import { from } from "src/db"
+import { from } from 'src/db';
 
-const users = from('users')
-    .select('id','email')
-    .many()
+const users = from('users').select('id', 'email').many();
 ```
 
 ## Setup the query engine
@@ -37,12 +37,9 @@ The QueryEngine compiles XQL queries into SQL and sends them to the DB.
 
 ```ts
 const queryEngine = new QueryEngine({
-    url: process.env.DATABASE_URL!
-})
+    url: process.env.DATABASE_URL!,
+});
 
 // execute the users query
-queryEngine.execute(users)
+queryEngine.execute(users);
 ```
-
-
-
