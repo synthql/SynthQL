@@ -60,9 +60,9 @@ const config: Config = {
         // Replace with your project's social card
         //image: 'img/docusaurus-social-card.jpg',
         navbar: {
-            title: 'synthql',
+            title: 'SynthQl',
             logo: {
-                alt: 'synthql Logo',
+                alt: 'SynthQL Logo',
                 src: '/img/logo.webp',
                 style: {
                     borderRadius: '100%',
@@ -114,7 +114,7 @@ const config: Config = {
                     title: 'Community',
                     items: [
                         {
-                            label: 'Github issues',
+                            label: 'GitHub issues',
                             href: 'https://github.com/synthql/synthql/issues',
                         },
                         {
@@ -127,7 +127,7 @@ const config: Config = {
                     title: 'Contact',
                     items: [
                         {
-                            label: 'github',
+                            label: 'GitHub',
                             to: 'https://github.com/fhur',
                         },
                         {

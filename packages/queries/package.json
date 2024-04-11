@@ -3,13 +3,13 @@
     "description": "",
     "repository": {
         "type": "git",
-        "url": "git@github.com:fhur/synthql.git"
+        "url": "git@github.com:synthql/synthql.git"
     },
     "author": {
         "name": "fhur",
         "url": "https://github.com/fhur"
     },
-    "homepage": "https://github.com/fhur/synthql#readme",
+    "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,
     "version": "0.26.4",

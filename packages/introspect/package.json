@@ -5,7 +5,7 @@
         "name": "fhur",
         "url": "https://github.com/fhur"
     },
-    "homepage": "https://github.com/fhur/synthql#readme",
+    "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,
     "version": "0.22.4",
