@@ -1,4 +1,7 @@
-import { Column, ColumnReference, RefOp, Table } from './types/types';
+import { RefOp } from './types/RefOp';
+import { ColumnReference } from './types/ColumnReference';
+import { Column } from './types/Column';
+import { Table } from './types/Table';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');

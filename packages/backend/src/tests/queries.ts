@@ -1,4 +1,4 @@
-import { Table, WhereClause, col, query, ref } from '@synthql/queries';
+import { Table, WhereClause, col, query } from '@synthql/queries';
 import { DB } from './db';
 
 export function from<TTable extends Table<DB>>(table: TTable) {
@@ -41,10 +41,6 @@ export function findLanguageById(
 }
 
 export function movie() {
-    const film_id = ref<DB>().table('film').column('film_id');
-    const actor_id = ref<DB>().table('film_actor').column('actor_id');
-    const languageId = ref<DB>().table('film').column('language_id');
-
     return from('film')
         .select({
             title: true,
@@ -52,11 +48,14 @@ export function movie() {
             release_year: true,
         })
         .include({
-            language: findLanguageById(languageId).one(),
-            film_actor: from('film_actor').select({}).where({ film_id }).many(),
+            language: findLanguageById(col('film.language_id')).one(),
+            film_actor: from('film_actor')
+                .select({})
+                .where({ film_id: col('film.film_id') })
+                .many(),
             actors: actor()
                 .where({
-                    actor_id,
+                    actor_id: col('film_actor.actor_id'),
                 })
                 .many(),
         })
@@ -87,9 +86,7 @@ export function city() {
         })
         .groupingId('city_id')
         .include({
-            country: findCountryById(
-                ref<DB>().table('city').column('country_id'),
-            ).one(),
+            country: findCountryById(col('city.country_id')).one(),
         });
 }
 

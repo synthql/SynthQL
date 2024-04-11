@@ -22,8 +22,6 @@ export async function generate({
     includeSchemas: string[];
     outDir: string;
 }) {
-
-
     const x = await extractSchemas(
         {
             connectionString,
@@ -37,10 +35,12 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    const schemaWithRefs: JSONSchema = createRootJsonSchema(x, { defaultSchema });
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(x, {
+        defaultSchema,
+    });
 
     /**
-     * Generate types from the schema with refs. 
+     * Generate types from the schema with refs.
      * This leads to a more readable output as the types are not inlined.
      */
     const db = await compile(schemaWithRefs, 'DB', {
@@ -53,7 +53,7 @@ export async function generate({
      * Generate types from the schema without refs.
      * This leads to a more compact output as the types are inlined.
      */
-    const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs)
+    const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
     fs.writeFileSync(
         path.join(outDir, 'schema.ts'),
         `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,

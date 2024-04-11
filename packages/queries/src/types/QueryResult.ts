@@ -1,4 +1,7 @@
-import { Column, ColumnValue, Query, Table } from './types';
+import { Query } from './types';
+import { ColumnValue } from './ColumnValue';
+import { Column } from './Column';
+import { Table } from './Table';
 
 export type QueryResult<DB, TQuery> = Simplify<
     TQuery extends Query<DB, infer TTable>

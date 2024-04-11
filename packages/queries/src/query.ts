@@ -1,4 +1,8 @@
-import { Column, Include, Select, Table, Where } from './types/types';
+import { Include } from './types/Include';
+import { Where } from './types/Where';
+import { Select } from './types/Select';
+import { Column } from './types/Column';
+import { Table } from './types/Table';
 
 export class QueryBuilder<
     DB,
