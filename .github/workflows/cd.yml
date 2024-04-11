@@ -1,7 +1,7 @@
-name: Continuous Integration
+name: Continuous Deployment
 
 on:
-    pull_request:
+    push:
         branches: [master]
 
 jobs:
@@ -35,3 +35,8 @@ jobs:
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn ci
+
+            - name: Publish package to NPM
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn pub
