@@ -8,7 +8,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
-            outDir: './src/generated',
+            outDir: '../queries/src/generated',
         });
     }, 100_000);
 });

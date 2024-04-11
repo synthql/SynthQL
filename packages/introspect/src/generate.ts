@@ -6,6 +6,7 @@ import {
     TableDetails,
 } from 'extract-pg-schema';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import fs from 'fs';
 
 import path from 'path';
@@ -21,6 +22,8 @@ export async function generate({
     includeSchemas: string[];
     outDir: string;
 }) {
+
+
     const x = await extractSchemas(
         {
             connectionString,
@@ -34,17 +37,27 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    const schema: JSONSchema = createRootJsonSchema(x, { defaultSchema });
-    fs.writeFileSync(
-        path.join(outDir, 'schema.ts'),
-        `export const schema = ${JSON.stringify(schema, null, 2)} as const`,
-    );
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(x, { defaultSchema });
 
-    const db = await compile(schema, 'DB', {
+    /**
+     * Generate types from the schema with refs. 
+     * This leads to a more readable output as the types are not inlined.
+     */
+    const db = await compile(schemaWithRefs, 'DB', {
         additionalProperties: false,
         unreachableDefinitions: false,
     });
     fs.writeFileSync(path.join(outDir, 'db.ts'), db);
+
+    /**
+     * Generate types from the schema without refs.
+     * This leads to a more compact output as the types are inlined.
+     */
+    const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs)
+    fs.writeFileSync(
+        path.join(outDir, 'schema.ts'),
+        `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
+    );
 
     fs.writeFileSync(
         path.join(outDir, 'index.ts'),
