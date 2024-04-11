@@ -23,6 +23,8 @@ jobs:
             - name: Install dependencies
               run: yarn install --frozen-lockfile
             - name: Build website
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn build:docs
 
             - name: Upload Build Artifact
