@@ -29,15 +29,15 @@ yarn ci
 
 ### On query builder
 
--   Query builder should map very closely to SQL. If you know SQL you should know `synthql`.
+-   Query builder should map very closely to SQL. If you know SQL you should know SynthQL.
 -   Query builder should allow for arbitrarily complex SQL expressions.
--   Sane defaults everywhere. Convention over configuration.
+-   Same defaults everywhere. Convention over configuration.
 
 ### On custom executors
 
--   Custom executors should feel like native citicens, not weird foreign entities.
+-   Custom executors should feel like native citizens, not weird foreign entities.
 
 ### On documentation
 
 -   Documentation is just as important as code. Users won't use what they can't understand.
--   Provide lot's of examples. Developers are used to copying code. Good examples enable them to quickly get going.
+-   Provide lots of examples. Developers are used to copying code. Good examples enable them to quickly get going.
