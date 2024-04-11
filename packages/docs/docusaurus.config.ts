@@ -31,6 +31,16 @@ const config: Config = {
         locales: ['en'],
     },
 
+    plugins: [
+        [
+            '@docusaurus/plugin-google-gtag',
+            {
+                trackingID: 'G-EBEHLG81MW',
+                anonymizeIP: true, // Anonymize IP in Google Analytics data
+            },
+        ],
+    ],
+
     presets: [
         [
             'classic',
