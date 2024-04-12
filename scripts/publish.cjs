@@ -40,7 +40,7 @@ execSync(`git add .`, {
     stdio: 'inherit',
 });
 
-execSync(`git commit -m "release: v${nextVersion}`, {
+execSync(`git commit -m "release: v${nextVersion}"`, {
     stdio: 'inherit',
 });
 
