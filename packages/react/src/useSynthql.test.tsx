@@ -5,6 +5,7 @@ import { useSynthql } from '.';
 import { DB, from } from './test/fakedb';
 import { Providers } from './test/Providers';
 import React from 'react';
+import { UseQueryResult } from '@tanstack/react-query';
 
 describe('useSynthql', () => {
     let echoServer: EchoServer | undefined;
@@ -54,7 +55,10 @@ describe('useSynthql', () => {
                     .where({ id: { in: ids } })
                     .many();
 
-                return useSynthql<DB, 'users', typeof q>(q);
+                const result: UseQueryResult<
+                    Array<{ id: string; name: string }>
+                > = useSynthql<DB, 'users', typeof q>(q);
+                return result;
             },
             {
                 wrapper: (props: React.PropsWithChildren) => {

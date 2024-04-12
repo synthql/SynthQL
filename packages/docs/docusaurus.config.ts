@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-    title: 'synthql',
+    title: 'SynthQL',
     tagline: 'A fullstack, type-safe client for your postgresql database',
     favicon: 'img/favicon.ico',
 
@@ -70,7 +70,7 @@ const config: Config = {
         // Replace with your project's social card
         //image: 'img/docusaurus-social-card.jpg',
         navbar: {
-            title: 'SynthQl',
+            title: 'SynthQL',
             logo: {
                 alt: 'SynthQL Logo',
                 src: '/img/logo.webp',

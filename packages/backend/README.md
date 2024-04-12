@@ -1,6 +1,6 @@
 # @synthql/backend
 
-The synthql backend.
+The SynthQL backend.
 
 ```ts
 import { QueryEngine } from "@synthql/backend"

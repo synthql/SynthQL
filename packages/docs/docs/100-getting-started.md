@@ -5,10 +5,14 @@
 
 ## Install the NPM package
 
-Start by installing the XQL package.
+Start by installing the SynthQL packages
 
 ```bash
-yarn install xql
+# Backend packages
+yarn add @synthql/backend @synthql/queries @synthql/cli
+
+# Frontend packages
+yarn add @synthql/react @synthql/queries
 ```
 
 ## Generate types
@@ -18,7 +22,7 @@ Then generate the types from your database.
 ```bash
 # --url is the database connection URL
 # --dir is the path where the schema will be generated [Defaults to src/]
-yarn run xql generate-types --url '...' --dir 'src/'
+yarn run synthql generate --url '...' --dir 'src/'
 ```
 
 This will generate a file at `src/db.ts`
