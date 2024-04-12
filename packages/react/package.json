@@ -30,6 +30,7 @@
         "build": "vite build --mode production",
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+        "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
+        "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthql.test.tsx"
     }
 }

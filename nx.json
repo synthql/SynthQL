@@ -13,8 +13,12 @@
             "dependsOn": ["^format"],
             "cache": true
         },
+        "compile-executable-examples": {
+            "dependsOn": ["test:ci","format"],
+            "cache": true
+        },
         "build:typedoc": {
-            "dependsOn": ["^build"],
+            "dependsOn": ["^build","^compile-executable-examples"],
             "cache": true,
             "outputs": ["{projectRoot}/static/reference"]
         },

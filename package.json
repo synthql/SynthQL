@@ -14,6 +14,7 @@
         "test:ci": "yarn nx run-many -t test:ci",
         "build": "yarn nx run-many -t build",
         "build:docs": "yarn nx build @synthql/docs",
+        "compile-executable-examples": "yarn nx run-many -t compile-executable-examples",
         "ci": "yarn nx run-many -t format typecheck test:ci build",
         "link-all": "yarn --cwd packages/backend link && yarn --cwd packages/queries link && yarn --cwd packages/react link",
         "pub": "node ./scripts/publish.cjs"

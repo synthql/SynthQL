@@ -50,14 +50,18 @@ describe('useSynthql', () => {
 
         const result = renderHook(
             () => {
+                // @@start-example@@ Find all users with ids in the list
+                // @@desc@@ Finds all records in the `users` table where the `id` is in the list of ids.
                 const q = from('users')
-                    .select({ id: true, name: true })
+                    .columns('id', 'name')
                     .where({ id: { in: ids } })
                     .many();
 
                 const result: UseQueryResult<
                     Array<{ id: string; name: string }>
                 > = useSynthql<DB, 'users', typeof q>(q);
+
+                // @@end-example@@
                 return result;
             },
             {
