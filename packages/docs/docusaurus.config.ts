@@ -88,12 +88,12 @@ const config: Config = {
                 // TODO(fhur): Add blog support
                 // { to: '/blog', label: 'Blog', position: 'left' },
                 {
-                    href: 'https://synthql.github.io/synthql/reference',
+                    href: 'https://synthql.github.io/SynthQL/reference',
                     label: 'API',
                     position: 'right',
                 },
                 {
-                    href: 'https://github.com/synthql/synthql',
+                    href: 'https://github.com/synthql/SynthQL',
                     label: 'GitHub',
                     position: 'right',
                 },

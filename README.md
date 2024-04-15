@@ -37,8 +37,8 @@ const { data } = useSynthql(query);
 
 ## Links
 
--   [Website](https://synthql.github.io/synthql/)
--   [Docs](https://synthql.github.io/synthql/docs/getting-started)
--   [API](https://synthql.github.io/synthql/reference)
+-   [Website](https://synthql.github.io/SynthQL/)
+-   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
+-   [API](https://synthql.github.io/SynthQL/reference)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [Github](https://github.com/synthql/synthql)
+-   [Github](https://github.com/synthql/SynthQL)
