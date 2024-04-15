@@ -1,4 +1,4 @@
-export { col } from './ref';
+export { col } from './col';
 export * from './types/types';
 export * from './types/isRefOp';
 export * from './types/QueryResult';

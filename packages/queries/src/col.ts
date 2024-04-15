@@ -1,7 +1,5 @@
 import { RefOp } from './types/RefOp';
 import { ColumnReference } from './types/ColumnReference';
-import { Column } from './types/Column';
-import { Table } from './types/Table';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');
@@ -24,24 +22,4 @@ export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
         };
     }
     throw new Error(`Invalid column reference: ${ref}`);
-}
-
-export function ref<DB>() {
-    return {
-        table: <TTable extends Table<DB>>(table: TTable) => {
-            return {
-                column: <TColumn extends Column<DB, TTable>>(
-                    column: TColumn,
-                ): RefOp<DB> => {
-                    return {
-                        $ref: {
-                            table,
-                            column,
-                            op: '=',
-                        },
-                    };
-                },
-            };
-        },
-    };
 }
