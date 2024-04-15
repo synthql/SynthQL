@@ -16,7 +16,7 @@ const config: Config = {
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: 'synthql', // Usually your GitHub org/user name.
-    projectName: 'synthql', // Usually your repo name.
+    projectName: 'SynthQL', // Usually your repo name.
     deploymentBranch: 'gh-pages',
     trailingSlash: false,
 
