@@ -1,0 +1,28 @@
+{
+    "name": "@synthql/cli",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:synthql/synthql.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "yarn tsc",
+        "publish:minor": "yarn publish --access public --no-git-tag-version",
+        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+    },
+    "dependencies": {
+        "@synthql/backend": "^0.26.4",
+        "pg": "^8.11.3",
+        "yargs": "^17.7.2"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.5",
+        "@types/pg": "^8.10.9",
+        "@types/yargs": "^17.0.32",
+        "typescript": "^5.4.5"
+    },
+    "bin": {
+        "synthql": "build/index.js"
+    }
+}
