@@ -1,13 +1,6 @@
-import {
-    CompiledQuery,
-    Kysely,
-    PostgresDialect,
-    SelectQueryBuilder,
-} from 'kysely';
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
-import { hydrate } from './execution/executors/PgExecutor/hydrate';
 import { QueryPlan } from '.';
 import { introspectSchema } from './introspection/introspectSchema';
 import { QueryProvider } from './QueryProvider';
@@ -29,8 +22,6 @@ export interface QueryEngineProps<DB> {
 }
 
 export class QueryEngine<DB> {
-    private dialect: PostgresDialect;
-    private db: Kysely<DB>;
     private pool: Pool;
     private schema: string;
     private executors: Array<QueryExecutor> = [];
@@ -42,10 +33,6 @@ export class QueryEngine<DB> {
                 connectionString: config.url,
                 max: 10,
             });
-        this.dialect = new PostgresDialect({
-            pool: this.pool,
-        });
-        this.db = new Kysely({ dialect: this.dialect });
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [

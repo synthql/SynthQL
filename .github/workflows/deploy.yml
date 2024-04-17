@@ -20,12 +20,17 @@ jobs:
                   node-version: 18
                   cache: yarn
 
+            - name: Set up database
+              run: |
+                  chmod +x ./setup-db.bash
+                  ./setup-db.bash
+
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: yarn install --frozen-lockfile            
             - name: Build website
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: yarn build:docs
+              run: yarn build
 
             - name: Upload Build Artifact
               uses: actions/upload-pages-artifact@v3

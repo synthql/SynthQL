@@ -9,9 +9,9 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "Bundler",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "incremental": true,
-        "baseUrl": "./"
+        "baseUrl": "./src"
     }
 }

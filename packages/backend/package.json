@@ -1,18 +1,18 @@
 {
     "name": "@synthql/backend",
     "type": "module",
-    "version": "0.26.4",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
+    "version": "0.33.4",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
     },
     "license": "MIT",
     "dependencies": {
-        "@synthql/queries": "0.26.4",
-        "dotenv": "^16.3.1",
-        "kysely": "^0.26.3",
+        "@synthql/queries": "0.33.4",
         "pg": "^8.11.3"
     },
     "scripts": {
@@ -27,6 +27,7 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
+        "dotenv": "^16.3.1",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@vitest/coverage-v8": "^1.2.2",
@@ -34,6 +35,7 @@
         "kysely-codegen": "^0.11.0",
         "postgres": "^3.4.3",
         "sql-formatter": "^15.0.2",
-        "vitest": "^1.1.0"
+        "vitest": "^1.1.0",
+        "typescript": "^5.4.5"
     }
 }

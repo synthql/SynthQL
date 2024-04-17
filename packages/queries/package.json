@@ -12,10 +12,11 @@
     "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,
-    "version": "0.26.4",
-    "main": "src/index.ts",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
+    "version": "0.33.4",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "license": "MIT",
     "dependencies": {},
     "scripts": {
@@ -28,6 +29,7 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
+        "typescript": "^5.4.5",
         "vitest": "^1.1.0"
     }
 }

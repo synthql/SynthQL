@@ -15,22 +15,24 @@ const resolveXqlAliases = Object.keys(packageJson.dependencies)
 
 export default defineConfig({
     build: {
-        outDir: path.resolve(__dirname, 'build'),
+        outDir: path.resolve(__dirname, 'build/src'),
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             fileName: 'index',
             formats: ['es', 'cjs'],
+
         },
+        minify: false,
         rollupOptions: {
             external: ['pg', 'kysely'],
         },
-        minify: false,
     },
     resolve: {
         alias: resolveXqlAliases,
     },
     test: {
         globals: true,
+        environment: 'node',
         coverage: {
             provider: 'v8',
             all: true,
