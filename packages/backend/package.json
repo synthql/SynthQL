@@ -17,6 +17,7 @@
     "license": "MIT",
     "dependencies": {
         "@synthql/queries": "0.34.4",
+        "kysely": "^0.27.3",
         "pg": "^8.11.3"
     },
     "scripts": {
@@ -31,15 +32,15 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
-        "dotenv": "^16.3.1",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@vitest/coverage-v8": "^1.2.2",
         "@vitest/ui": "^1.3.1",
+        "dotenv": "^16.3.1",
         "kysely-codegen": "^0.11.0",
         "postgres": "^3.4.3",
         "sql-formatter": "^15.0.2",
-        "vitest": "^1.1.0",
-        "typescript": "^5.4.5"
+        "typescript": "^5.4.5",
+        "vitest": "^1.1.0"
     }
 }
