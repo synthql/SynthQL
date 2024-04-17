@@ -1,7 +1,7 @@
 {
     "name": "@synthql/backend",
     "type": "module",
-    "version": "0.26.4",
+    "version": "0.30.4",
     "module": "src/index.ts",
     "types": "src/index.ts",
     "repository": {

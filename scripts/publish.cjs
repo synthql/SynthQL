@@ -2,6 +2,12 @@ const packageJson = require('../package.json');
 const { execSync } = require('child_process');
 const fs = require('fs');
 
+/**
+ * Bumps the minor version of a given version string
+ * 
+ * @param {string} version 
+ * @returns string
+ */
 function bumpMinorVersion(version) {
     const [major, minor, patch] = version.split('.');
     return `${major}.${parseInt(minor) + 1}.${patch}`;

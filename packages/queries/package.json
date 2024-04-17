@@ -12,7 +12,7 @@
     "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,
-    "version": "0.26.4",
+    "version": "0.30.4",
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "src/index.ts",
