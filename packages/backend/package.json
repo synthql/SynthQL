@@ -10,6 +10,10 @@
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
     },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "license": "MIT",
     "dependencies": {
         "@synthql/queries": "0.33.4",

@@ -9,6 +9,10 @@
         "name": "fhur",
         "url": "https://github.com/fhur"
     },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,

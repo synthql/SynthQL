@@ -5,6 +5,10 @@
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
     },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "type": "module",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
