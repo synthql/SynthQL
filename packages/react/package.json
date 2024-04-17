@@ -1,6 +1,6 @@
 {
     "name": "@synthql/react",
-    "version": "0.31.4",
+    "version": "0.32.4",
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
@@ -11,7 +11,7 @@
     "types": "build/types/src/index.d.ts",
     "license": "MIT",
     "dependencies": {
-        "@synthql/queries": "0.31.4"
+        "@synthql/queries": "0.32.4"
     },
     "devDependencies": {
         "@tanstack/react-query": "^4",
