@@ -30,7 +30,10 @@
         "@docusaurus/module-type-aliases": "3.1.0",
         "@docusaurus/tsconfig": "3.1.0",
         "@docusaurus/types": "3.1.0",
-        "typescript": "^5.4.5"
+        "typescript": "^5.4.5",
+        "@synthql/backend": "*",
+        "@synthql/queries": "*",
+        "@synthql/react": "*"
     },
     "browserslist": {
         "production": [
