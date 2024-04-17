@@ -9,6 +9,7 @@
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "license": "MIT",
     "dependencies": {
         "@synthql/queries": "0.32.4"

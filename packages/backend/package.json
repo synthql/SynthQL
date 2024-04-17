@@ -5,6 +5,7 @@
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
