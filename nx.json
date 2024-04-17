@@ -28,7 +28,8 @@
                 "build:typedoc",
                 "test:ci",
                 "lint",
-                "format"
+                "format",
+                "typecheck"
             ],
             "outputs": ["{projectRoot}/build"],
             "cache": true

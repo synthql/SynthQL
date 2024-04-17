@@ -5,6 +5,7 @@
         "module": "ESNext",
         "strict": true,
         "lib": ["ES2018.AsyncGenerator"],
+        "outDir": "./build/types",
         "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "skipLibCheck": true,

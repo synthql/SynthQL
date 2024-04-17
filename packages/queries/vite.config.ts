@@ -28,5 +28,16 @@ export default defineConfig({
     },
     test: {
         globals: true,
+        environment: 'node',
+        coverage: {
+            provider: 'v8',
+            all: true,
+            clean: true,
+            enabled: true,
+            reportsDirectory: 'coverage',
+            reportOnFailure: true,
+            reporter: ['html'],
+            include: ['src/**/*'],
+        },
     },
 });

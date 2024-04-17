@@ -21,9 +21,6 @@ export default defineConfig({
             fileName: 'index',
             formats: ['es', 'cjs'],
         },
-        rollupOptions: {
-            external: ['pg', 'kysely'],
-        },
         minify: false,
     },
     resolve: {
@@ -31,6 +28,7 @@ export default defineConfig({
     },
     test: {
         globals: true,
+        environment: 'node',
         coverage: {
             provider: 'v8',
             all: true,
