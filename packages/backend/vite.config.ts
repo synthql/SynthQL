@@ -20,8 +20,12 @@ export default defineConfig({
             entry: path.resolve(__dirname, 'src/index.ts'),
             fileName: 'index',
             formats: ['es', 'cjs'],
+
         },
         minify: false,
+        rollupOptions: {
+            external: ['pg', 'kysely'],
+        },
     },
     resolve: {
         alias: resolveXqlAliases,

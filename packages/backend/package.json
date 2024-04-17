@@ -12,8 +12,6 @@
     "license": "MIT",
     "dependencies": {
         "@synthql/queries": "0.32.4",
-        "dotenv": "^16.3.1",
-        "kysely": "^0.26.3",
         "pg": "^8.11.3"
     },
     "scripts": {
@@ -28,6 +26,7 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
+        "dotenv": "^16.3.1",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@vitest/coverage-v8": "^1.2.2",
