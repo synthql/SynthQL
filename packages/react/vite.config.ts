@@ -15,7 +15,7 @@ const resolveXqlAliases = Object.keys(packageJson.dependencies)
 
 export default defineConfig({
     build: {
-        outDir: path.resolve(__dirname, 'build'),
+        outDir: path.resolve(__dirname, 'build/src'),
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             fileName: 'index',

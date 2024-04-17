@@ -6,8 +6,9 @@
         "url": "git@github.com:synthql/synthql.git"
     },
     "type": "module",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
     "license": "MIT",
     "dependencies": {
         "@synthql/queries": "0.31.4"

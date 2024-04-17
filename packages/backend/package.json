@@ -2,8 +2,9 @@
     "name": "@synthql/backend",
     "type": "module",
     "version": "0.31.4",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
