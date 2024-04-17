@@ -35,6 +35,7 @@
         "kysely-codegen": "^0.11.0",
         "postgres": "^3.4.3",
         "sql-formatter": "^15.0.2",
-        "vitest": "^1.1.0"
+        "vitest": "^1.1.0",
+        "typescript": "^5.4.5"
     }
 }

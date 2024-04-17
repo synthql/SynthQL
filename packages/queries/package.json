@@ -28,6 +28,7 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "devDependencies": {
+        "typescript": "^5.4.5",
         "vitest": "^1.1.0"
     }
 }

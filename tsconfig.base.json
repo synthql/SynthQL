@@ -5,14 +5,13 @@
         "module": "ESNext",
         "strict": true,
         "lib": ["ES2018.AsyncGenerator"],
-        "outDir": "./build/types",
         "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "Bundler",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "incremental": true,
-        "baseUrl": "./"
+        "baseUrl": "./src"
     }
 }

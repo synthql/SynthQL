@@ -1,2 +1,2 @@
-export { DB } from './db';
-export { schema } from './schema';
+export { DB } from './db'
+export { schema } from './schema'
