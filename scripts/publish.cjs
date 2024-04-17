@@ -4,8 +4,8 @@ const fs = require('fs');
 
 /**
  * Bumps the minor version of a given version string
- * 
- * @param {string} version 
+ *
+ * @param {string} version
  * @returns string
  */
 function bumpMinorVersion(version) {
