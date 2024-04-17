@@ -7,28 +7,31 @@ import { generate } from './commands/generate';
 yargs(hideBin(process.argv))
     .command(
         'generate',
-        'Generate a schema from supplied database connection URL',
+        'Generate a schema file from supplied database connection URL',
         {
             connectionString: {
+                description:
+                    'Connection URL to the database to generate a schema from',
                 alias: 'url',
                 default: 'postgres://postgres:postgres@localhost:5432/postgres',
             },
-            outputDir: {
-                alias: 'out',
+            out: {
+                description: 'Output directory of the generated schema file',
                 default: 'src',
             },
             defaultSchema: {
-                alias: 'default',
+                description: 'Default schema to be included in the generation',
                 default: 'public',
             },
             schemas: {
+                description: 'List of schemas to be included in the generation',
                 default: ['public'],
             },
         },
         async (argv) => {
             const result = await generate({
                 connectionString: argv.connectionString,
-                outputDir: argv.outputDir,
+                out: argv.out,
                 defaultSchema: argv.defaultSchema,
                 schemas: argv.schemas,
             });

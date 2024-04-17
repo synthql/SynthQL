@@ -3,16 +3,16 @@ import { Pool } from 'pg';
 
 interface GenerateSchemaOptions {
     connectionString: string;
-    outputDir?: string;
+    out?: string;
     defaultSchema?: string;
     schemas?: string[];
 }
 
 export const generate = async ({
     connectionString,
-    outputDir,
+    out,
     defaultSchema,
-    schemas,
+    schemas = [],
 }: GenerateSchemaOptions) => {
     const pool = new Pool({
         connectionString,
@@ -24,9 +24,9 @@ export const generate = async ({
     });
 
     const result = await queryEngine.generateSchema({
-        out: outputDir,
+        out,
         defaultSchema,
-        schemas: schemas ?? [],
+        schemas,
     });
 
     return result;

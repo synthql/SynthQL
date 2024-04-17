@@ -1,13 +1,14 @@
 {
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
+        "emitDeclarationOnly": false,
         "rootDir": "src",
         "outDir": "build",
-        "strict": true,
         "target": "es6",
         "module": "commonjs",
         "sourceMap": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
         "moduleResolution": "node",
     },
+    "include": ["src"],
+    "exclude": ["./build/*", "./node_modules/*"],
 }
