@@ -3,12 +3,13 @@
     "compilerOptions": {
         "emitDeclarationOnly": false,
         "rootDir": "src",
-        "outDir": "build",
+        "outDir": "dist",
         "target": "es6",
         "module": "commonjs",
+        "skipLibCheck": true,
         "sourceMap": true,
         "moduleResolution": "node",
     },
     "include": ["src"],
-    "exclude": ["./build/*", "./node_modules/*"],
+    "exclude": ["./dist/*", "./node_modules/*"],
 }

@@ -1,18 +1,24 @@
 {
     "name": "@synthql/cli",
-    "version": "0.0.1",
+    "version": "0.33.4",
     "repository": {
         "type": "git",
-        "url": "git@github.com:synthql/synthql.git"
+        "url": "git@github.com:synthql/SynthQL.git"
     },
     "license": "MIT",
     "scripts": {
-        "build": "yarn tsc",
+        "test": "vitest --globals",
+        "test:ci": "CI=1 vitest run --globals",
+        "t": "vitest --ui",
+        "typecheck": "tsc",
+        "checks": "yarn vitest --globals run && yarn build && yarn tsc",
+        "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
+        "cov": "open coverage/index.html",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "dependencies": {
-        "@synthql/backend": "^0.26.4",
+        "@synthql/backend": "0.33.4",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },
@@ -20,9 +26,11 @@
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@types/yargs": "^17.0.32",
-        "typescript": "^5.4.5"
+        "@vitest/coverage-v8": "^1.2.2",
+        "@vitest/ui": "^1.3.1",
+        "vitest": "^1.1.0"
     },
     "bin": {
-        "synthql": "build/index.js"
+        "synthql": "dist/index.js"
     }
 }

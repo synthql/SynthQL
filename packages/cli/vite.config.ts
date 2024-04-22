@@ -15,16 +15,13 @@ const resolveXqlAliases = Object.keys(packageJson.dependencies)
 
 export default defineConfig({
     build: {
-        outDir: path.resolve(__dirname, 'build/src'),
+        outDir: path.resolve(__dirname, 'dist'),
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             fileName: 'index',
             formats: ['es', 'cjs'],
         },
         minify: false,
-        rollupOptions: {
-            external: ['pg', 'kysely'],
-        },
     },
     resolve: {
         alias: resolveXqlAliases,

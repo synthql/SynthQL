@@ -11,7 +11,7 @@ synthql generate --url=postgres://postgres:postgres@localhost:5432/postgres \
 
 ## Links
 
--   [Website](https://synthql.github.io/synthql/)
--   [Docs](https://synthql.github.io/synthql/docs/getting-started)
+-   [Website](https://synthql.github.io/SynthQL/)
+-   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [GitHub](https://github.com/synthql/synthql)
+-   [GitHub](https://github.com/synthql/SynthQL)

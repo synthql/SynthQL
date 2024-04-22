@@ -2671,21 +2671,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@synthql/backend@^0.26.4":
-  version "0.26.4"
-  resolved "https://registry.yarnpkg.com/@synthql/backend/-/backend-0.26.4.tgz#cbe96d7ac5376c62e6711f62d7ce0083124912ed"
-  integrity sha512-1cNAve/64ulgJHvBpnaLXG2SEWKldOATU33gEq/q0BH+UmAJc6RTbxsUS5tsL4+jX7TM/ghK/yRrYhG0HGNSJA==
-  dependencies:
-    "@synthql/queries" "0.26.4"
-    dotenv "^16.3.1"
-    kysely "^0.26.3"
-    pg "^8.11.3"
-
-"@synthql/queries@0.26.4":
-  version "0.26.4"
-  resolved "https://registry.yarnpkg.com/@synthql/queries/-/queries-0.26.4.tgz#cfaa137a4768e6c10f82455057e8ff78078ae26d"
-  integrity sha512-sUbH150gXSY6kDQp1WN/Eix038zSBP06btWrenh79+Sx6figOuf3eZdsSbTylRcwYmMT3KOBY8kMrFPAmNRAhQ==
-
 "@szmarczak/http-timer@^5.0.1":
   version "5.0.1"
   resolved "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-5.0.1.tgz"
@@ -7940,11 +7925,6 @@ kysely-codegen@^0.11.0:
     git-diff "^2.0.6"
     micromatch "^4.0.5"
     minimist "^1.2.8"
-
-kysely@^0.26.3:
-  version "0.26.3"
-  resolved "https://registry.npmjs.org/kysely/-/kysely-0.26.3.tgz"
-  integrity sha512-yWSgGi9bY13b/W06DD2OCDDHQmq1kwTGYlQ4wpZkMOJqMGCstVCFIvxCCVG4KfY1/3G0MhDAcZsip/Lw8/vJWw==
 
 language-subtag-registry@^0.3.20:
   version "0.3.22"
