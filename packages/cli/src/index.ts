@@ -44,6 +44,7 @@ yargs(hideBin(process.argv))
             });
 
             console.info(result);
+            process.exit(0);
         },
     )
     .array('schemas')

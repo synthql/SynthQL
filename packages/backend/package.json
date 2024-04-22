@@ -39,6 +39,7 @@
         "dotenv": "^16.3.1",
         "kysely-codegen": "^0.11.0",
         "postgres": "^3.4.3",
+        "rollup-plugin-node-externals": "^7.1.1",
         "sql-formatter": "^15.0.2",
         "typescript": "^5.4.5",
         "vitest": "^1.1.0"

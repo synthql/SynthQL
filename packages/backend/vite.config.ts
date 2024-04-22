@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import packageJson from './package.json';
 import path from 'path';
+import { nodeExternals } from 'rollup-plugin-node-externals';
 
 const resolveXqlAliases = Object.keys(packageJson.dependencies)
     .filter((dep) => dep.startsWith('@synthql/'))
@@ -23,7 +24,13 @@ export default defineConfig({
         },
         minify: false,
         rollupOptions: {
-            external: ['pg', 'kysely'],
+            plugins: [
+                nodeExternals({
+                    devDeps: true,
+                    deps: true,
+                    peerDeps: true,
+                }),
+            ],
         },
     },
     resolve: {
