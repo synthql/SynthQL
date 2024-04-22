@@ -8,25 +8,32 @@ yargs(hideBin(process.argv))
     .command(
         'generate',
         'Generate a schema file from supplied database connection URL',
-        {
-            connectionString: {
-                description:
-                    'Connection URL to the database to generate a schema from',
-                alias: 'url',
-                default: 'postgres://postgres:postgres@localhost:5432/postgres',
-            },
-            out: {
-                description: 'Output directory of the generated schema file',
-                default: 'src',
-            },
-            defaultSchema: {
-                description: 'Default schema to be included in the generation',
-                default: 'public',
-            },
-            schemas: {
-                description: 'List of schemas to be included in the generation',
-                default: ['public'],
-            },
+        (yargs) => {
+            return yargs
+                .option('connectionString', {
+                    type: 'string',
+                    description:
+                        'Connection URL to the database to generate a schema from',
+                    alias: 'url',
+                    default:
+                        'postgres://postgres:postgres@localhost:5432/postgres',
+                })
+                .option('out', {
+                    type: 'string',
+                    description:
+                        'Output directory of the generated schema file',
+                    default: 'src',
+                })
+                .option('defaultSchema', {
+                    type: 'string',
+                    description:
+                        'Default schema to be included in the generation',
+                })
+                .option('schemas', {
+                    description:
+                        'List of schemas to be included in the generation',
+                    default: [] as string[],
+                });
         },
         async (argv) => {
             const result = await generate({
