@@ -22,6 +22,9 @@ export default defineConfig({
             formats: ['es', 'cjs'],
         },
         minify: false,
+        rollupOptions: {
+            external: ['@synthql/backend', 'pg', 'yargs', 'yargs/helpers'],
+        },
     },
     resolve: {
         alias: resolveXqlAliases,

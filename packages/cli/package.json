@@ -41,6 +41,6 @@
         "vitest": "^1.1.0"
     },
     "bin": {
-        "synthql": "build/src/index.js"
+        "synthql": "build/src/index.cjs"
     }
 }
