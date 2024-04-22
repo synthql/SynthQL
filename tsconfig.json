@@ -6,6 +6,7 @@
             "@synthql/react/*": ["./packages/react/src/*"],
             "@synthql/backend/*": ["./packages/backend/src/*"],
             "@synthql/queries/*": ["./packages/queries/src/*"],
+            "@synthql/cli/*": ["./packages/cli/src/*"],
         },
         "outDir": "./build",
         "jsx": "preserve",
@@ -14,6 +15,7 @@
         "./packages/react/src",
         "./packages/backend/src",
         "./packages/queries/src",
+        "./packages/cli/src",
     ],
     "exclude": ["./node_modules", "**/*.spec.ts"],
 }

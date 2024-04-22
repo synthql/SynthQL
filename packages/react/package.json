@@ -1,10 +1,14 @@
 {
     "name": "@synthql/react",
-    "version": "0.33.4",
+    "version": "0.34.4",
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/synthql.git"
     },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "type": "module",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
@@ -12,7 +16,7 @@
     "sideEffects": false,
     "license": "MIT",
     "dependencies": {
-        "@synthql/queries": "0.33.4"
+        "@synthql/queries": "0.34.4"
     },
     "devDependencies": {
         "@tanstack/react-query": "^4",

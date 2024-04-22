@@ -1,15 +1,9 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "emitDeclarationOnly": false,
-        "rootDir": "src",
-        "outDir": "dist",
-        "target": "es6",
-        "module": "commonjs",
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "moduleResolution": "node",
+        "outDir": "./build/types",
+        "emitDeclarationOnly": true,
     },
     "include": ["src"],
-    "exclude": ["./dist/*", "./node_modules/*"],
+    "exclude": ["./build/*", "./node_modules/*"],
 }

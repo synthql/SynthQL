@@ -41,4 +41,4 @@ const { data } = useSynthql(query);
 -   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [API](https://synthql.github.io/SynthQL/reference)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [Github](https://github.com/synthql/SynthQL)
+-   [GitHub](https://github.com/synthql/SynthQL)

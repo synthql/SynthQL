@@ -9,10 +9,14 @@
         "name": "fhur",
         "url": "https://github.com/fhur"
     },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "homepage": "https://github.com/synthql/synthql#readme",
     "type": "module",
     "private": false,
-    "version": "0.33.4",
+    "version": "0.34.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
