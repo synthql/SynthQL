@@ -16,12 +16,18 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     outDir,
+    formatter = async (str) => str,
 }: {
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
+    formatter?: (str: string) => Promise<string>;
 }) {
+    async function writeFormattedFile(path: string, content: string) {
+        fs.writeFileSync(path, await formatter(content));
+    }
+
     const x = await extractSchemas(
         {
             connectionString,
@@ -47,19 +53,19 @@ export async function generate({
         additionalProperties: false,
         unreachableDefinitions: false,
     });
-    fs.writeFileSync(path.join(outDir, 'db.ts'), db);
+    writeFormattedFile(path.join(outDir, 'db.ts'), db);
 
     /**
      * Generate types from the schema without refs.
      * This leads to a more compact output as the types are inlined.
      */
     const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
-    fs.writeFileSync(
+    writeFormattedFile(
         path.join(outDir, 'schema.ts'),
         `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
     );
 
-    fs.writeFileSync(
+    writeFormattedFile(
         path.join(outDir, 'index.ts'),
         [`export { DB } from './db'`, `export { schema } from './schema'`].join(
             '\n',
