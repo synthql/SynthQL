@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const prettier = require('prettier');
 
 // Command line arguments
 const [, , testFilePath] = process.argv;
@@ -98,9 +99,21 @@ function generateMarkdown(examples) {
 }
 
 // Main function to process the test file and generate markdown
-function main() {
+async function main() {
     const examples = parseTestFile(testFilePath);
-    const markdown = `# Examples\n\n ${generateMarkdown(examples)}`;
+    const prettierConfig = await prettier.resolveConfig(
+        path.join(__dirname, '../.prettier.config.js'),
+    );
+
+    if (!prettierConfig) {
+        console.error('Prettier config not found');
+        process.exit(1);
+    }
+
+    const markdown = await prettier.format(
+        `# Examples\n\n${generateMarkdown(examples)}`,
+        { ...prettierConfig, parser: 'markdown' },
+    );
     const outputFilePath = path.join(
         __dirname,
         '../packages/docs/docs',
