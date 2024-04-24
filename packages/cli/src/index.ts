@@ -22,7 +22,7 @@ yargs(hideBin(process.argv))
                     type: 'string',
                     description:
                         'Output directory of the generated schema file',
-                    default: 'src',
+                    default: 'src/generated/synthql',
                 })
                 .option('defaultSchema', {
                     type: 'string',
