@@ -2,25 +2,23 @@ import { describe, expect, it } from 'vitest';
 
 import { cli } from './cli';
 
-describe('cli', () => {
-    describe(
-        '1',
-        () => {
-            it('Generate schema types with the CLI options default values', async () => {
+describe('CLI tests', () => {
+    describe('`generate` command tests', () => {
+        it(
+            'Generate schema types with the CLI options default values',
+            async () => {
                 const argv = ['node', 'index.js', 'generate'];
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
-            });
-        },
-        {
-            timeout: 20000,
-        },
-    );
+                // Verify that the option data is correct
+                expect(output._).toEqual(['generate']);
+            },
+            {
+                timeout: 20000,
+            },
+        );
 
-    describe('2', () => {
         it(
             `Generate schema types with a supplied connection string, --connectionString`,
             async () => {
@@ -36,16 +34,14 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data is correct
+                expect(output.connectionString).toEqual(url);
             },
             {
                 timeout: 20000,
             },
         );
-    });
 
-    describe('3', () => {
         it(
             `Generate schema types with a supplied connection string option, using the option's alias, --url`,
             async () => {
@@ -56,16 +52,14 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data is correct
+                expect(output.url).toEqual(url);
             },
             {
                 timeout: 20000,
             },
         );
-    });
 
-    describe('4', () => {
         it(
             `Generate schema types with a supplied output directory option, --out`,
             async () => {
@@ -75,16 +69,14 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data is correct
+                expect(output.out).toEqual(out);
             },
             {
                 timeout: 20000,
             },
         );
-    });
 
-    describe('5', () => {
         it(
             `Generate schema types with a supplied default schema option, --defaultSchema`,
             async () => {
@@ -99,16 +91,14 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data is correct
+                expect(output.defaultSchema).toEqual(defaultSchema);
             },
             {
                 timeout: 20000,
             },
         );
-    });
 
-    describe('6', () => {
         it(
             `Generate schema types with a supplied schemas array, --schemas`,
             async () => {
@@ -124,16 +114,14 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data is correct
+                expect(output.schemas).toEqual(schemas);
             },
             {
                 timeout: 20000,
             },
         );
-    });
 
-    describe('7', () => {
         it(
             `Generate schema types with all options supplied`,
             async () => {
@@ -156,8 +144,12 @@ describe('cli', () => {
 
                 const output = await cli(argv).parse();
 
-                // Verify the output is correct
-                expect(output).toBeDefined();
+                // Verify that the option data passed is correct
+                expect(output.connectionString).toEqual(url);
+                expect(output.url).toEqual(url);
+                expect(output.out).toEqual(out);
+                expect(output.defaultSchema).toEqual(defaultSchema);
+                expect(output.schemas).toEqual(schemas);
             },
             {
                 timeout: 20000,
