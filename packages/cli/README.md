@@ -3,10 +3,7 @@
 The SynthQL CLI.
 
 ```sh
-synthql generate --url=postgres://postgres:postgres@localhost:5432/postgres \
-    --out=src \
-    --defaultSchema=public \
-    --schemas actor,film
+synthql generate --connectionString=postgres://postgres:postgres@localhost:5432/postgres --out=src --defaultSchema=public --schemas actor film
 ```
 
 ## Links
