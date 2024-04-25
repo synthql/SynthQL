@@ -2,6 +2,8 @@
 
 import { cli } from './cli';
 
-cli(process.argv).help().demandCommand(1).parseSync();
+cli(process.argv).help().demandCommand(1).parse();
 
-process.exit(0);
+setTimeout(() => {
+    process.exit(0);
+}, 10000);
