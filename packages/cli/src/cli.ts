@@ -20,7 +20,7 @@ export function cli(argv: string[]) {
                     .option('out', {
                         type: 'string',
                         description:
-                            'Output directory of the generated schema file',
+                            'The path to the folder where the generated files will be created.',
                         default: 'src/generated/synthql',
                     })
                     .option('defaultSchema', {
