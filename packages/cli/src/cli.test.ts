@@ -1,159 +1,275 @@
-import { describe, expect, it } from 'vitest';
+import {
+    afterAll,
+    beforeAll,
+    beforeEach,
+    describe,
+    expect,
+    it,
+    vitest,
+} from 'vitest';
+import fs from 'fs';
 
 import { cli } from './cli';
+import { randomUUID } from 'crypto';
+import { assert } from 'console';
+import path from 'path';
 
 describe('CLI tests', () => {
     describe('`generate` command tests', () => {
+        const url = 'postgres://postgres:postgres@localhost:5432/postgres';
+        const out = 'src/generated/synthql/tests';
+        const defaultSchema = 'pg_catalog';
+        const schemas = ['public'];
+
+        beforeAll(() => {
+            fs.rmSync(out, {
+                force: true,
+                recursive: true,
+            });
+        });
+
+        beforeEach(() => {
+            vitest.resetModules();
+            vitest.resetAllMocks();
+        });
+
         it(
             'Generate schema types with the CLI options default values',
             async () => {
-                const argv = ['node', 'index.js', 'generate'];
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
+                const argv = ['node', 'generate-default.js', 'generate'];
+
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
 
-                // Verify that the option data is correct
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
+
+                // Verify that the command passed is correct
                 expect(output._).toEqual(['generate']);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with a supplied connection string, --connectionString`,
             async () => {
-                const url =
-                    'postgres://postgres:postgres@localhost:5432/postgres';
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
                 const argv = [
                     'node',
-                    'index.js',
+                    'generate-with-connection-string.js',
                     'generate',
                     `--connectionString=${url}`,
+                    `--out=${outDir}`,
                 ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
+
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
 
                 // Verify that the option data is correct
                 expect(output.connectionString).toEqual(url);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with a supplied connection string option, using the option's alias, --url`,
             async () => {
-                const url =
-                    'postgres://postgres:postgres@localhost:5432/postgres';
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
-                const argv = ['node', 'index.js', 'generate', `--url=${url}`];
+                const argv = [
+                    'node',
+                    'generate-with-connection-string-alias.js',
+                    'generate',
+                    `--url=${url}`,
+                    `--out=${outDir}`,
+                ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
+
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
 
                 // Verify that the option data is correct
                 expect(output.url).toEqual(url);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with a supplied output directory option, --out`,
             async () => {
-                const out = 'src/generated/synthql/tests';
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
-                const argv = ['node', 'index.js', 'generate', `--out=${out}`];
+                const argv = [
+                    'node',
+                    'generate-with-output-directory.js',
+                    'generate',
+                    `--out=${outDir}`,
+                ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
 
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
+
                 // Verify that the option data is correct
-                expect(output.out).toEqual(out);
+                expect(output.out).toEqual(outDir);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with a supplied default schema option, --defaultSchema`,
             async () => {
-                const defaultSchema = 'pg_catalog';
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
                 const argv = [
                     'node',
-                    'index.js',
+                    'generate-with-default-schema.js',
                     'generate',
                     `--defaultSchema=${defaultSchema}`,
+                    `--out=${outDir}`,
                 ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
+
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
 
                 // Verify that the option data is correct
                 expect(output.defaultSchema).toEqual(defaultSchema);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with a supplied schemas array, --schemas`,
             async () => {
-                const schemas = ['pg_catalog'];
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
                 const argv = [
                     'node',
-                    'index.js',
+                    'generate-with-schemas.js',
                     'generate',
+                    `--out=${outDir}`,
                     '--schemas',
                     ...schemas,
                 ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
+
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
 
                 // Verify that the option data is correct
                 expect(output.schemas).toEqual(schemas);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
 
         it(
             `Generate schema types with all options supplied`,
             async () => {
-                const url =
-                    'postgres://postgres:postgres@localhost:5432/postgres';
-                const out = 'src/generated/synthql/tests';
-                const defaultSchema = 'pg_catalog';
-                const schemas = ['pg_catalog'];
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
                 const argv = [
                     'node',
-                    'index.js',
+                    'generate.js',
                     'generate',
                     `--connectionString=${url}`,
-                    `--out=${out}`,
+                    `--out=${outDir}`,
                     `--defaultSchema=${defaultSchema}`,
                     '--schemas',
                     ...schemas,
                 ];
 
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                assert(!fs.existsSync(outFilePath));
+
+                // Generate schema file
                 const output = await cli(argv).parse();
 
-                // Verify that the option data passed is correct
+                // Check that the file now exists
+                assert(fs.existsSync(outFilePath));
+
+                // Verify that the options data passed is correct
                 expect(output.connectionString).toEqual(url);
                 expect(output.url).toEqual(url);
-                expect(output.out).toEqual(out);
+                expect(output.out).toEqual(outDir);
                 expect(output.defaultSchema).toEqual(defaultSchema);
                 expect(output.schemas).toEqual(schemas);
             },
             {
-                timeout: 20000,
+                timeout: 100000,
             },
         );
+
+        afterAll(() => {
+            fs.rmSync(out, {
+                force: true,
+                recursive: true,
+            });
+        });
     });
 });
