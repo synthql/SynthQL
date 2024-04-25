@@ -2,7 +2,13 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { generate } from './commands/generate';
 
-export function cli(argv: string[]) {
+export function cli({
+    argv,
+    exit,
+}: {
+    argv: string[];
+    exit: (statusCode: number) => void;
+}) {
     return yargs(hideBin(argv)).command(
         'generate',
         'Generate a schema file from supplied database connection URL',
@@ -41,6 +47,8 @@ export function cli(argv: string[]) {
                 defaultSchema: argv.defaultSchema,
                 schemas: argv.schemas,
             });
+
+            exit(0);
         },
     );
 }

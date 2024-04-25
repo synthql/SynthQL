@@ -47,7 +47,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -80,7 +80,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -113,7 +113,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -145,7 +145,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -178,7 +178,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -212,7 +212,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
@@ -248,7 +248,7 @@ describe('CLI tests', () => {
                 assert(!fs.existsSync(outFilePath));
 
                 // Generate schema file
-                const output = await cli(argv).parse();
+                const output = await cli({ argv, exit: () => {} }).parse();
 
                 // Check that the file now exists
                 assert(fs.existsSync(outFilePath));
