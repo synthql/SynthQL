@@ -5,9 +5,5 @@
         "emitDeclarationOnly": true,
     },
     "include": ["src"],
-    "exclude": [
-        "./build/*",
-        "./node_modules/*",
-        "./src/generated/synthql/tests/*",
-    ],
+    "exclude": ["./build/*", "./node_modules/*", "./generated/*"],
 }

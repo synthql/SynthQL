@@ -17,7 +17,7 @@ import path from 'path';
 describe('CLI tests', () => {
     describe('`generate` command tests', () => {
         const url = 'postgres://postgres:postgres@localhost:5432/postgres';
-        const out = 'src/generated/synthql/tests';
+        const out = 'generated/synthql/tests';
         const defaultSchema = 'pg_catalog';
         const schemas = ['public'];
 
