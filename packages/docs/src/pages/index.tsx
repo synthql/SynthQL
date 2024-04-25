@@ -38,7 +38,7 @@ function HomepageHeader() {
 export default function Home(): JSX.Element {
     return (
         <Layout
-            title={`synthql: Type-safe, composable queries`}
+            title={`SynthQL: Type-safe, composable queries`}
             description="The type-safe, composable query language"
         >
             <header
@@ -66,24 +66,24 @@ export default function Home(): JSX.Element {
                         padding: 20,
                     }}
                 >
-                    <h1 style={{ textAlign: 'center' }}>Welcome to synthql</h1>
+                    <h1 style={{ textAlign: 'center' }}>Welcome to SynthQL</h1>
                     <div className="row">
                         <p className="col">
-                            A full stack, type-safe client to your postgresql
+                            A full stack, type-safe client to your PostgreSQL
                             database with a focus on DX and performance.
                         </p>
                     </div>
                     <div className="row">
                         <p className="col">
-                            synthql let's you query your database directly from
+                            SynthQL lets you query your database directly from
                             the browser, helping you create large object graphs
                             without the need for implementing custom endpoints.
                         </p>
                     </div>
                     <div className="row">
                         <p className="col">
-                            synthql is written in TypeScript, and runs on the
-                            browser and nodejs.
+                            SynthQL is written in TypeScript, and runs on the
+                            browser and Node.js.
                         </p>
                     </div>
 
@@ -114,17 +114,17 @@ export default function Home(): JSX.Element {
                             {
                                 title: 'Full-stack',
                                 description:
-                                    'synthql queries can be written both on the client and server.',
+                                    'SynthQL queries can be written both on the client and server.',
                             },
                             {
                                 title: 'Plain-data queries',
                                 description:
-                                    'synthql queries are plain data. They can thus be serialized, deserialized, and transformed by regular function.',
+                                    'SynthQL queries are plain data. They can thus be serialized, deserialized, and transformed by regular function.',
                             },
                             {
                                 title: 'Composable queries',
                                 description:
-                                    "synthql's query language is composable, allowing you to build complex queries from simple ones.",
+                                    "SynthQL's query language is composable, allowing you to build complex queries from simple ones.",
                             },
                             {
                                 title: 'Lazy queries',
@@ -136,19 +136,19 @@ export default function Home(): JSX.Element {
                                 title: 'Security',
                                 link: '/docs/security',
                                 description:
-                                    'synthql provides mechanisms for whitelisting queries, restricting access to columns and restricting access to rows.',
+                                    'SynthQL provides mechanisms for whitelisting queries, restricting access to columns and restricting access to rows.',
                             },
                             {
                                 title: 'Custom query executors',
                                 link: '/docs/custom-query-executors',
                                 description:
-                                    'Queries are compiled by default to a single SQL query, query executors let you resolve queries from HTTP endpoints, files, etc.',
+                                    'Queries are compiled by default to a single SQL query, query executors let you resolve queries from HTTP endpoints, files, e.t.c.',
                             },
                             {
                                 title: 'Type-generation',
                                 link: '/docs/generating-types',
                                 description:
-                                    'synthql can automatically generate TypeScript types from your database schema.',
+                                    'SynthQL can automatically generate TypeScript types from your database schema.',
                             },
                             { title: 'Denormalized cache', description: '' },
                         ].map(({ title, link, description }) => {

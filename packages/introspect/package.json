@@ -5,7 +5,11 @@
         "name": "fhur",
         "url": "https://github.com/fhur"
     },
-    "homepage": "https://github.com/synthql/synthql#readme",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:synthql/SynthQL.git"
+    },
+    "homepage": "https://github.com/synthql/SynthQL#readme",
     "type": "module",
     "private": false,
     "version": "0.30.4",

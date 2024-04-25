@@ -1,21 +1,11 @@
-# @synthql/backend
+# @synthql/cli
 
-The SynthQL backend.
+The SynthQL CLI.
 
-```ts
-import { QueryEngine } from "@synthql/backend"
+## Generate types from database
 
-// Initialize the client
-const queryEngine = new QueryEngine({...})
-
-// Write your query
-const query = from('users')
-    .columns('id','first_name')
-    .where({id: {in:[1,2,3]}})
-    .many()
-
-// Execute the query
-queryEngine.execute(query);
+```sh
+synthql generate --connectionString=postgres://postgres:postgres@localhost:5432/postgres --out=src --defaultSchema=public --schemas public pg_catalog
 ```
 
 ## Links
@@ -23,4 +13,4 @@ queryEngine.execute(query);
 -   [Website](https://synthql.github.io/SynthQL/)
 -   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [Github](https://github.com/synthql/synthql)
+-   [GitHub](https://github.com/synthql/SynthQL)

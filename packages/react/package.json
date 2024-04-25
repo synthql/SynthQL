@@ -3,7 +3,7 @@
     "version": "0.34.4",
     "repository": {
         "type": "git",
-        "url": "git@github.com:synthql/synthql.git"
+        "url": "git@github.com:synthql/SynthQL.git"
     },
     "files": [
         "build",
