@@ -23,7 +23,7 @@ const users = from('users')
 
 ```ts
 import { from, Exp } from '@/db';
-import { sub, currentDate, interval, gte } from 'xql/exp';
+import { sub, currentDate, interval, gte } from '@synthql/queries';
 
 function inThePast3Months(exp: Exp) {
     return gte(exp, sub(currentDate, interval('3 months')));

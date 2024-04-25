@@ -40,7 +40,7 @@ function composeMessage(props: SqlExecutionErrorProps): string {
         'With the following parameters:',
         JSON.stringify(props.params, null, 2),
         '',
-        'And which was composed from the following synthql query:',
+        'And which was composed from the following SynthQL query:',
         JSON.stringify(props.query, null, 2),
     ];
 

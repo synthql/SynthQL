@@ -1,8 +1,10 @@
 # Query composition & reuse
 
-In my opinion one of the bigger issues with SQL is the fact that you cannot compose larger queries from simpler queries. Effectively this means that it's impossible to share SQL fragments between queries, so if you have a Users query and a Pets query, to make a Pets with Owners query you have to make a completely different query.
+In my opinion one of the bigger issues with SQL is the fact that you cannot compose larger queries from simpler queries.
 
-Synthql is design for composition and let's you achieve this in several ways. Let's see a few examples
+Effectively this means that it is impossible to share SQL fragments between queries, so if you have a Users query and a Pets query, to make a Pets with Owners query you have to make a completely different query.
+
+SynthQL is designed for composition and lets you achieve this in several ways. Let's see a few examples:
 
 ## Defining views
 
@@ -25,7 +27,7 @@ const personDetailed = from('person')
     })
 ```
 
-One you have views you can easily turn these into queries as follows:
+Once you have views, you can easily turn these into queries as follows:
 
 ```ts
 function findPetById(id:number) {

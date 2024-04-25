@@ -23,4 +23,4 @@ queryEngine.execute(query);
 -   [Website](https://synthql.github.io/SynthQL/)
 -   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [X/Twitter](https://twitter.com/fernandohur)
--   [GitHub](https://github.com/synthql/synthql)
+-   [GitHub](https://github.com/synthql/SynthQL)

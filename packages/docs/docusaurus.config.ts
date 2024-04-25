@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
     title: 'SynthQL',
-    tagline: 'A fullstack, type-safe client for your postgresql database',
+    tagline: 'A fullstack, type-safe client for your PostgreSQL database',
     favicon: 'img/favicon.ico',
 
     // Set the production url of your site here
@@ -50,14 +50,14 @@ const config: Config = {
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
-                        'https://github.com/synthql/synthql/tree/master/packages/docs/',
+                        'https://github.com/synthql/SynthQL/tree/master/packages/docs/',
                 },
                 blog: false && {
                     showReadingTime: true,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
-                        'https://github.com/synthql/synthql/tree/master/packages/docs/',
+                        'https://github.com/synthql/SynthQL/tree/master/packages/docs/',
                 },
                 theme: {
                     customCss: './src/css/custom.css',
@@ -125,7 +125,7 @@ const config: Config = {
                     items: [
                         {
                             label: 'GitHub issues',
-                            href: 'https://github.com/synthql/synthql/issues',
+                            href: 'https://github.com/synthql/SynthQL/issues',
                         },
                         {
                             label: 'Discord',

@@ -3,7 +3,7 @@
     "description": "",
     "repository": {
         "type": "git",
-        "url": "git@github.com:synthql/synthql.git"
+        "url": "git@github.com:synthql/SynthQL.git"
     },
     "author": {
         "name": "fhur",
@@ -13,7 +13,7 @@
         "build",
         "README.md"
     ],
-    "homepage": "https://github.com/synthql/synthql#readme",
+    "homepage": "https://github.com/synthql/SynthQL#readme",
     "type": "module",
     "private": false,
     "version": "0.34.4",

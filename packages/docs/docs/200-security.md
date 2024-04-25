@@ -3,9 +3,9 @@
 
 # Security
 
-Letting clients make arbitrary queries, even if read-only comes with a set of security challenges. synthql comes with built in mechanisms to implement robust authorization logic so you can limit what queries clients can make.
+Letting clients make arbitrary queries, even if read-only comes with a set of security challenges. SynthQL comes with built in mechanisms to implement robust authorization logic so you can limit what queries clients can make.
 
-Let's take a look at the different ways synthql ensures only the right queries will be sent to your database.
+Let's take a look at the different ways SynthQL ensures only the right queries will be sent to your database.
 
 ## Whitelisting queries
 
@@ -50,7 +50,7 @@ const userFull = from('users')
     .requires('users:read', 'users:admin');
 ```
 
-When executing queries you can pass a list of the user's current permissions.
+When executing queries, you can pass a list of the user's current permissions:
 
 ```ts
 const user = { permissions: ['users:read', 'pets:read'] };
@@ -61,10 +61,9 @@ The query engine will traverse the query recursively and reject the query unless
 
 ## Restricting access to rows
 
-Let's imagine an `orders` table that stores all orders made by `users`. A user should only
-ever be allowed to read it's own orders. This can be achieved with synthql as follows:
+Let's imagine an `orders` table that stores all orders made by `users`. A user should only ever be allowed to read it's own orders. This can be achieved with SynthQL, as follows:
 
-First let's define the schema
+First, we define the schema.
 
 ```tsx
 // queries.ts
@@ -78,7 +77,7 @@ const orders = from('orders').columns(
 );
 ```
 
-Now let's imagine a client makes the following query. Note that this query would select all orders.
+Now, let's imagine a client makes the following query. Note that this query will select all orders.
 
 ```tsx
 import { useSynthql } from '@synthql/react';
@@ -91,7 +90,7 @@ useSynthql(query);
 
 To prevent these kinds of mistakes or abuses, you can add middlewares to the `QueryEngine`. A middleware is essentially a function that takes the query context and the current query and return a new query context and a new query.
 
-In this example we're creating a middleware that will act on every query to the `orders` table and will for a filter on the `user_id` column.
+In this example, we're creating a middleware that will act on every query to the `orders` table and will for a filter on the `user_id` column.
 
 ```tsx
 import { DB } from './db';

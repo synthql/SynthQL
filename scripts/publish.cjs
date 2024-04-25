@@ -23,6 +23,7 @@ const packagesToUpdate = [
     '@synthql/queries',
     '@synthql/backend',
     '@synthql/react',
+    '@synthql/cli',
 ];
 
 packagesToUpdate.forEach((packageName) => {
