@@ -34,7 +34,7 @@ export const generate = async ({
     }
 
     const result = await queryEngine.generateSchema({
-        out: path.join(out, `db.ts`),
+        out: path.resolve(path.join(process.cwd(), out, 'db.ts')),
         defaultSchema,
         schemas,
     });
