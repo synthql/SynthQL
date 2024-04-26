@@ -1,6 +1,6 @@
 {
     "name": "@synthql/react",
-    "version": "0.34.4",
+    "version": "0.37.4",
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/SynthQL.git"
@@ -16,7 +16,7 @@
     "sideEffects": false,
     "license": "MIT",
     "dependencies": {
-        "@synthql/queries": "0.34.4"
+        "@synthql/queries": "0.37.4"
     },
     "devDependencies": {
         "@tanstack/react-query": "^4",
