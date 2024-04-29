@@ -16,7 +16,9 @@
     "sideEffects": false,
     "license": "MIT",
     "dependencies": {
-        "@synthql/queries": "0.37.4"
+        "@synthql/backend": "0.38.4",
+        "@synthql/cli": "0.38.4",
+        "@synthql/queries": "0.38.4"
     },
     "devDependencies": {
         "@tanstack/react-query": "^4",
@@ -38,6 +40,7 @@
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
+        "generate-types": "synthql generate --out=src/test --defaultSchema=public --schemas public",
         "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthql.test.tsx"
     }
 }

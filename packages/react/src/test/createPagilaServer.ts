@@ -1,38 +1,43 @@
+import { QueryEngine } from '@synthql/backend';
+import { DB as PagilaDB } from './db';
 import http from 'http';
 
-export interface EchoServer {
+export interface PagilaServer {
     url: string;
     server: http.Server;
 }
 
-export function createEchoServer(
-    mapRequest: (reqBody: any) => any[],
-): Promise<EchoServer> {
+export function createPagilaServer({
+    queryEngine,
+}: {
+    queryEngine: QueryEngine<PagilaDB>;
+}): Promise<PagilaServer> {
     return new Promise((resolve, reject) => {
         const server = http.createServer((req, res) => {
-            /* Reads the body, which always has the following form:
-                { lines: any[] }
-            and echos it back */
-
             let body = '';
 
             req.on('data', (chunk) => {
                 body += chunk;
             });
 
-            req.on('end', () => {
+            req.on('end', async () => {
                 const json = JSON.parse(body);
-
-                const lines = mapRequest(json);
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
 
-                for (const line of lines) {
-                    res.write(JSON.stringify(line) + '\n');
-                }
+                try {
+                    for await (const intermediateResult of queryEngine.execute(
+                        json,
+                    )) {
+                        res.write(JSON.stringify(intermediateResult) + '\n');
+                    }
 
-                // flush the buffer
-                res.end();
+                    res.end();
+                } catch (error) {
+                    res.write(JSON.stringify({ error: String(error) }) + '\n');
+
+                    res.end();
+                }
             });
         });
 
