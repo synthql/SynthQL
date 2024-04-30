@@ -16,9 +16,9 @@
     "sideEffects": false,
     "license": "MIT",
     "dependencies": {
-        "@synthql/backend": "0.38.4",
-        "@synthql/cli": "0.38.4",
-        "@synthql/queries": "0.38.4"
+        "@synthql/backend": "0.37.4",
+        "@synthql/cli": "0.37.4",
+        "@synthql/queries": "0.37.4"
     },
     "devDependencies": {
         "@tanstack/react-query": "^4",
