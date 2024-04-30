@@ -36,7 +36,7 @@ describe('useSynthql', () => {
     test('Fetching 0 or 1 row(s)', async () => {
         const result = renderHook(
             () => {
-                // @@start-example@@ Find a single user via id using `select()`
+                // @@start-example@@ Find a single user by id using `select()`
                 // @@desc@@ Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
 
                 const q = from('users')
