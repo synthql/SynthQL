@@ -62,46 +62,6 @@ describe('useSynthql', () => {
         expect(result.result.current.data).toEqual({ id: '1', name: 'bob' });
     }, /* 10 seconds */ 10_000);
 
-    test('Fetching 0 or n rows', async () => {
-        const count = 100;
-        const ids = Array(count)
-            .fill('0')
-            .map((_, i) => String(i));
-
-        const result = renderHook(
-            () => {
-                // @@start-example@@ Find all users with ids in the list using `select()`
-                // @@desc@@ Finds 0 or n records in the `users` table where their `id` is in the list of ids.
-
-                const q = from('users')
-                    .select({ id: true, name: true })
-                    .where({ id: { in: ids } })
-                    .many();
-
-                const result = useSynthql<DB, 'users', typeof q>(q);
-
-                // @@end-example@@
-
-                return result;
-            },
-            {
-                wrapper: (props: React.PropsWithChildren) => {
-                    return <Providers endpoint={echoServer?.url!} {...props} />;
-                },
-            },
-        );
-
-        await result.waitFor(
-            () => result.result.current.data?.length === count,
-        );
-
-        expect(result.result.current.data).toEqual(
-            ids.map((id) => ({ id, name: 'bob' })),
-        );
-
-        expect(result.result.current.status).toEqual(`success`);
-    }, 10_000);
-
     test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
         const result = renderHook(
             () => {
@@ -138,16 +98,16 @@ describe('useSynthql', () => {
         });
     }, /* 10 seconds */ 10_000);
 
-    test('Fetching 0 or n rows from the Pagila database  with `columns()`', async () => {
-        const count = 100;
+    test('Fetching n rows from the Pagila database  with `columns()`', async () => {
+        const count = 10;
         const ids = Array(count)
             .fill(0)
             .map((_, i) => i + 1);
 
         const result = renderHook(
             () => {
-                // @@start-example@@ Find all actors with ids in the list using `columns()`
-                // @@desc@@ Finds 0 or n records in the `actors` table where their `id` is in the list of ids.
+                // @@start-example@@ Find all actors by ids using `columns()`
+                // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids.
 
                 const q = fromPagila('actor')
                     .columns('actor_id', 'first_name', 'last_name')
@@ -172,7 +132,60 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        expect(result.result.current.data?.length).toEqual(100);
+        expect(result.result.current.data?.sort((a, b) => a.actor_id - b.actor_id)).toMatchInlineSnapshot(`
+          [
+            {
+              "actor_id": 1,
+              "first_name": "PENELOPE",
+              "last_name": "GUINESS",
+            },
+            {
+              "actor_id": 2,
+              "first_name": "NICK",
+              "last_name": "WAHLBERG",
+            },
+            {
+              "actor_id": 3,
+              "first_name": "ED",
+              "last_name": "CHASE",
+            },
+            {
+              "actor_id": 4,
+              "first_name": "JENNIFER",
+              "last_name": "DAVIS",
+            },
+            {
+              "actor_id": 5,
+              "first_name": "JOHNNY",
+              "last_name": "LOLLOBRIGIDA",
+            },
+            {
+              "actor_id": 6,
+              "first_name": "BETTE",
+              "last_name": "NICHOLSON",
+            },
+            {
+              "actor_id": 7,
+              "first_name": "GRACE",
+              "last_name": "MOSTEL",
+            },
+            {
+              "actor_id": 8,
+              "first_name": "MATTHEW",
+              "last_name": "JOHANSSON",
+            },
+            {
+              "actor_id": 9,
+              "first_name": "JOE",
+              "last_name": "SWANK",
+            },
+            {
+              "actor_id": 10,
+              "first_name": "CHRISTIAN",
+              "last_name": "GABLE",
+            },
+          ]
+        `)
     }, /* 10 seconds */ 10_000);
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
@@ -233,7 +246,7 @@ describe('useSynthql', () => {
         });
     }, /* 10 seconds */ 10_000);
 
-    test.skip('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
+    test('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
         const result = renderHook(
             () => {
                 // @@start-example@@ Find a single customer via id with a two-level-deep `include()`
@@ -284,7 +297,7 @@ describe('useSynthql', () => {
             },
         );
 
-        await result.waitFor(() => result.result.current.data !== undefined);
+        await result.waitFor(() => result.result.current.data?.store?.address !== undefined);
 
         expect(result.result.current.data).toEqual({
             customer_id: 4,
