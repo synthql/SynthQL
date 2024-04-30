@@ -1,6 +1,6 @@
 # Examples
 
-## Find a single user via id using `select()`
+## Find a single user by id using `select()`
 
 Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
 
@@ -13,20 +13,7 @@ const q = from('users')
 const result = useSynthql<DB, 'users', typeof q>(q);
 ```
 
-## Find all users with ids in the list using `select()`
-
-Finds 0 or n records in the `users` table where their `id` is in the list of ids.
-
-```ts
-const q = from('users')
-    .select({ id: true, name: true })
-    .where({ id: { in: ids } })
-    .many();
-
-const result = useSynthql<DB, 'users', typeof q>(q);
-```
-
-## Find a single actor via id using `columns()`
+## Find a single actor by id using `columns()`
 
 Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
 
@@ -40,9 +27,9 @@ const q = fromPagila('actor')
 const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
 ```
 
-## Find all actors with ids in the list using `columns()`
+## Find all actors by ids using `columns()`
 
-Finds 0 or n records in the `actors` table where their `id` is in the list of ids.
+Finds all the records in the `actors` table where their `id` is in the list of ids.
 
 ```ts
 const q = fromPagila('actor')
@@ -54,7 +41,7 @@ const q = fromPagila('actor')
 const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
 ```
 
-## Find a single actor via id with a single-level-deep`include()``
+## Find a single actor by id with a single-level-deep`include()`
 
 Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
@@ -77,7 +64,7 @@ const q = fromPagila('customer')
 const result = useSynthql<PagilaDB, 'customer', typeof q>(q);
 ```
 
-## Find a single customer via id with a two-level-deep `include()`
+## Find a single customer by id with a two-level-deep `include()`
 
 Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
