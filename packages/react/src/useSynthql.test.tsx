@@ -3,12 +3,40 @@ import { EchoServer, createEchoServer } from './test/createEchoServer';
 import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { DB, from } from './test/fakedb';
-import { DB as PagilaDB, from as fromPagila } from './test/db';
+import { Query, Table } from '@synthql/queries';
+import { DB as EchoDB, from as fromEcho } from './test/echoDb';
+import { DB as PagilaDB, from as fromPagila } from './test/pagilaDb';
 import { Providers } from './test/Providers';
 import React from 'react';
 import { QueryEngine } from '@synthql/backend';
 import { col } from '@synthql/queries';
+
+function renderSynthqlQuery<
+    DB,
+    TTable extends Table<DB>,
+    TQuery extends Query<DB, TTable>,
+>({
+    query,
+    server,
+}: {
+    query: TQuery;
+    server: EchoServer | PagilaServer | undefined;
+}) {
+    const result = renderHook(
+        () => {
+            const result = useSynthql<DB, TTable, typeof query>(query);
+
+            return result;
+        },
+        {
+            wrapper: (props: React.PropsWithChildren) => {
+                return <Providers endpoint={server?.url!} {...props} />;
+            },
+        },
+    );
+
+    return result;
+}
 
 describe('useSynthql', () => {
     let echoServer: EchoServer | undefined;
@@ -39,12 +67,12 @@ describe('useSynthql', () => {
                 // @@start-example@@ Find a single user by id using `select()`
                 // @@desc@@ Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
 
-                const q = from('users')
+                const q = fromEcho('users')
                     .select({ id: true, name: true })
                     .where({ id: { in: ['1'] } })
                     .maybe();
 
-                const result = useSynthql<DB, 'users', typeof q>(q);
+                const result = useSynthql<EchoDB, 'users', typeof q>(q);
 
                 // @@end-example@@
 
@@ -63,31 +91,21 @@ describe('useSynthql', () => {
     }, /* 10 seconds */ 10_000);
 
     test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
-        const result = renderHook(
-            () => {
-                // @@start-example@@ Find a single actor by id using `columns()`
-                // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
+        // @@start-example@@ Find a single actor by id using `columns()`
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
 
-                const q = fromPagila('actor')
-                    .columns('actor_id', 'first_name', 'last_name')
-                    .groupingId('actor_id')
-                    .where({ actor_id: { in: [1] } })
-                    .maybe();
+        const q = fromPagila('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .groupingId('actor_id')
+            .where({ actor_id: { in: [1] } })
+            .maybe();
 
-                const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
+        // @@end-example@@
 
-                // @@end-example@@
-
-                return result;
-            },
-            {
-                wrapper: (props: React.PropsWithChildren) => {
-                    return (
-                        <Providers endpoint={pagilaServer?.url!} {...props} />
-                    );
-                },
-            },
-        );
+        const result = renderSynthqlQuery<PagilaDB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
@@ -104,31 +122,21 @@ describe('useSynthql', () => {
             .fill(0)
             .map((_, i) => i + 1);
 
-        const result = renderHook(
-            () => {
-                // @@start-example@@ Find all actors by ids using `columns()`
-                // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids.
+        // @@start-example@@ Find all actors by ids using `columns()`
+        // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids.
 
-                const q = fromPagila('actor')
-                    .columns('actor_id', 'first_name', 'last_name')
-                    .groupingId('actor_id')
-                    .where({ actor_id: { in: ids } })
-                    .many();
+        const q = fromPagila('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .groupingId('actor_id')
+            .where({ actor_id: { in: ids } })
+            .many();
 
-                const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
+        // @@end-example@@
 
-                // @@end-example@@
-
-                return result;
-            },
-            {
-                wrapper: (props: React.PropsWithChildren) => {
-                    return (
-                        <Providers endpoint={pagilaServer?.url!} {...props} />
-                    );
-                },
-            },
-        );
+        const result = renderSynthqlQuery<PagilaDB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
@@ -191,46 +199,36 @@ describe('useSynthql', () => {
     }, /* 10 seconds */ 10_000);
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
-        const result = renderHook(
-            () => {
-                // @@start-example@@ Find a single actor by id with a single-level-deep`include()`
-                // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
+        // @@start-example@@ Find a single actor by id with a single-level-deep`include()`
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
-                const store = fromPagila('store')
-                    .columns('store_id', 'address_id', 'manager_staff_id')
-                    .groupingId('store_id')
-                    .where({
-                        store_id: col('customer.store_id'),
-                    })
-                    .one();
+        const store = fromPagila('store')
+            .columns('store_id', 'address_id', 'manager_staff_id')
+            .groupingId('store_id')
+            .where({
+                store_id: col('customer.store_id'),
+            })
+            .one();
 
-                const q = fromPagila('customer')
-                    .columns(
-                        'customer_id',
-                        'store_id',
-                        'first_name',
-                        'last_name',
-                        'email',
-                    )
-                    .groupingId('customer_id')
-                    .where({ customer_id: { in: [1] } })
-                    .include({ store })
-                    .one();
+        const q = fromPagila('customer')
+            .columns(
+                'customer_id',
+                'store_id',
+                'first_name',
+                'last_name',
+                'email',
+            )
+            .groupingId('customer_id')
+            .where({ customer_id: { in: [1] } })
+            .include({ store })
+            .one();
 
-                const result = useSynthql<PagilaDB, 'customer', typeof q>(q);
+        // @@end-example@@
 
-                // @@end-example@@
-
-                return result;
-            },
-            {
-                wrapper: (props: React.PropsWithChildren) => {
-                    return (
-                        <Providers endpoint={pagilaServer?.url!} {...props} />
-                    );
-                },
-            },
-        );
+        const result = renderSynthqlQuery<PagilaDB, 'customer', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
@@ -249,55 +247,45 @@ describe('useSynthql', () => {
     }, /* 10 seconds */ 10_000);
 
     test('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
-        const result = renderHook(
-            () => {
-                // @@start-example@@ Find a single customer by id with a two-level-deep `include()`
-                // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
+        // @@start-example@@ Find a single customer by id with a two-level-deep `include()`
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
-                const address = fromPagila('address')
-                    .columns('address_id', 'address', 'district')
-                    .groupingId('address_id')
-                    .where({
-                        address_id: col('store.address_id'),
-                    })
-                    .one();
+        const address = fromPagila('address')
+            .columns('address_id', 'address', 'district')
+            .groupingId('address_id')
+            .where({
+                address_id: col('store.address_id'),
+            })
+            .one();
 
-                const store = fromPagila('store')
-                    .columns('store_id', 'address_id', 'manager_staff_id')
-                    .groupingId('store_id')
-                    .where({
-                        store_id: col('customer.store_id'),
-                    })
-                    .include({ address })
-                    .one();
+        const store = fromPagila('store')
+            .columns('store_id', 'address_id', 'manager_staff_id')
+            .groupingId('store_id')
+            .where({
+                store_id: col('customer.store_id'),
+            })
+            .include({ address })
+            .one();
 
-                const q = fromPagila('customer')
-                    .columns(
-                        'customer_id',
-                        'store_id',
-                        'first_name',
-                        'last_name',
-                        'email',
-                    )
-                    .groupingId('customer_id')
-                    .where({ customer_id: { in: [4] } })
-                    .include({ store })
-                    .one();
+        const q = fromPagila('customer')
+            .columns(
+                'customer_id',
+                'store_id',
+                'first_name',
+                'last_name',
+                'email',
+            )
+            .groupingId('customer_id')
+            .where({ customer_id: { in: [4] } })
+            .include({ store })
+            .one();
 
-                const result = useSynthql<PagilaDB, 'customer', typeof q>(q);
+        const result = renderSynthqlQuery<PagilaDB, 'customer', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
 
-                // @@end-example@@
-
-                return result;
-            },
-            {
-                wrapper: (props: React.PropsWithChildren) => {
-                    return (
-                        <Providers endpoint={pagilaServer?.url!} {...props} />
-                    );
-                },
-            },
-        );
+        // @@end-example@@
 
         await result.waitFor(
             () => result.result.current.data?.store?.address !== undefined,
