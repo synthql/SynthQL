@@ -65,7 +65,7 @@ describe('useSynthql', () => {
     test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
         const result = renderHook(
             () => {
-                // @@start-example@@ Find a single actor via id using `columns()`
+                // @@start-example@@ Find a single actor by id using `columns()`
                 // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
 
                 const q = fromPagila('actor')
@@ -132,7 +132,9 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        expect(result.result.current.data?.sort((a, b) => a.actor_id - b.actor_id)).toMatchInlineSnapshot(`
+        expect(
+            result.result.current.data?.sort((a, b) => a.actor_id - b.actor_id),
+        ).toMatchInlineSnapshot(`
           [
             {
               "actor_id": 1,
@@ -185,13 +187,13 @@ describe('useSynthql', () => {
               "last_name": "GABLE",
             },
           ]
-        `)
+        `);
     }, /* 10 seconds */ 10_000);
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
         const result = renderHook(
             () => {
-                // @@start-example@@ Find a single actor via id with a single-level-deep`include()``
+                // @@start-example@@ Find a single actor by id with a single-level-deep`include()`
                 // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
                 const store = fromPagila('store')
@@ -249,7 +251,7 @@ describe('useSynthql', () => {
     test('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
         const result = renderHook(
             () => {
-                // @@start-example@@ Find a single customer via id with a two-level-deep `include()`
+                // @@start-example@@ Find a single customer by id with a two-level-deep `include()`
                 // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
                 const address = fromPagila('address')
@@ -297,7 +299,9 @@ describe('useSynthql', () => {
             },
         );
 
-        await result.waitFor(() => result.result.current.data?.store?.address !== undefined);
+        await result.waitFor(
+            () => result.result.current.data?.store?.address !== undefined,
+        );
 
         expect(result.result.current.data).toEqual({
             customer_id: 4,
