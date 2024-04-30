@@ -1,5 +1,5 @@
 import { QueryEngine } from '@synthql/backend';
-import { DB as PagilaDB } from './db';
+import { DB as PagilaDB } from './pagilaDb';
 import http from 'http';
 
 export interface PagilaServer {
