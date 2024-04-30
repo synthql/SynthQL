@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
-import { QueryPlan } from '.';
+import { QueryPlan, collectLast } from '.';
 import { introspectSchema } from './introspection/introspectSchema';
 import { QueryProvider } from './QueryProvider';
 import {
@@ -13,6 +13,7 @@ import { QueryExecutor } from './execution/types';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { SqlExecutionError } from './execution/executors/SqlExecutionError';
+import { generateLast } from './util/generators/generateLast';
 
 export interface QueryEngineProps<DB> {
     url?: string;
@@ -47,12 +48,23 @@ export class QueryEngine<DB> {
 
     execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
         query: TQuery,
-        opts?: { schema?: string },
+        opts?: {
+            schema?: string,
+            /**
+             * If true, the generator will only return the last result.
+             */
+            returnLastOnly?: boolean
+        },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        return execute<DB, TQuery>(query, {
+        const gen = execute<DB, TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
         });
+        if (opts?.returnLastOnly) {
+            return generateLast(gen)
+        }
+
+        return gen
     }
 
     compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {
