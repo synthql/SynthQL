@@ -59,7 +59,7 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        expect(result.result.current.data).toEqual([{ id: '1', name: 'bob' }]);
+        expect(result.result.current.data).toEqual({ id: '1', name: 'bob' });
     }, /* 10 seconds */ 10_000);
 
     test('Fetching 0 or n rows', async () => {
@@ -102,7 +102,7 @@ describe('useSynthql', () => {
         expect(result.result.current.status).toEqual(`success`);
     }, 10_000);
 
-    test.skip('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
+    test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
         const result = renderHook(
             () => {
                 // @@start-example@@ Find a single actor via id using `columns()`
@@ -131,18 +131,18 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        console.log(result.result.current.data);
-
-        expect(result.result.current.data).toEqual([
-            { actor_id: 1, first_name: 'PENELOPE', last_name: 'GUINESS' },
-        ]);
+        expect(result.result.current.data).toEqual({
+            actor_id: 1,
+            first_name: 'PENELOPE',
+            last_name: 'GUINESS',
+        });
     }, /* 10 seconds */ 10_000);
 
-    test.skip('Fetching 0 or n rows from the Pagila database  with `columns()`', async () => {
+    test('Fetching 0 or n rows from the Pagila database  with `columns()`', async () => {
         const count = 100;
         const ids = Array(count)
             .fill(0)
-            .map((_, i) => i);
+            .map((_, i) => i + 1);
 
         const result = renderHook(
             () => {
@@ -172,12 +172,10 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        console.log(result.result.current.data);
-
         expect(result.result.current.data?.length).toEqual(100);
     }, /* 10 seconds */ 10_000);
 
-    test.skip('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
+    test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
         const result = renderHook(
             () => {
                 // @@start-example@@ Find a single actor via id with a single-level-deep`include()``
@@ -221,22 +219,18 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        console.log(result.result.current.data);
-
-        expect(result.result.current.data).toEqual([
-            {
-                customer_id: 1,
+        expect(result.result.current.data).toEqual({
+            customer_id: 1,
+            store_id: 1,
+            first_name: 'MARY',
+            last_name: 'SMITH',
+            email: 'MARY.SMITH@sakilacustomer.org',
+            store: {
                 store_id: 1,
-                first_name: 'MARY',
-                last_name: 'SMITH',
-                email: 'MARY.SMITH@sakilacustomer.org',
-                store: {
-                    store_id: 1,
-                    address_id: 129,
-                    manager_staff_id: 1,
-                },
+                address_id: 129,
+                manager_staff_id: 1,
             },
-        ]);
+        });
     }, /* 10 seconds */ 10_000);
 
     test.skip('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
@@ -292,26 +286,22 @@ describe('useSynthql', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        console.log(result.result.current.data);
-
-        expect(result.result.current.data).toEqual([
-            {
-                customer_id: 4,
+        expect(result.result.current.data).toEqual({
+            customer_id: 4,
+            store_id: 2,
+            first_name: 'BARBARA',
+            last_name: 'JONES',
+            email: 'BARBARA.JONES@sakilacustomer.org',
+            store: {
                 store_id: 2,
-                first_name: 'BARBARA',
-                last_name: 'JONES',
-                email: 'BARBARA.JONES@sakilacustomer.org',
-                store: {
-                    store_id: 2,
+                address_id: 12,
+                manager_staff_id: 2,
+                address: {
                     address_id: 12,
-                    manager_staff_id: 2,
-                    address: {
-                        address_id: 12,
-                        address: '478 Joliet Way',
-                        district: 'Hamilton',
-                    },
+                    address: '478 Joliet Way',
+                    district: 'Hamilton',
                 },
             },
-        ]);
+        });
     }, /* 10 seconds */ 10_000);
 });
