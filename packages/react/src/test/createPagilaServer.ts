@@ -21,6 +21,8 @@ export function createPagilaServer({
             });
 
             req.on('end', async () => {
+                const headers = req.headers;
+
                 const json = JSON.parse(body);
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -28,6 +30,12 @@ export function createPagilaServer({
                 try {
                     for await (const intermediateResult of queryEngine.execute(
                         json,
+                        {
+                            // requestLastOnly:
+                            //     headers['x-return-last-only'] === 'true'
+                            //         ? true
+                            //         : false,
+                        },
                     )) {
                         res.write(JSON.stringify(intermediateResult) + '\n');
                     }

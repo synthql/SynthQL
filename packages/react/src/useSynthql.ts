@@ -11,6 +11,7 @@ type SynthqlQueryOptions<
     TQuery extends Query<DB, TTable>,
 > = {
     requestInit?: RequestInit;
+    returnLastOnly?: boolean;
     reactQuery?: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'retry'>;
 };
 
@@ -27,6 +28,10 @@ export function useSynthql<
     const mergedRequestInit: RequestInit = {
         ...requestInit,
         ...opts.requestInit,
+        headers: {
+            ...requestInit?.headers,
+            'X-Return-Last-Only': opts.returnLastOnly ? 'true' : 'false',
+        },
         body: JSON.stringify(query),
     };
 

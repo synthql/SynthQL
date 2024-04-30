@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
-import { QueryPlan, collectLast } from '.';
+import { QueryPlan } from '.';
 import { introspectSchema } from './introspection/introspectSchema';
 import { QueryProvider } from './QueryProvider';
 import {
@@ -49,11 +49,11 @@ export class QueryEngine<DB> {
     execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
         query: TQuery,
         opts?: {
-            schema?: string,
+            schema?: string;
             /**
              * If true, the generator will only return the last result.
              */
-            returnLastOnly?: boolean
+            returnLastOnly?: boolean;
         },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
         const gen = execute<DB, TQuery>(query, {
@@ -61,10 +61,10 @@ export class QueryEngine<DB> {
             defaultSchema: opts?.schema ?? this.schema,
         });
         if (opts?.returnLastOnly) {
-            return generateLast(gen)
+            return generateLast(gen);
         }
 
-        return gen
+        return gen;
     }
 
     compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {
