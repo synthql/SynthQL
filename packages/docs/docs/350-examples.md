@@ -5,12 +5,12 @@
 Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
 
 ```ts
-const q = from('users')
+const q = fromEcho('users')
     .select({ id: true, name: true })
     .where({ id: { in: ['1'] } })
     .maybe();
 
-const result = useSynthql<DB, 'users', typeof q>(q);
+const result = useSynthql<EchoDB, 'users', typeof q>(q);
 ```
 
 ## Find a single actor by id using `columns()`
@@ -23,8 +23,6 @@ const q = fromPagila('actor')
     .groupingId('actor_id')
     .where({ actor_id: { in: [1] } })
     .maybe();
-
-const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
 ```
 
 ## Find all actors by ids using `columns()`
@@ -37,8 +35,6 @@ const q = fromPagila('actor')
     .groupingId('actor_id')
     .where({ actor_id: { in: ids } })
     .many();
-
-const result = useSynthql<PagilaDB, 'actor', typeof q>(q);
 ```
 
 ## Find a single actor by id with a single-level-deep`include()`
@@ -60,8 +56,6 @@ const q = fromPagila('customer')
     .where({ customer_id: { in: [1] } })
     .include({ store })
     .one();
-
-const result = useSynthql<PagilaDB, 'customer', typeof q>(q);
 ```
 
 ## Find a single customer by id with a two-level-deep `include()`
@@ -93,5 +87,8 @@ const q = fromPagila('customer')
     .include({ store })
     .one();
 
-const result = useSynthql<PagilaDB, 'customer', typeof q>(q);
+const result = renderSynthqlQuery<PagilaDB, 'customer', typeof q>({
+    query: q,
+    server: pagilaServer,
+});
 ```
