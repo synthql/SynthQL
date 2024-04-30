@@ -2671,30 +2671,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@synthql/backend@0.38.4":
-  version "0.38.4"
-  resolved "https://registry.yarnpkg.com/@synthql/backend/-/backend-0.38.4.tgz#23de082ec9ed3dd64d6b09dbddf5e4b647c7eeda"
-  integrity sha512-1fQUBHzJLcMRG2zY2stO5S4iJ1g6IdXWsCLgi2dN3iVHYRVQkRpKGmoLloIefZvkSkj1zeK/feYUOf1D/tCYeA==
-  dependencies:
-    "@synthql/queries" "0.38.4"
-    kysely "^0.27.3"
-    pg "^8.11.3"
-    sql-formatter "^15.0.2"
-
-"@synthql/cli@0.38.4":
-  version "0.38.4"
-  resolved "https://registry.yarnpkg.com/@synthql/cli/-/cli-0.38.4.tgz#538701168617e77cbb792690e5dc95cc81c6ef57"
-  integrity sha512-9OFoFjjlcXDWZ74TLmaC2ukEMqK6tx9c16gx+MjbJzX6UZEJ8JH9PLXgxwnJ2GxaM0Msw66qA9ZDq/n7FDV9OQ==
-  dependencies:
-    "@synthql/backend" "0.38.4"
-    pg "^8.11.3"
-    yargs "^17.7.2"
-
-"@synthql/queries@0.38.4":
-  version "0.38.4"
-  resolved "https://registry.yarnpkg.com/@synthql/queries/-/queries-0.38.4.tgz#d6f344dc1db145b6560a4220827b95353c0699ad"
-  integrity sha512-o8KktsHZBoFh+PH3LX+qISol0QOekqRTzwSFzmlncJDF2jqMdVf+HzLH7H3iGpxVfC3ZlUXNYyzQWsxgBuIDgw==
-
 "@szmarczak/http-timer@^5.0.1":
   version "5.0.1"
   resolved "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-5.0.1.tgz"
