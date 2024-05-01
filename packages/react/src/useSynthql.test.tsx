@@ -79,7 +79,7 @@ describe('useSynthql tests', () => {
             first_name: 'PENELOPE',
             last_name: 'GUINESS',
         });
-    }, /* 10 seconds */ 10_000);
+    }, /* 10 seconds */ 1000);
 
     test('Fetching n rows from the Pagila database  with `columns()`', async () => {
         const count = 10;
@@ -161,7 +161,7 @@ describe('useSynthql tests', () => {
             },
           ]
         `);
-    }, /* 10 seconds */ 10_000);
+    }, /* 10 seconds */ 1000);
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
         // @@start-example@@ Find a single actor by id with a single-level-deep`include()`
@@ -209,7 +209,7 @@ describe('useSynthql tests', () => {
                 manager_staff_id: 1,
             },
         });
-    }, /* 10 seconds */ 10_000);
+    }, /* 10 seconds */ 1000);
 
     test('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
         // @@start-example@@ Find a single customer by id with a two-level-deep `include()`
@@ -272,7 +272,7 @@ describe('useSynthql tests', () => {
                 },
             },
         });
-    }, /* 10 seconds */ 10_000);
+    }, /* 10 seconds */ 1000);
 
     test('Fetching a single result from the Pagila database with three-level-deep nested data', async () => {
         // @@start-example@@ Find a single customer by id with a three-level-deep `include()`
@@ -327,8 +327,6 @@ describe('useSynthql tests', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        console.log(result.result.current.data);
-
         expect(result.result.current.data).toEqual({
             customer_id: 4,
             store_id: 2,
@@ -351,5 +349,5 @@ describe('useSynthql tests', () => {
                 },
             },
         });
-    }, /* 10 seconds */ 10_000);
+    }, /* 10 seconds */ 1000);
 });
