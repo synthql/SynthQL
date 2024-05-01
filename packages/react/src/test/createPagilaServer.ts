@@ -1,5 +1,5 @@
 import { QueryEngine } from '@synthql/backend';
-import { DB as PagilaDB } from './pagilaDb';
+import { DB } from './db';
 import http from 'http';
 
 export interface PagilaServer {
@@ -10,7 +10,7 @@ export interface PagilaServer {
 export function createPagilaServer({
     queryEngine,
 }: {
-    queryEngine: QueryEngine<PagilaDB>;
+    queryEngine: QueryEngine<DB>;
 }): Promise<PagilaServer> {
     return new Promise((resolve, reject) => {
         const server = http.createServer((req, res) => {

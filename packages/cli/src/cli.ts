@@ -32,11 +32,13 @@ export function cli({
                     type: 'string',
                     description:
                         'Default schema to be included in the generation',
+                    default: 'public',
                 })
                 .option('schemas', {
                     type: 'string',
                     description:
                         'List of schemas to be included in the generation',
+                    default: 'public',
                 })
                 .array('schemas');
         },
