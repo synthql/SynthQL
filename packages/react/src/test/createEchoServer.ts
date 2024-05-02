@@ -10,21 +10,27 @@ export function createEchoServer(
 ): Promise<EchoServer> {
     return new Promise((resolve, reject) => {
         const server = http.createServer((req, res) => {
-            // reads the body, which always has the following form
-            // { lines: any[] }
-            // and echos it back
+            /* Reads the body, which always has the following form:
+                { lines: any[] }
+            and echos it back */
+
             let body = '';
+
             req.on('data', (chunk) => {
                 body += chunk;
             });
+
             req.on('end', () => {
                 const json = JSON.parse(body);
+
                 const lines = mapRequest(json);
+
                 res.writeHead(200, { 'Content-Type': 'application/json' });
 
                 for (const line of lines) {
                     res.write(JSON.stringify(line) + '\n');
                 }
+
                 // flush the buffer
                 res.end();
             });

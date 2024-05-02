@@ -1,18 +1,14 @@
 # Examples
 
-## Find all users with ids in the list
+## Find a single user by id using `select()`
 
-Finds all records in the `users` table where the `id` is in the list of ids.
+Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
 
 ```ts
 const q = from('users')
-    .columns('id', 'name')
-    .where({ id: { in: ids } })
-    .many();
+    .select({ id: true, name: true })
+    .where({ id: { in: ['1'] } })
+    .maybe();
 
-const result: UseQueryResult<Array<{ id: string; name: string }>> = useSynthql<
-    DB,
-    'users',
-    typeof q
->(q);
+const result = useSynthql<DB, 'users', typeof q>(q);
 ```
