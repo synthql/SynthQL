@@ -59,7 +59,7 @@ describe('CLI tests', () => {
                 expect(output._).toEqual(['generate']);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -92,7 +92,7 @@ describe('CLI tests', () => {
                 expect(output.connectionString).toEqual(url);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -125,7 +125,7 @@ describe('CLI tests', () => {
                 expect(output.url).toEqual(url);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -157,7 +157,7 @@ describe('CLI tests', () => {
                 expect(output.out).toEqual(outDir);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -190,7 +190,7 @@ describe('CLI tests', () => {
                 expect(output.defaultSchema).toEqual(defaultSchema);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -224,7 +224,7 @@ describe('CLI tests', () => {
                 expect(output.schemas).toEqual(schemas);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
@@ -264,7 +264,7 @@ describe('CLI tests', () => {
                 expect(output.schemas).toEqual(schemas);
             },
             {
-                timeout: 100000,
+                timeout: 10000,
             },
         );
 
