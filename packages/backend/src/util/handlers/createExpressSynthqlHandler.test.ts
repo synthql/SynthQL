@@ -1,23 +1,16 @@
-import { beforeAll, describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createExpressSynthqlHandler } from './createExpressSynthqlHandler';
-import { QueryEngine } from '../..';
+import { queryEngine } from '../../tests/queryEngine';
 import { getMockReq, getMockRes } from 'vitest-mock-express';
 
-import { DB, from } from '../../tests/pagilaDb';
+import { from } from '../../tests/generated.schema';
+import { DB } from '../../tests/db';
 
 describe('createExpressSynthqlHandler', () => {
-    let queryEngine: QueryEngine<DB>;
-
-    beforeAll(async () => {
-        queryEngine = new QueryEngine<DB>({
-            url: 'postgres://postgres:postgres@localhost:5432/postgres',
-        });
-    });
-
     test('Query execution is successful', async () => {
         const handler = await createExpressSynthqlHandler<DB>(queryEngine);
 
-        const q = from('actor')
+        const q = from('public.actor')
             .columns('actor_id', 'first_name', 'last_name')
             .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
@@ -51,8 +44,6 @@ describe('createExpressSynthqlHandler', () => {
             'application/x-ndjson',
         );
 
-        // expect(res.end).toHaveBeenCalledWith(
-        //     'SynthQL request handled successfully!',
-        // );
+        // expect(res.end).toHaveBeenCalled();
     });
 });

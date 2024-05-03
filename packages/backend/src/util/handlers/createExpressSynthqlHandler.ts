@@ -18,14 +18,16 @@ export async function createExpressSynthqlHandler<T>(
             for await (const intermediateResult of queryEngine.execute(query, {
                 returnLastOnly: headers['x-return-last-only'] === 'true',
             })) {
-                res.write(JSON.stringify(intermediateResult) + '\n');
+                res.write(JSON.stringify(intermediateResult));
+
+                res.write('\n');
             }
 
-            res.end('SynthQL request handled successfully!');
+            res.end();
         } catch (error) {
             res.write(JSON.stringify({ error: String(error) }) + '\n');
 
-            res.end('SynthQL request failed with error!');
+            res.end();
         }
     };
 }
