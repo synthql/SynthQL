@@ -43,7 +43,6 @@
         "postgres": "^3.4.3",
         "rollup-plugin-node-externals": "^7.1.1",
         "typescript": "^5.4.5",
-        "vitest": "^1.1.0",
-        "vitest-mock-express": "^2.2.0"
+        "vitest": "^1.1.0"
     }
 }

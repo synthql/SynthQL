@@ -12603,13 +12603,6 @@ vite@^5.0.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vitest-mock-express@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/vitest-mock-express/-/vitest-mock-express-2.2.0.tgz#d7532480c9e7c3985347d7e930cf0e3ab083d9ed"
-  integrity sha512-JoKVdo9KM4K5wo9GcQ0GabiRFU5XP2yJVMFv9R/C6arcv5wTPoDAiama2jJelO/ieIq+XcGETLr/V4vjCuqofA==
-  dependencies:
-    "@types/express" "^4.17.21"
-
 vitest@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/vitest/-/vitest-1.1.1.tgz"
