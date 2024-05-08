@@ -1,11 +1,21 @@
 import { QueryEngine, collectLast } from '../..';
 import type { Request, Response } from 'express';
 
-export type ExpressSynthqlHandler = (req: Request, res: Response) => void;
+export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 
-export async function createExpressSynthqlHandler<T>(
+export type ExpressSynthqlHandlerResponse = Pick<
+    Response,
+    'statusCode' | 'write' | 'setHeader' | 'end'
+>;
+
+export type ExpressSynthqlHandler = (
+    req: ExpressSynthqlHandlerRequest,
+    res: ExpressSynthqlHandlerResponse,
+) => void;
+
+export function createExpressSynthqlHandler<T>(
     queryEngine: QueryEngine<T>,
-): Promise<ExpressSynthqlHandler> {
+): ExpressSynthqlHandler {
     return async (req, res) => {
         try {
             const headers = req.headers;
@@ -22,28 +32,24 @@ export async function createExpressSynthqlHandler<T>(
                         }),
                     );
 
-                    res.status(200);
+                    res.statusCode = 200;
 
-                    res.setHeader('Content-Type', 'application/x-ndjson');
+                    res.setHeader('Content-Type', 'application/json');
 
                     res.write(JSON.stringify(result));
 
-                    res.write('\n');
-
                     res.end();
                 } catch (error) {
-                    res.status(400);
+                    res.statusCode = 500;
 
-                    res.setHeader('Content-Type', 'application/x-ndjson');
+                    res.setHeader('Content-Type', 'application/json');
 
                     res.write(JSON.stringify({ error: String(error) }));
-
-                    res.write('\n');
 
                     res.end();
                 }
             } else {
-                res.status(200);
+                res.statusCode = 200;
 
                 res.setHeader('Content-Type', 'application/x-ndjson');
 
@@ -58,9 +64,11 @@ export async function createExpressSynthqlHandler<T>(
                 res.end();
             }
         } catch (error) {
-            res.write(JSON.stringify({ error: String(error) }));
+            res.statusCode = 400;
 
-            res.write('\n');
+            res.setHeader('Content-Type', 'application/json');
+
+            res.write(JSON.stringify({ error: 'Invalid JSON body' }));
 
             res.end();
         }
