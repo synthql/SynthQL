@@ -33,6 +33,7 @@
         "sql-formatter": "^15.0.2"
     },
     "devDependencies": {
+        "@types/express": "^4.17.21",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@vitest/coverage-v8": "^1.2.2",
