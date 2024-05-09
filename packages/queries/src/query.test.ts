@@ -1,6 +1,8 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col } from '.';
-import { Actor, DB, from } from './test/pagila.db';
+import { Query, QueryResult, Table, col, query } from '.';
+import { DB } from './generated/db';
+
+const from = query<DB>().from;
 
 describe('queries', () => {
     function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(
@@ -39,11 +41,12 @@ describe('queries', () => {
             .one();
 
         const result = fakeQueryResult(q);
+
         result satisfies {
             actor_id: number;
             first_name: string;
             last_name: string;
-            last_update: Date;
+            last_update: string;
         };
     });
 

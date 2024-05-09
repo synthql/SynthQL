@@ -98,6 +98,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -116,6 +117,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -134,6 +136,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -152,6 +155,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -170,6 +174,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -188,6 +193,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -206,6 +212,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -224,6 +231,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -242,6 +250,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -260,6 +269,7 @@ export interface TableCustomer {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
     };
@@ -288,6 +298,7 @@ export interface TableActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -306,6 +317,7 @@ export interface TableActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -324,6 +336,7 @@ export interface TableActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -342,6 +355,7 @@ export interface TableActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -370,6 +384,7 @@ export interface TableCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -388,6 +403,7 @@ export interface TableCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -406,6 +422,7 @@ export interface TableCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -434,6 +451,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -452,6 +470,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -470,6 +489,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -488,6 +508,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -506,6 +527,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -524,6 +546,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -542,6 +565,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -560,6 +584,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -578,6 +603,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -596,6 +622,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -614,6 +641,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -632,6 +660,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -650,6 +679,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -668,6 +698,7 @@ export interface TableFilm {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -696,6 +727,7 @@ export interface TableFilmActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -714,6 +746,7 @@ export interface TableFilmActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -732,6 +765,7 @@ export interface TableFilmActor {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -760,6 +794,7 @@ export interface TableFilmCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -778,6 +813,7 @@ export interface TableFilmCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -796,6 +832,7 @@ export interface TableFilmCategory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -824,6 +861,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -842,6 +880,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -860,6 +899,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -878,6 +918,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -896,6 +937,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -914,6 +956,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -932,6 +975,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -950,6 +994,7 @@ export interface TableAddress {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -978,6 +1023,7 @@ export interface TableCity {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -996,6 +1042,7 @@ export interface TableCity {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1014,6 +1061,7 @@ export interface TableCity {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1032,6 +1080,7 @@ export interface TableCity {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1060,6 +1109,7 @@ export interface TableCountry {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1078,6 +1128,7 @@ export interface TableCountry {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1096,6 +1147,7 @@ export interface TableCountry {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1124,6 +1176,7 @@ export interface TableInventory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1142,6 +1195,7 @@ export interface TableInventory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1160,6 +1214,7 @@ export interface TableInventory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1178,6 +1233,7 @@ export interface TableInventory {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1206,6 +1262,7 @@ export interface TableLanguage {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1224,6 +1281,7 @@ export interface TableLanguage {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1242,6 +1300,7 @@ export interface TableLanguage {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1270,6 +1329,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1288,6 +1348,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1306,6 +1367,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1324,6 +1386,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1342,6 +1405,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1360,6 +1424,7 @@ export interface TablePayment {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1388,6 +1453,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1406,6 +1472,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1424,6 +1491,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1442,6 +1510,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1460,6 +1529,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -1478,6 +1548,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1496,6 +1567,7 @@ export interface TableRental {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };
@@ -1524,6 +1596,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1542,6 +1615,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1560,6 +1634,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1578,6 +1653,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1596,6 +1672,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -1614,6 +1691,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1632,6 +1710,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1650,6 +1729,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1668,6 +1748,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
         /**
@@ -1686,6 +1767,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1704,6 +1786,7 @@ export interface TableStaff {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: true;
             isPrimaryKey: false;
         };
     };
@@ -1732,6 +1815,7 @@ export interface TableStore {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: true;
         };
         /**
@@ -1750,6 +1834,7 @@ export interface TableStore {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1768,6 +1853,7 @@ export interface TableStore {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -1786,6 +1872,7 @@ export interface TableStore {
             selectable: true;
             includable: true;
             whereable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
     };

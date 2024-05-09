@@ -34,6 +34,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -45,6 +49,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -71,6 +76,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -82,6 +91,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -106,6 +116,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -117,6 +131,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -141,6 +156,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -152,6 +171,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -176,6 +196,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -187,6 +211,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -213,6 +238,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -224,6 +253,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -248,6 +278,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -259,6 +293,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -284,6 +319,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -295,6 +334,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -320,6 +360,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -331,6 +375,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -357,6 +402,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -368,6 +417,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -417,6 +467,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -428,6 +482,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -452,6 +507,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -463,6 +522,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -487,6 +547,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -498,6 +562,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -523,6 +588,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -534,6 +603,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -581,6 +651,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -592,6 +666,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -616,6 +691,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -627,6 +706,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -652,6 +732,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -663,6 +747,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -704,6 +789,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -715,6 +804,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -739,6 +829,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -750,6 +844,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -774,6 +869,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -785,6 +884,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -811,6 +911,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -822,6 +926,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -848,6 +953,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -859,6 +968,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -885,6 +995,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -896,6 +1010,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -922,6 +1037,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -933,6 +1052,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -957,6 +1077,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -968,6 +1092,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -994,6 +1119,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1005,6 +1134,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1029,6 +1159,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1040,6 +1174,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1066,6 +1201,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1077,6 +1216,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1102,6 +1242,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1113,6 +1257,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1137,6 +1282,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1148,6 +1297,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1172,6 +1322,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1183,6 +1337,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1234,6 +1389,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1245,6 +1404,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1271,6 +1431,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1282,6 +1446,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1307,6 +1472,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1318,6 +1487,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1360,6 +1530,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1371,6 +1545,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1397,6 +1572,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1408,6 +1587,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1433,6 +1613,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1444,6 +1628,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1485,6 +1670,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1496,6 +1685,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1520,6 +1710,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1531,6 +1725,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1555,6 +1750,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1566,6 +1765,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1590,6 +1790,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1601,6 +1805,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1627,6 +1832,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1638,6 +1847,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1662,6 +1872,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1673,6 +1887,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1697,6 +1912,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1708,6 +1927,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1733,6 +1953,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1744,6 +1968,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1792,6 +2017,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1803,6 +2032,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1827,6 +2057,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1838,6 +2072,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1864,6 +2099,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1875,6 +2114,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1900,6 +2140,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1911,6 +2155,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1952,6 +2197,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -1963,6 +2212,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -1987,6 +2237,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -1998,6 +2252,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2023,6 +2278,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2034,6 +2293,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2076,6 +2336,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -2087,6 +2351,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2113,6 +2378,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2124,6 +2393,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2150,6 +2420,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2161,6 +2435,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2186,6 +2461,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2197,6 +2476,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2244,6 +2524,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -2255,6 +2539,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2279,6 +2564,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2290,6 +2579,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2315,6 +2605,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2326,6 +2620,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2367,6 +2662,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2378,6 +2677,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2404,6 +2704,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2415,6 +2719,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2441,6 +2746,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2452,6 +2761,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2478,6 +2788,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2489,6 +2803,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2513,6 +2828,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2524,6 +2843,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2549,6 +2869,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2560,6 +2884,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2608,6 +2933,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -2619,6 +2948,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2644,6 +2974,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2655,6 +2989,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2681,6 +3016,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2692,6 +3031,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2718,6 +3058,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2729,6 +3073,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2754,6 +3099,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2765,6 +3114,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2791,6 +3141,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2802,6 +3156,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2827,6 +3182,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2838,6 +3197,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2886,6 +3246,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -2897,6 +3261,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2921,6 +3286,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2932,6 +3301,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2956,6 +3326,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -2967,6 +3341,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -2993,6 +3368,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3004,6 +3383,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3028,6 +3408,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3039,6 +3423,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3065,6 +3450,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3076,6 +3465,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3100,6 +3490,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3111,6 +3505,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3135,6 +3530,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3146,6 +3545,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3170,6 +3570,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3181,6 +3585,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3206,6 +3611,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3217,6 +3626,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3241,6 +3651,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3252,6 +3666,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3302,6 +3717,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -3313,6 +3732,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3339,6 +3759,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3350,6 +3774,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3376,6 +3801,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3387,6 +3816,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3412,6 +3842,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3423,6 +3857,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3490,6 +3925,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -3501,6 +3940,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3527,6 +3967,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3538,6 +3982,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3562,6 +4007,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3573,6 +4022,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3597,6 +4047,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3608,6 +4062,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3632,6 +4087,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3643,6 +4102,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3669,6 +4129,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3680,6 +4144,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3704,6 +4169,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3715,6 +4184,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3740,6 +4210,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3751,6 +4225,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3776,6 +4251,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3787,6 +4266,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3813,6 +4293,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3824,6 +4308,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3873,6 +4358,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -3884,6 +4373,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3908,6 +4398,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3919,6 +4413,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3943,6 +4438,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3954,6 +4453,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -3979,6 +4479,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -3990,6 +4494,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4037,6 +4542,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4048,6 +4557,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4072,6 +4582,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4083,6 +4597,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4108,6 +4623,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4119,6 +4638,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4160,6 +4680,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4171,6 +4695,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4195,6 +4720,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4206,6 +4735,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4230,6 +4760,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4241,6 +4775,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4267,6 +4802,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4278,6 +4817,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4304,6 +4844,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4315,6 +4859,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4341,6 +4886,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4352,6 +4901,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4378,6 +4928,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4389,6 +4943,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4413,6 +4968,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4424,6 +4983,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4450,6 +5010,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4461,6 +5025,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4485,6 +5050,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4496,6 +5065,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4522,6 +5092,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4533,6 +5107,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4558,6 +5133,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4569,6 +5148,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4593,6 +5173,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4604,6 +5188,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4628,6 +5213,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4639,6 +5228,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4690,6 +5280,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4701,6 +5295,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4727,6 +5322,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4738,6 +5337,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4763,6 +5363,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4774,6 +5378,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4816,6 +5421,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4827,6 +5436,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4853,6 +5463,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4864,6 +5478,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4889,6 +5504,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4900,6 +5519,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4941,6 +5561,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -4952,6 +5576,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -4976,6 +5601,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -4987,6 +5616,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5011,6 +5641,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5022,6 +5656,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5046,6 +5681,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5057,6 +5696,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5083,6 +5723,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5094,6 +5738,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5118,6 +5763,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5129,6 +5778,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5153,6 +5803,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5164,6 +5818,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5189,6 +5844,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5200,6 +5859,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5248,6 +5908,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -5259,6 +5923,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5283,6 +5948,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5294,6 +5963,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5320,6 +5990,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5331,6 +6005,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5356,6 +6031,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5367,6 +6046,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5408,6 +6088,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -5419,6 +6103,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5443,6 +6128,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5454,6 +6143,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5479,6 +6169,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5490,6 +6184,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5532,6 +6227,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -5543,6 +6242,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5569,6 +6269,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5580,6 +6284,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5606,6 +6311,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5617,6 +6326,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5642,6 +6352,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5653,6 +6367,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5700,6 +6415,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -5711,6 +6430,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5735,6 +6455,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5746,6 +6470,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5771,6 +6496,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5782,6 +6511,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5823,6 +6553,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5834,6 +6568,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5860,6 +6595,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5871,6 +6610,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5897,6 +6637,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5908,6 +6652,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5934,6 +6679,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5945,6 +6694,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -5969,6 +6719,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -5980,6 +6734,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6005,6 +6760,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6016,6 +6775,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6064,6 +6824,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -6075,6 +6839,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6100,6 +6865,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6111,6 +6880,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6137,6 +6907,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6148,6 +6922,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6174,6 +6949,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6185,6 +6964,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6210,6 +6990,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6221,6 +7005,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6247,6 +7032,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6258,6 +7047,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6283,6 +7073,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6294,6 +7088,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6342,6 +7137,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -6353,6 +7152,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6377,6 +7177,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6388,6 +7192,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6412,6 +7217,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6423,6 +7232,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6449,6 +7259,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6460,6 +7274,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6484,6 +7299,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6495,6 +7314,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6521,6 +7341,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6532,6 +7356,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6556,6 +7381,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6567,6 +7396,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6591,6 +7421,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6602,6 +7436,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6626,6 +7461,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6637,6 +7476,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6662,6 +7502,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6673,6 +7517,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6697,6 +7542,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6708,6 +7557,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6758,6 +7608,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: true,
@@ -6769,6 +7623,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6795,6 +7650,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6806,6 +7665,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6832,6 +7692,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6843,6 +7707,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
@@ -6868,6 +7733,10 @@ export const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
@@ -6879,6 +7748,7 @@ export const schema = {
                                 'includable',
                                 'whereable',
                                 'isPrimaryKey',
+                                'nullable',
                             ],
                             additionalProperties: false,
                         },
