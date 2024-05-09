@@ -1,42 +1,24 @@
-import { QueryEngine } from '@synthql/backend';
-import { Pool } from 'pg';
-import fs from 'fs';
+import { generate } from '@synthql/introspect';
 import path from 'path';
 
 interface GenerateSchemaOptions {
     connectionString: string;
     out: string;
-    defaultSchema?: string;
-    schemas?: string[];
+    defaultSchema: string;
+    schemas: string[];
 }
 
-export const generate = async ({
+export const generateSchema = async ({
     connectionString,
     out,
     defaultSchema,
     schemas = [],
 }: GenerateSchemaOptions) => {
-    const pool = new Pool({
-        connectionString,
-    });
-
-    const queryEngine = new QueryEngine({
-        pool,
-        schema: defaultSchema,
-    });
-
-    try {
-        if (!fs.existsSync(out)) {
-            fs.mkdirSync(out, { recursive: true });
-        }
-    } catch (err) {
-        return err;
-    }
-
-    const result = await queryEngine.generateSchema({
-        out: path.resolve(path.join(process.cwd(), out, 'db.ts')),
+    const result = await generate({
         defaultSchema,
-        schemas,
+        connectionString,
+        includeSchemas: schemas,
+        outDir: path.resolve(path.join(process.cwd(), out)),
     });
 
     return result;

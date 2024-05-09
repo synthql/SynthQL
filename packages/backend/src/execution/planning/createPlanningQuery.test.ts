@@ -1,11 +1,10 @@
 import { describe, expect, test } from 'vitest';
+import { col } from '@synthql/queries';
 import { store } from '../../tests/queries.v2';
 import { createPlanningQuery } from './createPlanningQuery';
 import { PlanningQuery } from '../types';
 import { printPath } from '../../util/path/printPath';
-import { mapQuery } from '../../query/mapQuery';
-import { from } from '../../tests/generated.schema';
-import { col } from '@synthql/queries';
+import { from } from '../../tests/generated';
 
 describe('createPlanningQuery', () => {
     function simplifyQuery(q: PlanningQuery): {
@@ -33,11 +32,11 @@ describe('createPlanningQuery', () => {
                     children: [
                         {
                             children: [],
-                            from: 'public.city',
+                            from: 'city',
                             path: 'address.city',
                         },
                     ],
-                    from: 'public.address',
+                    from: 'address',
                     path: 'address',
                 },
                 {
@@ -46,30 +45,30 @@ describe('createPlanningQuery', () => {
                             children: [
                                 {
                                     children: [],
-                                    from: 'public.language',
+                                    from: 'language',
                                     path: 'inventory.film.language',
                                 },
                                 {
-                                    from: 'public.film_actor',
+                                    from: 'film_actor',
                                     path: 'inventory.film.filmActor',
                                     children: [
                                         {
                                             children: [],
-                                            from: 'public.actor',
+                                            from: 'actor',
                                             path: 'inventory.film.filmActor.actors',
                                         },
                                     ],
                                 },
                             ],
-                            from: 'public.film',
+                            from: 'film',
                             path: 'inventory.film',
                         },
                     ],
-                    from: 'public.inventory',
+                    from: 'inventory',
                     path: 'inventory',
                 },
             ],
-            from: 'public.store',
+            from: 'store',
             path: '',
         });
     });
@@ -80,39 +79,39 @@ describe('createPlanningQuery', () => {
             .maybe();
 
         expect(simplifyQuery(createPlanningQuery(q))).toEqual({
-            from: 'public.store',
+            from: 'store',
             path: '',
             children: [
                 {
-                    from: 'public.address',
+                    from: 'address',
                     path: 'address',
                     children: [
                         {
                             children: [],
-                            from: 'public.city',
+                            from: 'city',
                             path: 'address.city',
                         },
                     ],
                 },
                 {
-                    from: 'public.inventory',
+                    from: 'inventory',
                     path: 'inventory',
                     children: [
                         {
-                            from: 'public.film',
+                            from: 'film',
                             path: 'inventory.film',
                             children: [
                                 {
-                                    from: 'public.language',
+                                    from: 'language',
                                     path: 'inventory.film.language',
                                     children: [],
                                 },
                                 {
-                                    from: 'public.film_actor',
+                                    from: 'film_actor',
                                     path: 'inventory.film.filmActor',
                                     children: [
                                         {
-                                            from: 'public.actor',
+                                            from: 'actor',
                                             path: 'inventory.film.filmActor.actors',
                                             children: [],
                                         },
@@ -127,26 +126,26 @@ describe('createPlanningQuery', () => {
     });
 
     test('sore => address => city', () => {
-        const city = from('public.city')
+        const city = from('city')
             .columns('city_id', 'city')
             .groupingId('city_id')
             .where({
-                city_id: col('public.address.city_id'),
+                city_id: col('address.city_id'),
             })
             .one();
 
-        const address = from('public.address')
+        const address = from('address')
             .columns('address_id', 'address')
             .groupingId('address_id')
             .where({
-                address_id: col('public.store.address_id'),
+                address_id: col('store.address_id'),
             })
             .include({
                 city,
             })
             .one();
 
-        const query = from('public.store')
+        const query = from('store')
             .select({ store_id: true })
             .groupingId('store_id')
             .include({
@@ -161,46 +160,46 @@ describe('createPlanningQuery', () => {
                     children: [
                         {
                             children: [],
-                            from: 'public.city',
+                            from: 'city',
                             path: 'address.city',
                         },
                     ],
-                    from: 'public.address',
+                    from: 'address',
                     path: 'address',
                 },
             ],
-            from: 'public.store',
+            from: 'store',
             path: '',
         });
     });
 
     test('store with no children', () => {
-        const q = createPlanningQuery(from('public.store').many());
+        const q = createPlanningQuery(from('store').many());
         const simplified = simplifyQuery(q);
 
         expect(simplified).toEqual({
             children: [],
-            from: 'public.store',
+            from: 'store',
             path: '',
         });
     });
 
     test('store -> many(addresses)', () => {
         const q = createPlanningQuery(
-            from('public.store')
+            from('store')
                 .include({
-                    addresses: from('public.address').many(),
+                    addresses: from('address').many(),
                 })
                 .many(),
         );
         const simplified = simplifyQuery(q);
 
         expect(simplified).toEqual({
-            from: 'public.store',
+            from: 'store',
             path: '',
             children: [
                 {
-                    from: 'public.address',
+                    from: 'address',
                     path: 'addresses',
                     children: [],
                 },
@@ -210,11 +209,11 @@ describe('createPlanningQuery', () => {
 
     test('store -> many(addresses) -> many(cities)', () => {
         const q = createPlanningQuery(
-            from('public.store')
+            from('store')
                 .include({
-                    addresses: from('public.address')
+                    addresses: from('address')
                         .include({
-                            cities: from('public.city').many(),
+                            cities: from('city').many(),
                         })
                         .many(),
                 })
@@ -223,15 +222,15 @@ describe('createPlanningQuery', () => {
         const simplified = simplifyQuery(q);
 
         expect(simplified).toEqual({
-            from: 'public.store',
+            from: 'store',
             path: '',
             children: [
                 {
-                    from: 'public.address',
+                    from: 'address',
                     path: 'addresses',
                     children: [
                         {
-                            from: 'public.city',
+                            from: 'city',
                             path: 'addresses.cities',
                             children: [],
                         },
@@ -242,28 +241,28 @@ describe('createPlanningQuery', () => {
     });
 
     test('store -> many(addresses) -> maybe(city) -> maybe(language)', () => {
-        const language = from('public.language').maybe();
-        const city = from('public.city').include({ language }).maybe();
-        const addresses = from('public.address').include({ city }).many();
-        const store = from('public.store').include({ addresses }).many();
+        const language = from('language').maybe();
+        const city = from('city').include({ language }).maybe();
+        const addresses = from('address').include({ city }).many();
+        const store = from('store').include({ addresses }).many();
 
         const q = createPlanningQuery(store);
         const simplified = simplifyQuery(q);
 
         expect(simplified).toEqual({
-            from: 'public.store',
+            from: 'store',
             path: '',
             children: [
                 {
-                    from: 'public.address',
+                    from: 'address',
                     path: 'addresses',
                     children: [
                         {
-                            from: 'public.city',
+                            from: 'city',
                             path: 'addresses.city',
                             children: [
                                 {
-                                    from: 'public.language',
+                                    from: 'language',
                                     path: 'addresses.city.language',
                                     children: [],
                                 },
@@ -276,28 +275,28 @@ describe('createPlanningQuery', () => {
     });
 
     test('maybe(store) -> many(addresses) -> maybe(city) -> maybe(language)', () => {
-        const language = from('public.language').maybe();
-        const city = from('public.city').include({ language }).maybe();
-        const addresses = from('public.address').include({ city }).many();
-        const store = from('public.store').include({ addresses }).maybe();
+        const language = from('language').maybe();
+        const city = from('city').include({ language }).maybe();
+        const addresses = from('address').include({ city }).many();
+        const store = from('store').include({ addresses }).maybe();
 
         const q = createPlanningQuery(store);
         const simplified = simplifyQuery(q);
 
         expect(simplified).toEqual({
-            from: 'public.store',
+            from: 'store',
             path: '',
             children: [
                 {
-                    from: 'public.address',
+                    from: 'address',
                     path: 'addresses',
                     children: [
                         {
-                            from: 'public.city',
+                            from: 'city',
                             path: 'addresses.city',
                             children: [
                                 {
-                                    from: 'public.language',
+                                    from: 'language',
                                     path: 'addresses.city.language',
                                     children: [],
                                 },

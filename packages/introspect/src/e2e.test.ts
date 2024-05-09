@@ -3,7 +3,7 @@ import { generate } from '.';
 import * as prettier from 'prettier';
 
 describe('e2e', () => {
-    test('generate from pagila', async () => {
+    test('Generate from Pagila', async () => {
         const prettierOptions = await prettier.resolveConfig(
             '../../.prettier.config.js',
         );
@@ -21,6 +21,7 @@ describe('e2e', () => {
                     parser: 'typescript',
                     ...prettierOptions,
                 }),
+            SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation: '../query',
         });
     }, 100_000);
 });

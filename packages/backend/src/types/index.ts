@@ -1,5 +1,20 @@
-import { Query } from '@synthql/queries';
+import { Query, Table } from '@synthql/queries';
 
-export type AnyDb = Record<string, Record<string, any>>;
-export type AnyQuery = Query<AnyDb, string>;
-export type AnyTable = string;
+type AnyTableDef = {
+    columns: Record<
+        string,
+        {
+            type: any;
+            selectable: boolean;
+            includable: boolean;
+            whereable: boolean;
+            nullable: boolean;
+            isPrimaryKey: boolean;
+        }
+    >;
+};
+
+export type AnyDb = Record<string, AnyTableDef>;
+
+export type AnyTable = Table<AnyDb>;
+export type AnyQuery = Query<AnyDb, AnyTable>;

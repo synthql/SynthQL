@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { QueryEngine } from '../QueryEngine';
-import { DB } from './db';
+import { DB } from './generated';
 import { Pool } from 'pg';
 
 dotenv.config();

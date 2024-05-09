@@ -1,6 +1,6 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { generate } from './commands/generate';
+import { generateSchema } from './commands/generate';
 
 export function cli({
     argv,
@@ -43,7 +43,7 @@ export function cli({
                 .array('schemas');
         },
         async (argv) => {
-            await generate({
+            await generateSchema({
                 connectionString: argv.connectionString,
                 out: argv.out,
                 defaultSchema: argv.defaultSchema,

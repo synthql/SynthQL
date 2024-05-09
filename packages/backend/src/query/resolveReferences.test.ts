@@ -1,22 +1,19 @@
 import { describe, expect, test } from 'vitest';
+import { col } from '@synthql/queries';
 import { createRefContext } from '../refs/RefContext';
 import { ColumnRef } from '../refs/ColumnRef';
-import { from } from '../tests/generated.schema';
-import { col } from '@synthql/queries';
 import { resolveReferences } from './resolveReferences';
+import { from } from '../tests/generated';
 
 describe('resolveReferences', () => {
     test('should resolve references', async () => {
-        const columnLangId = ColumnRef.parse(
-            'public.film.language_id',
-            'public',
-        );
+        const columnLangId = ColumnRef.parse('film.language_id', 'public');
         const refContext = createRefContext();
         refContext.addValues(columnLangId, 1, 2, 3, 1, 2, 3);
 
-        const q = from('public.language')
+        const q = from('language')
             .columns('name')
-            .where({ language_id: col('public.film.language_id') })
+            .where({ language_id: col('film.language_id') })
             .many();
         const out = resolveReferences(q, refContext, 'public');
 

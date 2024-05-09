@@ -1,8 +1,6 @@
 import { describe, test } from 'vitest';
-import { query } from '@synthql/queries';
 
-import { DB } from '../../tests/db';
-const from = query<DB>().from;
+import { from } from '../../tests/generated';
 
 describe('createExpressSynthqlHandler', () => {
     test(`Query execution is successful`, async () => {

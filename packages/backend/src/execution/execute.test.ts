@@ -1,15 +1,33 @@
 import { describe, expect, test } from 'vitest';
 import { execute } from './execute';
-import { DB } from '../tests/generated.schema';
+import { DB } from '../tests/generated';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
-import { createExecutionPlan } from './planning/createExecutionPlan';
+import { ColumnDataTypes } from '../tests/getColumnDataTypes';
+import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 
 interface DbWithVirtualTables extends DB {
-    'virtual.film_rating': {
-        film_id: number;
-        rating: string;
+    film_rating: {
+        columns: {
+            film_id: {
+                type: PgCatalogInt4;
+                selectable: true;
+                includable: false;
+                whereable: true;
+                nullable: false;
+                isPrimaryKey: true;
+            };
+
+            rating: {
+                type: PgCatalogText;
+                selectable: true;
+                includable: false;
+                whereable: false;
+                nullable: false;
+                isPrimaryKey: false;
+            };
+        };
     };
 }
 
@@ -19,7 +37,7 @@ const defaultSchema = 'public';
 describe('execute', () => {
     const actorProvider = new QueryProviderExecutor([
         {
-            table: 'public.actor',
+            table: 'actor',
             execute: async (q) => {
                 const actorId = q.where?.actor_id;
                 return [
@@ -33,11 +51,11 @@ describe('execute', () => {
 
     const filmProvider = new QueryProviderExecutor([
         {
-            table: 'public.film',
+            table: 'film',
             execute: async (q) => {
                 const films: Array<
                     Pick<
-                        DbWithVirtualTables['public.film'],
+                        ColumnDataTypes<DbWithVirtualTables['film']['columns']>,
                         'film_id' | 'title'
                     >
                 > = [
@@ -69,11 +87,13 @@ describe('execute', () => {
 
     const filmRatingProvider = new QueryProviderExecutor([
         {
-            table: 'virtual.film_rating',
+            table: 'film_rating',
             execute: async (q) => {
                 const filmRatings: Array<
                     Pick<
-                        DbWithVirtualTables['virtual.film_rating'],
+                        ColumnDataTypes<
+                            DbWithVirtualTables['film_rating']['columns']
+                        >,
                         'film_id' | 'rating'
                     >
                 > = [
@@ -103,7 +123,7 @@ describe('execute', () => {
     ]);
 
     test('single provider', async () => {
-        const q = from('public.actor')
+        const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
             .groupingId('actor_id')
             .where({ actor_id: 1 })
@@ -122,16 +142,16 @@ describe('execute', () => {
         });
     });
 
-    test('public.film with virtual.film_rating', async () => {
+    test('film with film_rating', async () => {
         function findFilmWithRating(filmId: number) {
-            return from('public.film')
+            return from('film')
                 .columns('film_id', 'title')
                 .groupingId('film_id')
                 .where({ film_id: filmId })
                 .include({
-                    rating: from('virtual.film_rating')
+                    rating: from('film_rating')
                         .columns('rating')
-                        .where({ film_id: col('public.film.film_id') })
+                        .where({ film_id: col('film.film_id') })
                         .one(),
                 })
                 .one();

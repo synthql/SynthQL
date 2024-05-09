@@ -5,8 +5,13 @@
  *
  * Example: `users.id`
  */
+
 export type ColumnReference<DB> = {
     [TTable in keyof DB]: DB[TTable] extends object
-        ? `${TTable & string}.${(keyof DB[TTable] & string) | '*'}`
+        ? `${TTable & string}.${DB[TTable] extends {
+              columns: infer C;
+          }
+              ? keyof C
+              : string}`
         : never;
 }[keyof DB];

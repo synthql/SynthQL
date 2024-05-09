@@ -2,12 +2,12 @@ import { describe, expect, test } from 'vitest';
 import { iterateResultRows } from './iterateResultRow';
 import { city } from '../tests/queries.v2';
 import { QueryResult, col } from '@synthql/queries';
-import { DB } from '../tests/generated.schema';
+import { DB } from '../tests/generated';
 
 describe('iterateResultRow', () => {
     test('iterateResultRow', () => {
         const q = city()
-            .where({ city_id: col('public.address.city_id') })
+            .where({ city_id: col('address.city_id') })
             .many();
 
         const queryResult: QueryResult<DB, typeof q> = [

@@ -20,7 +20,7 @@ describe('splitQueryAtBoundary', () => {
 
         const { query, remaining } = splitQueryAtBoundary<AnyQuery>(
             q,
-            (q) => q.from === 'public.film_actor',
+            (q) => q.from === 'film_actor',
         );
         expect(describeQuery(query)).toEqual(
             removeIndentation(`
@@ -54,7 +54,7 @@ describe('splitQueryAtBoundary', () => {
 
         const { query, remaining } = splitQueryAtBoundary<AnyQuery>(
             q,
-            (q) => q.from === 'public.film',
+            (q) => q.from === 'film',
         );
 
         expect(describeQuery(query)).toEqual(
@@ -96,7 +96,7 @@ describe('splitQueryAtBoundary', () => {
 
         const { query, remaining } = splitQueryAtBoundary<AnyQuery>(
             q,
-            (q, { depth }) => q.from === 'public.film' || depth >= 4,
+            (q, { depth }) => q.from === 'film' || depth >= 4,
         );
 
         expect(describeQuery(query)).toEqual(

@@ -1,6 +1,6 @@
 # Getting started
 
-First, make sure you have node, yarn and docker installed.
+First, make sure you have Node.js, Classic Yarn and Docker installed.
 
 ```bash
 # Install dependencies

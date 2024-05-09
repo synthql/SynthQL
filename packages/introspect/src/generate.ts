@@ -17,18 +17,21 @@ export async function generate({
     defaultSchema,
     outDir,
     formatter = async (str) => str,
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
 }: {
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
     formatter?: (str: string) => Promise<string>;
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
 }) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
 
-    const x = await extractSchemas(
+    // Step 1: Use pg-extract-schema to get the schema
+    const pgExtractSchema = await extractSchemas(
         {
             connectionString,
         },
@@ -41,11 +44,13 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    const schemaWithRefs: JSONSchema = createRootJsonSchema(x, {
+    // Step 2: Convert the pg-extract-schema schema to a JSON Schema
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
     });
 
     /**
+     * Step 3: Compile the JSON schema into TypeScript files.
      * Generate types from the schema with refs.
      * This leads to a more readable output as the types are not inlined.
      */
@@ -67,9 +72,13 @@ export async function generate({
 
     writeFormattedFile(
         path.join(outDir, 'index.ts'),
-        [`export { DB } from './db'`, `export { schema } from './schema'`].join(
-            '\n',
-        ),
+        [
+            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
+            `import { DB } from './db';`,
+            `export { DB } from './db';`,
+            `export { schema } from './schema';`,
+            `export const from = query<DB>().from;`,
+        ].join('\n'),
     );
 }
 
@@ -114,6 +123,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
                 whereable: { type: 'boolean', const: true },
+                nullable: { type: 'boolean', const: column.isNullable },
                 isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
             },
             required: [
@@ -122,6 +132,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                 'includable',
                 'whereable',
                 'isPrimaryKey',
+                'nullable',
             ],
             additionalProperties: false,
         };
@@ -142,9 +153,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
             columns: {
                 type: 'object',
                 properties: columns,
-                required: table.columns
-                    .filter((column) => !column.isNullable)
-                    .map((column) => column.name),
+                required: table.columns.map((column) => column.name),
                 additionalProperties: false,
             },
         },

@@ -1,11 +1,9 @@
 import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { from } from '../../../tests/generated.schema';
+import { from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
-import { createRefContext } from '../../../refs/RefContext';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
-import { collectColumnReferences } from '../../../query/collectColumnReferences';
 
 describe('PgExecutor', () => {
     const executor = new PgExecutor({
@@ -14,13 +12,13 @@ describe('PgExecutor', () => {
         qpe: new QueryProviderExecutor([]),
     });
 
-    const q = from('public.film')
+    const q = from('film')
         .columns('film_id', 'title')
         .include({
-            lang: from('public.language')
+            lang: from('language')
                 .columns('name')
                 .where({
-                    language_id: col('public.film.language_id'),
+                    language_id: col('film.language_id'),
                 })
                 .one(),
         })

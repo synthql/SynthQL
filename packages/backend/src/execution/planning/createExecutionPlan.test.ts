@@ -31,17 +31,17 @@ describe('createExecutionPlan', () => {
 
         expect(simplified).toEqual({
             executor: 'QueryProviderExecutor',
-            from: 'public.film',
+            from: 'film',
             children: [
                 {
                     children: [],
                     executor: 'QueryProviderExecutor',
-                    from: 'public.language',
+                    from: 'language',
                 },
                 {
                     children: [],
                     executor: 'PgExecutor',
-                    from: 'public.film_actor, public.actor',
+                    from: 'film_actor, actor',
                 },
             ],
         });
@@ -70,11 +70,11 @@ describe('createExecutionPlan', () => {
                 {
                     children: [],
                     executor: 'PgExecutor',
-                    from: 'public.actor',
+                    from: 'actor',
                 },
             ],
             executor: 'PgExecutor',
-            from: 'public.film, public.film_actor, public.language',
+            from: 'film, film_actor, language',
         });
     });
 
@@ -100,20 +100,20 @@ describe('createExecutionPlan', () => {
                         {
                             children: [],
                             executor: 'PgExecutor',
-                            from: 'public.actor',
+                            from: 'actor',
                         },
                     ],
                     executor: 'PgExecutor',
-                    from: 'public.film, public.film_actor, public.language',
+                    from: 'film, film_actor, language',
                 },
                 {
                     children: [],
                     executor: 'PgExecutor',
-                    from: 'public.city',
+                    from: 'city',
                 },
             ],
             executor: 'PgExecutor',
-            from: 'public.store, public.inventory, public.address',
+            from: 'store, inventory, address',
         });
     });
 });

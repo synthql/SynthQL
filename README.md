@@ -10,7 +10,7 @@
 ```ts
 const query = from('films')
     .columns('id', 'title', 'year')
-    .where({ id: { in: [1, 2] } })
+    .where({ id: { in: [1, 2, 3] } })
     .many();
 
 const { data } = useSynthql(query);
@@ -37,7 +37,7 @@ const { data } = useSynthql(query);
 
 ## Links
 
--   [Website](https://synthql.github.io/SynthQL/)
+-   [Website](https://synthql.github.io/SynthQL)
 -   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [API](https://synthql.github.io/SynthQL/reference)
 -   [X/Twitter](https://twitter.com/fernandohur)

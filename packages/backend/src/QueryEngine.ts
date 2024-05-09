@@ -2,12 +2,7 @@ import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { QueryPlan } from '.';
-import { introspectSchema } from './introspection/introspectSchema';
 import { QueryProvider } from './QueryProvider';
-import {
-    GenerateSchemaConfig,
-    generateSchema,
-} from './introspection/generateSchema';
 import { execute } from './execution/execute';
 import { QueryExecutor } from './execution/types';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
@@ -102,15 +97,6 @@ export class QueryEngine<DB> {
                 query,
             });
         }
-    }
-
-    async introspect(config?: { schemas?: string[] }) {
-        const schemas = config?.schemas ?? ['public', this.schema];
-        return introspectSchema(this as any, { schemas });
-    }
-
-    async generateSchema(config: GenerateSchemaConfig) {
-        return generateSchema(this as any, config);
     }
 }
 

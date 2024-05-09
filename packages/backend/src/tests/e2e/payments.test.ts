@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { DB, from } from '../generated.schema';
+import { DB, from } from '../generated';
+
 import { describeQuery } from '../../query/describeQuery';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { pool } from '../queryEngine';
@@ -8,7 +9,7 @@ import { collectLast } from '../..';
 import { sql } from '../postgres';
 
 describe('e2e', () => {
-    const q = from('public.payment')
+    const q = from('payment')
         .columns('payment_id', 'amount', 'payment_date')
         .groupingId('payment_id', 'payment_date')
         .many();

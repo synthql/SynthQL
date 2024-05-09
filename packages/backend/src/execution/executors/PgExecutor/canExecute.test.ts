@@ -20,20 +20,20 @@ describe('PgExecutor', () => {
         const actors = filmActor()
             .include({
                 actor: actor()
-                    .where({ actor_id: col('public.film_actor.actor_id') })
+                    .where({ actor_id: col('film_actor.actor_id') })
                     .one(),
             })
-            .where({ film_id: col('public.film.film_id') })
+            .where({ film_id: col('film.film_id') })
             .many();
 
         const inventories = inventory()
             .include({
                 film: film()
                     .include({ actors })
-                    .where({ film_id: col('public.inventory.film_id') })
+                    .where({ film_id: col('inventory.film_id') })
                     .many(),
             })
-            .where({ store_id: col('public.store.store_id') })
+            .where({ store_id: col('store.store_id') })
             .many();
 
         const q = store()

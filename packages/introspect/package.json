@@ -1,21 +1,24 @@
 {
     "name": "@synthql/introspect",
-    "description": "",
-    "author": {
-        "name": "fhur",
-        "url": "https://github.com/fhur"
-    },
+    "type": "module",
+    "version": "0.39.4",
+    "private": false,
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/SynthQL.git"
     },
-    "homepage": "https://github.com/synthql/SynthQL#readme",
-    "type": "module",
-    "private": false,
-    "version": "0.30.4",
-    "main": "src/index.ts",
-    "module": "src/index.ts",
-    "types": "src/index.ts",
+    "author": {
+        "name": "fhur",
+        "url": "https://github.com/fhur"
+    },
+    "files": [
+        "build",
+        "README.md"
+    ],
     "license": "MIT",
     "dependencies": {
         "@apidevtools/json-schema-ref-parser": "^11.5.4",

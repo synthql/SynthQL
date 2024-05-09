@@ -1,11 +1,9 @@
 import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { DB, from } from '../tests/generated.schema';
-import { city, film } from '../tests/queries.v2';
+import { DB, from } from '../tests/generated';
+import { city } from '../tests/queries.v2';
 import { AnyQuery } from '../types';
 import { collectColumnReferences } from './collectColumnReferences';
-import { printPath } from '../util/path/printPath';
-import { getIn } from '../util/tree/getIn';
 
 describe('collectColumnReferences', () => {
     describe('collectColumnReferences', () => {
@@ -14,15 +12,15 @@ describe('collectColumnReferences', () => {
             expected: Array<string>;
         }> = [
             {
-                query: from('public.actor').where({ actor_id: 1 }).many(),
+                query: from('actor').where({ actor_id: 1 }).many(),
                 expected: ['public.actor.actor_id'],
             },
 
             {
-                query: from('public.actor')
+                query: from('actor')
                     .where({
                         actor_id: 1,
-                        first_name: col('public.country.country_id'),
+                        first_name: col('country.country_id'),
                     })
                     .many(),
                 expected: [
@@ -33,14 +31,14 @@ describe('collectColumnReferences', () => {
             },
 
             {
-                query: from('public.actor')
+                query: from('actor')
                     .where({
                         actor_id: 1,
-                        first_name: col('public.country.country_id'),
+                        first_name: col('country.country_id'),
                     })
                     .include({
-                        foo: from('public.country')
-                            .where({ country: col('public.film.film_id') })
+                        foo: from('country')
+                            .where({ country: col('film.film_id') })
                             .many(),
                     })
                     .many(),
@@ -55,7 +53,7 @@ describe('collectColumnReferences', () => {
 
             {
                 query: city()
-                    .where({ city_id: col('public.address.city_id') })
+                    .where({ city_id: col('address.city_id') })
                     .many(),
                 expected: ['public.city.city_id', 'public.address.city_id'],
             },
@@ -80,7 +78,7 @@ describe('collectColumnReferences', () => {
 
     test('paths', () => {
         const q = city()
-            .where({ city_id: col('public.address.city_id') })
+            .where({ city_id: col('address.city_id') })
             .many();
 
         const queryResult: QueryResult<DB, typeof q> = [
