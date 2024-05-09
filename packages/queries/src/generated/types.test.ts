@@ -28,7 +28,7 @@ describe('new types test', () => {
     })
 
     test('col should return the right ref', () => {
-        col<DB>('actor.columns')
+        col<DB>('actor.actor_id')
     })
 })
 
