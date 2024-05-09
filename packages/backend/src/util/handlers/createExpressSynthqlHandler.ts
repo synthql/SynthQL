@@ -19,9 +19,7 @@ export function createExpressSynthqlHandler<T>(
     return async (req, res) => {
         try {
             const headers = req.headers;
-
             const query = await JSON.parse(req.body);
-
             const returnLastOnly = headers['x-return-last-only'] === 'true';
 
             if (returnLastOnly) {
@@ -33,31 +31,23 @@ export function createExpressSynthqlHandler<T>(
                     );
 
                     res.statusCode = 200;
-
                     res.setHeader('Content-Type', 'application/json');
-
                     res.write(JSON.stringify(result));
-
                     res.end();
                 } catch (error) {
                     res.statusCode = 500;
-
                     res.setHeader('Content-Type', 'application/json');
-
                     res.write(JSON.stringify({ error: String(error) }));
-
                     res.end();
                 }
             } else {
                 res.statusCode = 200;
-
                 res.setHeader('Content-Type', 'application/x-ndjson');
 
                 for await (const intermediateResult of queryEngine.execute(
                     query,
                 )) {
                     res.write(JSON.stringify(intermediateResult));
-
                     res.write('\n');
                 }
 
@@ -65,11 +55,8 @@ export function createExpressSynthqlHandler<T>(
             }
         } catch (error) {
             res.statusCode = 400;
-
             res.setHeader('Content-Type', 'application/json');
-
             res.write(JSON.stringify({ error: 'Invalid JSON body' }));
-
             res.end();
         }
     };
