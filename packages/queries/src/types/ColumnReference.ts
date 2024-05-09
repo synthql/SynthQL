@@ -1,5 +1,3 @@
-import { Table } from "./Table";
-
 /**
  * A column reference is a string that represents a column in a table.
  *
@@ -7,8 +5,16 @@ import { Table } from "./Table";
  *
  * Example: `users.id`
  */
+
 export type ColumnReference<DB> = {
     [TTable in keyof DB]: DB[TTable] extends object
-    ? `${TTable & string}.${(keyof DB[TTable] & string) | '*'}`
-    : never;
+        ? `${TTable & string}.${
+              | ((DB[TTable] extends {
+                    columns: infer C;
+                }
+                    ? keyof C
+                    : never) &
+                    string)
+              | '*'}`
+        : never;
 }[keyof DB];

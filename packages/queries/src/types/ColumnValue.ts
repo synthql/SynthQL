@@ -14,15 +14,11 @@ export type ColumnValue<
     DB,
     TTable extends Table<DB>,
     TColumn extends Column<DB, TTable>,
-> =
-    // Get to the col
-    DB[TTable] extends { columns: infer TColumnDef }
+> = DB[TTable] extends { columns: infer TColumnDef }
     ? ColumnType<TColumnDef, TColumn>
     : never;
 
-
-type ColumnType<TColumnDef, TColumn extends keyof TColumnDef> =
-    TColumnDef[TColumn] extends { type: infer TType }
-    ? TType
-    : never;
-
+type ColumnType<
+    TColumnDef,
+    TColumn extends keyof TColumnDef,
+> = TColumnDef[TColumn] extends { type: infer TType } ? TType : never;

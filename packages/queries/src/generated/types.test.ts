@@ -1,43 +1,49 @@
-import { T, as } from "vitest/dist/reporters-O4LBziQ_.js";
-import { query } from "../query";
-import { Column } from "../types/Column";
-import { ColumnValue } from "../types/ColumnValue";
-import { DB } from "."
-import { describe, test } from "vitest"
-import { col } from "../col";
+import { query } from '../query';
+import { Column } from '../types/Column';
+import { ColumnValue } from '../types/ColumnValue';
+import { DB } from '.';
+import { describe, test } from 'vitest';
+import { col } from '../col';
+import { ColumnReference } from '../types/ColumnReference';
 
-function scratchpad() {
-    // Step 1: play around with the actual types to form an intuition on the type you want to refactor
+describe('New types tests', () => {
+    // Step 1: Play around with the actual types to form an intuition on the type you want to refactor
+    // Step 2: Refactor the type
+    // Step 3: Write a type test
+
     type x = DB['actor']['columns']['actor_id']['type'];
 
     type xx = ColumnValue<DB, 'actor', 'actor_id'>;
-    // Step 2: refactor the type
-    // Step 3: write a type test
-}
 
-describe('new types test', () => {
+    const from = query<DB>().from;
 
-    test('should get the right columns', () => {
+    test('Column should get the right column names in a table', () => {
         type T = Column<DB, 'actor'>;
-        const thing: ('actor_id' | 'first_name' | 'last_name' | 'last_update') = fakeThing<T>();
-    })
+        const thing: 'actor_id' | 'first_name' | 'last_name' | 'last_update' =
+            fakeThing<T>();
+
+        from('actor').columns('actor_id');
+    });
 
     test('ColumnValue should get the right type for a column in a table', () => {
         type T = ColumnValue<DB, 'actor', 'actor_id'>;
         const thing: number = fakeThing<T>();
-    })
 
-    test('col should return the right ref', () => {
-        col<DB>('actor.actor_id')
-    })
-})
+        const from = query<DB>().from;
 
-const from = query<DB>().from;
+        from('actor').columns('actor_id').where({
+            actor_id: 1,
+        });
+    });
 
-from('actor').columns('actor_id').where({
-    actor_id: 1,
-})
+    test('ColumnReference should return the right reference names for all the columns in all the tables', () => {
+        type T = ColumnReference<DB>;
+        const thing: string = fakeThing<T>();
+
+        col<DB>('actor.actor_id');
+    });
+});
 
 function fakeThing<T>(): T {
-    return undefined as any
+    return undefined as any;
 }

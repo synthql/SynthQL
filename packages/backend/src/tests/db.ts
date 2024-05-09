@@ -3,8 +3,8 @@ import { PgSchema } from '../introspection/introspectSchema';
 
 export type Generated<T> =
     T extends ColumnType<infer S, infer I, infer U>
-    ? ColumnType<S, I | undefined, U>
-    : ColumnType<T, T | undefined, T>;
+        ? ColumnType<S, I | undefined, U>
+        : ColumnType<T, T | undefined, T>;
 
 export type MpaaRating = 'G' | 'NC-17' | 'PG' | 'PG-13' | 'R';
 
