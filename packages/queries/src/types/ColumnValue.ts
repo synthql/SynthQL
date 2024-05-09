@@ -15,14 +15,14 @@ export type ColumnValue<
     TTable extends Table<DB>,
     TColumn extends Column<DB, TTable>,
 > =
-    // Case 1: The value is a ColumnType
-    DB[TTable][TColumn] extends Selectable<infer T>
-        ? T
-        : // Case 2: The value is a nullable ColumnType
-          DB[TTable][TColumn] extends Selectable<infer T> | null
-          ? T | null
-          : DB[TTable][TColumn];
+    // Get to the col
+    DB[TTable] extends { columns: infer TColumnDef }
+    ? ColumnType<TColumnDef, TColumn>
+    : never;
 
-type Selectable<T> = {
-    readonly __select__: T;
-};
+
+type ColumnType<TColumnDef, TColumn extends keyof TColumnDef> =
+    TColumnDef[TColumn] extends { type: infer TType }
+    ? TType
+    : never;
+

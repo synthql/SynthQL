@@ -28,7 +28,8 @@ export async function generate({
         fs.writeFileSync(path, await formatter(content));
     }
 
-    const x = await extractSchemas(
+    // Step one: use pg-extract-schema to get the schema
+    const pgExtractSchema = await extractSchemas(
         {
             connectionString,
         },
@@ -41,11 +42,13 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    const schemaWithRefs: JSONSchema = createRootJsonSchema(x, {
+    // Step 2: convert the pg-extract-schema schema to a JSON Schema
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
     });
 
     /**
+     * Step 3: compile the JSON schema into TypeScript files.
      * Generate types from the schema with refs.
      * This leads to a more readable output as the types are not inlined.
      */
@@ -114,6 +117,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
                 whereable: { type: 'boolean', const: true },
+                nullable: { type: 'boolean', const: column.isNullable },
                 isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
             },
             required: [
@@ -122,6 +126,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                 'includable',
                 'whereable',
                 'isPrimaryKey',
+                'nullable',
             ],
             additionalProperties: false,
         };

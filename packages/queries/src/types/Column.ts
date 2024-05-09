@@ -1,9 +1,10 @@
 import { Table } from './Table';
 
 /**
- * The name of a column in the database.
+ * The columns of a table.
  *
  * @param TTable The table the column belongs to.
  */
 
-export type Column<DB, TTable extends Table<DB>> = keyof DB[TTable] & string;
+export type Column<DB, TTable extends Table<DB>> =
+    DB[TTable] extends { columns: infer C } ? keyof C : never;
