@@ -17,7 +17,7 @@ describe('collectColumnReferences', () => {
         }> = [
             {
                 query: from('actor').where({ actor_id: 1 }).many(),
-                expected: ['actor.actor_id'],
+                expected: ['public.actor.actor_id'],
             },
 
             {
@@ -28,9 +28,9 @@ describe('collectColumnReferences', () => {
                     })
                     .many(),
                 expected: [
-                    'actor.actor_id',
-                    'actor.first_name',
-                    'country.country_id',
+                    'public.actor.actor_id',
+                    'public.actor.first_name',
+                    'public.country.country_id',
                 ],
             },
 
@@ -47,11 +47,11 @@ describe('collectColumnReferences', () => {
                     })
                     .many(),
                 expected: [
-                    'actor.actor_id',
-                    'actor.first_name',
-                    'country.country_id',
-                    'country.country',
-                    'film.film_id',
+                    'public.actor.actor_id',
+                    'public.actor.first_name',
+                    'public.country.country_id',
+                    'public.country.country',
+                    'public.film.film_id',
                 ],
             },
 
@@ -59,7 +59,7 @@ describe('collectColumnReferences', () => {
                 query: city()
                     .where({ city_id: col('address.city_id') })
                     .many(),
-                expected: ['city.city_id', 'address.city_id'],
+                expected: ['public.city.city_id', 'public.address.city_id'],
             },
         ];
 

@@ -5,11 +5,29 @@ import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
 import { createExecutionPlan } from './planning/createExecutionPlan';
+import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 
 interface DbWithVirtualTables extends DB {
-    'virtual.film_rating': {
-        film_id: number;
-        rating: string;
+    film_rating: {
+        columns: {
+            film_id: {
+                type: PgCatalogInt4;
+                // selectable: true;
+                // includable: true;
+                // whereable: true;
+                // nullable: false;
+                // isPrimaryKey: true;
+            };
+
+            rating: {
+                type: PgCatalogText;
+                // selectable: true;
+                // includable: true;
+                // whereable: true;
+                // nullable: false;
+                // isPrimaryKey: true;
+            };
+        };
     };
 }
 
@@ -36,7 +54,7 @@ describe('execute', () => {
             table: 'film',
             execute: async (q) => {
                 const films: Array<
-                    Pick<DbWithVirtualTables['film'], 'film_id' | 'title'>
+                    Pick<DbWithVirtucalTables['film'], 'film_id' | 'title'>
                 > = [
                     {
                         film_id: 1,
@@ -70,7 +88,7 @@ describe('execute', () => {
             execute: async (q) => {
                 const filmRatings: Array<
                     Pick<
-                        DbWithVirtualTables['virtual.film_rating'],
+                        DbWithVirtualTables['film_rating'],
                         'film_id' | 'rating'
                     >
                 > = [
@@ -126,7 +144,7 @@ describe('execute', () => {
                 .groupingId('film_id')
                 .where({ film_id: filmId })
                 .include({
-                    rating: from('virtual.film_rating')
+                    rating: from('film_rating')
                         .columns('rating')
                         .where({ film_id: col('film.film_id') })
                         .one(),
