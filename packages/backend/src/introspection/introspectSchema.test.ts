@@ -25,7 +25,7 @@ describe('introspectSchema', () => {
     test('actors table', async () => {
         const { tables } = await schema;
 
-        const table = tables.find((t) => t.name === 'public.film');
+        const table = tables.find((t) => t.name === 'film');
 
         expect(table).toEqual({
             columns: {
@@ -142,7 +142,7 @@ describe('introspectSchema', () => {
                     },
                 },
             },
-            name: 'public.film',
+            name: 'film',
             primaryKey: ['film_id'],
         });
     });
@@ -150,7 +150,7 @@ describe('introspectSchema', () => {
     test('actor_film table', async () => {
         const { tables } = await schema;
 
-        const table = tables.find((t) => t.name === 'public.film_actor');
+        const table = tables.find((t) => t.name === 'film_actor');
 
         expect(table).toEqual({
             columns: {
@@ -179,7 +179,7 @@ describe('introspectSchema', () => {
                     },
                 },
             },
-            name: 'public.film_actor',
+            name: 'film_actor',
             primaryKey: ['film_id', 'actor_id'],
         });
     });

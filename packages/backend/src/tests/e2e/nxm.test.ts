@@ -1,4 +1,4 @@
-import { col } from '@synthql/queries';
+import { col, query } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -7,29 +7,31 @@ import { createExecutionPlan } from '../../execution/planning/createExecutionPla
 import { simplifyPlan } from '../../execution/planning/simplifyPlan';
 import { describeQuery } from '../../query/describeQuery';
 import { compareInventory } from '../compareInventory';
-import { DB, from } from '../generated.schema';
+import { DB } from '../generated';
+
+const from = query<DB>().from;
 import { sql } from '../postgres';
 import { pool } from '../queryEngine';
 
 describe('n x m', () => {
-    const film = from('public.film')
+    const film = from('film')
         .columns('title')
         .where({
-            film_id: col('public.inventory.film_id'),
+            film_id: col('inventory.film_id'),
         })
         .groupingId('film_id')
         .many();
 
-    const inventory = from('public.inventory')
+    const inventory = from('inventory')
         .columns('inventory_id', 'film_id')
-        .where({ store_id: col('public.store.store_id') })
+        .where({ store_id: col('store.store_id') })
         .include({
             film,
         })
         .groupingId('inventory_id')
         .many();
 
-    const q = from('public.store')
+    const q = from('store')
         .columns('store_id')
         .include({
             inventory,
@@ -56,11 +58,11 @@ describe('n x m', () => {
                 {
                     children: [],
                     executor: 'PgExecutor',
-                    from: 'public.film',
+                    from: 'film',
                 },
             ],
             executor: 'PgExecutor',
-            from: 'public.store, public.inventory',
+            from: 'store, inventory',
         });
     });
 

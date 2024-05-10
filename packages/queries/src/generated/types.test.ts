@@ -29,8 +29,6 @@ describe('New types tests', () => {
         type T = ColumnValue<DB, 'actor', 'actor_id'>;
         const thing: number = fakeThing<T>();
 
-        const from = query<DB>().from;
-
         from('actor').columns('actor_id').where({
             actor_id: 1,
         });

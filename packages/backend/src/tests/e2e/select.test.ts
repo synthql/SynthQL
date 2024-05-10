@@ -1,7 +1,7 @@
 import { Query, Table, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
-import { DB } from '../db';
+import { DB } from '../generated';
 import { sql } from '../postgres';
 import { findActorById, findCityById, from, movie } from '../queries';
 import { queryEngine } from '../queryEngine';

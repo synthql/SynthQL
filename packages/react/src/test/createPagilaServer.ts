@@ -1,7 +1,7 @@
 import { QueryEngine, createExpressSynthqlHandler } from '@synthql/backend';
 import http from 'http';
 
-import { DB } from './db';
+import { DB } from './generated';
 import { appendBody } from './appendBody';
 
 export interface PagilaServer {

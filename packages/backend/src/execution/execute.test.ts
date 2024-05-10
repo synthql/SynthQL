@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { execute } from './execute';
-import { DB } from '../tests/generated.schema';
+import { DB } from '../tests/generated';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
@@ -19,7 +19,7 @@ const defaultSchema = 'public';
 describe('execute', () => {
     const actorProvider = new QueryProviderExecutor([
         {
-            table: 'public.actor',
+            table: 'actor',
             execute: async (q) => {
                 const actorId = q.where?.actor_id;
                 return [
@@ -33,13 +33,10 @@ describe('execute', () => {
 
     const filmProvider = new QueryProviderExecutor([
         {
-            table: 'public.film',
+            table: 'film',
             execute: async (q) => {
                 const films: Array<
-                    Pick<
-                        DbWithVirtualTables['public.film'],
-                        'film_id' | 'title'
-                    >
+                    Pick<DbWithVirtualTables['film'], 'film_id' | 'title'>
                 > = [
                     {
                         film_id: 1,
@@ -103,7 +100,7 @@ describe('execute', () => {
     ]);
 
     test('single provider', async () => {
-        const q = from('public.actor')
+        const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
             .groupingId('actor_id')
             .where({ actor_id: 1 })
@@ -122,16 +119,16 @@ describe('execute', () => {
         });
     });
 
-    test('public.film with virtual.film_rating', async () => {
+    test('film with virtual.film_rating', async () => {
         function findFilmWithRating(filmId: number) {
-            return from('public.film')
+            return from('film')
                 .columns('film_id', 'title')
                 .groupingId('film_id')
                 .where({ film_id: filmId })
                 .include({
                     rating: from('virtual.film_rating')
                         .columns('rating')
-                        .where({ film_id: col('public.film.film_id') })
+                        .where({ film_id: col('film.film_id') })
                         .one(),
                 })
                 .one();

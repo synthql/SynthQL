@@ -1,7 +1,10 @@
-import { DB } from './generated.schema';
+import { DB } from './generated';
+import { TableTypes } from './getTableTypes';
 
-type Customers = Pick<DB['public.customer'], 'customer_id'>;
+type C = DB['customer']['columns'];
 
-export const compareCustomers = (a: Customers, b: Customers) => {
+type Customer = TableTypes<C>;
+
+export const compareCustomers = (a: Customer, b: Customer) => {
     return a.customer_id - b.customer_id;
 };

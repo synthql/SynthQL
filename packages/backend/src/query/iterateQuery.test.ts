@@ -1,8 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { from } from '../tests/generated.schema';
+import { DB } from '../tests/generated';
 import { iterateQuery } from './iterateQuery';
 import { AnyQuery } from '../types';
 import { Path } from '../execution/types';
+import { query } from '@synthql/queries';
+
+const from = query<DB>().from;
 
 describe('iterateQuery', () => {
     const cases: Array<{
@@ -13,68 +16,66 @@ describe('iterateQuery', () => {
         }>;
     }> = [
         {
-            input: from('public.film').many(),
-            expected: [
-                { query: from('public.film').many(), insertionPath: [] },
-            ],
+            input: from('film').many(),
+            expected: [{ query: from('film').many(), insertionPath: [] }],
         },
         {
-            input: from('public.film')
+            input: from('film')
                 .include({
-                    lang: from('public.language').many(),
+                    lang: from('language').many(),
                 })
                 .many(),
 
             expected: [
                 {
-                    query: from('public.film')
-                        .include({ lang: from('public.language').many() })
+                    query: from('film')
+                        .include({ lang: from('language').many() })
                         .many(),
                     insertionPath: [],
                 },
                 {
-                    query: from('public.language').many(),
+                    query: from('language').many(),
                     insertionPath: ['lang'],
                 },
             ],
         },
 
         {
-            input: from('public.film')
+            input: from('film')
                 .include({
-                    lang: from('public.language').many(),
-                    actors: from('public.actor').many(),
+                    lang: from('language').many(),
+                    actors: from('actor').many(),
                 })
                 .many(),
 
             expected: [
                 {
-                    query: from('public.film')
+                    query: from('film')
                         .include({
-                            lang: from('public.language').many(),
-                            actors: from('public.actor').many(),
+                            lang: from('language').many(),
+                            actors: from('actor').many(),
                         })
                         .many(),
                     insertionPath: [],
                 },
                 {
-                    query: from('public.actor').many(),
+                    query: from('actor').many(),
                     insertionPath: ['actors'],
                 },
                 {
-                    query: from('public.language').many(),
+                    query: from('language').many(),
                     insertionPath: ['lang'],
                 },
             ],
         },
 
         {
-            input: from('public.film')
+            input: from('film')
                 .include({
-                    lang: from('public.language').many(),
-                    actors: from('public.actor')
+                    lang: from('language').many(),
+                    actors: from('actor')
                         .include({
-                            lang: from('public.language').many(),
+                            lang: from('language').many(),
                         })
                         .many(),
                 })
@@ -82,12 +83,12 @@ describe('iterateQuery', () => {
 
             expected: [
                 {
-                    query: from('public.film')
+                    query: from('film')
                         .include({
-                            lang: from('public.language').many(),
-                            actors: from('public.actor')
+                            lang: from('language').many(),
+                            actors: from('actor')
                                 .include({
-                                    lang: from('public.language').many(),
+                                    lang: from('language').many(),
                                 })
                                 .many(),
                         })
@@ -95,17 +96,17 @@ describe('iterateQuery', () => {
                     insertionPath: [],
                 },
                 {
-                    query: from('public.actor')
-                        .include({ lang: from('public.language').many() })
+                    query: from('actor')
+                        .include({ lang: from('language').many() })
                         .many(),
                     insertionPath: ['actors'],
                 },
                 {
-                    query: from('public.language').many(),
+                    query: from('language').many(),
                     insertionPath: ['actors', 'lang'],
                 },
                 {
-                    query: from('public.language').many(),
+                    query: from('language').many(),
                     insertionPath: ['lang'],
                 },
             ],
@@ -113,7 +114,7 @@ describe('iterateQuery', () => {
 
         {
             input: {
-                from: 'public.film',
+                from: 'film',
                 select: {},
                 where: {
                     film_id: 1,
@@ -122,7 +123,7 @@ describe('iterateQuery', () => {
             expected: [
                 {
                     query: {
-                        from: 'public.film',
+                        from: 'film',
                         select: {},
                         where: { film_id: 1 },
                     },

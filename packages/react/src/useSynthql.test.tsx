@@ -2,8 +2,10 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { Query, Table } from '@synthql/queries';
-import { DB, from } from './test/db';
+import { Query, Table, query } from '@synthql/queries';
+import { DB } from './test/generated';
+const from = query<DB>().from;
+
 import { Providers } from './test/Providers';
 import React from 'react';
 import { QueryEngine } from '@synthql/backend';

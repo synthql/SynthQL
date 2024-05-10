@@ -1,40 +1,38 @@
-import { col } from '@synthql/queries';
+import { col, query } from '@synthql/queries';
 import { expect, test } from 'vitest';
 import { describeQuery } from '../query/describeQuery';
-import { from } from './generated.schema';
-import { describe } from 'node:test';
+import { DB } from './generated';
+const from = query<DB>().from;
 
 export function language() {
-    return from('public.language')
+    return from('language')
         .groupingId('language_id')
         .columns('name', 'language_id');
 }
 
 export function actor() {
-    return from('public.actor')
+    return from('actor')
         .groupingId('actor_id')
         .columns('first_name', 'last_name', 'actor_id');
 }
 
 export function filmActor() {
-    return from('public.film_actor')
-        .groupingId('actor_id', 'film_id')
-        .columns();
+    return from('film_actor').groupingId('actor_id', 'film_id').columns();
 }
 
 export function film() {
-    return from('public.film')
+    return from('film')
         .columns('title', 'release_year')
         .groupingId('film_id')
         .include({
             language: language()
-                .where({ language_id: col('public.film.language_id') })
+                .where({ language_id: col('film.language_id') })
                 .maybe(),
             filmActor: filmActor()
-                .where({ film_id: col('public.film.film_id') })
+                .where({ film_id: col('film.film_id') })
                 .include({
                     actors: actor()
-                        .where({ actor_id: col('public.film_actor.actor_id') })
+                        .where({ actor_id: col('film_actor.actor_id') })
                         .many(),
                 })
                 .many(),
@@ -42,27 +40,27 @@ export function film() {
 }
 
 export function city() {
-    return from('public.city').columns('city_id', 'city').groupingId('city_id');
+    return from('city').columns('city_id', 'city').groupingId('city_id');
 }
 
 export function address() {
-    return from('public.address')
+    return from('address')
         .columns('address_id', 'address')
         .groupingId('address_id')
         .include({
             city: city()
-                .where({ city_id: col('public.address.city_id') })
+                .where({ city_id: col('address.city_id') })
                 .one(),
         });
 }
 
 export function inventory() {
-    return from('public.inventory')
+    return from('inventory')
         .columns('inventory_id')
         .groupingId('inventory_id')
         .include({
             film: film()
-                .where({ film_id: col('public.inventory.film_id') })
+                .where({ film_id: col('inventory.film_id') })
                 .one(),
         });
 }
@@ -78,15 +76,15 @@ export function inventory() {
  *           - actors
  */
 export function store() {
-    return from('public.store')
+    return from('store')
         .columns('store_id', 'address_id')
         .groupingId('store_id')
         .include({
             address: address()
-                .where({ address_id: col('public.store.address_id') })
+                .where({ address_id: col('store.address_id') })
                 .one(),
             inventory: inventory()
-                .where({ store_id: col('public.store.store_id') })
+                .where({ store_id: col('store.store_id') })
                 .many(),
         });
 }

@@ -1,11 +1,13 @@
-import { QueryResult, col } from '@synthql/queries';
+import { QueryResult, col, query } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
-import { DB, from } from '../generated.schema';
+import { DB } from '../generated';
+const from = query<DB>().from;
+
 import { sql } from '../postgres';
 import { store } from '../queries.v2';
 import { pool } from '../queryEngine';
@@ -13,16 +15,16 @@ import { sortRecursively } from '../sortRecursively';
 
 // Skipping for now, not sure why this isn't working
 describe.skip('e2e', () => {
-    const payments = from('public.payment')
+    const payments = from('payment')
         .groupingId('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
-        .where({ customer_id: col('public.customer.customer_id') })
+        .where({ customer_id: col('customer.customer_id') })
         .many();
 
-    const customers = from('public.customer')
+    const customers = from('customer')
         .groupingId('customer_id')
         .columns('email', 'customer_id')
-        .where({ store_id: col('public.store.store_id'), customer_id: 367 })
+        .where({ store_id: col('store.store_id'), customer_id: 367 })
         .include({
             payments,
         })

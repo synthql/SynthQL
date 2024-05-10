@@ -5,9 +5,9 @@ import { TableRef } from '../../../../refs/TableRef';
 
 describe('compareJoins', () => {
     test('ordering', () => {
-        const store = TableRef.parse('public.store', 'public');
-        const person = TableRef.parse('public.person', 'public');
-        const pet = TableRef.parse('public.pet', 'public');
+        const store = TableRef.parse('store', 'public');
+        const person = TableRef.parse('person', 'public');
+        const pet = TableRef.parse('pet', 'public');
 
         const joins: Join[] = [
             {

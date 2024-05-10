@@ -1,23 +1,25 @@
-import { Where, col } from '@synthql/queries';
+import { Where, col, query } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { QueryProviderExecutor } from '../../execution/executors/QueryProviderExecutor';
-import { DB, from } from '../generated.schema';
+import { DB } from '../generated';
 import { provideFilm } from '../provideFilm';
 import { provideLanguage } from '../provideLanguage';
 
+const from = query<DB>().from;
+
 describe('n x 1', () => {
     describe('n(film) -> 1(language)', async () => {
-        function findFilm(where: Where<DB, 'public.film'>) {
-            const lang = from('public.language')
+        function findFilm(where: Where<DB, 'film'>) {
+            const lang = from('language')
                 .columns('name')
                 .where({
-                    language_id: col('public.film.language_id'),
+                    language_id: col('film.language_id'),
                 })
                 .one();
 
-            return from('public.film')
+            return from('film')
                 .where(where)
                 .columns('film_id', 'title')
                 .include({
@@ -41,7 +43,7 @@ describe('n x 1', () => {
         );
 
         const cases: Array<{
-            where: Where<DB, 'public.film'>;
+            where: Where<DB, 'film'>;
             expected: typeof queryResult;
         }> = [
             {

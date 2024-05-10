@@ -1,7 +1,7 @@
 import { describe, test } from 'vitest';
 import { query } from '@synthql/queries';
 
-import { DB } from '../../tests/db';
+import { DB } from '../../tests/generated';
 const from = query<DB>().from;
 
 describe('createExpressSynthqlHandler', () => {
