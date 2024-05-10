@@ -52,7 +52,7 @@ const config: Config = {
                     editUrl:
                         'https://github.com/synthql/SynthQL/tree/master/packages/docs/',
                 },
-                blog: false && {
+                blog: {
                     showReadingTime: true,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
@@ -85,8 +85,7 @@ const config: Config = {
                     position: 'left',
                     label: 'Docs',
                 },
-                // TODO(fhur): Add blog support
-                // { to: '/blog', label: 'Blog', position: 'left' },
+                { to: '/blog', label: 'Blog', position: 'left' },
                 {
                     href: 'https://synthql.github.io/SynthQL/reference',
                     label: 'API',
