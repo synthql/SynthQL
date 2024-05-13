@@ -4,7 +4,7 @@ import { DB } from '../tests/generated';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
-import { createExecutionPlan } from './planning/createExecutionPlan';
+import { TableTypes } from '../tests/getTableTypes';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 
 interface DbWithVirtualTables extends DB {
@@ -54,7 +54,10 @@ describe('execute', () => {
             table: 'film',
             execute: async (q) => {
                 const films: Array<
-                    Pick<DbWithVirtucalTables['film'], 'film_id' | 'title'>
+                    Pick<
+                        TableTypes<DbWithVirtualTables['film']['columns']>,
+                        'film_id' | 'title'
+                    >
                 > = [
                     {
                         film_id: 1,
@@ -84,11 +87,13 @@ describe('execute', () => {
 
     const filmRatingProvider = new QueryProviderExecutor([
         {
-            table: 'virtual.film_rating',
+            table: 'film_rating',
             execute: async (q) => {
                 const filmRatings: Array<
                     Pick<
-                        DbWithVirtualTables['film_rating'],
+                        TableTypes<
+                            DbWithVirtualTables['film_rating']['columns']
+                        >,
                         'film_id' | 'rating'
                     >
                 > = [
@@ -137,7 +142,7 @@ describe('execute', () => {
         });
     });
 
-    test('film with virtual.film_rating', async () => {
+    test('film with film_rating', async () => {
         function findFilmWithRating(filmId: number) {
             return from('film')
                 .columns('film_id', 'title')
