@@ -3,7 +3,7 @@ import { TableTypes } from './getTableTypes';
 
 type S = DB['store']['columns'];
 
-type Store = TableTypes<S>;
+type Store = Pick<TableTypes<S>, 'store_id'>;
 
 export const compareStores = (a: Store, b: Store) => {
     // Q: does this compare ascending or descending?
