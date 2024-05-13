@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "@synthql/backend": "0.39.4",
+        "@synthql/introspect": "0.39.4",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },

@@ -20,10 +20,11 @@ console.log('Current version', currentVersion);
 console.log('Bumping minor version to', nextVersion);
 
 const packagesToUpdate = [
-    '@synthql/queries',
     '@synthql/backend',
-    '@synthql/react',
     '@synthql/cli',
+    '@syntql/introspect',
+    '@synthql/queries',
+    '@synthql/react',
 ];
 
 packagesToUpdate.forEach((packageName) => {
@@ -40,6 +41,10 @@ packagesToUpdate.forEach((packageName) => {
 });
 
 execSync(`yarn version --new-version ${nextVersion}`, {
+    stdio: 'inherit',
+});
+
+execSync(`yarn format:root`, {
     stdio: 'inherit',
 });
 

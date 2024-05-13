@@ -10,7 +10,7 @@ synthql generate --connectionString=postgres://postgres:postgres@localhost:5432/
 
 ## Links
 
--   [Website](https://synthql.github.io/SynthQL/)
+-   [Website](https://synthql.github.io/SynthQL)
 -   [Docs](https://synthql.github.io/SynthQL/docs/getting-started)
 -   [X/Twitter](https://twitter.com/fernandohur)
 -   [GitHub](https://github.com/synthql/SynthQL)

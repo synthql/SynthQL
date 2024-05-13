@@ -3,19 +3,21 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@synthql/react/*": ["./packages/react/src/*"],
             "@synthql/backend/*": ["./packages/backend/src/*"],
-            "@synthql/queries/*": ["./packages/queries/src/*"],
             "@synthql/cli/*": ["./packages/cli/src/*"],
+            "@synthql/introspect/*": ["./packages/introspect/src/*"],
+            "@synthql/queries/*": ["./packages/queries/src/*"],
+            "@synthql/react/*": ["./packages/react/src/*"],
         },
         "outDir": "./build",
         "jsx": "preserve",
     },
     "include": [
-        "./packages/react/src",
         "./packages/backend/src",
-        "./packages/queries/src",
         "./packages/cli/src",
+        "./packages/introspect/src",
+        "./packages/queries/src",
+        "./packages/react/src",
     ],
     "exclude": ["./node_modules", "**/*.spec.ts"],
 }
