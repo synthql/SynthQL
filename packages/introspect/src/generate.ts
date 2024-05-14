@@ -17,18 +17,24 @@ export async function generate({
     defaultSchema,
     outDir,
     formatter = async (str) => str,
+    config = {
+        importLocation: '@synthql/queries',
+    },
 }: {
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
     formatter?: (str: string) => Promise<string>;
+    config?: {
+        importLocation?: string;
+    };
 }) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
 
-    // Step one: use pg-extract-schema to get the schema
+    // Step 1: Use pg-extract-schema to get the schema
     const pgExtractSchema = await extractSchemas(
         {
             connectionString,
@@ -42,13 +48,13 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    // Step 2: convert the pg-extract-schema schema to a JSON Schema
+    // Step 2: Convert the pg-extract-schema schema to a JSON Schema
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
     });
 
     /**
-     * Step 3: compile the JSON schema into TypeScript files.
+     * Step 3: Compile the JSON schema into TypeScript files.
      * Generate types from the schema with refs.
      * This leads to a more readable output as the types are not inlined.
      */
@@ -70,9 +76,13 @@ export async function generate({
 
     writeFormattedFile(
         path.join(outDir, 'index.ts'),
-        [`export { DB } from './db'`, `export { schema } from './schema'`].join(
-            '\n',
-        ),
+        [
+            `import { query } from '${config.importLocation}';`,
+            `import { DB } from './db';`,
+            `export { DB } from './db';`,
+            `export { schema } from './schema';`,
+            `export const from = query<DB>().from;`,
+        ].join('\n'),
     );
 }
 

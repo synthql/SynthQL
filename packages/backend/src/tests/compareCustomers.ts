@@ -1,10 +1,14 @@
 import { DB } from './generated';
-import { TableTypes } from './getTableTypes';
+import { ColumnDataTypes } from './getColumnDataTypes';
 
-type C = DB['customer']['columns'];
+type SelectedCustomerColumnDataTypes = Pick<
+    ColumnDataTypes<DB['customer']['columns']>,
+    'customer_id'
+>;
 
-type Customer = Pick<TableTypes<C>, 'customer_id'>;
-
-export const compareCustomers = (a: Customer, b: Customer) => {
+export const compareCustomers = (
+    a: SelectedCustomerColumnDataTypes,
+    b: SelectedCustomerColumnDataTypes,
+) => {
     return a.customer_id - b.customer_id;
 };

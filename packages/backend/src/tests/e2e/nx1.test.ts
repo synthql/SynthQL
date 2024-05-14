@@ -1,13 +1,11 @@
-import { Where, col, query } from '@synthql/queries';
+import { Where, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { QueryProviderExecutor } from '../../execution/executors/QueryProviderExecutor';
-import { DB } from '../generated';
+import { DB, from } from '../generated';
 import { provideFilm } from '../provideFilm';
 import { provideLanguage } from '../provideLanguage';
-
-const from = query<DB>().from;
 
 describe('n x 1', () => {
     describe('n(film) -> 1(language)', async () => {

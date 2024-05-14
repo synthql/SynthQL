@@ -2,11 +2,9 @@ import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { DB } from './generated';
-import { TableTypes } from './getTableTypes';
+import { ColumnDataTypes } from './getColumnDataTypes';
 
-type L = DB['language']['columns'];
-
-type Language = TableTypes<L>;
+type Language = ColumnDataTypes<DB['language']['columns']>;
 
 const defaultLanguages: Language[] = [
     {

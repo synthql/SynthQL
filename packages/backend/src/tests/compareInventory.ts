@@ -1,10 +1,14 @@
 import { DB } from './generated';
-import { TableTypes } from './getTableTypes';
+import { ColumnDataTypes } from './getColumnDataTypes';
 
-type I = DB['inventory']['columns'];
+type SelectedInventoryColumnDataTypes = Pick<
+    ColumnDataTypes<DB['inventory']['columns']>,
+    'inventory_id'
+>;
 
-type Inventory = Pick<TableTypes<I>, 'inventory_id'>;
-
-export const compareInventory = (a: Inventory, b: Inventory) => {
+export const compareInventory = (
+    a: SelectedInventoryColumnDataTypes,
+    b: SelectedInventoryColumnDataTypes,
+) => {
     return a.inventory_id - b.inventory_id;
 };

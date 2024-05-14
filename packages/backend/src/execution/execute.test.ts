@@ -4,7 +4,7 @@ import { DB } from '../tests/generated';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
-import { TableTypes } from '../tests/getTableTypes';
+import { ColumnDataTypes } from '../tests/getColumnDataTypes';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 
 interface DbWithVirtualTables extends DB {
@@ -12,20 +12,20 @@ interface DbWithVirtualTables extends DB {
         columns: {
             film_id: {
                 type: PgCatalogInt4;
-                // selectable: true;
-                // includable: true;
-                // whereable: true;
-                // nullable: false;
-                // isPrimaryKey: true;
+                selectable: true;
+                includable: false;
+                whereable: true;
+                nullable: false;
+                isPrimaryKey: true;
             };
 
             rating: {
                 type: PgCatalogText;
-                // selectable: true;
-                // includable: true;
-                // whereable: true;
-                // nullable: false;
-                // isPrimaryKey: true;
+                selectable: true;
+                includable: false;
+                whereable: false;
+                nullable: false;
+                isPrimaryKey: false;
             };
         };
     };
@@ -55,7 +55,7 @@ describe('execute', () => {
             execute: async (q) => {
                 const films: Array<
                     Pick<
-                        TableTypes<DbWithVirtualTables['film']['columns']>,
+                        ColumnDataTypes<DbWithVirtualTables['film']['columns']>,
                         'film_id' | 'title'
                     >
                 > = [
@@ -91,7 +91,7 @@ describe('execute', () => {
             execute: async (q) => {
                 const filmRatings: Array<
                     Pick<
-                        TableTypes<
+                        ColumnDataTypes<
                             DbWithVirtualTables['film_rating']['columns']
                         >,
                         'film_id' | 'rating'

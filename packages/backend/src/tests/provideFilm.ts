@@ -2,11 +2,9 @@ import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { DB } from './generated';
-import { TableTypes } from './getTableTypes';
+import { ColumnDataTypes } from './getColumnDataTypes';
 
-type F = DB['film']['columns'];
-
-type Film = TableTypes<F>;
+type Film = ColumnDataTypes<DB['film']['columns']>;
 
 const defaultFilms: Film[] = [
     {

@@ -1,11 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import { DB } from '../tests/generated';
+import { from } from '../tests/generated';
 import { iterateQuery } from './iterateQuery';
 import { AnyQuery } from '../types';
 import { Path } from '../execution/types';
-import { query } from '@synthql/queries';
-
-const from = query<DB>().from;
 
 describe('iterateQuery', () => {
     const cases: Array<{

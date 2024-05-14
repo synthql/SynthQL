@@ -1,13 +1,9 @@
-import { QueryResult, col, query } from '@synthql/queries';
+import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { DB } from '../tests/generated';
-import { city, film } from '../tests/queries.v2';
+import { DB, from } from '../tests/generated';
+import { city } from '../tests/queries.v2';
 import { AnyQuery } from '../types';
 import { collectColumnReferences } from './collectColumnReferences';
-import { printPath } from '../util/path/printPath';
-import { getIn } from '../util/tree/getIn';
-
-const from = query<DB>().from;
 
 describe('collectColumnReferences', () => {
     describe('collectColumnReferences', () => {

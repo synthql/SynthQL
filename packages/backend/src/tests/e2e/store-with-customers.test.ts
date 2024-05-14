@@ -1,12 +1,11 @@
-import { QueryResult, col, query } from '@synthql/queries';
+import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
-import { DB } from '../generated';
-const from = query<DB>().from;
+import { DB, from } from '../generated';
 
 import { sql } from '../postgres';
 import { store } from '../queries.v2';

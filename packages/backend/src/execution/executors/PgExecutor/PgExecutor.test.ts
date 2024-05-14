@@ -1,13 +1,9 @@
-import { col, query } from '@synthql/queries';
+import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { DB } from '../../../tests/generated';
+import { from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
-import { createRefContext } from '../../../refs/RefContext';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
-import { collectColumnReferences } from '../../../query/collectColumnReferences';
-
-const from = query<DB>().from;
 
 describe('PgExecutor', () => {
     const executor = new PgExecutor({

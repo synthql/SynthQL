@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { DB } from '../generated';
+import { DB, from } from '../generated';
 
 import { describeQuery } from '../../query/describeQuery';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
@@ -7,9 +7,6 @@ import { pool } from '../queryEngine';
 import { execute } from '../../execution/execute';
 import { collectLast } from '../..';
 import { sql } from '../postgres';
-import { query } from '@synthql/queries';
-
-const from = query<DB>().from;
 
 describe('e2e', () => {
     const q = from('payment')

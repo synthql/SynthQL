@@ -1,8 +1,5 @@
-import { col, query } from '@synthql/queries';
-import { expect, test } from 'vitest';
-import { describeQuery } from '../query/describeQuery';
-import { DB } from './generated';
-const from = query<DB>().from;
+import { col } from '@synthql/queries';
+import { from } from './generated';
 
 export function language() {
     return from('language')

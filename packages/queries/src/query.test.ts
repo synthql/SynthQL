@@ -1,8 +1,6 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col, query } from '.';
-import { DB } from './generated/db';
-
-const from = query<DB>().from;
+import { Query, QueryResult, Table, col } from '.';
+import { DB, from } from './generated';
 
 describe('queries', () => {
     function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(

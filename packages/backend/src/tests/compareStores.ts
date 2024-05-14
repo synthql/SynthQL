@@ -1,11 +1,15 @@
 import { DB } from './generated';
-import { TableTypes } from './getTableTypes';
+import { ColumnDataTypes } from './getColumnDataTypes';
 
-type S = DB['store']['columns'];
+type SelectedStoreColumnDataTypes = Pick<
+    ColumnDataTypes<DB['store']['columns']>,
+    'store_id'
+>;
 
-type Store = Pick<TableTypes<S>, 'store_id'>;
-
-export const compareStores = (a: Store, b: Store) => {
+export const compareStores = (
+    a: SelectedStoreColumnDataTypes,
+    b: SelectedStoreColumnDataTypes,
+) => {
     // Q: does this compare ascending or descending?
     return a.store_id - b.store_id;
 };

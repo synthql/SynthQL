@@ -1,13 +1,20 @@
 import { Table } from './Table';
 
 /**
- * The columns of a table.
+ * The names of the columns of a table, returned as a string intersection type.
  *
+ * Example:
+ *
+ * ```ts
+ * type ColumnNamesType = Column<DB, 'customer'>
+ *
+ * const customer: ColumnNamesType = 'customer_id' | 'store_id' | 'first_name' | 'last_name';
+ * ```
  * @param TTable The table the column belongs to.
  */
 
 export type Column<DB, TTable extends Table<DB>> = DB[TTable] extends {
-    columns: infer C;
+    columns: infer TColumnDef;
 }
-    ? keyof C
+    ? keyof TColumnDef
     : never;
