@@ -2,12 +2,18 @@ import { Table } from './Table';
 import { Column } from './Column';
 
 /**
- * The type of a column in the database.
+ * Get the data type of a column in the database.
  *
- * Example: `ColumnValue<DB, 'users', 'age'> = number`
+ * Example:
+ *
+ * ```ts
+ * type ColumnValueType = ColumnValue<DB, 'customer', 'email'>
+ *
+ * const email: ColumnValueType = 'name@example.com';
+ * ```
  *
  * @param TTable The table the column belongs to.
- * @param TColumn The column the value belongs to.
+ * @param TColumn The name of the column.
  */
 
 export type ColumnValue<
@@ -21,4 +27,13 @@ export type ColumnValue<
 type ColumnType<
     TColumnDef,
     TColumn extends keyof TColumnDef,
-> = TColumnDef[TColumn] extends { type: infer TType } ? TType : never;
+> = TColumnDef[TColumn] extends
+    | { type: infer TNullableType; nullable: true }
+    | undefined
+    ? TNullableType | null
+    : TColumnDef[TColumn] extends {
+            type: infer TNotNullableType;
+            nullable: false;
+        }
+      ? TNotNullableType
+      : never;
