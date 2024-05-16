@@ -169,7 +169,7 @@ export interface TableCustomer {
          * - Nullable: true
          * - Generated: NEVER
          */
-        email?: {
+        email: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -245,7 +245,7 @@ export interface TableCustomer {
          * - Nullable: true
          * - Generated: NEVER
          */
-        last_update?: {
+        last_update: {
             type: PgCatalogTimestamptz;
             selectable: true;
             includable: true;
@@ -264,7 +264,7 @@ export interface TableCustomer {
          * - Nullable: true
          * - Generated: NEVER
          */
-        active?: {
+        active: {
             type: PgCatalogInt4;
             selectable: true;
             includable: true;
@@ -484,7 +484,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        description?: {
+        description: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -503,7 +503,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        release_year?: {
+        release_year: {
             type: PublicYearDomain;
             selectable: true;
             includable: true;
@@ -541,7 +541,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        original_language_id?: {
+        original_language_id: {
             type: PgCatalogInt4;
             selectable: true;
             includable: true;
@@ -598,7 +598,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        length?: {
+        length: {
             type: PgCatalogInt2;
             selectable: true;
             includable: true;
@@ -636,7 +636,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        rating?: {
+        rating: {
             type: PublicMpaaRatingEnum;
             selectable: true;
             includable: true;
@@ -674,7 +674,7 @@ export interface TableFilm {
          * - Nullable: true
          * - Generated: NEVER
          */
-        special_features?: {
+        special_features: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -894,7 +894,7 @@ export interface TableAddress {
          * - Nullable: true
          * - Generated: NEVER
          */
-        address2?: {
+        address2: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -951,7 +951,7 @@ export interface TableAddress {
          * - Nullable: true
          * - Generated: NEVER
          */
-        postal_code?: {
+        postal_code: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -1524,7 +1524,7 @@ export interface TableRental {
          * - Nullable: true
          * - Generated: NEVER
          */
-        return_date?: {
+        return_date: {
             type: PgCatalogTimestamptz;
             selectable: true;
             includable: true;
@@ -1667,7 +1667,7 @@ export interface TableStaff {
          * - Nullable: true
          * - Generated: NEVER
          */
-        email?: {
+        email: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -1743,7 +1743,7 @@ export interface TableStaff {
          * - Nullable: true
          * - Generated: NEVER
          */
-        password?: {
+        password: {
             type: PgCatalogText;
             selectable: true;
             includable: true;
@@ -1781,7 +1781,7 @@ export interface TableStaff {
          * - Nullable: true
          * - Generated: NEVER
          */
-        picture?: {
+        picture: {
             type: PgCatalogBytea;
             selectable: true;
             includable: true;
