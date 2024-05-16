@@ -21,9 +21,7 @@ describe('e2e', () => {
                     parser: 'typescript',
                     ...prettierOptions,
                 }),
-            config: {
-                importLocation: '../query',
-            },
+            SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation: '../query',
         });
     }, 100_000);
 });

@@ -17,18 +17,14 @@ export async function generate({
     defaultSchema,
     outDir,
     formatter = async (str) => str,
-    config = {
-        importLocation: '@synthql/queries',
-    },
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
 }: {
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
     formatter?: (str: string) => Promise<string>;
-    config?: {
-        importLocation?: string;
-    };
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
 }) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
@@ -77,7 +73,7 @@ export async function generate({
     writeFormattedFile(
         path.join(outDir, 'index.ts'),
         [
-            `import { query } from '${config.importLocation}';`,
+            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
             `import { DB } from './db';`,
             `export { DB } from './db';`,
             `export { schema } from './schema';`,
@@ -157,9 +153,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
             columns: {
                 type: 'object',
                 properties: columns,
-                required: table.columns
-                    .filter((column) => !column.isNullable)
-                    .map((column) => column.name),
+                required: table.columns.map((column) => column.name),
                 additionalProperties: false,
             },
         },

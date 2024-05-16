@@ -4,21 +4,27 @@
  * Example:
  *
  * ```ts
- * type CustomerColumnDataTypes = ColumnTypes<DB['customer']['columns']>
+ * type CustomerColumnDataTypes = ColumnDataTypes<DB['customer']['columns']>;
  *
  * const customer: CustomerColumnDataTypes = {
  *   customer_id: 1;
  *   store_id: 3;
  *   first_name: 'First';
  *   last_name: 'Last';
- * }
+ * };
  * ```
  */
 
-export type ColumnDataTypes<Table> = {
-    [TTable in keyof Table]: Table[TTable] extends {
+export type ColumnDataTypes<TColumnDef> = {
+    [TTable in keyof TColumnDef]: TColumnDef[TTable] extends {
         type: infer T;
+        nullable: true;
     }
-        ? T
-        : never;
+        ? T | null
+        : TColumnDef[TTable] extends {
+                type: infer T;
+                nullable: false;
+            }
+          ? T
+          : never;
 };

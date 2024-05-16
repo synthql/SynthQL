@@ -1,12 +1,12 @@
 import { Table } from './Table';
 
 /**
- * The names of the columns of a table, returned as a string intersection type.
+ * The names of the columns of a table, returned as a string union type.
  *
  * Example:
  *
  * ```ts
- * type ColumnNamesType = Column<DB, 'customer'>
+ * type ColumnNamesType = Column<DB, 'customer'>;
  *
  * const customer: ColumnNamesType = 'customer_id' | 'store_id' | 'first_name' | 'last_name';
  * ```

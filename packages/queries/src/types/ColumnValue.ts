@@ -7,7 +7,7 @@ import { Column } from './Column';
  * Example:
  *
  * ```ts
- * type ColumnValueType = ColumnValue<DB, 'customer', 'email'>
+ * type ColumnValueType = ColumnValue<DB, 'customer', 'email'>;
  *
  * const email: ColumnValueType = 'name@example.com';
  * ```
@@ -24,12 +24,25 @@ export type ColumnValue<
     ? ColumnType<TColumnDef, TColumn>
     : never;
 
-type ColumnType<
+/**
+ * Get the data type of a column in the database by passing the `columns` type object.
+ *
+ * Example:
+ *
+ * ```ts
+ * type ColumnType = ColumnValue<DB['customer']['columns'], 'email'>;
+ *
+ * const email: ColumnType = 'name@example.com';
+ * ```
+ *
+ * @param TColumnDef The columns of the table.
+ * @param TColumn The name of the column that you want its data type.
+ */
+
+export type ColumnType<
     TColumnDef,
     TColumn extends keyof TColumnDef,
-> = TColumnDef[TColumn] extends
-    | { type: infer TNullableType; nullable: true }
-    | undefined
+> = TColumnDef[TColumn] extends { type: infer TNullableType; nullable: true }
     ? TNullableType | null
     : TColumnDef[TColumn] extends {
             type: infer TNotNullableType;
