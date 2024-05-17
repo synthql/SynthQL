@@ -8,9 +8,9 @@ export class QueryBuilder<
     DB,
     TTable extends Table<DB>,
     TWhere extends Where<DB, TTable>,
-    TCardinality extends 'one' | 'maybe' | 'many',
-    TInclude extends Include<DB>,
     TSelect extends Select<DB, TTable>,
+    TInclude extends Include<DB>,
+    TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupingId extends string[],
 > {
@@ -55,9 +55,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -82,9 +82,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'one',
-            TInclude,
             TSelect,
+            TInclude,
+            'one',
             TLazy,
             TGroupingId
         >(
@@ -107,9 +107,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'many',
-            TInclude,
             TSelect,
+            TInclude,
+            'many',
             TLazy,
             TGroupingId
         >(
@@ -132,9 +132,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'maybe',
-            TInclude,
             TSelect,
+            TInclude,
+            'maybe',
             TLazy,
             TGroupingId
         >(
@@ -154,9 +154,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -197,9 +197,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
+            SelectFromKeys,
             TInclude,
-            { [k in TKeys[number]]: true },
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -219,9 +219,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -241,9 +241,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude & TNewInclude,
             TSelect,
+            TInclude & TNewInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -263,9 +263,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -285,9 +285,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             true,
             TGroupingId
         >(
@@ -307,9 +307,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -325,19 +325,95 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>() {
+export function query<DB>(schema: any) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
+            // type a = Array<Column<DB, TTable>>;
+
+            // type SelectFromKeys = { [k in a[number]]: true };
+
+            // const object: a = [];
+
+            // const select = object.reduce((acc, key) => {
+            //     return { ...acc, [key]: true };
+            // }, {} as SelectFromKeys);
+
+            // type a = Array<string>;
+
+            // type TSelect = { [k in a[number]]: true };
+
+            // const array: a = [];
+
+            // const select = array.reduce((acc, key) => {
+            //     return { ...acc, [key]: true };
+            // }, {} as TSelect);
+
+            // const object: { [k in a[number]]: true } = {};
+
+            const object: Record<string, boolean | undefined> = {};
+
+            const properties = schema.properties;
+
+            if (properties) {
+                const tableDef = properties[table];
+
+                if (tableDef) {
+                    const tableDefProperties = tableDef.properties;
+
+                    if (tableDefProperties) {
+                        const columnsDef = tableDefProperties['columns'];
+
+                        if (columnsDef) {
+                            const columnsDefProperties = columnsDef.properties;
+
+                            if (columnsDefProperties) {
+                                for (const column in columnsDefProperties) {
+                                    if (column) {
+                                        const columnDef =
+                                            columnsDefProperties[column];
+
+                                        if (columnDef) {
+                                            const columnDefProperties =
+                                                columnDef.properties;
+
+                                            if (columnDefProperties) {
+                                                const selectableDef =
+                                                    columnDefProperties[
+                                                        'selectable'
+                                                    ];
+
+                                                if (selectableDef) {
+                                                    const value =
+                                                        selectableDef.const;
+
+                                                    if (
+                                                        typeof value ===
+                                                        'boolean'
+                                                    ) {
+                                                        array.push(column);
+                                                        // object[column] = value;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             return new QueryBuilder<
                 DB,
                 TTable,
                 {},
+                {},
+                {},
                 'many',
-                {},
-                {},
                 undefined,
                 ['id']
-            >(table, {}, {}, {}, undefined, 'many', undefined, ['id']);
+            >(table, {}, object, {}, undefined, 'many', undefined, ['id']);
         },
     };
 }

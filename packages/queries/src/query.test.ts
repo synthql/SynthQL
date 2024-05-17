@@ -1,6 +1,7 @@
-import { describe, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { Query, QueryResult, Table, col } from '.';
 import { DB, from } from './generated';
+import { Select } from './types/Select';
 
 describe('queries', () => {
     function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(
@@ -14,6 +15,16 @@ describe('queries', () => {
 
         const result = fakeQueryResult(q);
         result satisfies { actor_id: number; first_name: string };
+    });
+
+    test('Find one customer with automatic select', () => {
+        type A = Select<DB, 'customer'>;
+
+        const q = from('customer').one();
+
+        const result = fakeQueryResult(q);
+
+        // result satisfies { actor_id: number; first_name: string };
     });
 
     test('Find many actors', () => {

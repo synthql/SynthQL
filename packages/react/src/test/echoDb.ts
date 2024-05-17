@@ -7,4 +7,4 @@ export interface DB {
 
 import { query } from '@synthql/queries';
 
-export const from = query<DB>().from;
+export const from = query<DB>({}).from;

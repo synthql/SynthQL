@@ -77,7 +77,8 @@ export async function generate({
             `import { DB } from './db';`,
             `export { DB } from './db';`,
             `export { schema } from './schema';`,
-            `export const from = query<DB>().from;`,
+            `import { schema } from './schema';`,
+            `export const from = query<DB>(schema).from;`,
         ].join('\n'),
     );
 }

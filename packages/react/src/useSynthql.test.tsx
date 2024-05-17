@@ -56,6 +56,32 @@ describe('useSynthql tests', () => {
         pagilaServer?.server.close();
     });
 
+    test('Fetching 0 or 1 rows(s) from the Pagila database  without `columns()`', async () => {
+        // @@start-example@@ Find a single actor by id using `columns()`
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
+
+        const q = from('actor')
+            .groupingId('actor_id')
+            .where({ actor_id: { in: [1] } })
+            .maybe();
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data).toEqual({
+            actor_id: 1,
+            first_name: 'PENELOPE',
+            last_name: 'GUINESS',
+            last_update: '2022-02-15T09:34:33.000Z',
+        });
+    }, 1000);
+
     test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
         // @@start-example@@ Find a single actor by id using `columns()`
         // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
