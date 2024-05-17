@@ -39,14 +39,18 @@ export type ColumnValue<
  * @param TColumn The name of the column that you want its data type.
  */
 
-export type ColumnType<
-    TColumnDef,
-    TColumn extends keyof TColumnDef,
-> = TColumnDef[TColumn] extends { type: infer TNullableType; nullable: true }
-    ? TNullableType | null
-    : TColumnDef[TColumn] extends {
-            type: infer TNotNullableType;
-            nullable: false;
-        }
-      ? TNotNullableType
-      : never;
+export type ColumnType<TColumnDef, TColumn extends keyof TColumnDef> =
+    // Case 1: Check if nullable is false
+    TColumnDef[TColumn] extends {
+        type: infer TNotNullableType;
+        nullable: false;
+    }
+        ? TNotNullableType
+        : // Case 2: Check if nullable is boolean
+          TColumnDef[TColumn] extends {
+                type: infer TNullableType;
+                nullable: boolean;
+            }
+          ? TNullableType | null
+          : // Case 3: Return never if nullable is not boolean
+            never;
