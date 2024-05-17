@@ -197,7 +197,7 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            SelectFromKeys,
+            { [k in TKeys[number]]: true },
             TInclude,
             TCardinality,
             TLazy,
@@ -328,29 +328,9 @@ export class QueryBuilder<
 export function query<DB>(schema: any) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
-            // type a = Array<Column<DB, TTable>>;
+            type TKeys = Array<Column<DB, TTable>>;
 
-            // type SelectFromKeys = { [k in a[number]]: true };
-
-            // const object: a = [];
-
-            // const select = object.reduce((acc, key) => {
-            //     return { ...acc, [key]: true };
-            // }, {} as SelectFromKeys);
-
-            // type a = Array<string>;
-
-            // type TSelect = { [k in a[number]]: true };
-
-            // const array: a = [];
-
-            // const select = array.reduce((acc, key) => {
-            //     return { ...acc, [key]: true };
-            // }, {} as TSelect);
-
-            // const object: { [k in a[number]]: true } = {};
-
-            const object: Record<string, boolean | undefined> = {};
+            const object: Record<string, true> = {};
 
             const properties = schema.properties;
 
@@ -386,11 +366,7 @@ export function query<DB>(schema: any) {
                                                     const value =
                                                         selectableDef.const;
 
-                                                    if (
-                                                        typeof value ===
-                                                        'boolean'
-                                                    ) {
-                                                        // array.push(column);
+                                                    if (value === true) {
                                                         object[column] = value;
                                                     }
                                                 }
@@ -408,7 +384,7 @@ export function query<DB>(schema: any) {
                 DB,
                 TTable,
                 {},
-                {},
+                { [k in TKeys[number]]: true },
                 {},
                 'many',
                 undefined,
