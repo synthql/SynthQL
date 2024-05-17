@@ -13,6 +13,7 @@ type AnyTableDef = {
         }
     >;
 };
+
 export type AnyDb = Record<string, AnyTableDef>;
 
 export type AnyTable = Table<AnyDb>;
