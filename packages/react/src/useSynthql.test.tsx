@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { Query, Table, query } from '@synthql/queries';
+import { Query, Table } from '@synthql/queries';
 import { DB, from } from './test/generated';
 
 import { Providers } from './test/Providers';
@@ -56,8 +56,8 @@ describe('useSynthql tests', () => {
         pagilaServer?.server.close();
     });
 
-    test('Fetching 0 or 1 rows(s) from the Pagila database  without `columns()`', async () => {
-        // @@start-example@@ Find a single actor by id using `columns()`
+    test('Fetching 0 or 1 rows(s) from the Pagila database without `columns()`', async () => {
+        // @@start-example@@ Find a single actor by id without `columns()`
         // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
 
         const q = from('actor')
