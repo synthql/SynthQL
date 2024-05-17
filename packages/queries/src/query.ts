@@ -390,8 +390,8 @@ export function query<DB>(schema: any) {
                                                         typeof value ===
                                                         'boolean'
                                                     ) {
-                                                        array.push(column);
-                                                        // object[column] = value;
+                                                        // array.push(column);
+                                                        object[column] = value;
                                                     }
                                                 }
                                             }
