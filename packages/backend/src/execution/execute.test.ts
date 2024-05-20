@@ -31,7 +31,37 @@ interface DbWithVirtualTables extends DB {
     };
 }
 
-const from = query<DbWithVirtualTables>(schema).from;
+const schemaWithVirtualTables = {
+    properties: {
+        ...schema.properties,
+        film_rating: {
+            properties: {
+                columns: {
+                    properties: {
+                        film_id: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                        rating: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
+const from = query<DbWithVirtualTables>(schemaWithVirtualTables).from;
 const defaultSchema = 'public';
 
 describe('execute', () => {

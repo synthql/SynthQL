@@ -3,6 +3,8 @@ import { Where } from './types/Where';
 import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
+import { DbSchema } from './types/schemas';
+import { getColumns } from './getColumns';
 
 export class QueryBuilder<
     DB,
@@ -325,60 +327,12 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>(schema: any) {
+export function query<DB>(schema: DbSchema) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;
 
-            const object: Record<string, true> = {};
-
-            const properties = schema.properties;
-
-            if (properties) {
-                const tableDef = properties[table];
-
-                if (tableDef) {
-                    const tableDefProperties = tableDef.properties;
-
-                    if (tableDefProperties) {
-                        const columnsDef = tableDefProperties['columns'];
-
-                        if (columnsDef) {
-                            const columnsDefProperties = columnsDef.properties;
-
-                            if (columnsDefProperties) {
-                                for (const column in columnsDefProperties) {
-                                    if (column) {
-                                        const columnDef =
-                                            columnsDefProperties[column];
-
-                                        if (columnDef) {
-                                            const columnDefProperties =
-                                                columnDef.properties;
-
-                                            if (columnDefProperties) {
-                                                const selectableDef =
-                                                    columnDefProperties[
-                                                        'selectable'
-                                                    ];
-
-                                                if (selectableDef) {
-                                                    const value =
-                                                        selectableDef.const;
-
-                                                    if (value === true) {
-                                                        object[column] = value;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            const select = getColumns(schema, table);
 
             return new QueryBuilder<
                 DB,
@@ -389,7 +343,7 @@ export function query<DB>(schema: any) {
                 'many',
                 undefined,
                 ['id']
-            >(table, {}, object, {}, undefined, 'many', undefined, ['id']);
+            >(table, {}, select, {}, undefined, 'many', undefined, ['id']);
         },
     };
 }

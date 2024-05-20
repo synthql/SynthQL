@@ -6,5 +6,6 @@ export interface DB {
 }
 
 import { query } from '@synthql/queries';
+import { schema } from './echoSchema';
 
-export const from = query<DB>({}).from;
+export const from = query<DB>(schema).from;
