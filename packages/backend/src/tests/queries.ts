@@ -1,8 +1,8 @@
 import { Table, WhereClause, col, query } from '@synthql/queries';
-import { DB } from './generated';
+import { DB, schema } from './generated';
 
 export function from<TTable extends Table<DB>>(table: TTable) {
-    return query<DB>().from(table);
+    return query<DB>(schema).from(table);
 }
 
 export function actor() {

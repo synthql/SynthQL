@@ -10,6 +10,7 @@ describe('e2e', () => {
 
         expect(prettierOptions).not.toBe(null);
 
+        // Generate in `queries` package
         await generate({
             connectionString:
                 'postgresql://postgres:postgres@localhost:5432/postgres',
@@ -22,6 +23,34 @@ describe('e2e', () => {
                     ...prettierOptions,
                 }),
             SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation: '../query',
+        });
+
+        // Generate in `backend` package
+        await generate({
+            connectionString:
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: '../backend/src/tests/generated',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
+        });
+
+        // Generate in `react` package
+        await generate({
+            connectionString:
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: '../react/src/test/generated',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
         });
     }, 100_000);
 });

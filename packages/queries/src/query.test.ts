@@ -16,6 +16,14 @@ describe('queries', () => {
         result satisfies { actor_id: number; first_name: string };
     });
 
+    test('Find one actor with automatic select', () => {
+        const q = from('actor').one();
+
+        const result = fakeQueryResult(q);
+
+        result satisfies { actor_id: number; first_name: string };
+    });
+
     test('Find many actors', () => {
         const q = from('actor').columns('actor_id', 'first_name').many();
 

@@ -5,6 +5,35 @@ export interface DB {
     };
 }
 
+const schema = {
+    properties: {
+        users: {
+            properties: {
+                columns: {
+                    properties: {
+                        id: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                        name: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
 import { query } from '@synthql/queries';
 
-export const from = query<DB>().from;
+export const from = query<DB>(schema).from;

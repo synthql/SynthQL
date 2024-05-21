@@ -3,14 +3,16 @@ import { Where } from './types/Where';
 import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
+import { DbSchema } from './types/DbSchema';
+import { getSelectableColumns } from './schema/getSelectableColumns';
 
 export class QueryBuilder<
     DB,
     TTable extends Table<DB>,
     TWhere extends Where<DB, TTable>,
-    TCardinality extends 'one' | 'maybe' | 'many',
-    TInclude extends Include<DB>,
     TSelect extends Select<DB, TTable>,
+    TInclude extends Include<DB>,
+    TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupingId extends string[],
 > {
@@ -55,9 +57,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -82,9 +84,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'one',
-            TInclude,
             TSelect,
+            TInclude,
+            'one',
             TLazy,
             TGroupingId
         >(
@@ -107,9 +109,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'many',
-            TInclude,
             TSelect,
+            TInclude,
+            'many',
             TLazy,
             TGroupingId
         >(
@@ -132,9 +134,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            'maybe',
-            TInclude,
             TSelect,
+            TInclude,
+            'maybe',
             TLazy,
             TGroupingId
         >(
@@ -154,9 +156,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -197,9 +199,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             { [k in TKeys[number]]: true },
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -219,9 +221,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -241,9 +243,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude & TNewInclude,
             TSelect,
+            TInclude & TNewInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -263,9 +265,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -285,9 +287,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             true,
             TGroupingId
         >(
@@ -307,9 +309,9 @@ export class QueryBuilder<
             DB,
             TTable,
             TWhere,
-            TCardinality,
-            TInclude,
             TSelect,
+            TInclude,
+            TCardinality,
             TLazy,
             TGroupingId
         >(
@@ -325,19 +327,23 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>() {
+export function query<DB>(schema: DbSchema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
+            type TKeys = Array<Column<DB, TTable>>;
+
+            const select = getSelectableColumns<DB>(schema, table);
+
             return new QueryBuilder<
                 DB,
                 TTable,
                 {},
+                { [k in TKeys[number]]: true },
+                {},
                 'many',
-                {},
-                {},
                 undefined,
                 ['id']
-            >(table, {}, {}, {}, undefined, 'many', undefined, ['id']);
+            >(table, {}, select, {}, undefined, 'many', undefined, ['id']);
         },
     };
 }

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { execute } from './execute';
-import { DB } from '../tests/generated';
+import { DB, schema } from '../tests/generated';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
@@ -31,7 +31,37 @@ interface DbWithVirtualTables extends DB {
     };
 }
 
-const from = query<DbWithVirtualTables>().from;
+const schemaWithVirtualTables = {
+    properties: {
+        ...schema.properties,
+        film_rating: {
+            properties: {
+                columns: {
+                    properties: {
+                        film_id: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                        rating: {
+                            properties: {
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
+const from = query<DbWithVirtualTables>(schemaWithVirtualTables).from;
 const defaultSchema = 'public';
 
 describe('execute', () => {
