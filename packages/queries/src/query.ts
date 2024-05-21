@@ -3,8 +3,8 @@ import { Where } from './types/Where';
 import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
-import { DbSchema } from './types/schemas';
-import { getColumns } from './getColumns';
+import { DbSchema } from './types/DbSchema';
+import { getSelectableColumns } from './getSelectableColumns';
 
 export class QueryBuilder<
     DB,
@@ -332,7 +332,7 @@ export function query<DB>(schema: DbSchema) {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;
 
-            const select = getColumns(schema, table);
+            const select = getSelectableColumns<DB>(schema, table);
 
             return new QueryBuilder<
                 DB,

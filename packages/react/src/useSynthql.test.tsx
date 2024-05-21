@@ -41,7 +41,7 @@ function renderSynthqlQuery<
     return result;
 }
 
-describe('useSynthql tests', () => {
+describe('useSynthql', () => {
     let pagilaServer: PagilaServer | undefined;
 
     beforeAll(async () => {
@@ -56,14 +56,14 @@ describe('useSynthql tests', () => {
         pagilaServer?.server.close();
     });
 
-    test('Fetching 0 or 1 rows(s) from the Pagila database without `columns()`', async () => {
-        // @@start-example@@ Find a single actor by id without `columns()`
-        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
+    test('Fetching a single row from the Pagila database with all selectable columns auto-selected', async () => {
+        // @@start-example@@ Find a single actor by id with all selectable columns auto-selected
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids and return all selectable columns.
 
         const q = from('actor')
             .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
-            .maybe();
+            .one();
 
         // @@end-example@@
 
@@ -82,9 +82,9 @@ describe('useSynthql tests', () => {
         });
     }, 1000);
 
-    test('Fetching 0 or 1 rows(s) from the Pagila database  with `columns()`', async () => {
-        // @@start-example@@ Find a single actor by id using `columns()`
-        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids.
+    test('Fetching 0 or 1 rows(s) from the Pagila database with columns to return specified', async () => {
+        // @@start-example@@ Find a single actor by id with columns to return specified`
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids, and returns all selectable columns passed.
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
@@ -108,14 +108,14 @@ describe('useSynthql tests', () => {
         });
     }, 1000);
 
-    test('Fetching n rows from the Pagila database  with `columns()`', async () => {
+    test('Fetching n rows from the Pagila database with columns to return specified', async () => {
         const count = 10;
         const ids = Array(count)
             .fill(0)
             .map((_, i) => i + 1);
 
-        // @@start-example@@ Find all actors by ids using `columns()`
-        // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids.
+        // @@start-example@@ Find all actors by ids columns to return specified`
+        // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids, and returns all selectable columns passed.
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
@@ -191,7 +191,7 @@ describe('useSynthql tests', () => {
     }, 1000);
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
-        // @@start-example@@ Find a single actor by id with a single-level-deep`include()`
+        // @@start-example@@ Find a single actor by id with a single-level-deep `include()`
         // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
 
         const store = from('store')
