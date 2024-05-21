@@ -327,7 +327,7 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>(schema: DbSchema) {
+export function query<DB>(schema: DbSchema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;

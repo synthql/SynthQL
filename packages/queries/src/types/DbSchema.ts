@@ -1,14 +1,17 @@
-export interface DbSchema {
-    properties: Record<string, TableSchema>;
+import { Column } from './Column';
+import { Table } from './Table';
+
+export interface DbSchema<DB> {
+    properties: Record<Table<DB>, TableSchema<DB>>;
 }
 
-export interface TableSchema {
-    properties: ColumnsSchema;
+export interface TableSchema<DB> {
+    properties: ColumnsSchema<DB>;
 }
 
-export interface ColumnsSchema {
+export interface ColumnsSchema<DB> {
     columns: {
-        properties: Record<string, ColumnSchema>;
+        properties: Record<Column<DB, Table<DB>>, ColumnSchema>;
     };
 }
 

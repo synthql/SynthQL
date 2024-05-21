@@ -5,7 +5,7 @@ export interface DB {
     };
 }
 
-export const schema = {
+const schema = {
     properties: {
         users: {
             properties: {
