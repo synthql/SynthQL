@@ -4,7 +4,7 @@ import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
 import { DbSchema } from './types/DbSchema';
-import { getSelectableColumns } from './getSelectableColumns';
+import { getSelectableColumns } from './schema/getSelectableColumns';
 
 export class QueryBuilder<
     DB,

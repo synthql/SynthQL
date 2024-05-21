@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { DB, schema } from './generated';
+import { DB, schema } from '../generated';
 import { getSelectableColumns } from './getSelectableColumns';
 
 describe('getSelectableColumns', () => {

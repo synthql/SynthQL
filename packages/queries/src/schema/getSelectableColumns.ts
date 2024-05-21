@@ -1,5 +1,5 @@
-import { ColumnSchema, DbSchema, TableSchema } from './types/DbSchema';
-import { Table } from './types/Table';
+import { ColumnSchema, DbSchema, TableSchema } from '../types/DbSchema';
+import { Table } from '../types/Table';
 
 function getTableDef<DB>(schema: DbSchema, table: Table<DB>): TableSchema {
     return schema.properties[table];
