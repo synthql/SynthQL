@@ -9,7 +9,7 @@ export type QueryProviderInput<
         ? keyof TColumnDef
         : never]: DB[TTable] extends { columns: infer TColumnDef }
         ? TColumnDef[k] extends { whereable: true }
-            ? ColumnValue<DB, TTable, k>[]
+            ? ColumnValue<DB, TTable, k>[] | undefined
             : never
         : never;
 }>;
