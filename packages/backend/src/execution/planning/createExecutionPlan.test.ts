@@ -8,16 +8,17 @@ import { PgExecutor } from '../executors/PgExecutor';
 import { QueryProviderExecutor } from '../executors/QueryProviderExecutor';
 import { createExecutionPlan } from './createExecutionPlan';
 import { simplifyPlan } from './simplifyPlan';
+import { DB } from '../../tests/generated';
 
 describe('createExecutionPlan', () => {
     test('find film', async () => {
         const q = film().where({ film_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor([
+        const qpe = new QueryProviderExecutor<DB>([
             provideLanguage(),
             provideFilm(),
         ]);
-        const pgExecutor = new PgExecutor({
+        const pgExecutor = new PgExecutor<DB>({
             pool,
             defaultSchema: 'public',
             qpe,
@@ -52,8 +53,8 @@ describe('createExecutionPlan', () => {
     test('find film with only PgExecutor', async () => {
         const q = film().where({ film_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor([]);
-        const pgExecutor = new PgExecutor({
+        const qpe = new QueryProviderExecutor<DB>([]);
+        const pgExecutor = new PgExecutor<DB>({
             pool,
             defaultSchema: 'public',
             qpe,
@@ -81,8 +82,8 @@ describe('createExecutionPlan', () => {
     test('store', async () => {
         const q = store().where({ store_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor([]);
-        const pgExecutor = new PgExecutor({
+        const qpe = new QueryProviderExecutor<DB>([]);
+        const pgExecutor = new PgExecutor<DB>({
             pool,
             defaultSchema: 'public',
             qpe,

@@ -38,7 +38,7 @@ describe.skip('e2e', () => {
         .groupingId('store_id')
         .one();
 
-    const pgExecutor = new PgExecutor({
+    const pgExecutor = new PgExecutor<DB>({
         defaultSchema: 'public',
         logging: true,
         pool,

@@ -1,15 +1,15 @@
 import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { from } from '../../../tests/generated';
+import { DB, from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 
 describe('PgExecutor', () => {
-    const executor = new PgExecutor({
+    const executor = new PgExecutor<DB>({
         pool,
         defaultSchema: 'public',
-        qpe: new QueryProviderExecutor([]),
+        qpe: new QueryProviderExecutor<DB>([]),
     });
 
     const q = from('film')

@@ -21,7 +21,7 @@ const defaultLanguages: Language[] = [
 
 export function provideLanguage(
     languages: Language[] = defaultLanguages,
-): QueryProvider {
+): QueryProvider<DB, 'language'> {
     return {
         table: 'language',
         execute: async (q): Promise<Language[]> => {

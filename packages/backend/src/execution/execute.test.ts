@@ -65,7 +65,7 @@ const from = query<DbWithVirtualTables>(schemaWithVirtualTables).from;
 const defaultSchema = 'public';
 
 describe('execute', () => {
-    const actorProvider = new QueryProviderExecutor([
+    const actorProvider = new QueryProviderExecutor<DbWithVirtualTables>([
         {
             table: 'actor',
             execute: async (q) => {
@@ -79,7 +79,7 @@ describe('execute', () => {
         },
     ]);
 
-    const filmProvider = new QueryProviderExecutor([
+    const filmProvider = new QueryProviderExecutor<DbWithVirtualTables>([
         {
             table: 'film',
             execute: async (q) => {
@@ -115,7 +115,7 @@ describe('execute', () => {
         },
     ]);
 
-    const filmRatingProvider = new QueryProviderExecutor([
+    const filmRatingProvider = new QueryProviderExecutor<DbWithVirtualTables>([
         {
             table: 'film_rating',
             execute: async (q) => {

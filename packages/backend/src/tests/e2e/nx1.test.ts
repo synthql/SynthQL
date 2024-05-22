@@ -32,7 +32,7 @@ describe('n x 1', () => {
             execute<DB, typeof q>(q, {
                 defaultSchema: 'public',
                 executors: [
-                    new QueryProviderExecutor([
+                    new QueryProviderExecutor<DB>([
                         provideLanguage(),
                         provideFilm(),
                     ]),

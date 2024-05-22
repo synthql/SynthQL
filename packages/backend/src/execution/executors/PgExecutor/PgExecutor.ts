@@ -14,17 +14,17 @@ type PgQueryResult = {
     [key: string]: any;
 };
 
-interface PgExecutorProps {
-    qpe?: QueryProviderExecutor;
+interface PgExecutorProps<DB> {
+    qpe?: QueryProviderExecutor<DB>;
     defaultSchema: string;
     pool: Pool;
     logging?: boolean;
 }
 
-export class PgExecutor implements QueryExecutor<PgQueryResult> {
+export class PgExecutor<DB> implements QueryExecutor<PgQueryResult> {
     private client: Promise<PoolClient>;
 
-    constructor(private props: PgExecutorProps) {
+    constructor(private props: PgExecutorProps<DB>) {
         this.client = props.pool.connect();
     }
 

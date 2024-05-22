@@ -7,18 +7,9 @@ import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
 import { DB } from '../generated';
 import { sql } from '../postgres';
-import {
-    address,
-    inventory,
-    store,
-    film,
-    filmActor,
-    actor,
-} from '../queries.v2';
+import { inventory, store, film, filmActor, actor } from '../queries.v2';
 import { pool } from '../queryEngine';
 import { QueryResult, col } from '@synthql/queries';
-import { createExecutionPlan } from '../../execution/planning/createExecutionPlan';
-import { simplifyPlan } from '../../execution/planning/simplifyPlan';
 
 describe('e2e', () => {
     const actors = filmActor()
@@ -47,7 +38,7 @@ describe('e2e', () => {
         .where({ store_id: { in: [1] } })
         .one();
 
-    const pgExecutor = new PgExecutor({
+    const pgExecutor = new PgExecutor<DB>({
         defaultSchema: 'public',
         logging: true,
         pool,

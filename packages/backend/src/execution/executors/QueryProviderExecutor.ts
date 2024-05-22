@@ -1,21 +1,24 @@
 import { QueryProvider } from '../../QueryProvider';
 import { AnyQuery } from '../../types';
-import { QueryNode } from '../../query/createQueryTree';
 import { RefContext, createRefContext } from '../../refs/RefContext';
 import { QueryExecutor } from '../types';
 import { ColumnRef } from '../../refs/ColumnRef';
+import { Table } from '@synthql/queries';
 
-export class QueryProviderExecutor implements QueryExecutor {
-    private providersByTable: Map<string, QueryProvider>;
-    constructor(providers: QueryProvider[]) {
+export class QueryProviderExecutor<DB> implements QueryExecutor {
+    private providersByTable: Map<string, QueryProvider<DB, Table<DB>>>;
+
+    constructor(providers: QueryProvider<DB, Table<DB>>[]) {
         this.providersByTable = new Map(providers.map((p) => [p.table, p]));
     }
 
     execute(query: AnyQuery): Promise<Array<any>> {
         const provider = this.providersByTable.get(query.from);
+
         if (!provider) {
             throw new Error(`No provider for table ${query.from}`);
         }
+
         return provider.execute(query);
     }
 

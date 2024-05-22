@@ -1,5 +1,5 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col } from '.';
+import { Query, QueryResult, QueryProviderInput, Table, Where, col } from '.';
 import { DB, from } from './generated';
 
 describe('queries', () => {
@@ -10,9 +10,16 @@ describe('queries', () => {
     }
 
     test('Find one actor', () => {
+        type A = QueryProviderInput<DB, 'actor'>;
+
+        type C = QueryProviderInput<DB, 'customer'>;
+
+        type B = Where<DB, 'actor'>;
+
         const q = from('actor').columns('actor_id', 'first_name').one();
 
         const result = fakeQueryResult(q);
+
         result satisfies { actor_id: number; first_name: string };
     });
 

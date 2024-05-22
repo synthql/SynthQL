@@ -73,7 +73,7 @@ const defaultFilms: Film[] = [
     },
 ];
 
-export function provideFilm(films = defaultFilms): QueryProvider {
+export function provideFilm(films = defaultFilms): QueryProvider<DB, 'film'> {
     return {
         table: 'film',
         execute: async (q): Promise<Film[]> => {
