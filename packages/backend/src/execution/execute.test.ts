@@ -103,7 +103,7 @@ describe('execute', () => {
                     },
                     {
                         film_id: 4,
-                        title: 'The fifth element',
+                        title: 'The Fifth element',
                     },
                 ];
 
@@ -165,6 +165,7 @@ describe('execute', () => {
                 defaultSchema,
             }),
         );
+
         expect(result).toEqual({
             actor_id: 1,
             first_name: 'John',
@@ -195,6 +196,7 @@ describe('execute', () => {
                 defaultSchema,
             }),
         );
+
         expect(result).toMatchObject({
             film_id: 1,
             title: 'The Matrix',
@@ -204,12 +206,14 @@ describe('execute', () => {
         });
 
         const q2 = findFilmWithRating(2);
+
         const result2 = await collectLast(
             execute<DbWithVirtualTables, typeof q2>(q2, {
                 executors: [filmProvider, filmRatingProvider],
                 defaultSchema,
             }),
         );
+
         expect(result2).toMatchObject({
             film_id: 2,
             title: 'The Matrix Reloaded',
