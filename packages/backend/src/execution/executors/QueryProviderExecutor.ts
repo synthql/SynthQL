@@ -15,18 +15,21 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
     extract(where: Where<DB, Table<DB>>) {
         const w: Record<string, any> = {};
 
-        type N = string | number;
+        type N = any;
 
         interface O {
-            in: Array<string | number>;
+            in: Array<any>;
         }
 
         interface P {
-            '= any': string | number;
+            '= any': any;
         }
 
         function isN(value: unknown): value is N {
-            return typeof (value as N) !== 'object';
+            return (
+                typeof (value as N) === 'string' ||
+                typeof (value as N) === 'number'
+            );
         }
 
         function isO(value: unknown): value is O {
@@ -34,7 +37,10 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
         }
 
         function isP(value: unknown): value is P {
-            return typeof (value as P)['= any'] !== 'object';
+            return (
+                typeof (value as P)['= any'] === 'string' ||
+                typeof (value as P)['= any'] === 'number'
+            );
         }
 
         for (const [key, value] of Object.entries(where)) {
