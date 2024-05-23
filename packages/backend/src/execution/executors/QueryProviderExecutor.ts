@@ -15,17 +15,17 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
     extract(where: Where<DB, Table<DB>>) {
         const w: Record<string, any> = {};
 
-        type N = any;
+        type N = string | number;
 
         interface O {
-            in: Array<any>;
+            in: Array<string | number>;
         }
 
         interface P {
-            '= any': any;
+            '= any': string | number;
         }
 
-        function isN(value: unknown) {
+        function isN(value: unknown): value is N {
             return typeof (value as N) !== 'object';
         }
 
@@ -43,7 +43,7 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
             } else if (isO(value)) {
                 w[key] = [...value.in];
             } else if (isP(value)) {
-                w[key] = [...value['= any']];
+                w[key] = [value['= any']];
             } else {
                 throw Error('Invalid where clause!');
             }
