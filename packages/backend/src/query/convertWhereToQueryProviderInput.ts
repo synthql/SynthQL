@@ -56,10 +56,7 @@ function isOfTypeTColumn<
 }
 
 function isOfTypeWhereEqualsValue(value: unknown): value is WhereEqualsValue {
-    return (
-        typeof (value as WhereEqualsValue) === 'string' ||
-        typeof (value as WhereEqualsValue) === 'number'
-    );
+    return typeof (value as WhereEqualsValue) !== 'object';
 }
 
 function isOfTypeWhereEqualsAnyValueInArray(
