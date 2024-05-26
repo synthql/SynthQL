@@ -33,6 +33,7 @@
         "react": "^17"
     },
     "scripts": {
+        "link:pkg": "yarn link",
         "test": "vitest --globals",
         "test:ci": "CI=1 vitest run --globals",
         "typecheck": "tsc",

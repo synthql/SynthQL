@@ -14,7 +14,7 @@ describe('e2e', () => {
             connectionString:
                 'postgresql://epibator:TempEpibatorPass@localhost:5432/epibator',
             includeSchemas: ['public', 'luminovo', 'types'],
-            defaultSchema: 'public',
+            defaultSchema: 'luminovo',
             outDir: './build/foo',
             formatter: (str) =>
                 prettier.format(str, {

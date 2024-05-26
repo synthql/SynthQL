@@ -16,6 +16,7 @@
     ],
     "license": "MIT",
     "scripts": {
+        "link:pkg": "yarn link",
         "test": "vitest",
         "test:ci": "CI=1 vitest run --globals",
         "build": "vite build --mode production",

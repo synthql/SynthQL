@@ -26,6 +26,7 @@
         "json-schema-to-typescript": "^13.1.2"
     },
     "scripts": {
+        "link:pkg": "yarn link",
         "test": "vitest --globals",
         "typecheck": "tsc",
         "test:ci": "CI=1 vitest run --globals",

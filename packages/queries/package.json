@@ -24,6 +24,7 @@
     "license": "MIT",
     "dependencies": {},
     "scripts": {
+        "link:pkg": "yarn link",
         "test": "vitest --globals",
         "typecheck": "tsc",
         "test:ci": "CI=1 vitest run --globals",

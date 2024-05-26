@@ -8,6 +8,7 @@
         "packages/*"
     ],
     "scripts": {
+        "link:pkg": "yarn nx run-many -t link:pkg",
         "format:root": "yarn prettier --write .",
         "format": "yarn prettier --write .",
         "typecheck": "yarn nx run-many -t typecheck",
@@ -17,7 +18,6 @@
         "compile-executable-examples": "yarn nx run-many -t compile-executable-examples",
         "ci": "yarn nx run-many -t typecheck test:ci build",
         "ci:force": "yarn nx run-many --skip-nx-cache -t typecheck test:ci build",
-        "link-all": "yarn --cwd packages/backend link && yarn --cwd packages/queries link && yarn --cwd packages/react link",
         "pub": "node ./scripts/publish.cjs"
     },
     "devDependencies": {

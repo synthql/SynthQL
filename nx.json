@@ -1,6 +1,9 @@
 {
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "targetDefaults": {
+        "link:pkg": {
+            "cache": false
+        },
         "test:ci": {
             "dependsOn": ["^test:ci"],
             "cache": true
