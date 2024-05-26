@@ -13,6 +13,7 @@ describe('queries', () => {
         const q = from('actor').columns('actor_id', 'first_name').one();
 
         const result = fakeQueryResult(q);
+
         result satisfies { actor_id: number; first_name: string };
     });
 

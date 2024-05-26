@@ -1,22 +1,28 @@
-import { QueryProvider } from '../../QueryProvider';
-import { AnyQuery } from '../../types';
-import { QueryNode } from '../../query/createQueryTree';
-import { RefContext, createRefContext } from '../../refs/RefContext';
-import { QueryExecutor } from '../types';
-import { ColumnRef } from '../../refs/ColumnRef';
+import { QueryProvider } from '../../../QueryProvider';
+import { AnyDb, AnyQuery } from '../../../types';
+import { RefContext, createRefContext } from '../../../refs/RefContext';
+import { QueryExecutor } from '../../types';
+import { ColumnRef } from '../../../refs/ColumnRef';
+import { Table } from '@synthql/queries';
+import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
 export class QueryProviderExecutor implements QueryExecutor {
-    private providersByTable: Map<string, QueryProvider>;
-    constructor(providers: QueryProvider[]) {
+    private providersByTable: Map<string, QueryProvider<AnyDb, string>>;
+
+    constructor(providers: QueryProvider<AnyDb, string>[]) {
         this.providersByTable = new Map(providers.map((p) => [p.table, p]));
     }
 
     execute(query: AnyQuery): Promise<Array<any>> {
         const provider = this.providersByTable.get(query.from);
+
         if (!provider) {
             throw new Error(`No provider for table ${query.from}`);
         }
-        return provider.execute(query);
+
+        const queryProviderInput = convertWhereToQueryProviderInput(provider.table, query.where);
+
+        return provider.execute(queryProviderInput);
     }
 
     canExecute<TQuery extends AnyQuery>(

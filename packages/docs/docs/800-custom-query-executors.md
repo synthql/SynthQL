@@ -9,22 +9,22 @@ This can be used to fetch data from a source other than your database, such as a
 When constructing a `QueryEngine` you may pass a list of `executors`. In this example we're configuring a custom executor for the `rotten_tomatoes_rating` table.
 
 ```ts
-import { QueryProviderExecutor } from "@synthql/backend";
+import { QueryProvider } from "@synthql/backend";
 
 interface DB {
-    film: { id: number, title: string },
-    rotten_tomatoes_rating: { title: string, rating: string }
+    film: {...}
+    rotten_tomatoes_rating: {...}
 }
 
-const rottenTomatoesRatingProvider = new QueryProviderExecutor([{
+const rottenTomatoesRatingProvider: QueryProvider<DB,'rotten_tomatoes_rating'> = {
     table: 'rotten_tomatoes_rating'.
-    execute: (query) => {
-        return fetchRottenTomatoesRating(query)
+    execute: ({title}) => {
+        return fetchRottenTomatoesRatingByTitle(title)
     }
-}])
+}
 
 new QueryEngine({
-    executors: rottenTomatoesRatingProvider
+    executors: [rottenTomatoesRatingProvider]
 })
 ```
 
