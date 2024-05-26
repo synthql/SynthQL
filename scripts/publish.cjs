@@ -22,7 +22,7 @@ console.log('Bumping minor version to', nextVersion);
 const packagesToUpdate = [
     '@synthql/backend',
     '@synthql/cli',
-    '@syntql/introspect',
+    '@synthql/introspect',
     '@synthql/queries',
     '@synthql/react',
 ];
