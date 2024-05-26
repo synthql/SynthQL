@@ -3,6 +3,27 @@ import { generate } from '.';
 import * as prettier from 'prettier';
 
 describe('e2e', () => {
+    test.skip('Generate from luminovo', async () => {
+        const prettierOptions = await prettier.resolveConfig(
+            '../../.prettier.config.js',
+        );
+
+        expect(prettierOptions).not.toBe(null);
+
+        await generate({
+            connectionString:
+                'postgresql://epibator:TempEpibatorPass@localhost:5432/epibator',
+            includeSchemas: ['public', 'luminovo', 'types'],
+            defaultSchema: 'public',
+            outDir: './build/foo',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
+        });
+    }, 60_000);
+
     test('Generate from Pagila', async () => {
         const prettierOptions = await prettier.resolveConfig(
             '../../.prettier.config.js',

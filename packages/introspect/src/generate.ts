@@ -1,14 +1,14 @@
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import {
+    DomainDetails,
     EnumDetails,
     extractSchemas,
     Schema,
     TableColumnType,
     TableDetails,
 } from 'extract-pg-schema';
-import { compile, JSONSchema } from 'json-schema-to-typescript';
-import $RefParser from '@apidevtools/json-schema-ref-parser';
 import fs from 'fs';
-
+import { compile, JSONSchema } from 'json-schema-to-typescript';
 import path from 'path';
 
 export async function generate({
@@ -81,6 +81,10 @@ export async function generate({
             `export const from = query<DB>(schema).from;`,
         ].join('\n'),
     );
+
+    return {
+        schema: schemaWithoutRefs,
+    };
 }
 
 function createTypeDefId(type: {
@@ -175,6 +179,10 @@ function createRootJsonSchema(
         return schema.enums;
     });
 
+    const domains = Object.values(schemas).flatMap((schema) => {
+        return schema.domains;
+    });
+
     return {
         $schema: 'https://json-schema.org/draft/2020-12/schema',
         description: "Your database's schema",
@@ -196,6 +204,7 @@ function createRootJsonSchema(
             ...createTableDefs(tables, defaultSchema),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
+            ...createDomainJsonSchema(domains),
         },
     };
 }
@@ -217,7 +226,6 @@ function createTableDefs(
             createTableJsonSchema(table);
         return acc;
     }, empty);
-    require;
 }
 
 function createEnumJsonSchema(
@@ -241,6 +249,28 @@ function createEnumJsonSchema(
     }, empty);
 }
 
+function createDomainJsonSchema(
+    domains: DomainDetails[],
+): Record<string, JSONSchema> {
+    const empty: Record<string, JSONSchema> = {};
+
+    return domains.reduce((acc, domain) => {
+        acc[
+            createTypeDefId({
+                kind: 'domain',
+                fullName: `${domain.schemaName}.${domain.name}`,
+            })
+        ] = {
+            // TODO: implement domain type
+            type: 'any',
+            description:
+                domain.comment ??
+                `The ${domain.name} enum from the ${domain.schemaName} schema`,
+        };
+        return acc;
+    }, empty);
+}
+
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
         'pg_catalog.int4': {
@@ -252,6 +282,10 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         'pg_catalog.text': {
             type: 'string',
             description: 'A PG text',
+        },
+        'pg_catalog.varchar': {
+            type: 'string',
+            description: 'A PG varchar',
         },
         'pg_catalog.bool': {
             type: 'boolean',
@@ -267,15 +301,36 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             format: 'date-time',
             description: 'A PG timestamptz',
         },
+        'pg_catalog.timestamp': {
+            type: 'string',
+            format: 'date-time',
+            description: 'A PG timestamp',
+        },
         'pg_catalog.int2': {
             type: 'integer',
             minimum: -32768,
             maximum: 32767,
             description: 'A PG int2',
         },
+        'pg_catalog.int8': {
+            type: 'integer',
+            minimum: -9223372036854775808,
+            maximum: 9223372036854775807,
+            description: 'A PG int8',
+        },
+
+        'pg_catalog.float4': {
+            type: 'number',
+            description: 'A PG float4',
+        },
+
         'pg_catalog.numeric': {
             type: 'number',
             description: 'A PG numeric',
+        },
+        'pg_catalog.float8': {
+            type: 'number',
+            description: 'A PG float8',
         },
 
         'pg_catalog.tsvector': {

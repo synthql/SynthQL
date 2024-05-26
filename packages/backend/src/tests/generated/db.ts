@@ -26,9 +26,9 @@ export type PgCatalogDate = string;
  */
 export type PgCatalogTimestamptz = string;
 /**
- * A PG year
+ * The year enum from the public schema
  */
-export type PublicYearDomain = number;
+export type PublicYear = unknown;
 /**
  * A PG int2
  */
@@ -504,7 +504,7 @@ export interface TableFilm {
          * - Generated: NEVER
          */
         release_year: {
-            type: PublicYearDomain;
+            type: PublicYear;
             selectable: true;
             includable: true;
             whereable: true;

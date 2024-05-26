@@ -897,10 +897,9 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'integer',
-                                    minimum: 1900,
-                                    maximum: 2155,
-                                    description: 'A PG year',
+                                    type: 'any',
+                                    description:
+                                        'The year enum from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -4803,10 +4802,9 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'integer',
-                                    minimum: 1900,
-                                    maximum: 2155,
-                                    description: 'A PG year',
+                                    type: 'any',
+                                    description:
+                                        'The year enum from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7805,6 +7803,10 @@ export const schema = {
             type: 'string',
             description: 'A PG text',
         },
+        'pg_catalog.varchar': {
+            type: 'string',
+            description: 'A PG varchar',
+        },
         'pg_catalog.bool': {
             type: 'boolean',
             description: 'A PG bool',
@@ -7819,15 +7821,34 @@ export const schema = {
             format: 'date-time',
             description: 'A PG timestamptz',
         },
+        'pg_catalog.timestamp': {
+            type: 'string',
+            format: 'date-time',
+            description: 'A PG timestamp',
+        },
         'pg_catalog.int2': {
             type: 'integer',
             minimum: -32768,
             maximum: 32767,
             description: 'A PG int2',
         },
+        'pg_catalog.int8': {
+            type: 'integer',
+            minimum: -9223372036854776000,
+            maximum: 9223372036854776000,
+            description: 'A PG int8',
+        },
+        'pg_catalog.float4': {
+            type: 'number',
+            description: 'A PG float4',
+        },
         'pg_catalog.numeric': {
             type: 'number',
             description: 'A PG numeric',
+        },
+        'pg_catalog.float8': {
+            type: 'number',
+            description: 'A PG float8',
         },
         'pg_catalog.tsvector': {
             type: 'string',
@@ -7842,10 +7863,8 @@ export const schema = {
             description: 'A PG bytea',
         },
         'public.year.domain': {
-            type: 'integer',
-            minimum: 1900,
-            maximum: 2155,
-            description: 'A PG year',
+            type: 'any',
+            description: 'The year enum from the public schema',
         },
         'pg_catalog.uuid': {
             type: 'string',
@@ -7864,6 +7883,10 @@ export const schema = {
             type: 'string',
             enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
             description: 'The mpaa_rating enum from the public schema',
+        },
+        'public.bıgınt.domain': {
+            type: 'any',
+            description: 'The bıgınt enum from the public schema',
         },
     },
 } as const;
