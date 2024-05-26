@@ -22,7 +22,10 @@ describe('convertWhereToQueryProviderInput', () => {
             { a: [1], b: [2] },
         ],
         [{ a: new Date() }, { a: [new Date()] }],
-        [{ a: true, b: false }, { a: [true], b: [false] }],
+        [
+            { a: true, b: false },
+            { a: [true], b: [false] },
+        ],
         [{ a: true }, { a: [true] }],
         [{ a: false }, { a: [false] }],
     ];
@@ -53,7 +56,7 @@ describe('convertWhereToQueryProviderInput', () => {
         { a: { ilike: 'a%' } },
         { a: 1, b: { not: 2 } },
         { a: col<any>('b.a') },
-        { a: col<any>('b.a'), b: 2 }
+        { a: col<any>('b.a'), b: 2 },
     ];
 
     describe('unsupported where clauses', () => {

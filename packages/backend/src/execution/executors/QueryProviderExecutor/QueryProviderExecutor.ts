@@ -20,7 +20,10 @@ export class QueryProviderExecutor implements QueryExecutor {
             throw new Error(`No provider for table ${query.from}`);
         }
 
-        const queryProviderInput = convertWhereToQueryProviderInput(provider.table, query.where);
+        const queryProviderInput = convertWhereToQueryProviderInput(
+            provider.table,
+            query.where,
+        );
 
         return provider.execute(queryProviderInput);
     }
