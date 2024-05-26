@@ -1,7 +1,7 @@
-import { Query, QueryResult, Table } from '@synthql/queries';
-import { AnyQuery } from './types';
+import { Table } from '@synthql/queries';
+import { QueryProviderInput } from './types/QueryProviderInput';
 
-export interface QueryProvider {
-    table: string;
-    execute(query: AnyQuery): Promise<Array<any>>;
+export interface QueryProvider<DB, TTable extends Table<DB>> {
+    table: TTable;
+    execute(query: QueryProviderInput<DB, TTable>): Promise<Array<any>>;
 }

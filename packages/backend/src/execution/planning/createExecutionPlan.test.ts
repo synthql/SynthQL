@@ -8,6 +8,7 @@ import { PgExecutor } from '../executors/PgExecutor';
 import { QueryProviderExecutor } from '../executors/QueryProviderExecutor';
 import { createExecutionPlan } from './createExecutionPlan';
 import { simplifyPlan } from './simplifyPlan';
+import { DB } from '../../tests/generated';
 
 describe('createExecutionPlan', () => {
     test('find film', async () => {

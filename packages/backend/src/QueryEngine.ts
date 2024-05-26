@@ -13,7 +13,7 @@ import { generateLast } from './util/generators/generateLast';
 export interface QueryEngineProps<DB> {
     url?: string;
     schema?: string;
-    providers?: Array<QueryProvider>;
+    providers?: Array<QueryProvider<DB, Table<DB>>>;
     pool?: Pool;
 }
 

@@ -1,4 +1,4 @@
-export function* interateTree<T extends { children: T[] }>(
+export function* iterateTree<T extends { children: T[] }>(
     tree: T,
 ): Generator<T> {
     const stack: T[] = [tree];

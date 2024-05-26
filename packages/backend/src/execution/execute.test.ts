@@ -1,11 +1,11 @@
-import { describe, expect, test } from 'vitest';
-import { execute } from './execute';
-import { DB, schema } from '../tests/generated';
-import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
-import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
-import { ColumnDataTypes } from '../tests/getColumnDataTypes';
+import { describe, expect, test } from 'vitest';
+import { collectLast } from '..';
+import { QueryProvider } from '../QueryProvider';
+import { DB, schema } from '../tests/generated';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
+import { execute } from './execute';
+import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {
@@ -64,94 +64,89 @@ const schemaWithVirtualTables = {
 const from = query<DbWithVirtualTables>(schemaWithVirtualTables).from;
 const defaultSchema = 'public';
 
+type ActorQueryProvider = QueryProvider<DbWithVirtualTables, 'actor'>;
+type FilmQueryProvider = QueryProvider<DbWithVirtualTables, 'film'>;
+type FilmRatingQueryProvider = QueryProvider<
+    DbWithVirtualTables,
+    'film_rating'
+>;
+
+const actorProvider: ActorQueryProvider = {
+    table: 'actor',
+    execute: async ({ actor_id: actorIds }) => {
+        const actors = [
+            { actor_id: 1, first_name: 'John', last_name: 'Doe' },
+            { actor_id: 2, first_name: 'Jane', last_name: 'Doe' },
+            { actor_id: 3, first_name: 'John', last_name: 'Smith' },
+        ];
+        if (actorIds === undefined || actorIds.length === 0) {
+            return actors;
+        }
+        return actors.filter((a) => actorIds.includes(a.actor_id));
+    },
+};
+
+const filmProvider: FilmQueryProvider = {
+    table: 'film',
+    execute: async ({ film_id: filmIds }) => {
+        const films = [
+            {
+                film_id: 1,
+                title: 'The Matrix',
+            },
+            {
+                film_id: 2,
+                title: 'The Matrix Reloaded',
+            },
+            {
+                film_id: 3,
+                title: 'The Matrix Revolutions',
+            },
+            {
+                film_id: 4,
+                title: 'The Fifth element',
+            },
+        ];
+
+        if (filmIds === undefined || filmIds.length === 0) {
+            return films;
+        }
+
+        return films.filter((f) => filmIds.includes(f.film_id));
+    },
+};
+
+const filmRatingProvider: FilmRatingQueryProvider = {
+    table: 'film_rating',
+    execute: async ({ film_id: filmIds }) => {
+        const filmRatings = [
+            {
+                film_id: 1,
+                rating: 'PG-13',
+            },
+            {
+                film_id: 2,
+                rating: 'R',
+            },
+            {
+                film_id: 3,
+                rating: 'R',
+            },
+            {
+                film_id: 4,
+                rating: 'PG-13',
+            },
+        ];
+
+        if (filmIds === undefined || filmIds.length === 0) {
+            return filmRatings;
+        }
+
+        return filmRatings.filter((f) => filmIds.includes(f.film_id));
+    },
+};
+
 describe('execute', () => {
-    const actorProvider = new QueryProviderExecutor([
-        {
-            table: 'actor',
-            execute: async (q) => {
-                const actorId = q.where?.actor_id;
-                return [
-                    { actor_id: 1, first_name: 'John', last_name: 'Doe' },
-                    { actor_id: 2, first_name: 'Jane', last_name: 'Doe' },
-                    { actor_id: 3, first_name: 'John', last_name: 'Smith' },
-                ].filter((a) => (actorId ? a.actor_id === actorId : true));
-            },
-        },
-    ]);
-
-    const filmProvider = new QueryProviderExecutor([
-        {
-            table: 'film',
-            execute: async (q) => {
-                const films: Array<
-                    Pick<
-                        ColumnDataTypes<DbWithVirtualTables['film']['columns']>,
-                        'film_id' | 'title'
-                    >
-                > = [
-                    {
-                        film_id: 1,
-                        title: 'The Matrix',
-                    },
-                    {
-                        film_id: 2,
-                        title: 'The Matrix Reloaded',
-                    },
-                    {
-                        film_id: 3,
-                        title: 'The Matrix Revolutions',
-                    },
-                    {
-                        film_id: 4,
-                        title: 'The fifth element',
-                    },
-                ];
-
-                const filmId = q.where?.film_id;
-                return films.filter((a) =>
-                    filmId ? a.film_id === filmId : true,
-                );
-            },
-        },
-    ]);
-
-    const filmRatingProvider = new QueryProviderExecutor([
-        {
-            table: 'film_rating',
-            execute: async (q) => {
-                const filmRatings: Array<
-                    Pick<
-                        ColumnDataTypes<
-                            DbWithVirtualTables['film_rating']['columns']
-                        >,
-                        'film_id' | 'rating'
-                    >
-                > = [
-                    {
-                        film_id: 1,
-                        rating: 'PG-13',
-                    },
-                    {
-                        film_id: 2,
-                        rating: 'R',
-                    },
-                    {
-                        film_id: 3,
-                        rating: 'R',
-                    },
-                    {
-                        film_id: 4,
-                        rating: 'PG-13',
-                    },
-                ];
-                const filmIds = q.where?.film_id.in;
-                return filmRatings.filter((a) =>
-                    filmIds ? filmIds.includes(a.film_id) : true,
-                );
-            },
-        },
-    ]);
-
     test('single provider', async () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
@@ -161,10 +156,11 @@ describe('execute', () => {
 
         const result = await collectLast(
             execute<DbWithVirtualTables, typeof q>(q, {
-                executors: [actorProvider],
+                executors: [new QueryProviderExecutor([actorProvider])],
                 defaultSchema,
             }),
         );
+
         expect(result).toEqual({
             actor_id: 1,
             first_name: 'John',
@@ -191,10 +187,16 @@ describe('execute', () => {
 
         const result = await collectLast(
             execute<DbWithVirtualTables, typeof q>(q, {
-                executors: [filmProvider, filmRatingProvider],
+                executors: [
+                    new QueryProviderExecutor([
+                        filmProvider,
+                        filmRatingProvider,
+                    ]),
+                ],
                 defaultSchema,
             }),
         );
+
         expect(result).toMatchObject({
             film_id: 1,
             title: 'The Matrix',
@@ -204,12 +206,19 @@ describe('execute', () => {
         });
 
         const q2 = findFilmWithRating(2);
+
         const result2 = await collectLast(
             execute<DbWithVirtualTables, typeof q2>(q2, {
-                executors: [filmProvider, filmRatingProvider],
+                executors: [
+                    new QueryProviderExecutor([
+                        filmProvider,
+                        filmRatingProvider,
+                    ]),
+                ],
                 defaultSchema,
             }),
         );
+
         expect(result2).toMatchObject({
             film_id: 2,
             title: 'The Matrix Reloaded',

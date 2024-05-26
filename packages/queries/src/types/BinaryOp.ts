@@ -51,12 +51,24 @@ export const BINARY_OPERATORS = [
     '>>',
     '&&',
     '||',
-];
-
-type BinaryOperator = (typeof BINARY_OPERATORS)[number];
+] as const;
 
 /**
  * An SQL binary operator.
+ */
+export type BinaryOperator = (typeof BINARY_OPERATORS)[number];
+
+/**
+ * A typed binary operator, which can be used in a `Where` clause.
+ *
+ * Has the following format:
+ *
+ * ```ts
+ * {
+ *    [operator]: value
+ * }
+ * ```
+ *
  */
 export type BinaryOp<
     DB,
