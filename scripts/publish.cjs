@@ -27,6 +27,11 @@ const packagesToUpdate = [
     '@synthql/react',
 ];
 
+// First update the root package.json
+execSync(`yarn version --new-version ${nextVersion}`, {
+    stdio: 'inherit',
+});
+
 packagesToUpdate.forEach((packageName) => {
     const packageDir = packageName.replace('@synthql/', '');
     const dir = `./packages/${packageDir}`;
@@ -38,10 +43,6 @@ packagesToUpdate.forEach((packageName) => {
         cwd: dir,
         stdio: 'inherit',
     });
-});
-
-execSync(`yarn version --new-version ${nextVersion}`, {
-    stdio: 'inherit',
 });
 
 execSync(`yarn format:root`, {
