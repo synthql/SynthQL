@@ -1,6 +1,8 @@
+import { runInThisContext } from 'vm';
 import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
 import { assertHasKey } from '../util/asserts/assertHasKey';
+import { assertPresent } from '../util/asserts/assertPresent';
 import { DB } from './generated';
 import { ColumnDataTypes } from './getColumnDataTypes';
 
@@ -24,19 +26,15 @@ export function provideLanguage(
 ): QueryProvider<DB, 'language'> {
     return {
         table: 'language',
-        execute: async (q): Promise<Language[]> => {
-            assertHasKey(q.where, 'language_id');
-            const language_id = q.where.language_id;
+        execute: async ({ language_id: languageIds }): Promise<Language[]> => {
+            assertPresent(languageIds);
+            assertArray(languageIds);
 
-            if (typeof language_id === 'number') {
-                return languages.filter((l) => l.language_id === language_id);
+            if (languageIds.length === 0) {
+                return languages;
             }
 
-            assertHasKey(language_id, 'in');
-            const ids = language_id.in;
-            assertArray(ids);
-
-            return languages.filter((l) => ids.includes(l.language_id));
+            return languages.filter((l) => languageIds.includes(l.language_id));
         },
     };
 }

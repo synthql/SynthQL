@@ -1,10 +1,10 @@
-import { QueryProvider } from '../../QueryProvider';
-import { AnyQuery } from '../../types';
-import { RefContext, createRefContext } from '../../refs/RefContext';
-import { QueryExecutor } from '../types';
-import { ColumnRef } from '../../refs/ColumnRef';
+import { QueryProvider } from '../../../QueryProvider';
+import { AnyQuery } from '../../../types';
+import { RefContext, createRefContext } from '../../../refs/RefContext';
+import { QueryExecutor } from '../../types';
+import { ColumnRef } from '../../../refs/ColumnRef';
 import { Table } from '@synthql/queries';
-import { convertWhereToQueryProviderInput } from '../../query/convertWhereToQueryProviderInput';
+import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
 export class QueryProviderExecutor<DB> implements QueryExecutor {
     private providersByTable: Map<string, QueryProvider<DB, Table<DB>>>;
@@ -20,12 +20,12 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
             throw new Error(`No provider for table ${query.from}`);
         }
 
-        const where = convertWhereToQueryProviderInput<DB, Table<DB>>(
-            provider.table,
-            query.where,
-        );
+        const queryProviderInput = convertWhereToQueryProviderInput<
+            DB,
+            Table<DB>
+        >(provider.table, query.where);
 
-        return provider.execute(where);
+        return provider.execute(queryProviderInput);
     }
 
     canExecute<TQuery extends AnyQuery>(

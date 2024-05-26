@@ -1,6 +1,7 @@
 import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
 import { assertHasKey } from '../util/asserts/assertHasKey';
+import { assertPresent } from '../util/asserts/assertPresent';
 import { DB } from './generated';
 import { ColumnDataTypes } from './getColumnDataTypes';
 
@@ -76,19 +77,15 @@ const defaultFilms: Film[] = [
 export function provideFilm(films = defaultFilms): QueryProvider<DB, 'film'> {
     return {
         table: 'film',
-        execute: async (q): Promise<Film[]> => {
-            assertHasKey(q.where, 'film_id');
-            const film_id = q.where.film_id;
+        execute: async ({ film_id: filmIds }): Promise<Film[]> => {
+            assertPresent(filmIds);
+            assertArray(filmIds);
 
-            if (typeof film_id === 'number') {
-                return films.filter((f) => f.film_id === film_id);
+            if (filmIds.length === 0) {
+                return films;
             }
 
-            assertHasKey(film_id, 'in');
-            const ids = film_id.in;
-            assertArray(ids);
-
-            return films.filter((f) => ids.includes(f.film_id));
+            return films.filter((f) => filmIds.includes(f.film_id));
         },
     };
 }
