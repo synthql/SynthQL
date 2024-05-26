@@ -38,7 +38,7 @@ describe('e2e', () => {
         .where({ store_id: { in: [1] } })
         .one();
 
-    const pgExecutor = new PgExecutor<DB>({
+    const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
         logging: true,
         pool,

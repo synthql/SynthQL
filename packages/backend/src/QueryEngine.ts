@@ -30,10 +30,10 @@ export class QueryEngine<DB> {
                 max: 10,
             });
 
-        const qpe = new QueryProviderExecutor<DB>(config.providers ?? []);
+        const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
             qpe,
-            new PgExecutor<DB>({
+            new PgExecutor({
                 pool: this.pool,
                 defaultSchema: this.schema,
                 qpe,

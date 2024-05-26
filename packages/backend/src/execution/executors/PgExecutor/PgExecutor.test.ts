@@ -6,10 +6,10 @@ import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 
 describe('PgExecutor', () => {
-    const executor = new PgExecutor<DB>({
+    const executor = new PgExecutor({
         pool,
         defaultSchema: 'public',
-        qpe: new QueryProviderExecutor<DB>([]),
+        qpe: new QueryProviderExecutor([]),
     });
 
     const q = from('film')

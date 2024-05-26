@@ -15,7 +15,7 @@ describe('e2e', () => {
         .many();
 
     test(describeQuery(q), async () => {
-        const pgExecutor = new PgExecutor<DB>({
+        const pgExecutor = new PgExecutor({
             defaultSchema: 'public',
             logging: true,
             pool,

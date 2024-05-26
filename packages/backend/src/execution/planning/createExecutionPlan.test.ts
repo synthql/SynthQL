@@ -14,11 +14,11 @@ describe('createExecutionPlan', () => {
     test('find film', async () => {
         const q = film().where({ film_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor<DB>([
+        const qpe = new QueryProviderExecutor([
             provideLanguage(),
             provideFilm(),
         ]);
-        const pgExecutor = new PgExecutor<DB>({
+        const pgExecutor = new PgExecutor({
             pool,
             defaultSchema: 'public',
             qpe,
@@ -53,8 +53,8 @@ describe('createExecutionPlan', () => {
     test('find film with only PgExecutor', async () => {
         const q = film().where({ film_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor<DB>([]);
-        const pgExecutor = new PgExecutor<DB>({
+        const qpe = new QueryProviderExecutor([]);
+        const pgExecutor = new PgExecutor({
             pool,
             defaultSchema: 'public',
             qpe,
@@ -82,8 +82,8 @@ describe('createExecutionPlan', () => {
     test('store', async () => {
         const q = store().where({ store_id: 1 }).maybe();
 
-        const qpe = new QueryProviderExecutor<DB>([]);
-        const pgExecutor = new PgExecutor<DB>({
+        const qpe = new QueryProviderExecutor([]);
+        const pgExecutor = new PgExecutor({
             pool,
             defaultSchema: 'public',
             qpe,

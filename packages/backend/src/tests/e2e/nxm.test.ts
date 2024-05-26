@@ -42,7 +42,7 @@ describe('n x m', () => {
     const execProps = {
         defaultSchema: 'public',
         executors: [
-            new PgExecutor<DB>({
+            new PgExecutor({
                 defaultSchema: 'public',
                 logging: true,
                 pool,

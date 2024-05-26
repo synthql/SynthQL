@@ -12,7 +12,7 @@ import { pool } from '../../../tests/queryEngine';
 import { DB } from '../../../tests/generated';
 
 describe('PgExecutor', () => {
-    const executor = new PgExecutor<DB>({
+    const executor = new PgExecutor({
         pool,
         defaultSchema: 'public',
     });

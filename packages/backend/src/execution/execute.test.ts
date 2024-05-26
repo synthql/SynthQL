@@ -1,12 +1,11 @@
-import { describe, expect, test } from 'vitest';
-import { execute } from './execute';
-import { DB, schema } from '../tests/generated';
-import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
-import { collectLast } from '..';
 import { col, query } from '@synthql/queries';
-import { ColumnDataTypes } from '../tests/getColumnDataTypes';
-import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
+import { describe, expect, test } from 'vitest';
+import { collectLast } from '..';
 import { QueryProvider } from '../QueryProvider';
+import { DB, schema } from '../tests/generated';
+import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
+import { execute } from './execute';
+import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {

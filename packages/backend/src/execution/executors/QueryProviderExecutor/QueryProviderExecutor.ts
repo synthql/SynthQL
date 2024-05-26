@@ -1,15 +1,15 @@
 import { QueryProvider } from '../../../QueryProvider';
-import { AnyQuery } from '../../../types';
+import { AnyDb, AnyQuery } from '../../../types';
 import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { QueryExecutor } from '../../types';
 import { ColumnRef } from '../../../refs/ColumnRef';
 import { Table } from '@synthql/queries';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
-export class QueryProviderExecutor<DB> implements QueryExecutor {
-    private providersByTable: Map<string, QueryProvider<DB, Table<DB>>>;
+export class QueryProviderExecutor implements QueryExecutor {
+    private providersByTable: Map<string, QueryProvider<AnyDb, string>>;
 
-    constructor(providers: QueryProvider<DB, Table<DB>>[]) {
+    constructor(providers: QueryProvider<AnyDb, string>[]) {
         this.providersByTable = new Map(providers.map((p) => [p.table, p]));
     }
 
@@ -20,10 +20,7 @@ export class QueryProviderExecutor<DB> implements QueryExecutor {
             throw new Error(`No provider for table ${query.from}`);
         }
 
-        const queryProviderInput = convertWhereToQueryProviderInput<
-            DB,
-            Table<DB>
-        >(provider.table, query.where);
+        const queryProviderInput = convertWhereToQueryProviderInput(provider.table, query.where);
 
         return provider.execute(queryProviderInput);
     }
