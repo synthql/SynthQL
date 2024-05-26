@@ -16,7 +16,7 @@
     "homepage": "https://github.com/synthql/SynthQL#readme",
     "type": "module",
     "private": false,
-    "version": "0.39.4",
+    "version": "0.42.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
