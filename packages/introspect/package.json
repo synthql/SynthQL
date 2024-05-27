@@ -1,7 +1,7 @@
 {
     "name": "@synthql/introspect",
     "type": "module",
-    "version": "0.45.4",
+    "version": "0.46.4",
     "private": false,
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
