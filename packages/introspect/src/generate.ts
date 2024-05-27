@@ -274,13 +274,13 @@ function createDomainJsonSchema(
 function domainType(
     domainInnerType: DomainDetails['innerType'],
 ): JSONSchema['type'] {
-    if (domainInnerType === 'pg_catalog.int4') {
-        return 'integer';
-    } else if (domainInnerType === 'pg_catalog.int8') {
-        return 'integer';
-    } else {
-        return 'any';
+    for (const [name, schema] of Object.entries(createWellKnownDefs())) {
+        if (domainInnerType === name) {
+            return schema.type;
+        }
     }
+
+    return 'any';
 }
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
