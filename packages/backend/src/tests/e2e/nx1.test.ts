@@ -23,7 +23,6 @@ describe('n x 1', () => {
                 .include({
                     lang,
                 })
-                .groupingId('film_id')
                 .many();
         }
 

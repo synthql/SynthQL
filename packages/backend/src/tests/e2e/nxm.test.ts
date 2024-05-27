@@ -18,7 +18,6 @@ describe('n x m', () => {
         .where({
             film_id: col('inventory.film_id'),
         })
-        .groupingId('film_id')
         .many();
 
     const inventory = from('inventory')
@@ -27,7 +26,6 @@ describe('n x m', () => {
         .include({
             film,
         })
-        .groupingId('inventory_id')
         .many();
 
     const q = from('store')
@@ -35,7 +33,6 @@ describe('n x m', () => {
         .include({
             inventory,
         })
-        .groupingId('store_id')
         .where({ store_id: 1 })
         .one();
 

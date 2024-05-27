@@ -6,7 +6,6 @@ describe('createExpressSynthqlHandler', () => {
     test(`Query execution is successful`, async () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
-            .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
             .one();
     });
@@ -14,7 +13,6 @@ describe('createExpressSynthqlHandler', () => {
     test(`Query execution is successful with returnLastOnly passed`, async () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
-            .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
             .maybe();
     });

@@ -2,15 +2,11 @@ import { col } from '@synthql/queries';
 import { from } from './generated';
 
 export function language() {
-    return from('language')
-        .groupingId('language_id')
-        .columns('name', 'language_id');
+    return from('language').columns('name', 'language_id');
 }
 
 export function actor() {
-    return from('actor')
-        .groupingId('actor_id')
-        .columns('first_name', 'last_name', 'actor_id');
+    return from('actor').columns('first_name', 'last_name', 'actor_id');
 }
 
 export function filmActor() {
@@ -20,7 +16,6 @@ export function filmActor() {
 export function film() {
     return from('film')
         .columns('title', 'release_year')
-        .groupingId('film_id')
         .include({
             language: language()
                 .where({ language_id: col('film.language_id') })
@@ -37,13 +32,12 @@ export function film() {
 }
 
 export function city() {
-    return from('city').columns('city_id', 'city').groupingId('city_id');
+    return from('city').columns('city_id', 'city');
 }
 
 export function address() {
     return from('address')
         .columns('address_id', 'address')
-        .groupingId('address_id')
         .include({
             city: city()
                 .where({ city_id: col('address.city_id') })
@@ -54,7 +48,6 @@ export function address() {
 export function inventory() {
     return from('inventory')
         .columns('inventory_id')
-        .groupingId('inventory_id')
         .include({
             film: film()
                 .where({ film_id: col('inventory.film_id') })
@@ -75,7 +68,6 @@ export function inventory() {
 export function store() {
     return from('store')
         .columns('store_id', 'address_id')
-        .groupingId('store_id')
         .include({
             address: address()
                 .where({ address_id: col('store.address_id') })

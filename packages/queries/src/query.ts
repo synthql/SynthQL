@@ -5,6 +5,7 @@ import { Column } from './types/Column';
 import { Table } from './types/Table';
 import { DbSchema } from './types/DbSchema';
 import { getSelectableColumns } from './schema/getSelectableColumns';
+import { getPrimaryKey } from './schema/getPrimaryKey';
 
 export class QueryBuilder<
     DB,
@@ -334,6 +335,8 @@ export function query<DB>(schema: DbSchema<DB>) {
 
             const select = getSelectableColumns<DB>(schema, table);
 
+            const primaryKeys = getPrimaryKey<DB>(schema, table);
+
             return new QueryBuilder<
                 DB,
                 TTable,
@@ -342,8 +345,8 @@ export function query<DB>(schema: DbSchema<DB>) {
                 {},
                 'many',
                 undefined,
-                ['id']
-            >(table, {}, select, {}, undefined, 'many', undefined, ['id']);
+                typeof primaryKeys
+            >(table, {}, select, {}, undefined, 'many', undefined, primaryKeys);
         },
     };
 }

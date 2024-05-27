@@ -17,6 +17,10 @@ const schema = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                             },
                         },
                         name: {
@@ -24,6 +28,10 @@ const schema = {
                                 selectable: {
                                     type: 'boolean',
                                     const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
                                 },
                             },
                         },

@@ -25,7 +25,6 @@ describe('PgExecutor', () => {
         .where({
             film_id: { '= any': [2] },
         })
-        .groupingId('film_id')
         .one();
 
     it('compiles', () => {

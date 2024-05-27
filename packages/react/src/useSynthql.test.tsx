@@ -61,7 +61,6 @@ describe('useSynthql', () => {
         // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids and return all selectable columns.
 
         const q = from('actor')
-            .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
             .one();
 
@@ -88,7 +87,6 @@ describe('useSynthql', () => {
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
-            .groupingId('actor_id')
             .where({ actor_id: { in: [1] } })
             .maybe();
 
@@ -119,7 +117,6 @@ describe('useSynthql', () => {
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
-            .groupingId('actor_id')
             .where({ actor_id: { in: ids } })
             .many();
 
@@ -196,7 +193,6 @@ describe('useSynthql', () => {
 
         const store = from('store')
             .columns('store_id', 'address_id', 'manager_staff_id')
-            .groupingId('store_id')
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -210,7 +206,6 @@ describe('useSynthql', () => {
                 'last_name',
                 'email',
             )
-            .groupingId('customer_id')
             .where({ customer_id: { in: [1] } })
             .include({ store })
             .one();
@@ -244,7 +239,6 @@ describe('useSynthql', () => {
 
         const address = from('address')
             .columns('address_id', 'address', 'district')
-            .groupingId('address_id')
             .where({
                 address_id: col('store.address_id'),
             })
@@ -252,7 +246,6 @@ describe('useSynthql', () => {
 
         const store = from('store')
             .columns('store_id', 'address_id', 'manager_staff_id')
-            .groupingId('store_id')
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -267,7 +260,6 @@ describe('useSynthql', () => {
                 'last_name',
                 'email',
             )
-            .groupingId('customer_id')
             .where({ customer_id: { in: [4] } })
             .include({ store })
             .one();
@@ -307,7 +299,6 @@ describe('useSynthql', () => {
 
         const city = from('city')
             .columns('city_id', 'city')
-            .groupingId('city_id')
             .where({
                 city_id: col('address.city_id'),
             })
@@ -315,7 +306,6 @@ describe('useSynthql', () => {
 
         const address = from('address')
             .columns('address_id', 'city_id', 'address', 'district')
-            .groupingId('address_id')
             .where({
                 address_id: col('store.address_id'),
             })
@@ -324,7 +314,6 @@ describe('useSynthql', () => {
 
         const store = from('store')
             .columns('store_id', 'address_id', 'manager_staff_id')
-            .groupingId('store_id')
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -339,7 +328,6 @@ describe('useSynthql', () => {
                 'last_name',
                 'email',
             )
-            .groupingId('customer_id')
             .where({ customer_id: { in: [4] } })
             .include({ store })
             .one();

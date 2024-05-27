@@ -44,6 +44,10 @@ const schemaWithVirtualTables = {
                                     type: 'boolean',
                                     const: true,
                                 },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
                             },
                         },
                         rating: {
@@ -51,6 +55,10 @@ const schemaWithVirtualTables = {
                                 selectable: {
                                     type: 'boolean',
                                     const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
                                 },
                             },
                         },
@@ -150,7 +158,6 @@ describe('execute', () => {
     test('single provider', async () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
-            .groupingId('actor_id')
             .where({ actor_id: 1 })
             .one();
 
@@ -172,7 +179,6 @@ describe('execute', () => {
         function findFilmWithRating(filmId: number) {
             return from('film')
                 .columns('film_id', 'title')
-                .groupingId('film_id')
                 .where({ film_id: filmId })
                 .include({
                     rating: from('film_rating')
