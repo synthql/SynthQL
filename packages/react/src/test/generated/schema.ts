@@ -897,9 +897,9 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'any',
+                                    type: 'integer',
                                     description:
-                                        'The year enum from the public schema',
+                                        'The year domain from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -4802,9 +4802,9 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'any',
+                                    type: 'integer',
                                     description:
-                                        'The year enum from the public schema',
+                                        'The year domain from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7862,10 +7862,6 @@ export const schema = {
             type: 'string',
             description: 'A PG bytea',
         },
-        'public.year.domain': {
-            type: 'any',
-            description: 'The year enum from the public schema',
-        },
         'pg_catalog.uuid': {
             type: 'string',
             format: 'uuid',
@@ -7885,8 +7881,12 @@ export const schema = {
             description: 'The mpaa_rating enum from the public schema',
         },
         'public.bıgınt.domain': {
-            type: 'any',
-            description: 'The bıgınt enum from the public schema',
+            type: 'integer',
+            description: 'The bıgınt domain from the public schema',
+        },
+        'public.year.domain': {
+            type: 'integer',
+            description: 'The year domain from the public schema',
         },
     },
 } as const;
