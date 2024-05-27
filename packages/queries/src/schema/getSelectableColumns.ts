@@ -1,5 +1,6 @@
-import { ColumnSchema, DbSchema, TableSchema } from '../types/DbSchema';
+import { DbSchema } from '../types/DbSchema';
 import { Table } from '../types/Table';
+import { getColumnDefs, getTableDef, isSelectableColumn } from './getTableDefs';
 
 type SelectableColumnsType = Record<string, true>;
 
@@ -9,7 +10,7 @@ type SelectableColumnsType = Record<string, true>;
  * Example:
  *
  * ```ts
- * const select = getSelectableColumns(schema, 'actor');
+ * const select = getSelectableColumns<DB>(schema, 'actor');
  *
  * select =
  *   actor_id: true,
@@ -20,7 +21,7 @@ type SelectableColumnsType = Record<string, true>;
  * ```
  *
  * @param schema The generated schema object for the database
- * @param table The name of the table.
+ * @param table The name of the table
  */
 
 export function getSelectableColumns<DB>(
@@ -38,21 +39,4 @@ export function getSelectableColumns<DB>(
     }
 
     return select;
-}
-
-function getTableDef<DB>(
-    schema: DbSchema<DB>,
-    table: Table<DB>,
-): TableSchema<DB> {
-    return schema.properties[table];
-}
-
-function getColumnDefs<DB>(
-    tableDef: TableSchema<DB>,
-): [string, ColumnSchema][] {
-    return Object.entries(tableDef.properties.columns.properties);
-}
-
-function isSelectableColumn(columnDef: ColumnSchema): boolean {
-    return columnDef.properties.selectable.const;
 }

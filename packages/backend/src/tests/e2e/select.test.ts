@@ -124,7 +124,6 @@ describe('select', () => {
 
         const city = from('city')
             .select({ city_id: true, city: true })
-            .groupingId('city_id')
             .where({
                 city_id: col('address.city_id'),
             })
@@ -132,7 +131,6 @@ describe('select', () => {
 
         const address = from('address')
             .select({ address_id: true, address: true, city: true })
-            .groupingId('address_id')
             .where({
                 address_id: col('store.address_id'),
             })
@@ -143,7 +141,6 @@ describe('select', () => {
 
         const query = from('store')
             .select({ store_id: true })
-            .groupingId('store_id')
             .include({
                 address,
             })

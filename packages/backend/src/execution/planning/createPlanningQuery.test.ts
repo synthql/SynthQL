@@ -128,7 +128,6 @@ describe('createPlanningQuery', () => {
     test('sore => address => city', () => {
         const city = from('city')
             .columns('city_id', 'city')
-            .groupingId('city_id')
             .where({
                 city_id: col('address.city_id'),
             })
@@ -136,7 +135,6 @@ describe('createPlanningQuery', () => {
 
         const address = from('address')
             .columns('address_id', 'address')
-            .groupingId('address_id')
             .where({
                 address_id: col('store.address_id'),
             })
@@ -147,7 +145,6 @@ describe('createPlanningQuery', () => {
 
         const query = from('store')
             .select({ store_id: true })
-            .groupingId('store_id')
             .include({
                 address,
             })

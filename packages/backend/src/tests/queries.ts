@@ -6,14 +6,12 @@ export function from<TTable extends Table<DB>>(table: TTable) {
 }
 
 export function actor() {
-    return from('actor')
-        .select({
-            actor_id: true,
-            first_name: true,
-            last_name: true,
-            last_update: true,
-        })
-        .groupingId('actor_id');
+    return from('actor').select({
+        actor_id: true,
+        first_name: true,
+        last_name: true,
+        last_update: true,
+    });
 }
 
 export function findActorById(actorId: number) {
@@ -25,13 +23,11 @@ export function findActors() {
 }
 
 export function language() {
-    return from('language')
-        .select({
-            language_id: true,
-            name: true,
-            last_update: true,
-        })
-        .groupingId('language_id');
+    return from('language').select({
+        language_id: true,
+        name: true,
+        last_update: true,
+    });
 }
 
 export function findLanguageById(
@@ -58,18 +54,15 @@ export function movie() {
                     actor_id: col('film_actor.actor_id'),
                 })
                 .many(),
-        })
-        .groupingId('film_id');
+        });
 }
 
 export function country() {
-    return from('country')
-        .select({
-            country_id: true,
-            country: true,
-            last_update: true,
-        })
-        .groupingId('country_id');
+    return from('country').select({
+        country_id: true,
+        country: true,
+        last_update: true,
+    });
 }
 
 function findCountryById(id: WhereClause<DB, 'country', 'country_id'>) {
@@ -84,7 +77,6 @@ export function city() {
             last_update: true,
             country_id: true,
         })
-        .groupingId('city_id')
         .include({
             country: findCountryById(col('city.country_id')).one(),
         });

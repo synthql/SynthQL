@@ -21,5 +21,9 @@ export interface ColumnSchema {
             type: string;
             const: boolean;
         };
+        isPrimaryKey: {
+            type: string;
+            const: boolean;
+        };
     };
 }

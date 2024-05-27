@@ -21,7 +21,6 @@ describe.skip('e2e', () => {
         .many();
 
     const customers = from('customer')
-        .groupingId('customer_id')
         .columns('email', 'customer_id')
         .where({ store_id: col('store.store_id'), customer_id: 367 })
         .include({
@@ -35,7 +34,6 @@ describe.skip('e2e', () => {
             customers,
         })
         .where({ store_id: { in: [1] } })
-        .groupingId('store_id')
         .one();
 
     const pgExecutor = new PgExecutor({
