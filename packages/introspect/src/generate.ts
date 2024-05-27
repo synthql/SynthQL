@@ -7,6 +7,7 @@ import {
     TableColumnType,
     TableDetails,
 } from 'extract-pg-schema';
+
 import fs from 'fs';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import path from 'path';
@@ -261,14 +262,25 @@ function createDomainJsonSchema(
                 fullName: `${domain.schemaName}.${domain.name}`,
             })
         ] = {
-            // TODO: implement domain type
-            type: 'any',
+            type: domainType(domain.innerType),
             description:
                 domain.comment ??
-                `The ${domain.name} enum from the ${domain.schemaName} schema`,
+                `The ${domain.name} domain from the ${domain.schemaName} schema`,
         };
         return acc;
     }, empty);
+}
+
+function domainType(
+    domainInnerType: DomainDetails['innerType'],
+): JSONSchema['type'] {
+    if (domainInnerType === 'pg_catalog.int4') {
+        return 'integer';
+    } else if (domainInnerType === 'pg_catalog.int8') {
+        return 'integer';
+    } else {
+        return 'any';
+    }
 }
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
@@ -344,12 +356,6 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         'pg_catalog.bytea': {
             type: 'string',
             description: 'A PG bytea',
-        },
-        'public.year.domain': {
-            type: 'integer',
-            minimum: 1900,
-            maximum: 2155,
-            description: 'A PG year',
         },
         'pg_catalog.uuid': {
             type: 'string',

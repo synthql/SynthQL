@@ -2,7 +2,6 @@ import { describe, expect, test } from 'vitest';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 import { DB } from '../../../tests/generated';
 import { Table, col } from '@synthql/queries';
-import { not } from '../PgExecutor/queryBuilder/exp';
 
 describe('convertWhereToQueryProviderInput', () => {
     const supportedCases: Array<[expectedWhere: any, actualWhere: any]> = [
