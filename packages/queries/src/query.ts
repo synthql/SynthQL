@@ -333,11 +333,9 @@ export function query<DB>(schema: DbSchema<DB>) {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;
 
-            type TPrimaryKey = Array<string>;
-
             const select = getSelectableColumns<DB>(schema, table);
 
-            const primaryKey = getPrimaryKey<DB>(schema, table);
+            const primaryKeys = getPrimaryKey<DB>(schema, table);
 
             return new QueryBuilder<
                 DB,
@@ -347,10 +345,8 @@ export function query<DB>(schema: DbSchema<DB>) {
                 {},
                 'many',
                 undefined,
-                TPrimaryKey
-            >(table, {}, select, {}, undefined, 'many', undefined, [
-                primaryKey,
-            ]);
+                typeof primaryKeys
+            >(table, {}, select, {}, undefined, 'many', undefined, primaryKeys);
         },
     };
 }

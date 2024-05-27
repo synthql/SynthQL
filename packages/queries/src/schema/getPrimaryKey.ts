@@ -20,14 +20,16 @@ import { getColumnDefs, getTableDef, isPrimaryKeyColumn } from './getTableDefs';
 export function getPrimaryKey<DB>(
     schema: DbSchema<DB>,
     table: Table<DB>,
-): string {
+): Array<string> {
+    const primaryKeys: Array<string> = [];
+
     const tableDef = getTableDef<DB>(schema, table);
 
     for (const [columnName, columnDef] of getColumnDefs<DB>(tableDef)) {
         if (isPrimaryKeyColumn(columnDef)) {
-            return columnName;
+            primaryKeys.push(columnName);
         }
     }
 
-    return 'id';
+    return primaryKeys;
 }

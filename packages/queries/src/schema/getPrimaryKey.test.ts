@@ -6,6 +6,6 @@ describe('getPrimaryKey', () => {
     test('Get the primary key for a table', () => {
         const primaryKey = getPrimaryKey<DB>(schema, 'actor');
 
-        expect(primaryKey).toEqual('actor_id');
+        expect(primaryKey).toEqual(['actor_id']);
     });
 });
