@@ -4,6 +4,8 @@ import { DB } from '../../../tests/generated';
 import { Table, col } from '@synthql/queries';
 
 describe('convertWhereToQueryProviderInput', () => {
+    const date = new Date();
+
     const supportedCases: Array<[expectedWhere: any, actualWhere: any]> = [
         [{}, {}],
         [{ a: 1 }, { a: [1] }],
@@ -20,7 +22,7 @@ describe('convertWhereToQueryProviderInput', () => {
             { a: 1, b: 2 },
             { a: [1], b: [2] },
         ],
-        [{ a: new Date() }, { a: [new Date()] }],
+        [{ a: date }, { a: [date] }],
         [
             { a: true, b: false },
             { a: [true], b: [false] },
