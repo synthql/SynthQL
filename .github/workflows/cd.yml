@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
     push:
-        branches: [temporarily-disabled]
+        branches: [master]
 
 jobs:
     build:
@@ -37,12 +37,15 @@ jobs:
               run: yarn ci
 
             - name: Set Git user name
-              run: git config --global user.name "Fernando Hurtado"
+              run: git config --global user.name "github-actions[bot]"
 
             - name: Set Git user email
-              run: git config --global user.email "fernandohur@gmail.com"
+              run: git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            - name: Set Git remote URL
+              run: git remote add origin ${{ github.repositoryUrl }}
 
             - name: Publish package to NPM
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: yarn pub
+              run: yarn publish-minor-versions
