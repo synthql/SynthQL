@@ -37,10 +37,16 @@ jobs:
               run: yarn ci
 
             - name: Set Git user name
-              run: git config --global user.name "github-actions[bot]"
+              run: git config user.name "github-actions[bot]"
 
             - name: Set Git user email
-              run: git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              run: git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            - name: See refs
+              run: git branch -b
+
+            - name: Fetch refs
+              run: git fetch
 
             - name: Checkout to master
               run: git checkout master
