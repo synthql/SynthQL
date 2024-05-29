@@ -47,13 +47,13 @@ packagesToUpdate.forEach((packageName, index, packages) => {
             stdio: 'inherit',
         });
     } catch (error) {
-        for (const i = index; i >= 0; i--) {
+        for (let i = index; i >= 0; i--) {
             try {
                 const pkgName = packages[i];
                 const pkgDir = pkgName.replace('@synthql/', '');
                 const pkgPath = `./packages/${pkgDir}`;
 
-                execSync(`npm unpublish ${pkgName}@${nextVersion}.`, {
+                execSync(`npm unpublish ${pkgName}@${nextVersion}`, {
                     cwd: pkgPath,
                     stdio: 'inherit',
                 });
@@ -77,7 +77,7 @@ execSync(`git add .`, {
 });
 
 // Commit the changes
-execSync(`git commit -m "release: v${nextVersion}"`, {
+execSync(`git commit -m "[skip actions]-release: v${nextVersion}"`, {
     stdio: 'inherit',
 });
 
