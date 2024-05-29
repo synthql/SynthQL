@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
     push:
-        branches-ignore: [master]
+        branches: [master]
 
 permissions:
     contents: write
