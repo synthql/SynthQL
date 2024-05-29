@@ -39,6 +39,8 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn ci
 
+            # We use the name and email for the GitHub Actions bot, as provided via this link: https://api.github.com/users/github-actions%5Bbot%5D
+
             - name: Set Git user name
               run: git config user.name "github-actions[bot]"
 
