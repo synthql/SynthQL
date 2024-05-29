@@ -1,7 +1,7 @@
 {
     "name": "@synthql/root",
     "type": "module",
-    "version": "0.46.4",
+    "version": "0.50.4",
     "license": "MIT",
     "private": true,
     "workspaces": [
@@ -9,16 +9,16 @@
     ],
     "scripts": {
         "link:pkg": "yarn nx run-many -t link:pkg",
-        "format:root": "yarn prettier --write .",
         "format": "yarn prettier --write .",
+        "format:root": "yarn prettier --write .",
         "typecheck": "yarn nx run-many -t typecheck",
         "test:ci": "yarn nx run-many -t test:ci",
         "build": "yarn nx run-many -t build",
         "build:docs": "yarn nx build @synthql/docs",
-        "compile-executable-examples": "yarn nx run-many -t compile-executable-examples",
         "ci": "yarn nx run-many -t typecheck test:ci build",
         "ci:force": "yarn nx run-many --skip-nx-cache -t typecheck test:ci build",
-        "pub": "node ./scripts/publish.cjs"
+        "compile-executable-examples": "yarn nx run-many -t compile-executable-examples",
+        "publish-minor-versions": "node ./scripts/publish-minor-versions.cjs"
     },
     "devDependencies": {
         "nx": "18.2.1",

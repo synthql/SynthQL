@@ -2,10 +2,13 @@ name: Continuous Deployment
 
 on:
     push:
-        branches: [temporarily-disabled]
+        branches: [master]
+
+permissions:
+    contents: write
 
 jobs:
-    build:
+    publish:
         runs-on: ubuntu-latest
 
         steps:
@@ -36,13 +39,15 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn ci
 
+            # We use the name and email for the GitHub Actions bot, as provided via this link: https://api.github.com/users/github-actions%5Bbot%5D
+
             - name: Set Git user name
-              run: git config --global user.name "Fernando Hurtado"
+              run: git config user.name "github-actions[bot]"
 
             - name: Set Git user email
-              run: git config --global user.email "fernandohur@gmail.com"
+              run: git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
             - name: Publish package to NPM
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: yarn pub
+              run: yarn publish-minor-versions
