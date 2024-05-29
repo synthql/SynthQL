@@ -42,18 +42,6 @@ jobs:
             - name: Set Git user email
               run: git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-            - name: See refs
-              run: git branch -r
-
-            - name: Fetch refs
-              run: git fetch
-
-            - name: Checkout to master
-              run: git checkout master
-
-            # - name: Set Git remote URL
-            #   run: git remote add origin ${{ github.repositoryUrl }}
-
             - name: Publish package to NPM
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

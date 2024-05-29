@@ -82,7 +82,7 @@ execSync(`git commit -m "release: v${nextVersion}"`, {
 });
 
 // Push the changes
-execSync(`git push origin master`, {
+execSync(`git push`, {
     stdio: 'inherit',
 });
 
