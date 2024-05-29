@@ -1,7 +1,7 @@
 {
     "name": "@synthql/root",
     "type": "module",
-    "version": "0.50.4",
+    "version": "0.51.4",
     "license": "MIT",
     "private": true,
     "workspaces": [
@@ -10,7 +10,6 @@
     "scripts": {
         "link:pkg": "yarn nx run-many -t link:pkg",
         "format": "yarn prettier --write .",
-        "format:root": "yarn prettier --write .",
         "typecheck": "yarn nx run-many -t typecheck",
         "test:ci": "yarn nx run-many -t test:ci",
         "build": "yarn nx run-many -t build",
