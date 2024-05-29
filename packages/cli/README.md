@@ -2,10 +2,19 @@
 
 The SynthQL CLI.
 
-## Generate types from database
+## Generate types from your PG database
+
+To generate types from your PG database schema, use the `generate` command.
 
 ```sh
-synthql generate --connectionString=postgres://postgres:postgres@localhost:5432/postgres --out=src --defaultSchema=public --schemas public pg_catalog
+synthql generate \
+    # The PG connection string.
+    --connectionString=postgres://postgres:postgres@localhost:5432/postgres \
+    # The path where types will be generated to
+    --out=src \
+    --defaultSchema=public \
+    # The schemas to include. Separate every schema with a space.
+    --schemas public pg_catalog
 ```
 
 ## Links
