@@ -42,8 +42,11 @@ jobs:
             - name: Set Git user email
               run: git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-            - name: Set Git remote URL
-              run: git remote add origin ${{ github.repositoryUrl }}
+            - name: Echo git remote
+              run: git remote -v
+
+            # - name: Set Git remote URL
+            #   run: git remote add origin ${{ github.repositoryUrl }}
 
             - name: Publish package to NPM
               env:
