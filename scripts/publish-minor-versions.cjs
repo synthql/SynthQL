@@ -67,7 +67,7 @@ packagesToUpdate.forEach((packageName, index, packages) => {
 });
 
 // Format the results using Prettier
-execSync(`yarn format:root`, {
+execSync(`yarn format`, {
     stdio: 'inherit',
 });
 
