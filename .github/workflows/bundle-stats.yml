@@ -2,8 +2,9 @@ name: Comment with HTML on Commit
 
 on:
   push:
-    branches:
-      - main  # Adjust this if you want to target a different branch
+    branches-ignore:
+      - master
+      - gh-pages
 
 jobs:
   generate-and-comment:
