@@ -31,7 +31,7 @@ export default defineConfig({
                     deps: true,
                     peerDeps: true,
                 }),
-                visualizer({ filename: "./build/stats.html" })
+                visualizer({ filename: './build/stats.html' }),
             ],
         },
     },
