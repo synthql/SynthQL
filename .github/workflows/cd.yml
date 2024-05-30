@@ -14,13 +14,7 @@ jobs:
         name: Run CD
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 18
-                  cache: yarn
+            - uses: actions/checkout@v2
 
             - name: Set up database
               run: |
@@ -28,7 +22,7 @@ jobs:
                   ./setup-db.bash
 
             - name: Cache yarn dependencies
-              uses: actions/cache@v4
+              uses: actions/cache@v2
               with:
                   path: |
                       **/node_modules
