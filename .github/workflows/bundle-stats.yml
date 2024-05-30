@@ -7,7 +7,7 @@ on:
             - gh-pages
 
 jobs:
-    generate-and-comment:
+    comment-with-bundle-stats:
         runs-on: ubuntu-latest
 
         steps:
