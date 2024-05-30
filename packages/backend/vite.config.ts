@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import packageJson from './package.json';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const resolveXqlAliases = Object.keys(packageJson.dependencies)
     .filter((dep) => dep.startsWith('@synthql/'))
@@ -30,6 +31,7 @@ export default defineConfig({
                     deps: true,
                     peerDeps: true,
                 }),
+                visualizer({ filename: "./build/stats.html" })
             ],
         },
     },
