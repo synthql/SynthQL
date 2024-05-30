@@ -28,24 +28,14 @@ jobs:
                   html_content=$(cat output.html)
                   echo "::set-output name=html_content::$html_content"
 
-            - name: Find Comment
-              uses: peter-evans/find-comment@v3
-              id: fc
-              with:
-                  issue-number: ${{ github.event.pull_request.number }}
-                  comment-author: 'github-actions[bot]'
-                  body-includes: Bundle Stats
-
-            - name: Create or update comment
+            - name: Create comment
               uses: peter-evans/create-or-update-comment@v4
               with:
-                  comment-id: ${{ steps.fc.outputs.comment-id }}
-                  issue-number: ${{ github.event.pull_request.number }}
-                  body: |
-                      Build output
+                issue-number: 1
+                body: |
+                    This is a multi-line test comment
+                    - With GitHub **Markdown** :sparkles:
+                    - Created by [create-or-update-comment][1]
 
-                      <details>
-                        <summary>Bundle Stats</summary>
-                        <p> more details </p>
-                      </details>
-                  edit-mode: replace
+                    [1]: https://github.com/peter-evans/create-or-update-comment
+                reactions: '+1'
