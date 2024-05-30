@@ -1,0 +1,59 @@
+name: Continuous Benchmarking
+
+on:
+    push:
+
+permissions:
+    contents: write
+    deployments: write
+
+jobs:
+    cb:
+        name: Run TypeScript benchmark example
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+                  cache: yarn
+
+            - name: Set up database
+              run: |
+                  chmod +x ./setup-db.bash
+                  ./setup-db.bash
+
+            - name: Cache yarn dependencies
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      **/node_modules
+                      .yarn/cache
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Install dependencies
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn install
+
+            - name: Run CI tasks (which contain benchmark test files)
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn ci
+
+            - name: Store benchmark result
+              uses: benchmark-action/github-action-benchmark@v1
+              with:
+                  name: Benchmark.js Benchmark
+                  tool: 'benchmarkjs'
+                  output-file-path: packages/backend/src/tests/benchmarks/output.txt
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  auto-push: ${{ github.ref_name == 'master'}}
+                  alert-threshold: '200%'
+                  comment-on-alert: true
+                  fail-on-alert: true
+                  alert-comment-cc-users: '@fhur, @jimezesinachi'
