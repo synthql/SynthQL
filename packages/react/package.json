@@ -1,6 +1,11 @@
 {
     "name": "@synthql/react",
+    "type": "module",
     "version": "0.50.4",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/SynthQL.git"
@@ -9,12 +14,18 @@
         "build",
         "README.md"
     ],
-    "type": "module",
-    "main": "build/src/index.cjs",
-    "module": "build/src/index.js",
-    "types": "build/types/src/index.d.ts",
-    "sideEffects": false,
     "license": "MIT",
+    "scripts": {
+        "link:pkg": "yarn link",
+        "test": "vitest --globals",
+        "test:ci": "CI=1 vitest run --globals",
+        "typecheck": "tsc",
+        "build": "vite build --mode production",
+        "checks": "yarn vitest run && yarn tsc",
+        "publish:minor": "yarn publish --access public --no-git-tag-version",
+        "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
+        "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthqlExamples.test.tsx"
+    },
     "dependencies": {
         "@synthql/backend": "0.50.4",
         "@synthql/cli": "0.50.4",
@@ -25,23 +36,12 @@
         "@testing-library/react-hooks": "^8.0.1",
         "jsdom": "^24.0.0",
         "react": "^17 || ^18",
+        "rollup-plugin-node-externals": "^7.1.1",
         "vitest": "^1.1.0",
         "typescript": "^5.4.5"
     },
     "peerDependencies": {
         "@tanstack/react-query": "^4",
         "react": "^17"
-    },
-    "scripts": {
-        "link:pkg": "yarn link",
-        "test": "vitest --globals",
-        "test:ci": "CI=1 vitest run --globals",
-        "typecheck": "tsc",
-        "build": "vite build --mode production",
-        "checks": "yarn vitest run && yarn tsc",
-        "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
-        "generate-types": "synthql generate --out=src/test",
-        "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthqlExamples.test.tsx"
     }
 }
