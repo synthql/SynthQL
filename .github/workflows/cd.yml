@@ -3,7 +3,6 @@ name: Continuous Deployment
 on:
     push:
         branches: [master-test]
-
 jobs:
     cd:
         name: Run CD
@@ -13,7 +12,6 @@ jobs:
             packages: 'write'
             actions: 'read'
         environment: actions
-
         steps:
             - name: Create GitHub App token
               uses: actions/create-github-app-token@v1
