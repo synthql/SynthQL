@@ -1,6 +1,11 @@
 {
     "name": "@synthql/queries",
-    "description": "",
+    "type": "module",
+    "version": "0.58.4",
+    "main": "build/src/index.cjs",
+    "module": "build/src/index.js",
+    "types": "build/types/src/index.d.ts",
+    "sideEffects": false,
     "repository": {
         "type": "git",
         "url": "git@github.com:synthql/SynthQL.git"
@@ -13,16 +18,7 @@
         "build",
         "README.md"
     ],
-    "homepage": "https://github.com/synthql/SynthQL#readme",
-    "type": "module",
-    "private": false,
-    "version": "0.58.4",
-    "main": "build/src/index.cjs",
-    "module": "build/src/index.js",
-    "types": "build/types/src/index.d.ts",
-    "sideEffects": false,
     "license": "MIT",
-    "dependencies": {},
     "scripts": {
         "link:pkg": "yarn link",
         "test": "vitest --globals",
@@ -33,7 +29,9 @@
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
+    "dependencies": {},
     "devDependencies": {
+        "rollup-plugin-node-externals": "^7.1.1",
         "typescript": "^5.4.5",
         "vitest": "^1.1.0"
     }

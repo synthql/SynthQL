@@ -25,8 +25,9 @@ export default defineConfig({
         rollupOptions: {
             plugins: [
                 nodeExternals({
-                    devDeps: true,
                     deps: true,
+                    devDeps: true,
+                    optDeps: true,
                     peerDeps: true,
                 }),
             ],
