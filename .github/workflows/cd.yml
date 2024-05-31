@@ -12,6 +12,8 @@ jobs:
             contents: 'write'
             packages: 'write'
             actions: 'read'
+        environment: actions
+
         steps:
             - name: Create GitHub App token
               uses: actions/create-github-app-token@v1
