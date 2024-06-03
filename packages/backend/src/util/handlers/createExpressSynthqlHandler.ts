@@ -2,7 +2,6 @@ import { QueryEngine, SynthqlError, collectLast } from '../..';
 import type { Request, Response } from 'express';
 
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
-
 export type ExpressSynthqlHandlerResponse = Pick<
     Response,
     'statusCode' | 'write' | 'setHeader' | 'end'
@@ -45,7 +44,10 @@ async function tryParseBody(body: any) {
     try {
         return JSON.parse(body);
     } catch (e) {
-        throw e;
+        throw SynthqlError.createJsonParsingError({
+            error: e,
+            json: body,
+        });
     }
 }
 
@@ -94,12 +96,12 @@ async function writeQueryResultToResponse(
 
 async function writeErrorToResponse(
     res: ExpressSynthqlHandlerResponse,
-    err: any,
+    err: SynthqlError,
 ) {
     try {
         res.statusCode = 400;
         res.setHeader('Content-Type', 'application/json');
-        res.write(JSON.stringify({ error: String(err) }));
+        res.write(JSON.stringify({ error: err.message, json: err.type.json }));
         res.end();
     } catch (e) {
         throw e;

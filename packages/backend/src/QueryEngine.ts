@@ -103,14 +103,40 @@ export class QueryEngine<DB> {
 
 export class SynthqlError extends Error {
     constructor(
-        public sql: string,
-        public json: any,
         err: Error | any,
+        public type: {
+            sql?: string;
+            json?: any;
+        },
     ) {
         super(err?.message);
     }
 
-    createConnectionError({ error }: { error: any }) {}
-    createSqlError({ error, sql }: { error: any; sql: string }) {}
-    createJsonParsingError({ error, json }: { error: any; json: any }) {}
+    static createConnectionError({ error }: { error: any }): SynthqlError {
+        return new SynthqlError(error, {});
+    }
+
+    static createSqlError({
+        error,
+        sql,
+    }: {
+        error: any;
+        sql: string;
+    }): SynthqlError {
+        return new SynthqlError(error, {
+            sql,
+        });
+    }
+
+    static createJsonParsingError({
+        error,
+        json,
+    }: {
+        error: any;
+        json: any;
+    }): SynthqlError {
+        return new SynthqlError(error, {
+            json,
+        });
+    }
 }
