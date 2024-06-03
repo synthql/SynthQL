@@ -1,5 +1,6 @@
 import { QueryEngine, SynthqlError, collectLast } from '../..';
 import type { Request, Response } from 'express';
+import { SqlExecutionError } from '../../execution/executors/SqlExecutionError';
 
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 export type ExpressSynthqlHandlerResponse = Pick<
@@ -63,7 +64,14 @@ async function tryExecuteQuery<T>(
             return queryEngine.execute(query);
         }
     } catch (e) {
-        throw e;
+        if (e instanceof SqlExecutionError) {
+            throw SynthqlError.createSqlError({
+                error: e,
+                sql: e.message,
+            });
+        } else {
+            throw e;
+        }
     }
 }
 
@@ -101,7 +109,18 @@ async function writeErrorToResponse(
     try {
         res.statusCode = 400;
         res.setHeader('Content-Type', 'application/json');
-        res.write(JSON.stringify({ error: err.message, json: err.type.json }));
+        res.write(
+            JSON.stringify({
+                errorType: err.type.json
+                    ? 'JSON query parse error'
+                    : err.type.sql
+                      ? 'SQL query execution error'
+                      : '',
+                fullErrorStack: String(err),
+                json: err.type.json,
+                sql: err.type.sql,
+            }),
+        );
         res.end();
     } catch (e) {
         throw e;

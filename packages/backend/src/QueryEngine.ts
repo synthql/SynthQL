@@ -56,6 +56,7 @@ export class QueryEngine<DB> {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
         });
+
         if (opts?.returnLastOnly) {
             return generateLast(gen);
         }
