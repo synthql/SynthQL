@@ -21,6 +21,7 @@ export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
     private executors: Array<QueryExecutor> = [];
+
     constructor(private config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
         this.pool =
@@ -100,11 +101,16 @@ export class QueryEngine<DB> {
     }
 }
 
-class SqlError extends Error {
+export class SynthqlError extends Error {
     constructor(
         public sql: string,
+        public json: any,
         err: Error | any,
     ) {
         super(err?.message);
     }
+
+    createConnectionError({ error }: { error: any }) {}
+    createSqlError({ error, sql }: { error: any; sql: string }) {}
+    createJsonParsingError({ error, json }: { error: any; json: any }) {}
 }
