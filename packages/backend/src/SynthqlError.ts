@@ -56,6 +56,29 @@ export class SynthqlError extends Error {
         return new SynthqlError(error, type, message);
     }
 
+    static createResponseStreamingError({
+        error,
+        query,
+    }: {
+        error: any;
+        query: any;
+    }): SynthqlError {
+        const type = 'ResponseStreamingError';
+
+        const lines = [
+            'Response streaming error!',
+            '',
+            'Failure while streaming back the results for the query:',
+            '',
+            query,
+            '',
+            'Check your query and make sure you have `read` access to all included',
+            'tables and columns, and have registered all queries via the QueryEngine',
+        ];
+
+        return new SynthqlError(error, type, lines.join('\n'));
+    }
+
     static createJsonParsingError({
         error,
         json,
