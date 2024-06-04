@@ -1,6 +1,6 @@
-import { QueryEngine, SynthqlError, collectLast } from '../..';
+import { QueryEngine } from '../..';
 import type { Request, Response } from 'express';
-import { SqlExecutionError } from '../../execution/executors/SqlExecutionError';
+import { SynthqlError } from '../../SynthqlError';
 
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 export type ExpressSynthqlHandlerResponse = Pick<
@@ -28,11 +28,11 @@ export function createExpressSynthqlHandler<T>(
                 returnLastOnly,
             );
 
-            writeQueryResultToResponse(res, queryResult, returnLastOnly);
+            await writeQueryResultToResponse(res, queryResult);
         } catch (e) {
             if (e instanceof SynthqlError) {
-                // If it's a known error, write it to the response
-                writeErrorToResponse(res, e);
+                // If it's a SynthQL error, write it to the response
+                await writeErrorToResponse(res, e);
             } else {
                 // If it's an unknown error, just throw it so some other layer can handle it
                 throw e;
@@ -41,7 +41,7 @@ export function createExpressSynthqlHandler<T>(
     };
 }
 
-async function tryParseBody(body: any) {
+async function tryParseBody(body: string) {
     try {
         return JSON.parse(body);
     } catch (e) {
@@ -57,72 +57,34 @@ async function tryExecuteQuery<T>(
     query: any,
     returnLastOnly: boolean,
 ) {
-    try {
-        if (returnLastOnly) {
-            return collectLast(queryEngine.execute(query, { returnLastOnly }));
-        } else {
-            return queryEngine.execute(query);
-        }
-    } catch (e) {
-        if (e instanceof SqlExecutionError) {
-            throw SynthqlError.createSqlError({
-                error: e,
-                sql: e.message,
-            });
-        } else {
-            throw e;
-        }
+    if (returnLastOnly) {
+        return queryEngine.execute(query, { returnLastOnly });
+    } else {
+        return queryEngine.execute(query);
     }
 }
 
 async function writeQueryResultToResponse(
     res: ExpressSynthqlHandlerResponse,
     result: any,
-    returnLastOnly: boolean,
 ) {
-    try {
-        if (returnLastOnly) {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.write(JSON.stringify(result));
-            res.end();
-        } else {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/x-ndjson');
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/x-ndjson');
 
-            for await (const intermediateResult of result) {
-                res.write(JSON.stringify(intermediateResult));
-                res.write('\n');
-            }
-
-            res.end();
-        }
-    } catch (e) {
-        throw e;
+    for await (const intermediateResult of result) {
+        res.write(JSON.stringify(intermediateResult));
+        res.write('\n');
     }
+
+    res.end();
 }
 
 async function writeErrorToResponse(
     res: ExpressSynthqlHandlerResponse,
     err: SynthqlError,
 ) {
-    try {
-        res.statusCode = 400;
-        res.setHeader('Content-Type', 'application/json');
-        res.write(
-            JSON.stringify({
-                errorType: err.type.json
-                    ? 'JSON query parse error'
-                    : err.type.sql
-                      ? 'SQL query execution error'
-                      : '',
-                fullErrorStack: String(err),
-                json: err.type.json,
-                sql: err.type.sql,
-            }),
-        );
-        res.end();
-    } catch (e) {
-        throw e;
-    }
+    res.statusCode = 400;
+    res.setHeader('Content-Type', 'application/json');
+    res.write(JSON.stringify({ type: err.type, message: err.message }));
+    res.end();
 }

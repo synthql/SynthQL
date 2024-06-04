@@ -7,8 +7,8 @@ import { execute } from './execution/execute';
 import { QueryExecutor } from './execution/types';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { PgExecutor } from './execution/executors/PgExecutor';
-import { SqlExecutionError } from './execution/executors/SqlExecutionError';
 import { generateLast } from './util/generators/generateLast';
+import { SynthqlError } from './SynthqlError';
 
 export interface QueryEngineProps<DB> {
     url?: string;
@@ -92,52 +92,10 @@ export class QueryEngine<DB> {
             const result = await this.pool.query(explainQuery, params);
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
-            throw new SqlExecutionError({
-                err,
-                params,
-                sql,
-                query,
+            throw SynthqlError.createSqlExecutionError({
+                error: err,
+                props: { params, sql, query },
             });
         }
-    }
-}
-
-export class SynthqlError extends Error {
-    constructor(
-        err: Error | any,
-        public type: {
-            sql?: string;
-            json?: any;
-        },
-    ) {
-        super(err?.message);
-    }
-
-    static createConnectionError({ error }: { error: any }): SynthqlError {
-        return new SynthqlError(error, {});
-    }
-
-    static createSqlError({
-        error,
-        sql,
-    }: {
-        error: any;
-        sql: string;
-    }): SynthqlError {
-        return new SynthqlError(error, {
-            sql,
-        });
-    }
-
-    static createJsonParsingError({
-        error,
-        json,
-    }: {
-        error: any;
-        json: any;
-    }): SynthqlError {
-        return new SynthqlError(error, {
-            json,
-        });
     }
 }

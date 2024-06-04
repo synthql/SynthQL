@@ -6,9 +6,9 @@ import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { AnyQuery } from '../../../types';
 import { QueryExecutor } from '../../types';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
-import { SqlExecutionError } from '../SqlExecutionError';
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
+import { SynthqlError } from '../../../SynthqlError';
 
 type PgQueryResult = {
     [key: string]: any;
@@ -58,11 +58,9 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
             return hydrate(rows, augmentedQuery) as Array<PgQueryResult>;
         } catch (err) {
-            throw new SqlExecutionError({
-                err,
-                sql,
-                params,
-                query,
+            throw SynthqlError.createSqlExecutionError({
+                error: err,
+                props: { params, sql, query },
             });
         }
     }
