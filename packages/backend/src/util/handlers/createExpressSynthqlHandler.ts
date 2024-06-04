@@ -18,13 +18,13 @@ export function createExpressSynthqlHandler<T>(
 ): ExpressSynthqlHandler {
     return async (req, res) => {
         // First, there should be a global error handler that catches all errors
-        // 1. Known errors (i.e. SynthqlErrors) should be converted to a JSON response
+        // 1. Known errors (i.e. `SynthqlError`s) should be converted to a JSON response
         // 2. Unknown errors should be passed on to the next layer
 
         try {
             await executeSynthqlRequest<T>(queryEngine, req, res);
         } catch (e) {
-            // Handle known SynthqlErrors
+            // Handle known `SynthqlError`s
             if (e instanceof SynthqlError) {
                 res.status(400).json({
                     type: e.type,
@@ -43,7 +43,7 @@ async function executeSynthqlRequest<T>(
     req: ExpressSynthqlHandlerRequest,
     res: ExpressSynthqlHandlerResponse,
 ) {
-    // first try to parse the request body as JSON
+    // First try to parse the request body as JSON
     const { query, returnLastOnly } = await tryParseRequest(req);
 
     // We don't do this yet, but eventually we'll want to validate the request
@@ -56,8 +56,9 @@ async function executeSynthqlRequest<T>(
         returnLastOnly,
     );
 
-    // now that we have the generator we want to iterate over the items and
-    // depending on returnLastOnly we will write the status code before, or after iteration
+    // Now that we have the generator, we want to iterate over the items
+    // and depending on `returnLastOnly`, we will write the status code
+    // either before, or after iteration
     await writeBody(res, query, resultGenerator, returnLastOnly);
 
     res.end();
@@ -107,7 +108,9 @@ async function writeBody(
         res.write(JSON.stringify(lastResult));
     } else {
         try {
-            // This is a streaming request, so counterintuitively we always need to return 2xx
+            // This is a streaming request, so albeit
+            // counterintuitively, we always need to return 2xx
+
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/x-ndjson');
 
@@ -116,9 +119,12 @@ async function writeBody(
                 res.write('\n');
             }
         } catch (e) {
-            // First, wrap the error in a SynthqlError to capture the fact that it happened during streaming
-            // The `e` can be of any type, but in case its an error we want to preserve the stack trace
-            // and any other information that might be useful for debugging
+            // First, wrap the error in a SynthqlError to capture
+            // the fact that it happened during streaming
+
+            // The `e` can be of any type, but in case its an error,
+            // we want to preserve the stack trace and any other
+            // information that might be useful for debugging
 
             const error = SynthqlError.createResponseStreamingError({
                 error: e,
