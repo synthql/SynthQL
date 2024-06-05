@@ -7,14 +7,13 @@ export type ExpressSynthqlHandlerResponse = Pick<
     Response,
     'statusCode' | 'status' | 'write' | 'setHeader' | 'end'
 >;
-
 export type ExpressSynthqlHandler = (
     req: ExpressSynthqlHandlerRequest,
     res: ExpressSynthqlHandlerResponse,
-) => void;
+) => Promise<void>;
 
-export function createExpressSynthqlHandler<T>(
-    queryEngine: QueryEngine<T>,
+export function createExpressSynthqlHandler<DB>(
+    queryEngine: QueryEngine<DB>,
 ): ExpressSynthqlHandler {
     return async (req, res) => {
         // First, there should be a global error handler that catches all errors
@@ -22,14 +21,19 @@ export function createExpressSynthqlHandler<T>(
         // 2. Unknown errors should be passed on to the next layer
 
         try {
-            await executeSynthqlRequest<T>(queryEngine, req, res);
+            await executeSynthqlRequest<DB>(queryEngine, req, res);
         } catch (e) {
             // Handle known `SynthqlError`s
             if (e instanceof SynthqlError) {
-                res.status(400).json({
-                    type: e.type,
-                    error: e.message,
-                });
+                res.statusCode = 400;
+                res.setHeader('Content-Type', 'application/json');
+
+                res.write(
+                    JSON.stringify({
+                        type: e.type,
+                        error: e.message,
+                    }),
+                );
             } else {
                 // Let another layer handle the error
                 throw e;
@@ -38,8 +42,8 @@ export function createExpressSynthqlHandler<T>(
     };
 }
 
-async function executeSynthqlRequest<T>(
-    queryEngine: QueryEngine<T>,
+async function executeSynthqlRequest<DB>(
+    queryEngine: QueryEngine<DB>,
     req: ExpressSynthqlHandlerRequest,
     res: ExpressSynthqlHandlerResponse,
 ) {
@@ -50,7 +54,7 @@ async function executeSynthqlRequest<T>(
     // const validatedQuery = await tryValidateSynthqlQuery(query);
 
     // Execute the query, but just to get the initial generator
-    const resultGenerator = await tryExecuteQuery<T>(
+    const resultGenerator = await tryExecuteQuery<DB>(
         queryEngine,
         query,
         returnLastOnly,
@@ -80,16 +84,12 @@ async function tryParseRequest(req: ExpressSynthqlHandlerRequest) {
     }
 }
 
-async function tryExecuteQuery<T>(
-    queryEngine: QueryEngine<T>,
+async function tryExecuteQuery<DB>(
+    queryEngine: QueryEngine<DB>,
     query: any,
     returnLastOnly: boolean,
 ) {
-    if (returnLastOnly) {
-        return queryEngine.execute(query, { returnLastOnly });
-    } else {
-        return queryEngine.execute(query);
-    }
+    return queryEngine.execute(query, { returnLastOnly });
 }
 
 async function writeBody(

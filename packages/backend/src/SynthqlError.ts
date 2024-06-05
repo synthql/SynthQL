@@ -61,7 +61,7 @@ export class SynthqlError extends Error {
         query,
     }: {
         error: any;
-        query: any;
+        query: AnyQuery;
     }): SynthqlError {
         const type = 'ResponseStreamingError';
 
@@ -70,7 +70,7 @@ export class SynthqlError extends Error {
             '',
             'Failure while streaming back the results for the query:',
             '',
-            query,
+            JSON.stringify(query, null, 2),
             '',
             'Check your query and make sure you have `read` access to all included',
             'tables and columns, and have registered all queries via the QueryEngine',
