@@ -5,7 +5,7 @@ import { SynthqlError } from '../../SynthqlError';
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 export type ExpressSynthqlHandlerResponse = Pick<
     Response,
-    'statusCode' | 'status' | 'write' | 'setHeader' | 'end'
+    'statusCode' | 'write' | 'setHeader' | 'end'
 >;
 export type ExpressSynthqlHandler = (
     req: ExpressSynthqlHandlerRequest,

@@ -362,11 +362,6 @@ function initReq(
 function initRes(): ExpressSynthqlHandlerResponse {
     return {
         statusCode: 0,
-        status: (code: number): Response<any, Record<string, any>> => {
-            return {
-                json: (body?: any) => {},
-            } as any;
-        },
         write: (
             chunk: any,
             arg1?: BufferEncoding | ((error: Error | null | undefined) => void),
