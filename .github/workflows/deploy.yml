@@ -104,7 +104,7 @@ jobs:
               run: |
                   cp -r packages/docs/build/ ./
                   git add .
-                  git commit -m "build: updated build files"
+                  git commit -m "build: updated build files" || echo "Ignored commit failure, proceeding"
                   git push
 
             - name: Store benchmark result
