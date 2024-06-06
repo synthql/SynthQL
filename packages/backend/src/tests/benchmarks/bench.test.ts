@@ -10,7 +10,6 @@ import path from 'path';
 describe('Benchmark tests', () => {
     test(`Find matching rows`, async () => {
         const suite = new Benchmark.Suite();
-
         const lines: Array<string> = [];
 
         suite
@@ -75,7 +74,12 @@ describe('Benchmark tests', () => {
             .run();
 
         // Write to output file
-        const filePath = path.resolve(__dirname, 'generated/output.txt');
-        fs.writeFileSync(filePath, lines.join('\n'));
+        const dir = path.resolve(__dirname, 'generated');
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        fs.writeFileSync(path.join(dir, 'output.txt'), lines.join('\n'));
     });
 });
