@@ -88,8 +88,24 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn build
 
+            # We use the name and email for the GitHub Actions bot, as provided via this link: https://api.github.com/users/github-actions%5Bbot%5D
+            - name: Set Git user
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
             - name: Discard any changes
               run: git restore .
+
+            - name: Switch branch to gh-pages branch
+              run: git switch gh-pages
+
+            - name: Commit updated build files to gh-pages branch
+              run: |
+                  cp -r packages/docs/build/ ./
+                  git add .
+                  git commit -m "build: updated build files"
+                  git push
 
             - name: Store benchmark result
               uses: benchmark-action/github-action-benchmark@v1
