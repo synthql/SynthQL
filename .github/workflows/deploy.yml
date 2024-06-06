@@ -122,7 +122,7 @@ jobs:
                   fail-threshold: '200%'
                   alert-comment-cc-users: '@fhur, @jimezesinachi'
 
-            - name: Switch to gh-pages branch
+            - name: Switch branch to gh-pages branch
               run: git switch gh-pages
 
             - name: Upload Build Artifact
