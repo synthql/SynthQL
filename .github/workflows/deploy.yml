@@ -101,6 +101,11 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn build
 
+            - name: Discard any changes
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: git restore
+
             - name: Store benchmark result
               uses: benchmark-action/github-action-benchmark@v1
               with:
@@ -112,4 +117,5 @@ jobs:
                   alert-threshold: '200%'
                   comment-on-alert: true
                   fail-on-alert: true
+                  fail-threshold: '200%'
                   alert-comment-cc-users: '@fhur, @jimezesinachi'
