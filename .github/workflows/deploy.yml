@@ -104,7 +104,7 @@ jobs:
             - name: Discard any changes
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: git restore
+              run: git restore .
 
             - name: Store benchmark result
               uses: benchmark-action/github-action-benchmark@v1
