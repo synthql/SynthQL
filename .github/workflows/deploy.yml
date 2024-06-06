@@ -114,6 +114,7 @@ jobs:
                   tool: 'benchmarkjs'
                   output-file-path: packages/backend/src/tests/benchmarks/generated/output.txt
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  skip-fetch-gh-pages: true
                   benchmark-data-dir-path: 'benchmarks'
                   auto-push: true
                   comment-always: true
