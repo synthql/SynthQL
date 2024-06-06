@@ -16,6 +16,9 @@
             "dependsOn": ["^format"],
             "cache": true
         },
+        "compile-benchmarks": {
+            "cache": true
+        },
         "compile-executable-examples": {
             "dependsOn": ["test:ci", "format"],
             "cache": true

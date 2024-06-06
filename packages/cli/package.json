@@ -24,7 +24,6 @@
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "cov": "open coverage/index.html",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "dependencies": {

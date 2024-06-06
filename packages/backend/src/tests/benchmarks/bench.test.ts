@@ -5,6 +5,7 @@ import { from } from '../generated';
 import { queryEngine } from '../queryEngine';
 import Benchmark from 'benchmark';
 import fs from 'fs';
+import path from 'path';
 
 describe('Benchmark tests', () => {
     test(`Find matching rows`, async () => {
@@ -74,6 +75,7 @@ describe('Benchmark tests', () => {
             .run();
 
         // Write to output file
-        fs.writeFileSync('src/tests/benchmarks/output.txt', lines.join('\n'));
+        const filePath = path.resolve(__dirname, 'generated/output.txt');
+        fs.writeFileSync(filePath, lines.join('\n'));
     });
 });

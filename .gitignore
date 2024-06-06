@@ -9,6 +9,7 @@ tsconfig.tsbuildinfo
 build/
 *.log
 
+output.txt
 
 .nx/cache
 

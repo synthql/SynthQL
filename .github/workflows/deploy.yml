@@ -1,17 +1,23 @@
-name: Deploy documentation to GitHub Pages
+name: Deploy documentation & benchmarks to GitHub Pages
 
 on:
     push:
-        branches: [master]
+        branches: [master, feat/benchmark]
+
+permissions:
+    contents: write
+    deployments: write
 
 jobs:
     build:
         name: Build Docusaurus
         runs-on: ubuntu-latest
+
         steps:
             - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
+
             - uses: actions/setup-node@v4
               with:
                   node-version: 20
@@ -24,6 +30,7 @@ jobs:
 
             - name: Install dependencies
               run: yarn install --frozen-lockfile
+
             - name: Build website
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -34,8 +41,8 @@ jobs:
               with:
                   path: packages/docs/build
 
-    deploy:
-        name: Deploy to GitHub Pages
+    deploy-docs:
+        name: Deploy documention to GitHub Pages
         needs: build
 
         # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
@@ -53,3 +60,56 @@ jobs:
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v4
+
+    deploy-benchmarks:
+        name: Deploy benchmarks to GitHub Pages
+        needs: deploy-docs
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: yarn
+
+            - name: Set up database
+              run: |
+                  chmod +x ./setup-db.bash
+                  ./setup-db.bash
+
+            - name: Cache yarn dependencies
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      **/node_modules
+                      .yarn/cache
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Install dependencies
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn install
+
+            - name: Run build tasks (which contain benchmark test files)
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn build
+
+            - name: Store benchmark result
+              uses: benchmark-action/github-action-benchmark@v1
+              with:
+                  name: Benchmark.js Benchmark
+                  tool: 'benchmarkjs'
+                  output-file-path: packages/backend/src/tests/benchmarks/output.txt
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  auto-push: true
+                  alert-threshold: '200%'
+                  comment-on-alert: true
+                  fail-on-alert: true
+                  alert-comment-cc-users: '@fhur, @jimezesinachi'
