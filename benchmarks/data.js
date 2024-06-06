@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1717707705798,
+  "lastUpdate": 1717709825259,
   "repoUrl": "https://github.com/synthql/SynthQL",
   "entries": {
     "Benchmark.js benchmark": [
@@ -114,6 +114,44 @@ window.BENCHMARK_DATA = {
             "range": "±16.42%",
             "unit": "ops/sec",
             "extra": "49 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ezesinachijim@gmail.com",
+            "name": "Jim Ezesinachi",
+            "username": "jimezesinachi"
+          },
+          "committer": {
+            "email": "ezesinachijim@gmail.com",
+            "name": "Jim Ezesinachi",
+            "username": "jimezesinachi"
+          },
+          "distinct": true,
+          "id": "258ac7e4e535fb4386f490405b365d33f219ba9d",
+          "message": "wip\n\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>",
+          "timestamp": "2024-06-06T22:32:11+01:00",
+          "tree_id": "c2f2b10bda09bb9362e8e576e8988db5e3b30451",
+          "url": "https://github.com/synthql/SynthQL/commit/258ac7e4e535fb4386f490405b365d33f219ba9d"
+        },
+        "date": 1717709824887,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Find one matching row",
+            "value": 7350,
+            "range": "±28.92%",
+            "unit": "ops/sec",
+            "extra": "31 samples"
+          },
+          {
+            "name": "Find one matching row with three-level-deep nested include",
+            "value": 1664,
+            "range": "±12.10%",
+            "unit": "ops/sec",
+            "extra": "51 samples"
           }
         ]
       }
