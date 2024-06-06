@@ -1,7 +1,7 @@
 {
     "name": "@synthql/backend",
     "type": "module",
-    "version": "0.50.4",
+    "version": "0.60.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
@@ -28,7 +28,7 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "dependencies": {
-        "@synthql/queries": "0.50.4",
+        "@synthql/queries": "0.60.4",
         "kysely": "^0.27.3",
         "pg": "^8.11.3",
         "sql-formatter": "^15.0.2"

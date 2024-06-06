@@ -1,8 +1,7 @@
 {
     "name": "@synthql/introspect",
     "type": "module",
-    "version": "0.50.4",
-    "private": false,
+    "version": "0.60.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
@@ -20,11 +19,6 @@
         "README.md"
     ],
     "license": "MIT",
-    "dependencies": {
-        "@apidevtools/json-schema-ref-parser": "^11.5.4",
-        "extract-pg-schema": "^5.1.1",
-        "json-schema-to-typescript": "^13.1.2"
-    },
     "scripts": {
         "link:pkg": "yarn link",
         "test": "vitest --globals",
@@ -35,7 +29,13 @@
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
+    "dependencies": {
+        "@apidevtools/json-schema-ref-parser": "^11.5.4",
+        "extract-pg-schema": "^5.1.1",
+        "json-schema-to-typescript": "^13.1.2"
+    },
     "devDependencies": {
+        "rollup-plugin-node-externals": "^7.1.1",
         "vitest": "^1.1.0"
     }
 }

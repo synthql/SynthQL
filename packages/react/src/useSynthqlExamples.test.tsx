@@ -12,7 +12,7 @@ describe('useSynthql test examples', () => {
     beforeAll(async () => {
         echoServer = await createEchoServer((req) => {
             return Object.values(req.where?.id.in).map((id) => {
-                return { id, name: 'bob' };
+                return { id, name: 'Bob' };
             });
         });
     });
@@ -47,6 +47,6 @@ describe('useSynthql test examples', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        expect(result.result.current.data).toEqual({ id: '1', name: 'bob' });
+        expect(result.result.current.data).toEqual({ id: '1', name: 'Bob' });
     }, 1000);
 });

@@ -7,8 +7,8 @@ import { execute } from './execution/execute';
 import { QueryExecutor } from './execution/types';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { PgExecutor } from './execution/executors/PgExecutor';
-import { SqlExecutionError } from './execution/executors/SqlExecutionError';
 import { generateLast } from './util/generators/generateLast';
+import { SynthqlError } from './SynthqlError';
 
 export interface QueryEngineProps<DB> {
     url?: string;
@@ -21,6 +21,7 @@ export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
     private executors: Array<QueryExecutor> = [];
+
     constructor(private config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
         this.pool =
@@ -55,6 +56,7 @@ export class QueryEngine<DB> {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
         });
+
         if (opts?.returnLastOnly) {
             return generateLast(gen);
         }
@@ -90,21 +92,10 @@ export class QueryEngine<DB> {
             const result = await this.pool.query(explainQuery, params);
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
-            throw new SqlExecutionError({
-                err,
-                params,
-                sql,
-                query,
+            throw SynthqlError.createSqlExecutionError({
+                error: err,
+                props: { params, sql, query },
             });
         }
-    }
-}
-
-class SqlError extends Error {
-    constructor(
-        public sql: string,
-        err: Error | any,
-    ) {
-        super(err?.message);
     }
 }
