@@ -5,65 +5,72 @@ on:
         branches: [feat/benchmark]
 
 jobs:
-    # build:
-    #     name: Build Docusaurus
-    #     runs-on: ubuntu-latest
+    build:
+        name: Build Docusaurus
+        runs-on: ubuntu-latest
 
-    #     steps:
-    #         - uses: actions/checkout@v4
-    #           with:
-    #               fetch-depth: 0
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-    #         - uses: actions/setup-node@v4
-    #           with:
-    #               node-version: 20
-    #               cache: yarn
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: yarn
 
-    #         - name: Set up database
-    #           run: |
-    #               chmod +x ./setup-db.bash
-    #               ./setup-db.bash
+            - name: Set up database
+              run: |
+                  chmod +x ./setup-db.bash
+                  ./setup-db.bash
 
-    #         - name: Install dependencies
-    #           run: yarn install --frozen-lockfile
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
 
-    #         - name: Build website
-    #           env:
-    #               NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    #           run: yarn build
+            - name: Build website
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn build
 
-    #         - name: Upload Build Artifact
-    #           uses: actions/upload-pages-artifact@v3
-    #           with:
-    #               path: packages/docs/build
+            - name: Upload Build Artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: packages/docs/build
 
-    # deploy-docs:
-    #     name: Deploy documention to GitHub Pages
-    #     needs: build
+    deploy-docs:
+        name: Deploy documention to GitHub Pages
+        needs: build
 
-    #     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    #     permissions:
-    #         pages: write # to deploy to Pages
-    #         id-token: write # to verify the deployment originates from an appropriate source
+        # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+        permissions:
+            pages: write # to deploy to Pages
+            id-token: write # to verify the deployment originates from an appropriate source
 
-    #     # Deploy to the github-pages environment
-    #     environment:
-    #         name: github-pages
-    #         url: ${{ steps.deployment.outputs.page_url }}
+        # Deploy to the github-pages environment
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
 
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: Deploy to GitHub Pages
-    #           id: deployment
-    #           uses: actions/deploy-pages@v4
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
 
     deploy-benchmarks:
         name: Deploy benchmarks to GitHub Pages
-        # needs: build
+        needs: deploy-docs
 
         permissions:
             contents: write
             deployments: write
+            pages: write # to deploy to Pages
+            id-token: write # to verify the deployment originates from an appropriate source
+
+        # Deploy to the github-pages environment
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
 
         runs-on: ubuntu-latest
         steps:
@@ -119,3 +126,12 @@ jobs:
                   fail-on-alert: true
                   fail-threshold: '200%'
                   alert-comment-cc-users: '@fhur, @jimezesinachi'
+
+            - name: Upload Build Artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: ./
+
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
