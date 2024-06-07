@@ -2,7 +2,7 @@ name: Deploy documentation & benchmarks to GitHub Pages
 
 on:
     push:
-        branches: [feat/benchmark]
+        branches: [master]
 
 permissions:
     contents: write
