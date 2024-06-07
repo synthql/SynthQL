@@ -25,7 +25,7 @@
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
-        "compile-benchmarks": "yarn vitest run src/tests/benchmarks/bench.test.ts"
+        "benchmarks": "yarn vitest run src/tests/benchmarks/bench.test.ts"
     },
     "dependencies": {
         "@synthql/queries": "0.60.4",

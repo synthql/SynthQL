@@ -16,7 +16,7 @@
             "dependsOn": ["^format"],
             "cache": true
         },
-        "compile-benchmarks": {
+        "benchmarks": {
             "cache": true
         },
         "compile-executable-examples": {

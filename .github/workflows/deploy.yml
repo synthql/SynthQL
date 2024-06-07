@@ -35,10 +35,15 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn install
 
-            - name: Run build tasks (which contain benchmark test files)
+            - name: Run build tasks
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn build
+
+            - name: Run benchmarks in isolation (after build step above is complete)
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn benchmarks
 
             # We use the name and email for the GitHub Actions bot, as provided via this link: https://api.github.com/users/github-actions%5Bbot%5D
             - name: Set Git user
@@ -70,10 +75,10 @@ jobs:
                   benchmark-data-dir-path: 'benchmarks'
                   auto-push: true
                   comment-always: true
-                  alert-threshold: '200%'
+                  alert-threshold: '125%'
                   comment-on-alert: true
                   fail-on-alert: true
-                  fail-threshold: '200%'
+                  fail-threshold: '150%'
                   alert-comment-cc-users: '@fhur, @jimezesinachi'
 
     deploy:
@@ -81,7 +86,6 @@ jobs:
         runs-on: ubuntu-latest
         needs: build
 
-        # Deploy to the github-pages environment
         environment:
             name: github-pages
             url: ${{ steps.deployment_benchmarks.outputs.page_url }}

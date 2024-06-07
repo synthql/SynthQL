@@ -17,7 +17,7 @@
         "ci": "yarn nx run-many -t typecheck test:ci build",
         "ci:force": "yarn nx run-many --skip-nx-cache -t typecheck test:ci build",
         "compile-executable-examples": "yarn nx compile-executable-examples @synthql/react",
-        "compile-benchmarks": "yarn nx compile-benchmarks @synthql/backend",
+        "benchmarks": "yarn nx benchmarks @synthql/backend",
         "publish-minor-versions": "node ./scripts/publish-minor-versions.cjs"
     },
     "devDependencies": {
