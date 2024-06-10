@@ -58,7 +58,7 @@ describe('useSynthql', () => {
 
     test('Fetching a single row from the Pagila database with all selectable columns auto-selected', async () => {
         // @@start-example@@ Find a single actor by id with all selectable columns auto-selected
-        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids and return all selectable columns.
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids and return all selectable columns
 
         const q = from('actor')
             .where({ actor_id: { in: [1] } })
@@ -83,7 +83,7 @@ describe('useSynthql', () => {
 
     test('Fetching 0 or 1 rows(s) from the Pagila database with columns to return specified', async () => {
         // @@start-example@@ Find a single actor by id with columns to return specified`
-        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids, and returns all selectable columns passed.
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table where the `id` is in the list of ids, and returns all selectable columns passed
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
@@ -106,6 +106,113 @@ describe('useSynthql', () => {
         });
     }, 1000);
 
+    test('Fetching a single row from the Pagila database with no filters specified', async () => {
+        // @@start-example@@ Find a single actor with no filters specified
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` table
+
+        const q = from('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .one();
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data).toEqual({
+            actor_id: 58,
+            first_name: 'CHRISTIAN',
+            last_name: 'AKROYD',
+        });
+    }, 1000);
+
+    test('Fetching a single row from the Pagila database with offset value specified', async () => {
+        // @@start-example@@ Find a single actor with offset value specified
+        // @@desc@@ Finds 0 or 1 record(s) in the `actors` starting from the offset value position
+
+        const q = from('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .offset(1)
+            .one();
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data).toEqual({
+            actor_id: 8,
+            first_name: 'MATTHEW',
+            last_name: 'JOHANSSON',
+        });
+    }, 1000);
+
+    test('Fetching a single row from the Pagila database with limit of results to return specified', async () => {
+        // @@start-example@@ Find a single actor with limit of results to return specified
+        // @@desc@@ Finds n record(s) in the `actors`, where `n` is the value passed to `limit()`
+
+        const q = from('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .limit(2)
+            .many();
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data?.length).toEqual(2);
+
+        expect(result.result.current.data).toEqual([
+            {
+                actor_id: 8,
+                first_name: 'MATTHEW',
+                last_name: 'JOHANSSON',
+            },
+        ]);
+    }, 1000);
+
+    test('Fetching a single row from the Pagila database with number of results to take specified', async () => {
+        // @@start-example@@ Find a single actor with number of results to take specified
+        // @@desc@@ Finds n record(s) in the `actors`, where `n` is the value passed to `take()`
+
+        const q = from('actor')
+            .columns('actor_id', 'first_name', 'last_name', 'last_update')
+            .take(2);
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+            query: q,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data?.length).toEqual(2);
+
+        expect(result.result.current.data).toEqual([
+            {
+                actor_id: 8,
+                first_name: 'MATTHEW',
+                last_name: 'JOHANSSON',
+                last_update: '2022-02-15T09:34:33.000Z',
+            },
+        ]);
+    }, 1000);
+
     test('Fetching n rows from the Pagila database with columns to return specified', async () => {
         const count = 10;
         const ids = Array(count)
@@ -113,7 +220,7 @@ describe('useSynthql', () => {
             .map((_, i) => i + 1);
 
         // @@start-example@@ Find all actors by ids columns to return specified`
-        // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids, and returns all selectable columns passed.
+        // @@desc@@ Finds all the records in the `actors` table where their `id` is in the list of ids, and returns all selectable columns passed
 
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
@@ -189,7 +296,7 @@ describe('useSynthql', () => {
 
     test('Fetching a single result from the Pagila database with single-level-deep nested data', async () => {
         // @@start-example@@ Find a single actor by id with a single-level-deep `include()`
-        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const store = from('store')
             .columns('store_id', 'address_id', 'manager_staff_id')
@@ -235,7 +342,7 @@ describe('useSynthql', () => {
 
     test('Fetching a single result from the Pagila database with two-level-deep nested data', async () => {
         // @@start-example@@ Find a single customer by id with a two-level-deep `include()`
-        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const address = from('address')
             .columns('address_id', 'address', 'district')
@@ -295,7 +402,7 @@ describe('useSynthql', () => {
 
     test('Fetching a single result from the Pagila database with three-level-deep nested data', async () => {
         // @@start-example@@ Find a single customer by id with a three-level-deep `include()`
-        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids.
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const city = from('city')
             .columns('city_id', 'city')
