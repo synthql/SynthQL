@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1717718113735,
+  "lastUpdate": 1718039871951,
   "repoUrl": "https://github.com/synthql/SynthQL",
   "entries": {
     "SynthQL query execution benchmarks": [
@@ -76,6 +76,44 @@ window.BENCHMARK_DATA = {
             "range": "±14.16%",
             "unit": "ops/sec",
             "extra": "49 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ezesinachijim@gmail.com",
+            "name": "Jim Ezesinachi",
+            "username": "jimezesinachi"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a62e6280f372a1b9bff27d649aadefe93abbe779",
+          "message": "feat: added benchmark tests & workflow (#22)",
+          "timestamp": "2024-06-10T19:14:59+02:00",
+          "tree_id": "93b25e85aa0e6a710da8ce5bd728c25164b601b5",
+          "url": "https://github.com/synthql/SynthQL/commit/a62e6280f372a1b9bff27d649aadefe93abbe779"
+        },
+        "date": 1718039871932,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Find one matching row",
+            "value": 20135,
+            "range": "±39.73%",
+            "unit": "ops/sec",
+            "extra": "67 samples"
+          },
+          {
+            "name": "Find one matching row with three-level-deep nested include",
+            "value": 6162,
+            "range": "±1.64%",
+            "unit": "ops/sec",
+            "extra": "85 samples"
           }
         ]
       }
