@@ -50,11 +50,7 @@ function getNext(
         return [tree];
     }
 
-    if (tree === undefined) {
-        return [];
-    }
-
-    if (tree === null) {
+    if (tree === undefined || tree === null) {
         return [];
     }
 
