@@ -49,23 +49,27 @@ function getNext(
     if (path.length === 0) {
         return [tree];
     }
+
     if (tree === undefined) {
         return [];
     }
+
+    if (tree === null) {
+        return [];
+    }
+
     if (Array.isArray(tree)) {
         return tree.flatMap((item) => getNext(item, path, pathSegment));
     }
+
     if (typeof pathSegment === 'number') {
         assertArrayAtPath(tree, path);
         return [tree[pathSegment]];
     }
+
     if (typeof pathSegment === 'string') {
-        if (tree !== null) {
-            assertObject(tree, path);
-            return [tree[pathSegment]];
-        } else {
-            return [null];
-        }
+        assertObject(tree, path);
+        return [tree[pathSegment]];
     }
 
     /* v8 ignore next 2 */
