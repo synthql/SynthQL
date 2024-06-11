@@ -1,7 +1,7 @@
 import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { DB, from } from '../../../tests/generated';
+import { from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 
@@ -12,7 +12,7 @@ describe('PgExecutor', () => {
         qpe: new QueryProviderExecutor([]),
     });
 
-    const q = from('film')
+    const q1 = from('film')
         .columns('film_id', 'title')
         .include({
             lang: from('language')
@@ -28,7 +28,7 @@ describe('PgExecutor', () => {
         .one();
 
     it('compiles', () => {
-        const { sql, params } = executor.compile(q);
+        const { sql, params } = executor.compile(q1);
 
         expect(sql).toMatchInlineSnapshot(`
       "select
@@ -48,7 +48,7 @@ describe('PgExecutor', () => {
     });
 
     it('should', async () => {
-        const result = await executor.execute(q);
+        const result = await executor.execute(q1);
 
         expect(result).toEqual([
             {
@@ -57,6 +57,30 @@ describe('PgExecutor', () => {
                     name: 'English             ',
                 },
                 title: 'ACE GOLDFINGER',
+            },
+        ]);
+    });
+
+    const q2 = from('actor')
+        .columns('actor_id', 'first_name', 'last_name')
+        .limit(2)
+        .many();
+
+    it('should', async () => {
+        const result = await executor.execute(q2);
+
+        expect(result.length).toBe(2);
+
+        expect(result).toEqual([
+            {
+                actor_id: 1,
+                first_name: 'PENELOPE',
+                last_name: 'GUINESS',
+            },
+            {
+                actor_id: 2,
+                first_name: 'NICK',
+                last_name: 'WAHLBERG',
             },
         ]);
     });

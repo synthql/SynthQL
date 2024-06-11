@@ -124,9 +124,9 @@ describe('useSynthql', () => {
         await result.waitFor(() => result.result.current.data !== undefined);
 
         expect(result.result.current.data).toEqual({
-            actor_id: 58,
-            first_name: 'CHRISTIAN',
-            last_name: 'AKROYD',
+            actor_id: 1,
+            first_name: 'PENELOPE',
+            last_name: 'GUINESS',
         });
     }, 1000);
 
@@ -149,9 +149,9 @@ describe('useSynthql', () => {
         await result.waitFor(() => result.result.current.data !== undefined);
 
         expect(result.result.current.data).toEqual({
-            actor_id: 8,
-            first_name: 'MATTHEW',
-            last_name: 'JOHANSSON',
+            actor_id: 2,
+            first_name: 'NICK',
+            last_name: 'WAHLBERG',
         });
     }, 1000);
 
@@ -177,9 +177,14 @@ describe('useSynthql', () => {
 
         expect(result.result.current.data).toEqual([
             {
-                actor_id: 8,
-                first_name: 'MATTHEW',
-                last_name: 'JOHANSSON',
+                actor_id: 1,
+                first_name: 'PENELOPE',
+                last_name: 'GUINESS',
+            },
+            {
+                actor_id: 2,
+                first_name: 'NICK',
+                last_name: 'WAHLBERG',
             },
         ]);
     }, 1000);
@@ -189,7 +194,7 @@ describe('useSynthql', () => {
         // @@desc@@ Finds n record(s) in the `actors`, where `n` is the value passed to `take()`
 
         const q = from('actor')
-            .columns('actor_id', 'first_name', 'last_name', 'last_update')
+            .columns('actor_id', 'first_name', 'last_name')
             .take(2);
 
         // @@end-example@@
@@ -205,10 +210,14 @@ describe('useSynthql', () => {
 
         expect(result.result.current.data).toEqual([
             {
-                actor_id: 8,
-                first_name: 'MATTHEW',
-                last_name: 'JOHANSSON',
-                last_update: '2022-02-15T09:34:33.000Z',
+                actor_id: 1,
+                first_name: 'PENELOPE',
+                last_name: 'GUINESS',
+            },
+            {
+                actor_id: 2,
+                first_name: 'NICK',
+                last_name: 'WAHLBERG',
             },
         ]);
     }, 1000);

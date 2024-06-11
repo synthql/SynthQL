@@ -42,7 +42,8 @@ export function resolveReferences(
         ...query,
         where: resolveReferencesInWhere(query.where, refContext, defaultSchema),
         // Remove the limit, since we don't know how many rows the references will resolve to
-        limit: undefined,
+        // Commented out as this breaks limits in non-nested queries
+        // limit: undefined,
     };
 }
 

@@ -26,6 +26,8 @@ export function executePlan(
                 defaultSchema,
             );
 
+            if (parentNode) query.limit = undefined;
+
             // Execute the query
             const rows = await planNode.executor.execute(query);
 
