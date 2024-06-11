@@ -25,6 +25,8 @@ export function useSynthql<
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
+    const enrichedEndpoint = `${endpoint}/${query.from}`.replace('//', '/');
+
     const mergedRequestInit: RequestInit = {
         ...requestInit,
         ...opts.requestInit,
@@ -36,7 +38,7 @@ export function useSynthql<
     };
 
     const queryKey = synthqlQueryKey<DB, TTable, TQuery>(query, {
-        endpoint: endpoint,
+        endpoint: enrichedEndpoint,
         requestInit: mergedRequestInit,
     });
 
@@ -44,7 +46,7 @@ export function useSynthql<
         queryKey,
         queryFn: async () => {
             return fetchJsonLines<QueryResult<DB, TQuery>>(
-                endpoint,
+                enrichedEndpoint,
                 mergedRequestInit,
             );
         },

@@ -41,8 +41,6 @@ export function resolveReferences(
     return {
         ...query,
         where: resolveReferencesInWhere(query.where, refContext, defaultSchema),
-        // Remove the limit, since we don't know how many rows the references will resolve to
-        limit: undefined,
     };
 }
 
@@ -55,6 +53,7 @@ function resolveReferencesInWhere(
         const referencedValues = context.getValues(
             ColumnRef.fromRefOp(ref, defaultSchema),
         );
+
         return {
             in: referencedValues,
         };

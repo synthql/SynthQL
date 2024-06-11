@@ -12,7 +12,7 @@ describe('useSynthql test examples', () => {
     beforeAll(async () => {
         echoServer = await createEchoServer((req) => {
             return Object.values(req.where?.id.in).map((id) => {
-                return { id, name: 'Bob' };
+                return { id, name: 'Bob', age: 1, active: true };
             });
         });
     });
@@ -25,7 +25,7 @@ describe('useSynthql test examples', () => {
         const result = renderHook(
             () => {
                 // @@start-example@@ Find a single user by id using `select()`
-                // @@desc@@ Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids.
+                // @@desc@@ Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids
 
                 const q = from('users')
                     .select({ id: true, name: true })
@@ -47,6 +47,11 @@ describe('useSynthql test examples', () => {
 
         await result.waitFor(() => result.result.current.data !== undefined);
 
-        expect(result.result.current.data).toEqual({ id: '1', name: 'Bob' });
+        expect(result.result.current.data).toEqual({
+            id: '1',
+            name: 'Bob',
+            age: 1,
+            active: true,
+        });
     }, 1000);
 });

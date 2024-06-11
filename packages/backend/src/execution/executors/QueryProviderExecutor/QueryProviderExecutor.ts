@@ -3,7 +3,6 @@ import { AnyDb, AnyQuery } from '../../../types';
 import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { QueryExecutor } from '../../types';
 import { ColumnRef } from '../../../refs/ColumnRef';
-import { Table } from '@synthql/queries';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
 export class QueryProviderExecutor implements QueryExecutor {
@@ -49,6 +48,7 @@ export class QueryProviderExecutor implements QueryExecutor {
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {
         const refContext = createRefContext();
+
         for (const column of columns) {
             const value = row[column.column];
             refContext.addValues(column, value);
