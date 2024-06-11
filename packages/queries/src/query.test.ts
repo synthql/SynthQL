@@ -9,7 +9,7 @@ describe('queries', () => {
         return {} as any;
     }
 
-    test('Find one actor', () => {
+    test('Find one actor with `columns()`', () => {
         const q = from('actor').columns('actor_id', 'first_name').one();
 
         const result = fakeQueryResult(q);
@@ -17,16 +17,51 @@ describe('queries', () => {
         result satisfies { actor_id: number; first_name: string };
     });
 
-    test('Find one actor with automatic select', () => {
-        const q = from('actor').one();
+    test('Find one actor with `select()`', () => {
+        const q = from('actor')
+            .select({
+                actor_id: true,
+                first_name: true,
+            })
+            .one();
 
         const result = fakeQueryResult(q);
 
         result satisfies { actor_id: number; first_name: string };
     });
 
+    test('Find one actor with automatic select of all selectable columns', () => {
+        const q = from('actor').one();
+
+        const result = fakeQueryResult(q);
+
+        result satisfies {
+            actor_id: number;
+            first_name: string;
+            last_name: string;
+            last_update: string;
+        };
+    });
+
     test('Find many actors', () => {
         const q = from('actor').columns('actor_id', 'first_name').many();
+
+        const result = fakeQueryResult(q);
+        result satisfies Array<{ actor_id: number; first_name: string }>;
+    });
+
+    test('Find many actors with `offset()`', () => {
+        const q = from('actor')
+            .columns('actor_id', 'first_name')
+            .offset(2)
+            .many();
+
+        const result = fakeQueryResult(q);
+        result satisfies Array<{ actor_id: number; first_name: string }>;
+    });
+
+    test('Find many actors with `take()`', () => {
+        const q = from('actor').columns('actor_id', 'first_name').take(2);
 
         const result = fakeQueryResult(q);
         result satisfies Array<{ actor_id: number; first_name: string }>;
@@ -59,37 +94,19 @@ describe('queries', () => {
 
     test('Find one actor by ID', () => {
         const q = from('actor')
-            .columns('actor_id', 'first_name', 'last_name')
+            .columns('actor_id', 'first_name', 'last_name', 'last_update')
             .where({
                 actor_id: 1,
             })
             .one();
 
         const result = fakeQueryResult(q);
-        // @ts-expect-error
+
         result satisfies {
             actor_id: number;
             first_name: string;
             last_name: string;
-            last_update: Date;
-        };
-    });
-
-    test('Find one actor by ID', () => {
-        const q = from('actor')
-            .columns()
-            .where({
-                actor_id: 1,
-            })
-            .one();
-
-        const result = fakeQueryResult(q);
-        // @ts-expect-error
-        result satisfies {
-            actor_id: number;
-            first_name: string;
-            last_name: string;
-            last_update: Date;
+            last_update: string;
         };
     });
 

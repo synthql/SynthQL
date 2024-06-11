@@ -13,6 +13,8 @@ export class QueryBuilder<
     TWhere extends Where<DB, TTable>,
     TSelect extends Select<DB, TTable>,
     TInclude extends Include<DB>,
+    TLimit extends number | undefined,
+    TOffset extends number | undefined,
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupingId extends string[],
@@ -22,7 +24,8 @@ export class QueryBuilder<
         private _where: TWhere,
         private _select: TSelect,
         private _include: TInclude,
-        private _limit: number | undefined,
+        private _limit: TLimit,
+        private _offset: TOffset,
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupingId: TGroupingId,
@@ -33,7 +36,8 @@ export class QueryBuilder<
         where: TWhere;
         select: TSelect;
         include: TInclude;
-        limit: number | undefined;
+        limit: TLimit;
+        offset: TOffset;
         cardinality: TCardinality;
         lazy: TLazy;
         groupingId: TGroupingId;
@@ -44,6 +48,7 @@ export class QueryBuilder<
             select: this._select,
             include: this._include,
             limit: this._limit,
+            offset: this._offset,
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupingId: this._groupingId,
@@ -53,13 +58,15 @@ export class QueryBuilder<
     /**
      * Sets the limit of the query.
      */
-    limit(limit: number) {
+    limit(limit: TLimit) {
         return new QueryBuilder<
             DB,
             TTable,
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -69,6 +76,63 @@ export class QueryBuilder<
             this._select,
             this._include,
             limit,
+            this._offset,
+            this._cardinality,
+            this._lazy,
+            this._groupingId,
+        );
+    }
+
+    /**
+     * Sets the number (n) of results to return for the query. Shorthand for `.limit(n).many()`.
+     */
+    take(take: TLimit) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TSelect,
+            TInclude,
+            TLimit,
+            TOffset,
+            'many',
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            take,
+            this._offset,
+            'many',
+            this._lazy,
+            this._groupingId,
+        ).build();
+    }
+
+    /**
+     * Sets the number (n) of rows to skip before returning results.
+     */
+    offset(offset: TOffset) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TSelect,
+            TInclude,
+            TLimit,
+            TOffset,
+            TCardinality,
+            TLazy,
+            TGroupingId
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -87,6 +151,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            1,
+            TOffset,
             'one',
             TLazy,
             TGroupingId
@@ -96,6 +162,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             1,
+            this._offset,
             'one',
             this._lazy,
             this._groupingId,
@@ -112,6 +179,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             'many',
             TLazy,
             TGroupingId
@@ -121,6 +190,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             this._limit,
+            this._offset,
             'many',
             this._lazy,
             this._groupingId,
@@ -137,6 +207,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            1,
+            TOffset,
             'maybe',
             TLazy,
             TGroupingId
@@ -146,6 +218,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             1,
+            this._offset,
             'maybe',
             this._lazy,
             this._groupingId,
@@ -159,6 +232,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -168,6 +243,7 @@ export class QueryBuilder<
             select,
             this._include,
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -196,12 +272,15 @@ export class QueryBuilder<
         const select = keys.reduce((acc, key) => {
             return { ...acc, [key]: true };
         }, {} as SelectFromKeys);
+
         return new QueryBuilder<
             DB,
             TTable,
             TWhere,
             { [k in TKeys[number]]: true },
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -211,6 +290,7 @@ export class QueryBuilder<
             select,
             this._include,
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -224,6 +304,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -233,6 +315,7 @@ export class QueryBuilder<
             this._select,
             include,
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -246,6 +329,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude & TNewInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -255,6 +340,7 @@ export class QueryBuilder<
             this._select,
             { ...this._include, ...include },
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -268,6 +354,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -277,6 +365,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             this._groupingId,
@@ -290,6 +379,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             true,
             TGroupingId
@@ -299,6 +390,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             this._limit,
+            this._offset,
             this._cardinality,
             true,
             this._groupingId,
@@ -312,6 +404,8 @@ export class QueryBuilder<
             TWhere,
             TSelect,
             TInclude,
+            TLimit,
+            TOffset,
             TCardinality,
             TLazy,
             TGroupingId
@@ -321,6 +415,7 @@ export class QueryBuilder<
             this._select,
             this._include,
             this._limit,
+            this._offset,
             this._cardinality,
             this._lazy,
             id,
@@ -343,10 +438,22 @@ export function query<DB>(schema: DbSchema<DB>) {
                 {},
                 { [k in TKeys[number]]: true },
                 {},
+                number | undefined,
+                number | undefined,
                 'many',
                 undefined,
                 typeof primaryKeys
-            >(table, {}, select, {}, undefined, 'many', undefined, primaryKeys);
+            >(
+                table,
+                {},
+                select,
+                {},
+                undefined,
+                undefined,
+                'many',
+                undefined,
+                primaryKeys,
+            );
         },
     };
 }

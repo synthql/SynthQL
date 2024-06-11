@@ -26,6 +26,11 @@ export function executePlan(
                 defaultSchema,
             );
 
+            // Remove the limit for child nodes, since we don't know how many rows the references will resolve to
+            if (parentNode) {
+                query.limit = undefined;
+            }
+
             // Execute the query
             const rows = await planNode.executor.execute(query);
 
