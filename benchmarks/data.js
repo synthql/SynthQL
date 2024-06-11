@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718039871951,
+  "lastUpdate": 1718130481829,
   "repoUrl": "https://github.com/synthql/SynthQL",
   "entries": {
     "SynthQL query execution benchmarks": [
@@ -114,6 +114,44 @@ window.BENCHMARK_DATA = {
             "range": "±1.64%",
             "unit": "ops/sec",
             "extra": "85 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ezesinachijim@gmail.com",
+            "name": "Jim Ezesinachi",
+            "username": "jimezesinachi"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7109e33466677c20505d809aafa1c97350cf1dec",
+          "message": "feat: add `offset()` and `take()` to the `query` API (#23)",
+          "timestamp": "2024-06-11T20:25:21+02:00",
+          "tree_id": "7cccc09a0ff17539998f74abc1f8ca31d04ee356",
+          "url": "https://github.com/synthql/SynthQL/commit/7109e33466677c20505d809aafa1c97350cf1dec"
+        },
+        "date": 1718130481809,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Find one matching row",
+            "value": 19770,
+            "range": "±38.36%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "Find one matching row with three-level-deep nested include",
+            "value": 6028,
+            "range": "±1.61%",
+            "unit": "ops/sec",
+            "extra": "84 samples"
           }
         ]
       }
