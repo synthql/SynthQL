@@ -60,8 +60,14 @@ function getNext(
         return [tree[pathSegment]];
     }
     if (typeof pathSegment === 'string') {
-        assertObject(tree, path);
-        return [tree[pathSegment]];
-    } /* v8 ignore next 2 */
+        if (tree !== null) {
+            assertObject(tree, path);
+            return [tree[pathSegment]];
+        } else {
+            return [null];
+        }
+    }
+
+    /* v8 ignore next 2 */
     throw new Error(`Unknown path segment: ${pathSegment} at path ${path}`);
 }

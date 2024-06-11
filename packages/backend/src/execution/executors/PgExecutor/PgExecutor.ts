@@ -25,7 +25,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
     private client: Promise<PoolClient>;
 
     constructor(private props: PgExecutorProps) {
-        this.client = props.pool.connect();
+        this.client = connectToPool(props.pool);
     }
 
     compile(query: AnyQuery) {
@@ -34,6 +34,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
             defaultSchema: this.props.defaultSchema,
         });
         const { sql, params } = sqlBuilder.build();
+
         return {
             sql: format(sql, { language: 'postgresql' }),
             params,
@@ -69,18 +70,22 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         query: TQuery,
     ): { query: TQuery; remaining: TQuery[] } | undefined {
         const { qpe } = this.props;
+
         if (qpe?.canExecute(query)) {
             return undefined;
         }
+
         const shouldSplit = (
             q: TQuery,
             { depth }: { depth: number },
         ): boolean => {
             const isProviderQuery = Boolean(qpe?.canExecute(q));
             const isLazyQuery = Boolean(q.lazy);
+
             if (depth >= 2) {
                 return true;
             }
+
             return isProviderQuery || isLazyQuery;
         };
 
@@ -89,11 +94,22 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
     collectRefValues(row: any, columns: ColumnRef[]): RefContext {
         const refContext = createRefContext();
+
         for (const column of columns) {
             const value = row[column.column];
             refContext.addValues(column, value);
         }
 
         return refContext;
+    }
+}
+
+function connectToPool(pool: Pool): Promise<PoolClient> {
+    try {
+        return pool.connect();
+    } catch (error) {
+        throw SynthqlError.createDatabaseConnectionError({
+            error,
+        });
     }
 }
