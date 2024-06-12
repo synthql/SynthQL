@@ -27,8 +27,8 @@ describe('PgExecutor', () => {
         })
         .one();
 
-    it('compiles', () => {
-        const { sql, params } = executor.compile(q1);
+    it('Film table SynthQL query compiles to expected SQL query', () => {
+        const { sql } = executor.compile(q1);
 
         expect(sql).toMatchInlineSnapshot(`
       "select
@@ -47,7 +47,7 @@ describe('PgExecutor', () => {
     `);
     });
 
-    it('should', async () => {
+    it('Film table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q1);
 
         expect(result).toEqual([
@@ -63,13 +63,10 @@ describe('PgExecutor', () => {
 
     const q2 = from('actor')
         .columns('actor_id', 'first_name', 'last_name')
-        .limit(2)
-        .many();
+        .take(2);
 
-    it('should', async () => {
+    it('Actor table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q2);
-
-        expect(result.length).toBe(2);
 
         expect(result).toEqual([
             {
@@ -83,5 +80,52 @@ describe('PgExecutor', () => {
                 last_name: 'WAHLBERG',
             },
         ]);
+    });
+
+    const language = from('language')
+        .columns('language_id', 'name')
+        .where({
+            language_id: col('film.original_language_id'),
+        })
+        .maybe();
+
+    const filmWithIncludedColumnSelected = from('film')
+        .columns('film_id', 'title', 'original_language_id')
+        .include({
+            original_language_id: language,
+        })
+        .take(2);
+
+    const filmWithoutIncludedColumnSelected = from('film')
+        .columns('film_id', 'title')
+        .include({
+            original_language_id: language,
+        })
+        .take(2);
+
+    it('Film table level 1 `include()` SynthQL query executes to expected result', async () => {
+        const resultWithIncludedColumnSelected = await executor.execute(
+            filmWithIncludedColumnSelected,
+        );
+
+        const resultWithoutIncludedColumnSelected = await executor.execute(
+            filmWithoutIncludedColumnSelected,
+        );
+
+        const rows = [
+            {
+                film_id: 1,
+                title: 'ACADEMY DINOSAUR',
+                original_language_id: null,
+            },
+            {
+                film_id: 2,
+                title: 'ACE GOLDFINGER',
+                original_language_id: null,
+            },
+        ];
+
+        expect(resultWithIncludedColumnSelected).toEqual(rows);
+        expect(resultWithoutIncludedColumnSelected).toEqual(rows);
     });
 });

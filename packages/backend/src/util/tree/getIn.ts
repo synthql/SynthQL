@@ -49,19 +49,25 @@ function getNext(
     if (path.length === 0) {
         return [tree];
     }
-    if (tree === undefined) {
+
+    if (tree === undefined || tree === null) {
         return [];
     }
+
     if (Array.isArray(tree)) {
         return tree.flatMap((item) => getNext(item, path, pathSegment));
     }
+
     if (typeof pathSegment === 'number') {
         assertArrayAtPath(tree, path);
         return [tree[pathSegment]];
     }
+
     if (typeof pathSegment === 'string') {
         assertObject(tree, path);
         return [tree[pathSegment]];
-    } /* v8 ignore next 2 */
+    }
+
+    /* v8 ignore next 2 */
     throw new Error(`Unknown path segment: ${pathSegment} at path ${path}`);
 }

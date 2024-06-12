@@ -15,28 +15,27 @@ export class SynthqlError extends Error {
         public message: string,
     ) {
         super(message);
-
         Error.captureStackTrace(this, SynthqlError);
     }
 
-    static createConnectionError({
+    static createDatabaseConnectionError({
         error,
-        url,
     }: {
         error: any;
-        url: string;
     }): SynthqlError {
-        const type = 'ConnectionError';
+        const type = 'DatabaseConnectionError';
 
         const lines = [
-            'Connection error!',
+            'Database connection error!',
             '',
-            'Failure to establish a connection to your datastore:',
+            'Failure to establish a connection to your database.',
             '',
-            url,
+            'Check your connection string, and make sure your database',
+            'is up and can accept new connections.',
             '',
-            'Check your connection string, and make sure your data store',
-            'is up and can accept new connections',
+            'Here is the underlying error message:',
+            '',
+            error,
         ];
 
         return new SynthqlError(error, type, lines.join('\n'));
@@ -102,12 +101,13 @@ export class SynthqlError extends Error {
     }
 }
 
-function printError(err: any, sql: string): string {
+function printError(err: any): string {
     if (err instanceof DatabaseError) {
         return [err.message, err.stack].join('\n');
     } else if (err instanceof Error) {
         return [err.message, err.stack].join('\n');
     }
+
     return String(err);
 }
 
@@ -115,7 +115,7 @@ function composeMessage(err: any, props: SqlExecutionErrorProps): string {
     const lines: string[] = [
         '# Error executing query',
         '',
-        printError(err, props.sql),
+        printError(err),
         '',
         'This error was caused by the following SQL query:',
         tryFormatSql(props.sql),
