@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718130481829,
+  "lastUpdate": 1718218394376,
   "repoUrl": "https://github.com/synthql/SynthQL",
   "entries": {
     "SynthQL query execution benchmarks": [
@@ -152,6 +152,44 @@ window.BENCHMARK_DATA = {
             "range": "±1.61%",
             "unit": "ops/sec",
             "extra": "84 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ezesinachijim@gmail.com",
+            "name": "Jim Ezesinachi",
+            "username": "jimezesinachi"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "17b6d605f3a1cf759623904735b92de246376c26",
+          "message": "fix: connection error messages & fix: not handling `null` ref values (#24)\n\n* fix: iterateResultRows\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* fix: iterateResultRows\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* refactor\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* added tests\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* refactor\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* fixed tests\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n* fixed tests\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>\r\n\r\n---------\r\n\r\nSigned-off-by: Jim Ezesinachi <ezesinachijim@gmail.com>",
+          "timestamp": "2024-06-12T19:50:47+01:00",
+          "tree_id": "a3ae6bb7dadd86bf8d59d2ae72f7921dd485bb92",
+          "url": "https://github.com/synthql/SynthQL/commit/17b6d605f3a1cf759623904735b92de246376c26"
+        },
+        "date": 1718218394356,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Find one matching row",
+            "value": 19580,
+            "range": "±40.18%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "Find one matching row with three-level-deep nested include",
+            "value": 5844,
+            "range": "±2.39%",
+            "unit": "ops/sec",
+            "extra": "83 samples"
           }
         ]
       }
