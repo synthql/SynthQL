@@ -28,7 +28,7 @@ describe('PgExecutor', () => {
         .one();
 
     it('compiles', () => {
-        const { sql, params } = executor.compile(q1);
+        const { sql } = executor.compile(q1);
 
         expect(sql).toMatchInlineSnapshot(`
       "select
@@ -63,13 +63,10 @@ describe('PgExecutor', () => {
 
     const q2 = from('actor')
         .columns('actor_id', 'first_name', 'last_name')
-        .limit(2)
-        .many();
+        .take(2);
 
     it('should', async () => {
         const result = await executor.execute(q2);
-
-        expect(result.length).toBe(2);
 
         expect(result).toEqual([
             {
@@ -83,5 +80,50 @@ describe('PgExecutor', () => {
                 last_name: 'WAHLBERG',
             },
         ]);
+    });
+
+    const og_language = from('language')
+        .columns('language_id', 'name')
+        .where({
+            language_id: col('film.original_language_id'),
+        })
+        .maybe();
+
+    const film_with_included_column_selected = from('film')
+        .columns('film_id', 'title', 'original_language_id')
+        .where({ film_id: 1 })
+        .include({
+            original_language_id: og_language,
+        })
+        .one();
+
+    const film_without_included_column_selected = from('film')
+        .columns('film_id', 'title')
+        .where({ film_id: 1 })
+        .include({
+            original_language_id: og_language,
+        })
+        .one();
+
+    it('should', async () => {
+        const result = await executor.execute(
+            film_with_included_column_selected,
+        );
+
+        const result_without_included_column_selected = await executor.execute(
+            film_without_included_column_selected,
+        );
+
+        const rows = [
+            {
+                film_id: 1,
+                title: 'ACADEMY DINOSAUR',
+                original_language_id: null,
+            },
+        ];
+
+        expect(result).toEqual(rows);
+
+        expect(result_without_included_column_selected).toEqual(rows);
     });
 });
