@@ -27,7 +27,7 @@ describe('PgExecutor', () => {
         })
         .one();
 
-    it('compiles', () => {
+    it('Film table SynthQL query compiles to expected SQL query', () => {
         const { sql } = executor.compile(q1);
 
         expect(sql).toMatchInlineSnapshot(`
@@ -47,7 +47,7 @@ describe('PgExecutor', () => {
     `);
     });
 
-    it('should', async () => {
+    it('Film table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q1);
 
         expect(result).toEqual([
@@ -65,7 +65,7 @@ describe('PgExecutor', () => {
         .columns('actor_id', 'first_name', 'last_name')
         .take(2);
 
-    it('should', async () => {
+    it('Actor table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q2);
 
         expect(result).toEqual([
@@ -103,8 +103,8 @@ describe('PgExecutor', () => {
         })
         .take(2);
 
-    it('should', async () => {
-        const result = await executor.execute(
+    it('Film table level 1 `include()` SynthQL query executes to expected result', async () => {
+        const result_with_included_column_selected = await executor.execute(
             film_with_included_column_selected,
         );
 
@@ -125,7 +125,7 @@ describe('PgExecutor', () => {
             },
         ];
 
-        expect(result).toEqual(rows);
+        expect(result_with_included_column_selected).toEqual(rows);
         expect(result_without_included_column_selected).toEqual(rows);
     });
 });
