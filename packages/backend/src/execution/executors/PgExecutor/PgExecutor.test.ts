@@ -82,34 +82,34 @@ describe('PgExecutor', () => {
         ]);
     });
 
-    const original_language_id = from('language')
+    const language = from('language')
         .columns('language_id', 'name')
         .where({
             language_id: col('film.original_language_id'),
         })
         .maybe();
 
-    const film_with_included_column_selected = from('film')
+    const filmWithIncludedColumnSelected = from('film')
         .columns('film_id', 'title', 'original_language_id')
         .include({
-            original_language_id,
+            original_language_id: language,
         })
         .take(2);
 
-    const film_without_included_column_selected = from('film')
+    const filmWithoutIncludedColumnSelected = from('film')
         .columns('film_id', 'title')
         .include({
-            original_language_id,
+            original_language_id: language,
         })
         .take(2);
 
     it('Film table level 1 `include()` SynthQL query executes to expected result', async () => {
-        const result_with_included_column_selected = await executor.execute(
-            film_with_included_column_selected,
+        const resultWithIncludedColumnSelected = await executor.execute(
+            filmWithIncludedColumnSelected,
         );
 
-        const result_without_included_column_selected = await executor.execute(
-            film_without_included_column_selected,
+        const resultWithoutIncludedColumnSelected = await executor.execute(
+            filmWithoutIncludedColumnSelected,
         );
 
         const rows = [
@@ -125,7 +125,7 @@ describe('PgExecutor', () => {
             },
         ];
 
-        expect(result_with_included_column_selected).toEqual(rows);
-        expect(result_without_included_column_selected).toEqual(rows);
+        expect(resultWithIncludedColumnSelected).toEqual(rows);
+        expect(resultWithoutIncludedColumnSelected).toEqual(rows);
     });
 });
