@@ -82,7 +82,7 @@ describe('PgExecutor', () => {
         ]);
     });
 
-    const og_language = from('language')
+    const original_language_id = from('language')
         .columns('language_id', 'name')
         .where({
             language_id: col('film.original_language_id'),
@@ -91,19 +91,17 @@ describe('PgExecutor', () => {
 
     const film_with_included_column_selected = from('film')
         .columns('film_id', 'title', 'original_language_id')
-        .where({ film_id: 1 })
         .include({
-            original_language_id: og_language,
+            original_language_id,
         })
-        .one();
+        .take(2);
 
     const film_without_included_column_selected = from('film')
         .columns('film_id', 'title')
-        .where({ film_id: 1 })
         .include({
-            original_language_id: og_language,
+            original_language_id,
         })
-        .one();
+        .take(2);
 
     it('should', async () => {
         const result = await executor.execute(
@@ -120,10 +118,14 @@ describe('PgExecutor', () => {
                 title: 'ACADEMY DINOSAUR',
                 original_language_id: null,
             },
+            {
+                film_id: 2,
+                title: 'ACE GOLDFINGER',
+                original_language_id: null,
+            },
         ];
 
         expect(result).toEqual(rows);
-
         expect(result_without_included_column_selected).toEqual(rows);
     });
 });
