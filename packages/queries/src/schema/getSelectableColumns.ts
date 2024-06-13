@@ -1,6 +1,14 @@
-import { DbSchema } from '../types/DbSchema';
+import { AnyDbSchema, DbSchema } from '../types/DbSchema';
 import { Table } from '../types/Table';
-import { getColumnDefs, getTableDef, isSelectableColumn } from './getTableDefs';
+import {
+    getColumnNamesAndDefs,
+    getColumnNamesAndDefsFromGenericTableDef,
+    getTableDef,
+    getTableDefFromGenericDbSchema,
+    isSelectableColumn,
+    isSelectableColumnFromGenericColumnDef,
+    isWhereableColumnFromGenericColumnDef,
+} from './getTableDefs';
 
 type SelectableColumnsType = Record<string, true>;
 
@@ -32,11 +40,51 @@ export function getSelectableColumns<DB>(
 
     const tableDef = getTableDef<DB>(schema, table);
 
-    for (const [columnName, columnDef] of getColumnDefs<DB>(tableDef)) {
+    for (const [columnName, columnDef] of getColumnNamesAndDefs<DB>(tableDef)) {
         if (isSelectableColumn(columnDef)) {
             select[columnName] = true;
         }
     }
 
     return select;
+}
+
+export function getSelectableColumnsFromGenericDbSchema(
+    schema: AnyDbSchema,
+    table: string,
+): string[] {
+    const select: string[] = [];
+
+    const tableDef = getTableDefFromGenericDbSchema(schema, table);
+
+    for (const [
+        columnName,
+        columnDef,
+    ] of getColumnNamesAndDefsFromGenericTableDef(tableDef)) {
+        if (isSelectableColumnFromGenericColumnDef(columnDef)) {
+            select.push(columnName);
+        }
+    }
+
+    return select;
+}
+
+export function getWhereableColumnsFromGenericDbSchema(
+    schema: AnyDbSchema,
+    table: string,
+): string[] {
+    const where: string[] = [];
+
+    const tableDef = getTableDefFromGenericDbSchema(schema, table);
+
+    for (const [
+        columnName,
+        columnDef,
+    ] of getColumnNamesAndDefsFromGenericTableDef(tableDef)) {
+        if (isWhereableColumnFromGenericColumnDef(columnDef)) {
+            where.push(columnName);
+        }
+    }
+
+    return where;
 }

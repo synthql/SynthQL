@@ -1,6 +1,10 @@
 import { DbSchema } from '../types/DbSchema';
 import { Table } from '../types/Table';
-import { getColumnDefs, getTableDef, isPrimaryKeyColumn } from './getTableDefs';
+import {
+    getColumnNamesAndDefs,
+    getTableDef,
+    isPrimaryKeyColumn,
+} from './getTableDefs';
 
 /**
  * Get the primary key of a table, as defined in the database schema.
@@ -17,7 +21,7 @@ import { getColumnDefs, getTableDef, isPrimaryKeyColumn } from './getTableDefs';
  * @param table The name of the table
  */
 
-export function getPrimaryKey<DB>(
+export function getPrimaryKeys<DB>(
     schema: DbSchema<DB>,
     table: Table<DB>,
 ): Array<string> {
@@ -25,7 +29,7 @@ export function getPrimaryKey<DB>(
 
     const tableDef = getTableDef<DB>(schema, table);
 
-    for (const [columnName, columnDef] of getColumnDefs<DB>(tableDef)) {
+    for (const [columnName, columnDef] of getColumnNamesAndDefs<DB>(tableDef)) {
         if (isPrimaryKeyColumn(columnDef)) {
             primaryKeys.push(columnName);
         }
