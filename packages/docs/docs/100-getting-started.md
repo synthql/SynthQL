@@ -9,7 +9,7 @@ Start by installing the SynthQL packages.
 
 ```bash
 # Backend packages
-yarn add @synthql/backend @synthql/queries @synthql/cli
+yarn add @synthql/backend @synthql/queries
 
 # Frontend packages
 yarn add @synthql/react @synthql/queries
@@ -20,9 +20,11 @@ yarn add @synthql/react @synthql/queries
 Then generate the types from your database using the `@synthql/cli`.
 
 ```bash
-# --url is the database connection URL
-# --dir is the path where the schema will be generated [Defaults to src/]
-yarn run synthql generate --connectionString=postgres://postgres:postgres@localhost:5432/postgres --out=src --defaultSchema=public --schemas public pg_catalog
+npx @synthql/cli generate \
+    # The database connection string
+    --url=postgres://postgres:postgres@localhost:5432/postgres \
+    # The folder where SynthQL will write the generated types
+    --out=./src/generated
 ```
 
 This will generate a file at `src/generated/synthql/db.ts`.
@@ -32,7 +34,12 @@ This will generate a file at `src/generated/synthql/db.ts`.
 ```ts
 import { from } from 'src/db';
 
-const users = from('users').select('id', 'email').many();
+const findUserById = (id: string) => {
+    return from('users')
+        .columns('id', 'email')
+        .filter({ id })
+        .many();
+}
 ```
 
 ## Setup the query engine
