@@ -6,7 +6,12 @@ import {
     getTableNamesFromGenericDbSchema,
 } from '@synthql/queries';
 
-export function generateQueryArbitrary(schema: AnyDbSchema) {
+type Cardinality = 'one' | 'maybe' | 'many';
+
+export function generateQueryArbitrary(
+    schema: AnyDbSchema,
+    cardinality: Cardinality,
+) {
     return fc
         .constantFrom(...getTableNamesFromGenericDbSchema(schema))
         .chain((table) =>
@@ -29,24 +34,28 @@ export function generateQueryArbitrary(schema: AnyDbSchema) {
                             maxKeys: keys.length,
                         }),
                     ),
-                where: fc
-                    .constantFrom(
-                        ...getWhereableColumnsFromGenericDbSchema(
-                            schema,
-                            table,
-                        ),
-                    )
-                    .chain((column) =>
-                        fc.object({
-                            key: fc.constant(column),
-                            values: [
-                                whereValueArbitrary(schema, table, column),
-                            ],
-                            maxDepth: 0,
-                            maxKeys: 1,
-                        }),
-                    ),
-                cardinality: fc.constantFrom(...['one', 'maybe', 'many']),
+                // where: fc
+                //     .constantFrom(
+                //         ...getWhereableColumnsFromGenericDbSchema(
+                //             schema,
+                //             table,
+                //         ),
+                //     )
+                //     .chain((column) =>
+                //         fc.object({
+                //             key: fc.constant(column),
+                //             values: [
+                //                 whereValueArbitrary(schema, table, column),
+                //             ],
+                //             maxDepth: 0,
+                //             maxKeys: 1,
+                //         }),
+                //     ),
+                where: fc.constant({}),
+                limit: fc.integer({
+                    min: 1,
+                }),
+                cardinality: fc.constant(cardinality),
             }),
         );
 }

@@ -1,16 +1,23 @@
-import { test, fc } from '@fast-check/vitest';
-import { schema } from '../../generated';
-import { expect } from 'vitest';
+import { it } from '@fast-check/vitest';
+import { DB, schema } from '../../generated';
+import { describe, expect } from 'vitest';
 import { generateQueryArbitrary } from '../arbitraries/cardinality';
+import { queryEngine } from '../../queryEngine';
+import { executeQuery } from './executeQuery';
 
-const qa = generateQueryArbitrary(schema);
+describe('cardinalityOne', () => {
+    const qa = generateQueryArbitrary(schema, 'one');
 
-// test.prop([fc.boolean()])('should detect the substring', (query) => {
-//     console.log(query);
-//     expect(query);
-// });
+    it.prop([qa], { verbose: 2 })(
+        'Valid query should return a non-null, non-array, TS object result',
+        async (query) => {
+            const queryResult = await executeQuery<DB>(queryEngine, query);
 
-test.prop([qa])('should detect the substring', (query) => {
-    console.log(query);
-    expect(query).toBe(1);
+            expect(queryResult).toBeTypeOf('object');
+
+            expect(Array.isArray(queryResult)).toEqual(false);
+
+            expect(queryResult).not.toBeNull();
+        },
+    );
 });
