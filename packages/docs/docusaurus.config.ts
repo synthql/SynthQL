@@ -114,15 +114,13 @@ const config: Config = {
                         },
                         {
                             label: 'Benchmarks',
-                            to: 'https://synthql.github.io/SynthQL/benchmarks/'
-                        }
+                            to: 'https://synthql.github.io/SynthQL/benchmarks/',
+                        },
                     ],
                 },
                 {
                     title: ' ',
-                    items: [
-
-                    ],
+                    items: [],
                 },
                 {
                     title: 'Community',

@@ -45,8 +45,9 @@ export default function Home(): JSX.Element {
                         }}
                     />
                     <h1 style={{ textAlign: 'center' }}>SynthQL</h1>
-                    <p >The type-safe http client for your
-                        PostgreSQL database.</p>
+                    <p>
+                        The type-safe http client for your PostgreSQL database.
+                    </p>
 
                     <Link to="/docs/getting-started">
                         <button className="button button--primary button--lg">
@@ -123,39 +124,41 @@ export default function Home(): JSX.Element {
                             gap: 80,
                         }}
                     >
-                        {features.map(({ title, link, description, code }, i) => {
-                            const blocks = [
-                                <div className="col col--6">
-                                    <div
-                                        style={{
-                                            height: '100%',
-
-                                            borderRadius: 16,
-                                        }}
-                                    >
-                                        <Heading as="h3">{title}</Heading>
-                                        <p
+                        {features.map(
+                            ({ title, link, description, code }, i) => {
+                                const blocks = [
+                                    <div className="col col--6">
+                                        <div
                                             style={{
-                                                // preserve white space
-                                                whiteSpace: 'pre-wrap',
+                                                height: '100%',
+
+                                                borderRadius: 16,
                                             }}
                                         >
-                                            {description}
-                                        </p>
-                                        {link && (
-                                            <Link to={link}>Read more</Link>
-                                        )}
-                                    </div>
-                                </div>,
-                                <div className="col col--6">
-                                    <CodeBlock language="typescript">
-                                        {code}
-                                    </CodeBlock>
-                                </div>,
-                            ];
+                                            <Heading as="h3">{title}</Heading>
+                                            <p
+                                                style={{
+                                                    // preserve white space
+                                                    whiteSpace: 'pre-wrap',
+                                                }}
+                                            >
+                                                {description}
+                                            </p>
+                                            {link && (
+                                                <Link to={link}>Read more</Link>
+                                            )}
+                                        </div>
+                                    </div>,
+                                    <div className="col col--6">
+                                        <CodeBlock language="typescript">
+                                            {code}
+                                        </CodeBlock>
+                                    </div>,
+                                ];
 
-                            return <div className="row">{blocks}</div>;
-                        })}
+                                return <div className="row">{blocks}</div>;
+                            },
+                        )}
                     </div>
                 </section>
 
@@ -188,65 +191,62 @@ export default function Home(): JSX.Element {
 }
 
 const features: Array<{
-    title: string,
-    description: string,
-    link?: string,
-    code: string
+    title: string;
+    description: string;
+    link?: string;
+    code: string;
 }> = [
-        {
-            title: 'End-to-end type safety',
-            description:
-                'Generate types from your schema with a single command. Run in on your CI to ensure types are always up to date.',
-            link: '/docs/getting-started#generate-types',
-            code: [
-                `npx @synthql/cli generate --url $DATABASE_URL`,
-            ].join('\n'),
-        },
-        {
-            title: 'Composable query language',
-            description:
-                'Build complex queries by composing smaller queries together. The SynthQL query language is designed for easy composition and re-use.',
-            code: [
-                `const findPetsByOwner = (owner) =>`,
-                `    from('pets')`,
-                `        .filter({ owner })`,
-                `        .many();`,
-                ``,
-                `const findPersonById = (id) => {`,
-                `    const pets = findPetsByOwner(id)`,
-                `    return from('people')`,
-                `        .filter({ id })`,
-                `        .include({ pets })`,
-                `        .one()`,
-                `    }`,
-            ].join('\n'),
-        },
-        {
-            title: 'Built-in pagination & streaming',
-            link: '/docs/pagination',
-            code: [
-                `
+    {
+        title: 'End-to-end type safety',
+        description:
+            'Generate types from your schema with a single command. Run in on your CI to ensure types are always up to date.',
+        link: '/docs/getting-started#generate-types',
+        code: [`npx @synthql/cli generate --url $DATABASE_URL`].join('\n'),
+    },
+    {
+        title: 'Composable query language',
+        description:
+            'Build complex queries by composing smaller queries together. The SynthQL query language is designed for easy composition and re-use.',
+        code: [
+            `const findPetsByOwner = (owner) =>`,
+            `    from('pets')`,
+            `        .filter({ owner })`,
+            `        .many();`,
+            ``,
+            `const findPersonById = (id) => {`,
+            `    const pets = findPetsByOwner(id)`,
+            `    return from('people')`,
+            `        .filter({ id })`,
+            `        .include({ pets })`,
+            `        .one()`,
+            `    }`,
+        ].join('\n'),
+    },
+    {
+        title: 'Built-in pagination & streaming',
+        link: '/docs/pagination',
+        code: [
+            `
 const query = from('users')
     .filter({age: {gt:18}})
     .take(100) // set the size of the page
 
 const {data, fetchNextPage} = useSynthql(query)`,
-            ].join('\n'),
-            description: [
-                `Pagination in SynthQL just works. You don't need to do anything special to enable it.`,
-            ].join('\n'),
-        },
-        {
-            title: 'Lazy queries',
-            description: [
-                `As queries become bigger, latency also grows. Lazy queries help you split large object graphs to optimize page load.`,
-                '',
-                'In the following example, we use a lazy query to load a store and its products separately. This means the store can load quickly and the products can load in the background.',
-                'This is especially useful when the products are not immediately visible on the page.',
-
-            ].join('\n'),
-            link: '/docs/lazy-queries',
-            code: `
+        ].join('\n'),
+        description: [
+            `Pagination in SynthQL just works. You don't need to do anything special to enable it.`,
+        ].join('\n'),
+    },
+    {
+        title: 'Lazy queries',
+        description: [
+            `As queries become bigger, latency also grows. Lazy queries help you split large object graphs to optimize page load.`,
+            '',
+            'In the following example, we use a lazy query to load a store and its products separately. This means the store can load quickly and the products can load in the background.',
+            'This is especially useful when the products are not immediately visible on the page.',
+        ].join('\n'),
+        link: '/docs/lazy-queries',
+        code: `
 const products = from('products')
     .column('id', 'name', 'price')
     .filter({
@@ -267,14 +267,14 @@ const query = from('store')
 [{ id: "store 1", name: "Fnacy store", products: { status: 'pending' } }]
 [{ id: "store 1", name: "Fancy store", products: { status: "done", data: [...] } }]
             `,
-        },
+    },
 
-        {
-            title: 'Security',
-            link: '/docs/security',
-            description:
-                'SynthQL offers a number of security features to help you secure your application. This includes built-in authentication, query whitelisting, and more.',
-            code: `
+    {
+        title: 'Security',
+        link: '/docs/security',
+        description:
+            'SynthQL offers a number of security features to help you secure your application. This includes built-in authentication, query whitelisting, and more.',
+        code: `
 const findPetsByOwner = (ownerId) => {
     return from('pets')
         .column('name','id')
@@ -292,15 +292,15 @@ const findPersonByIds = (ids) => {
             films: findPetsByOwner(col('people.id'))
         })
         .many()
-}`
-        },
+}`,
+    },
 
-        {
-            title: 'Custom query providers',
-            link: '/docs/custom-query-executors',
-            description:
-                'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
-            code: `
+    {
+        title: 'Custom query providers',
+        link: '/docs/custom-query-executors',
+        description:
+            'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
+        code: `
 const findFilmsWithRatings = () => {
     const ratings = from('rotten_tomatoes_ratings')
         .filter({
@@ -312,8 +312,6 @@ const findFilmsWithRatings = () => {
         .filter({ year: 1965 })
         .include({ ratings })
         .many()
-}`
-        },
-
-
-    ];
+}`,
+    },
+];
