@@ -43,7 +43,7 @@ function collectRefsFromWhere(
     query: AnyQuery,
     table: TableRef,
 ): Array<ColumnRef> {
-    return Object.keys(query.where).map((column) => {
+    return Object.keys(query.where ?? {}).map((column) => {
         return table.column(column);
     });
 }
@@ -52,7 +52,7 @@ function collectRefsFromRefOp(
     query: AnyQuery,
     defaultSchema: string,
 ): Array<ColumnRef> {
-    return Object.values(query.where).flatMap((clause) => {
+    return Object.values(query.where ?? {}).flatMap((clause) => {
         if (isRefOp(clause)) {
             return [ColumnRef.fromRefOp(clause, defaultSchema)];
         }

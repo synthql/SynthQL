@@ -1,12 +1,23 @@
 import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
-import { describe, expect } from 'vitest';
-import { generateQueryArbitrary } from '../arbitraries/cardinality';
-import { queryEngine } from '../../queryEngine';
-import { executeQuery } from './executeQuery';
+import { beforeAll, describe, expect } from 'vitest';
+import {
+    generateEmptyQueryArbitrary,
+    generateQueryArbitrary,
+} from '../arbitraries/cardinality';
+import { pool, queryEngine } from '../../queryEngine';
+import { executeQuery, getTableValues } from './executeQuery';
 
 describe('cardinalityOne', () => {
-    const qa = generateQueryArbitrary(schema, 'one');
+    let allValuesMap = new Map<string, Array<any>>();
+
+    beforeAll(async () => {
+        allValuesMap = await getTableValues(pool, schema);
+    });
+
+    const qa = generateQueryArbitrary(schema, allValuesMap, 'one');
+
+    const eqa = generateEmptyQueryArbitrary(schema, 'one');
 
     it.prop([qa], { verbose: 2 })(
         'Valid query should return a non-null, non-array, TS object result',
@@ -18,6 +29,15 @@ describe('cardinalityOne', () => {
             expect(Array.isArray(queryResult)).toEqual(false);
 
             expect(queryResult).not.toBeNull();
+        },
+    );
+
+    it.prop([eqa], { verbose: 2 })(
+        'Empty query should throw error',
+        async (query) => {
+            const queryResult = await executeQuery<DB>(queryEngine, query);
+
+            expect(queryResult).toEqual({});
         },
     );
 });

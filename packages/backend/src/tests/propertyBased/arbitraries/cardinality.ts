@@ -10,6 +10,7 @@ type Cardinality = 'one' | 'maybe' | 'many';
 
 export function generateQueryArbitrary(
     schema: AnyDbSchema,
+    allValuesMap: Map<string, Array<any>>,
     cardinality: Cardinality,
 ) {
     return fc
@@ -34,24 +35,27 @@ export function generateQueryArbitrary(
                             maxKeys: keys.length,
                         }),
                     ),
-                // where: fc
-                //     .constantFrom(
-                //         ...getWhereableColumnsFromGenericDbSchema(
-                //             schema,
-                //             table,
-                //         ),
-                //     )
-                //     .chain((column) =>
-                //         fc.object({
-                //             key: fc.constant(column),
-                //             values: [
-                //                 whereValueArbitrary(schema, table, column),
-                //             ],
-                //             maxDepth: 0,
-                //             maxKeys: 1,
-                //         }),
-                //     ),
-                where: fc.constant({}),
+                where: fc
+                    .constantFrom(
+                        ...getWhereableColumnsFromGenericDbSchema(
+                            schema,
+                            table,
+                        ),
+                    )
+                    .chain((column) =>
+                        fc.object({
+                            key: fc.constant(column),
+                            values: [
+                                whereValueArbitrary(
+                                    allValuesMap,
+                                    table,
+                                    column,
+                                ),
+                            ],
+                            maxDepth: 0,
+                            maxKeys: 1,
+                        }),
+                    ),
                 limit: fc.integer({
                     min: 1,
                 }),
@@ -60,10 +64,41 @@ export function generateQueryArbitrary(
         );
 }
 
-function whereValueArbitrary(
+export function generateEmptyQueryArbitrary(
     schema: AnyDbSchema,
+    cardinality: Cardinality,
+) {
+    return fc
+        .constantFrom(...getTableNamesFromGenericDbSchema(schema))
+        .chain((table) =>
+            fc.record({
+                from: fc.constant(table),
+                cardinality: fc.constant(cardinality),
+            }),
+        );
+}
+
+function whereValueArbitrary(
+    allValuesMap: Map<string, Array<any>>,
     table: string,
     column: string,
 ): fc.Arbitrary<unknown> {
-    return fc.boolean();
+    const tableValues = allValuesMap.get(table);
+
+    const columnValues = tableValues?.map((row) => {
+        const value = row[column];
+
+        if (value instanceof Date) {
+        } else {
+            return value;
+        }
+    });
+
+    if (columnValues && columnValues?.length > 0) {
+        const columnValuesFromSet = Array.from(new Set(columnValues));
+
+        return fc.constantFrom(...columnValuesFromSet);
+    } else {
+        return fc.constant({});
+    }
 }
