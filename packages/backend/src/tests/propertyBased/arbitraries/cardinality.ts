@@ -88,10 +88,15 @@ function whereValueArbitrary(
     const columnValues = tableValues?.map((row) => {
         const value = row[column];
 
-        if (value instanceof Date) {
-        } else {
-            return value;
-        }
+        return value;
+
+        // if (value instanceof Date) {
+        //     console.log(0, value);
+
+        //     return value;
+        // } else {
+        //     return value;
+        // }
     });
 
     if (columnValues && columnValues?.length > 0) {
@@ -99,6 +104,6 @@ function whereValueArbitrary(
 
         return fc.constantFrom(...columnValuesFromSet);
     } else {
-        return fc.constant({});
+        return fc.constant(undefined);
     }
 }
