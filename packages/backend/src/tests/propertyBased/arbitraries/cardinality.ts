@@ -1,6 +1,6 @@
 import { fc } from '@fast-check/vitest';
 import {
-    AnyDbSchema,
+    AnySchema,
     getSelectableColumnsFromGenericDbSchema,
     getWhereableColumnsFromGenericDbSchema,
     getTableNamesFromGenericDbSchema,
@@ -9,7 +9,7 @@ import {
 type Cardinality = 'one' | 'maybe' | 'many';
 
 export function generateQueryArbitrary(
-    schema: AnyDbSchema,
+    schema: AnySchema,
     allValuesMap: Map<string, Array<any>>,
     cardinality: Cardinality,
 ) {
@@ -65,7 +65,7 @@ export function generateQueryArbitrary(
 }
 
 export function generateEmptyQueryArbitrary(
-    schema: AnyDbSchema,
+    schema: AnySchema,
     cardinality: Cardinality,
 ) {
     return fc

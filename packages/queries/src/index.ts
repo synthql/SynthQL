@@ -4,7 +4,7 @@ export * from './schema/getSelectableColumns';
 export * from './schema/getTableDefs';
 export * from './types/types';
 export * from './types/isRefOp';
-export * from './types/DbSchema';
+export * from './types/Schema';
 export * from './types/QueryResult';
 export * from './types/WhereClause';
 export * from './types/Where';

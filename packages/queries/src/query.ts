@@ -3,7 +3,7 @@ import { Where } from './types/Where';
 import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
-import { DbSchema } from './types/DbSchema';
+import { Schema } from './types/Schema';
 import { getSelectableColumns } from './schema/getSelectableColumns';
 import { getPrimaryKeys } from './schema/getPrimaryKeys';
 
@@ -423,7 +423,7 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>(schema: DbSchema<DB>) {
+export function query<DB>(schema: Schema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;

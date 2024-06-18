@@ -1,4 +1,4 @@
-import { DbSchema } from '../types/DbSchema';
+import { Schema } from '../types/Schema';
 import { Table } from '../types/Table';
 import {
     getColumnNamesAndDefs,
@@ -22,7 +22,7 @@ import {
  */
 
 export function getPrimaryKeys<DB>(
-    schema: DbSchema<DB>,
+    schema: Schema<DB>,
     table: Table<DB>,
 ): Array<string> {
     const primaryKeys: Array<string> = [];

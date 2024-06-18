@@ -1,4 +1,4 @@
-import { AnyDbSchema, DbSchema } from '../types/DbSchema';
+import { AnySchema, Schema } from '../types/Schema';
 import { Table } from '../types/Table';
 import {
     getColumnNamesAndDefs,
@@ -33,7 +33,7 @@ type SelectableColumnsType = Record<string, true>;
  */
 
 export function getSelectableColumns<DB>(
-    schema: DbSchema<DB>,
+    schema: Schema<DB>,
     table: Table<DB>,
 ): SelectableColumnsType {
     const select: SelectableColumnsType = {};
@@ -50,7 +50,7 @@ export function getSelectableColumns<DB>(
 }
 
 export function getSelectableColumnsFromGenericDbSchema(
-    schema: AnyDbSchema,
+    schema: AnySchema,
     table: string,
 ): string[] {
     const select: string[] = [];
@@ -70,7 +70,7 @@ export function getSelectableColumnsFromGenericDbSchema(
 }
 
 export function getWhereableColumnsFromGenericDbSchema(
-    schema: AnyDbSchema,
+    schema: AnySchema,
     table: string,
 ): string[] {
     const where: string[] = [];

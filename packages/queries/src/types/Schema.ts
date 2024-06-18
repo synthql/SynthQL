@@ -1,11 +1,11 @@
 import { Column } from './Column';
 import { Table } from './Table';
 
-export interface AnyDbSchema {
+export interface AnySchema {
     properties: Record<string, AnyTableDef>;
 }
 
-export interface DbSchema<DB> {
+export interface Schema<DB> {
     properties: Record<Table<DB>, TableDef<DB>>;
 }
 

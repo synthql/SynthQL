@@ -1,56 +1,54 @@
 import { Column } from '../types/Column';
 import {
     AnyColumnDef,
-    AnyDbSchema,
+    AnySchema,
     AnyTableDef,
     ColumnDef,
-    DbSchema,
+    Schema,
     TableDef,
-} from '../types/DbSchema';
+} from '../types/Schema';
 import { Table } from '../types/Table';
 
-export function getTableNamesFromGenericDbSchema(
-    schema: AnyDbSchema,
-): string[] {
+export function getTableNamesFromGenericDbSchema(schema: AnySchema): string[] {
     return Object.keys(schema.properties);
 }
 
-export function getTableNames<DB>(schema: DbSchema<DB>): string[] {
+export function getTableNames<DB>(schema: Schema<DB>): string[] {
     return Object.keys(schema.properties);
 }
 
 export function getTableDefFromGenericDbSchema(
-    schema: AnyDbSchema,
+    schema: AnySchema,
     table: string,
 ): AnyTableDef {
     return schema.properties[table];
 }
 
 export function getTableDef<DB>(
-    schema: DbSchema<DB>,
+    schema: Schema<DB>,
     table: Table<DB>,
 ): TableDef<DB> {
     return schema.properties[table];
 }
 
 export function getTableDefsFromGenericDbSchema(
-    schema: AnyDbSchema,
+    schema: AnySchema,
 ): AnyTableDef[] {
     return Object.values(schema.properties);
 }
 
-export function getTableDefs<DB>(schema: DbSchema<DB>): TableDef<DB>[] {
+export function getTableDefs<DB>(schema: Schema<DB>): TableDef<DB>[] {
     return Object.values(schema.properties);
 }
 
 export function getTableNamesAndDefsFromGenericDbSchema(
-    schema: AnyDbSchema,
+    schema: AnySchema,
 ): [string, AnyTableDef][] {
     return Object.entries(schema.properties);
 }
 
 export function getTableNamesAndDefs<DB>(
-    schema: DbSchema<DB>,
+    schema: Schema<DB>,
 ): [string, TableDef<DB>][] {
     return Object.entries(schema.properties);
 }
