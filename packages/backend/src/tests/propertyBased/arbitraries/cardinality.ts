@@ -8,66 +8,50 @@ import {
 
 type Cardinality = 'one' | 'maybe' | 'many';
 
-export function generateQueryArbitrary(
-    schema: AnySchema,
-    allValuesMap: Map<string, Array<any>>,
-    cardinality: Cardinality,
-) {
+type TableName = string;
+
+type ColumnName = string;
+
+export type ValuesMap = Map<TableName, Array<any>>;
+
+interface QueryArbitrary {
+    schema: AnySchema;
+    allValuesMap: ValuesMap;
+    cardinality: Cardinality;
+    validWhere: boolean;
+}
+
+export function generateQueryArbitrary({
+    schema,
+    allValuesMap,
+    cardinality,
+    validWhere,
+}: QueryArbitrary) {
     return fc
         .constantFrom(...getTableNamesFromGenericDbSchema(schema))
-        .chain((table) =>
+        .chain((tableName) =>
             fc.record({
-                from: fc.constant(table),
-                select: fc
-                    .constantFrom(
-                        getSelectableColumnsFromGenericDbSchema(schema, table),
-                    )
-                    .chain((keys) =>
-                        fc.object({
-                            key: fc.constantFrom(
-                                ...getSelectableColumnsFromGenericDbSchema(
-                                    schema,
-                                    table,
-                                ),
-                            ),
-                            values: [fc.boolean()],
-                            maxDepth: 0,
-                            maxKeys: keys.length,
-                        }),
-                    ),
-                where: fc
-                    .constantFrom(
-                        ...getWhereableColumnsFromGenericDbSchema(
-                            schema,
-                            table,
-                        ),
-                    )
-                    .chain((column) =>
-                        fc.object({
-                            key: fc.constant(column),
-                            values: [
-                                whereValueArbitrary(
-                                    allValuesMap,
-                                    table,
-                                    column,
-                                ),
-                            ],
-                            maxDepth: 0,
-                            maxKeys: 1,
-                        }),
-                    ),
-                limit: fc.integer({
-                    min: 1,
+                from: tableNameArbitrary(tableName),
+                select: selectArbitrary({ schema, tableName }),
+                where: whereArbitrary({
+                    schema,
+                    allValuesMap,
+                    tableName,
+                    validWhere,
                 }),
-                cardinality: fc.constant(cardinality),
+                limit: limitArbitrary(),
+                cardinality: cardinalityArbitrary(cardinality),
             }),
         );
 }
 
-export function generateEmptyQueryArbitrary(
-    schema: AnySchema,
-    cardinality: Cardinality,
-) {
+export function generateFromAndCardinalityOnlyQueryArbitrary({
+    schema,
+    cardinality,
+}: {
+    schema: AnySchema;
+    cardinality: Cardinality;
+}) {
     return fc
         .constantFrom(...getTableNamesFromGenericDbSchema(schema))
         .chain((table) =>
@@ -78,32 +62,117 @@ export function generateEmptyQueryArbitrary(
         );
 }
 
-function whereValueArbitrary(
-    allValuesMap: Map<string, Array<any>>,
-    table: string,
-    column: string,
-): fc.Arbitrary<unknown> {
-    const tableValues = allValuesMap.get(table);
+function tableNameArbitrary(tableName: TableName) {
+    return fc.constant(tableName);
+}
+
+function selectArbitrary({
+    schema,
+    tableName,
+}: {
+    schema: AnySchema;
+    tableName: TableName;
+}) {
+    return fc
+        .constantFrom(
+            getSelectableColumnsFromGenericDbSchema(schema, tableName),
+        )
+        .chain((keys) =>
+            fc.object({
+                key: fc.constantFrom(
+                    ...getSelectableColumnsFromGenericDbSchema(
+                        schema,
+                        tableName,
+                    ),
+                ),
+                values: [fc.boolean()],
+                maxDepth: 0,
+                maxKeys: keys.length,
+            }),
+        );
+}
+
+function whereArbitrary({
+    schema,
+    allValuesMap,
+    tableName,
+    validWhere,
+}: {
+    schema: AnySchema;
+    allValuesMap: ValuesMap;
+    tableName: TableName;
+    validWhere: boolean;
+}) {
+    return fc
+        .constantFrom(
+            ...getWhereableColumnsFromGenericDbSchema(schema, tableName),
+        )
+        .chain((columnName) =>
+            fc.dictionary(
+                fc.constant(columnName),
+                whereValueArbitrary({
+                    allValuesMap,
+                    tableName,
+                    columnName,
+                    validWhere,
+                }),
+                {
+                    depthIdentifier: '0',
+                    minKeys: 1,
+                    maxKeys: 1,
+                },
+            ),
+        );
+}
+
+function whereValueArbitrary({
+    allValuesMap,
+    tableName,
+    columnName,
+    validWhere,
+}: {
+    allValuesMap: ValuesMap;
+    tableName: TableName;
+    columnName: ColumnName;
+    validWhere: boolean;
+}): fc.Arbitrary<unknown> {
+    const tableValues = allValuesMap.get(tableName);
 
     const columnValues = tableValues?.map((row) => {
-        const value = row[column];
+        const value = row[columnName];
 
         return value;
-
-        // if (value instanceof Date) {
-        //     console.log(0, value);
-
-        //     return value;
-        // } else {
-        //     return value;
-        // }
     });
 
     if (columnValues && columnValues?.length > 0) {
-        const columnValuesFromSet = Array.from(new Set(columnValues));
+        if (validWhere) {
+            const columnValuesFromSet = Array.from(new Set(columnValues));
 
-        return fc.constantFrom(...columnValuesFromSet);
+            return fc.constantFrom(...columnValuesFromSet);
+        } else {
+            // Return an `any type of value` arbitrary value that matches two conditions
+            // 1. It is of the type of the first column value in the column values array
+            // 2. It does not exist in the column values array
+
+            return fc
+                .anything()
+                .filter(
+                    (n) =>
+                        typeof n === typeof columnValues[0] &&
+                        !columnValues.includes(n),
+                );
+        }
     } else {
         return fc.constant(undefined);
     }
+}
+
+function limitArbitrary() {
+    return fc.integer({
+        min: 1,
+    });
+}
+
+function cardinalityArbitrary(cardinality: Cardinality) {
+    return fc.constant(cardinality);
 }

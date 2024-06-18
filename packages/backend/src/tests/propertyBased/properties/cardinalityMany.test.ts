@@ -2,25 +2,42 @@ import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
 import { beforeAll, describe, expect } from 'vitest';
 import {
-    generateEmptyQueryArbitrary,
+    ValuesMap,
+    generateFromAndCardinalityOnlyQueryArbitrary,
     generateQueryArbitrary,
 } from '../arbitraries/cardinality';
 import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
 
 describe('cardinalityMany', () => {
-    let allValuesMap = new Map<string, Array<any>>();
+    let allValuesMap: ValuesMap = new Map();
 
     beforeAll(async () => {
         allValuesMap = await getTableValues(pool, schema);
     });
 
-    const qa = generateQueryArbitrary(schema, allValuesMap, 'many');
+    const validWhereQueryArbitrary = generateQueryArbitrary({
+        schema,
+        allValuesMap,
+        cardinality: 'many',
+        validWhere: true,
+    });
 
-    const eqa = generateEmptyQueryArbitrary(schema, 'many');
+    const invalidWhereQueryArbitrary = generateQueryArbitrary({
+        schema,
+        allValuesMap,
+        cardinality: 'many',
+        validWhere: false,
+    });
 
-    it.prop([qa], { verbose: 2 })(
-        'Valid query should return possibly empty array',
+    const fromAndCardinalityOnlyQueryArbitrary =
+        generateFromAndCardinalityOnlyQueryArbitrary({
+            schema,
+            cardinality: 'many',
+        });
+
+    it.prop([validWhereQueryArbitrary], { verbose: 2 })(
+        'Valid where query should return possibly empty array',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
 
@@ -30,8 +47,19 @@ describe('cardinalityMany', () => {
         },
     );
 
-    it.prop([eqa], { verbose: 2 })(
-        'Empty query should return empty array',
+    it.prop([invalidWhereQueryArbitrary], { verbose: 2 })(
+        'Invalid where query should return empty array',
+        async (query) => {
+            const queryResult = await executeQuery<DB>(queryEngine, query);
+
+            expect(Array.isArray(queryResult)).toEqual(true);
+
+            expect(queryResult).toEqual([]);
+        },
+    );
+
+    it.prop([fromAndCardinalityOnlyQueryArbitrary], { verbose: 2 })(
+        'From & cardinality only query should return array',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
 

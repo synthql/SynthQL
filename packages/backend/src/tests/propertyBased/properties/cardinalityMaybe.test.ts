@@ -2,25 +2,42 @@ import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
 import { beforeAll, describe, expect } from 'vitest';
 import {
-    generateEmptyQueryArbitrary,
+    ValuesMap,
+    generateFromAndCardinalityOnlyQueryArbitrary,
     generateQueryArbitrary,
 } from '../arbitraries/cardinality';
 import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
 
 describe('cardinalityMaybe', () => {
-    let allValuesMap = new Map<string, Array<any>>();
+    let allValuesMap: ValuesMap = new Map();
 
     beforeAll(async () => {
         allValuesMap = await getTableValues(pool, schema);
     });
 
-    const qa = generateQueryArbitrary(schema, allValuesMap, 'maybe');
+    const validWhereQueryArbitrary = generateQueryArbitrary({
+        schema,
+        allValuesMap,
+        cardinality: 'maybe',
+        validWhere: true,
+    });
 
-    const eqa = generateEmptyQueryArbitrary(schema, 'maybe');
+    const invalidWhereQueryArbitrary = generateQueryArbitrary({
+        schema,
+        allValuesMap,
+        cardinality: 'maybe',
+        validWhere: false,
+    });
 
-    it.prop([qa], { verbose: 2 })(
-        'Valid query should return a possibly null, non-array, TS object result',
+    const fromAndCardinalityOnlyQueryArbitrary =
+        generateFromAndCardinalityOnlyQueryArbitrary({
+            schema,
+            cardinality: 'maybe',
+        });
+
+    it.prop([validWhereQueryArbitrary], { verbose: 2 })(
+        'Valid where query should return a possibly null, non-array, TS object result',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
 
@@ -30,8 +47,17 @@ describe('cardinalityMaybe', () => {
         },
     );
 
-    it.prop([eqa], { verbose: 2 })(
-        'Empty query should return empty object',
+    it.prop([invalidWhereQueryArbitrary], { verbose: 2 })(
+        'Invalid where query should return null',
+        async (query) => {
+            const queryResult = await executeQuery<DB>(queryEngine, query);
+
+            expect(queryResult).toEqual(null);
+        },
+    );
+
+    it.prop([fromAndCardinalityOnlyQueryArbitrary], { verbose: 2 })(
+        'From & cardinality only query should return empty object',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
 
