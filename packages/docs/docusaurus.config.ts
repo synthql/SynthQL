@@ -110,7 +110,7 @@ const config: Config = {
                         },
                         {
                             label: 'API Reference',
-                            to: '/reference',
+                            to: 'https://synthql.github.io/SynthQL/reference',
                         },
                         {
                             label: 'Benchmarks',
