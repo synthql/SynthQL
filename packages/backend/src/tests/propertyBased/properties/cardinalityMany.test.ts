@@ -1,8 +1,7 @@
 import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
-import { beforeAll, describe, expect } from 'vitest';
+import { describe, expect } from 'vitest';
 import {
-    ValuesMap,
     generateFromAndCardinalityOnlyQueryArbitrary,
     generateQueryArbitrary,
 } from '../arbitraries/cardinality';
@@ -10,26 +9,6 @@ import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
 
 describe('cardinalityMany', async () => {
-    // let allValuesMapForValidWhere: ValuesMap = new Map();
-    // let allValuesMapForInvalidWhere: ValuesMap = new Map();
-
-    // beforeAll(async () => {
-    //     allValuesMapForValidWhere = await getTableValues(pool, schema);
-
-    //     allValuesMapForInvalidWhere = await getTableValues(pool, schema);
-    // });
-
-    // console.log(0, allValuesMapForValidWhere);
-    // console.log(1, allValuesMapForInvalidWhere);
-
-    // for (const item of allValuesMapForValidWhere.keys()) {
-    //     console.log(0, item);
-    // }
-
-    // for (const item of allValuesMapForInvalidWhere.keys()) {
-    //     console.log(1, item);
-    // }
-
     const validWhereQueryArbitrary = generateQueryArbitrary({
         schema,
         allValuesMap: await getTableValues(pool, schema),

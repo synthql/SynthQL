@@ -7793,12 +7793,6 @@ export const schema = {
             required: ['columns'],
             additionalProperties: false,
         },
-        'pg_catalog.int4': {
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
         'pg_catalog.text': {
             type: 'string',
             description: 'A PG text',
@@ -7831,6 +7825,12 @@ export const schema = {
             minimum: -32768,
             maximum: 32767,
             description: 'A PG int2',
+        },
+        'pg_catalog.int4': {
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
         },
         'pg_catalog.int8': {
             type: 'integer',

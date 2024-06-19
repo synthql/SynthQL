@@ -8,8 +8,8 @@ import {
     TableDetails,
 } from 'extract-pg-schema';
 
-import fs from 'fs';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
+import fs from 'fs';
 import path from 'path';
 
 export async function generate({
@@ -59,6 +59,7 @@ export async function generate({
         additionalProperties: false,
         unreachableDefinitions: false,
     });
+
     writeFormattedFile(path.join(outDir, 'db.ts'), db);
 
     /**
@@ -66,6 +67,7 @@ export async function generate({
      * This leads to a more compact output as the types are inlined.
      */
     const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
+
     writeFormattedFile(
         path.join(outDir, 'schema.ts'),
         `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
@@ -95,6 +97,7 @@ function createTypeDefId(type: {
     if (type.kind === 'base') {
         return type.fullName;
     }
+
     return `${type.fullName}.${type.kind}`;
 }
 
@@ -102,11 +105,13 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
     if (type.schemaName === defaultSchema) {
         return `table_${type.name}`;
     }
+
     return `table_${type.schemaName}_${type.name}`;
 }
 
 function createTableJsonSchema(table: TableDetails): JSONSchema {
     const empty: Record<string, any> = {};
+
     const columns = table.columns.reduce((acc, column) => {
         acc[column.name] = {
             type: 'object',
@@ -142,6 +147,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
             ],
             additionalProperties: false,
         };
+
         return acc;
     }, empty);
 
@@ -214,6 +220,7 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
     if (table.schemaName === defaultSchema) {
         return table.name;
     }
+
     return `${table.schemaName}.${table.name}`;
 }
 
@@ -222,9 +229,11 @@ function createTableDefs(
     defaultSchema: string,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
+
     return tables.reduce((acc, table) => {
         acc[createTableDefId(table, defaultSchema)] =
             createTableJsonSchema(table);
+
         return acc;
     }, empty);
 }
@@ -233,6 +242,7 @@ function createEnumJsonSchema(
     enums: EnumDetails[],
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
+
     return enums.reduce((acc, enumType) => {
         acc[
             createTypeDefId({
@@ -246,6 +256,7 @@ function createEnumJsonSchema(
                 enumType.comment ??
                 `The ${enumType.name} enum from the ${enumType.schemaName} schema`,
         };
+
         return acc;
     }, empty);
 }
@@ -267,6 +278,7 @@ function createDomainJsonSchema(
                 domain.comment ??
                 `The ${domain.name} domain from the ${domain.schemaName} schema`,
         };
+
         return acc;
     }, empty);
 }
@@ -285,12 +297,6 @@ function domainType(
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
-        'pg_catalog.int4': {
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
         'pg_catalog.text': {
             type: 'string',
             description: 'A PG text',
@@ -324,13 +330,18 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             maximum: 32767,
             description: 'A PG int2',
         },
+        'pg_catalog.int4': {
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+        },
         'pg_catalog.int8': {
             type: 'integer',
             minimum: -9223372036854775808,
             maximum: 9223372036854775807,
             description: 'A PG int8',
         },
-
         'pg_catalog.float4': {
             type: 'number',
             description: 'A PG float4',

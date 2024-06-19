@@ -36,7 +36,7 @@ export function applyCardinality<T, TCardinality extends Cardinality>(
     throw new Error(`applyCardinality(...,${cardinality}): Unreachable`);
 }
 
-class CardinalityError extends Error {
+export class CardinalityError extends Error {
     constructor(cardinality: Cardinality, query?: AnyQuery, row?: any) {
         super(
             [

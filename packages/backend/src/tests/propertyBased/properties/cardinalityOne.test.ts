@@ -1,23 +1,16 @@
 import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
-import { beforeAll, describe, expect } from 'vitest';
+import { describe, expect } from 'vitest';
 import {
-    ValuesMap,
     generateQueryArbitrary,
     generateFromAndCardinalityOnlyQueryArbitrary,
 } from '../arbitraries/cardinality';
 import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
+import { error } from 'console';
+import { CardinalityError } from '../../../query/applyCardinality';
 
 describe('cardinalityOne', async () => {
-    // let allValuesMapForValidWhere: ValuesMap = new Map();
-    // let allValuesMapForInvalidWhere: ValuesMap = new Map();
-
-    // beforeAll(async () => {
-    //     allValuesMapForValidWhere = await getTableValues(pool, schema);
-    //     allValuesMapForInvalidWhere = await getTableValues(pool, schema);
-    // });
-
     const validWhereQueryArbitrary = generateQueryArbitrary({
         schema,
         allValuesMap: await getTableValues(pool, schema),
@@ -54,11 +47,11 @@ describe('cardinalityOne', async () => {
     it.prop([invalidWhereQueryArbitrary], { verbose: 2 })(
         'Invalid where query should throw error',
         async (query) => {
-            const queryResult = await executeQuery<DB>(queryEngine, query);
-
-            expect(
-                async () => await executeQuery<DB>(queryEngine, query),
-            ).toThrow();
+            try {
+                await executeQuery<DB>(queryEngine, query);
+            } catch (error) {
+                expect(error).toBeInstanceOf(CardinalityError);
+            }
         },
     );
 
