@@ -35,13 +35,15 @@ This will generate a file at `src/generated/synthql/db.ts`.
 import { from } from 'src/db';
 
 const findUserByIds = (ids: string[]) => {
-    return from('users')
-        // select which columns you want
-        .columns('id', 'email')
-        // filter by IDs
-        .filter({ id: { in: ids } })
-        // return the first 100 that match
-        .take(100);
+    return (
+        from('users')
+            // select which columns you want
+            .columns('id', 'email')
+            // filter by IDs
+            .filter({ id: { in: ids } })
+            // return the first 100 that match
+            .take(100)
+    );
 };
 ```
 
