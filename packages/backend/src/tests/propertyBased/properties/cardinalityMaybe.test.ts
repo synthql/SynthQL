@@ -9,23 +9,25 @@ import {
 import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
 
-describe('cardinalityMaybe', () => {
-    let allValuesMap: ValuesMap = new Map();
+describe('cardinalityMaybe', async () => {
+    // let allValuesMapForValidWhere: ValuesMap = new Map();
+    // let allValuesMapForInvalidWhere: ValuesMap = new Map();
 
-    beforeAll(async () => {
-        allValuesMap = await getTableValues(pool, schema);
-    });
+    // beforeAll(async () => {
+    //     allValuesMapForValidWhere = await getTableValues(pool, schema);
+    //     allValuesMapForInvalidWhere = await getTableValues(pool, schema);
+    // });
 
     const validWhereQueryArbitrary = generateQueryArbitrary({
         schema,
-        allValuesMap,
+        allValuesMap: await getTableValues(pool, schema),
         cardinality: 'maybe',
         validWhere: true,
     });
 
     const invalidWhereQueryArbitrary = generateQueryArbitrary({
         schema,
-        allValuesMap,
+        allValuesMap: await getTableValues(pool, schema),
         cardinality: 'maybe',
         validWhere: false,
     });

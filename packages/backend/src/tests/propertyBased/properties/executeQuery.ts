@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { QueryEngine, collectLast } from '../../..';
 import { AnySchema, getTableNamesFromGenericDbSchema } from '@synthql/queries';
+import { ValuesMap } from '../arbitraries/cardinality';
 
 export async function executeQuery<DB>(
     queryEngine: QueryEngine<DB>,
@@ -16,7 +17,7 @@ export async function executeQuery<DB>(
 }
 
 export async function getTableValues(pool: Pool, schema: AnySchema) {
-    const allValuesMap = new Map<string, Array<any>>();
+    const allValuesMap: ValuesMap = new Map();
 
     const client = await pool.connect();
 

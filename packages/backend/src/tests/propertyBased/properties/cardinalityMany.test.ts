@@ -9,23 +9,37 @@ import {
 import { pool, queryEngine } from '../../queryEngine';
 import { executeQuery, getTableValues } from './executeQuery';
 
-describe('cardinalityMany', () => {
-    let allValuesMap: ValuesMap = new Map();
+describe('cardinalityMany', async () => {
+    // let allValuesMapForValidWhere: ValuesMap = new Map();
+    // let allValuesMapForInvalidWhere: ValuesMap = new Map();
 
-    beforeAll(async () => {
-        allValuesMap = await getTableValues(pool, schema);
-    });
+    // beforeAll(async () => {
+    //     allValuesMapForValidWhere = await getTableValues(pool, schema);
+
+    //     allValuesMapForInvalidWhere = await getTableValues(pool, schema);
+    // });
+
+    // console.log(0, allValuesMapForValidWhere);
+    // console.log(1, allValuesMapForInvalidWhere);
+
+    // for (const item of allValuesMapForValidWhere.keys()) {
+    //     console.log(0, item);
+    // }
+
+    // for (const item of allValuesMapForInvalidWhere.keys()) {
+    //     console.log(1, item);
+    // }
 
     const validWhereQueryArbitrary = generateQueryArbitrary({
         schema,
-        allValuesMap,
+        allValuesMap: await getTableValues(pool, schema),
         cardinality: 'many',
         validWhere: true,
     });
 
     const invalidWhereQueryArbitrary = generateQueryArbitrary({
         schema,
-        allValuesMap,
+        allValuesMap: await getTableValues(pool, schema),
         cardinality: 'many',
         validWhere: false,
     });
