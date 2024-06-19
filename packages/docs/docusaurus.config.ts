@@ -108,16 +108,19 @@ const config: Config = {
                             label: 'Tutorial',
                             to: '/docs/getting-started',
                         },
+                        {
+                            label: 'API Reference',
+                            to: 'https://synthql.github.io/SynthQL/reference',
+                        },
+                        {
+                            label: 'Benchmarks',
+                            to: 'https://synthql.github.io/SynthQL/benchmarks/',
+                        },
                     ],
                 },
                 {
-                    title: 'Docs',
-                    items: [
-                        {
-                            label: 'Tutorial',
-                            to: '/docs/getting-started',
-                        },
-                    ],
+                    title: ' ',
+                    items: [],
                 },
                 {
                     title: 'Community',
@@ -128,7 +131,7 @@ const config: Config = {
                         },
                         {
                             label: 'Discord',
-                            href: 'https://discord.gg/3NfpfJxb',
+                            href: 'https://discord.gg/7RWu7rHH9A',
                         },
                     ],
                 },
@@ -146,7 +149,6 @@ const config: Config = {
                     ],
                 },
             ],
-            //copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
         },
         prism: {
             theme: prismThemes.github,
