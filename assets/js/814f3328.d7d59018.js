@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_synthql_docs=self.webpackChunk_synthql_docs||[]).push([[535],{5641:s=>{s.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Why JSON Schema?","permalink":"/SynthQL/blog/why-json-schema","unlisted":false}]}')}}]);

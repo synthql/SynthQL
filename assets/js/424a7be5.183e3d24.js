@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_synthql_docs=self.webpackChunk_synthql_docs||[]).push([[478],{1758:s=>{s.exports=JSON.parse('[{"label":"devlog","permalink":"/SynthQL/blog/tags/devlog","count":1}]')}}]);
