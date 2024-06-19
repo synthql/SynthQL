@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1718218394376,
+  "lastUpdate": 1718782419818,
   "repoUrl": "https://github.com/synthql/SynthQL",
   "entries": {
     "SynthQL query execution benchmarks": [
@@ -188,6 +188,44 @@ window.BENCHMARK_DATA = {
             "name": "Find one matching row with three-level-deep nested include",
             "value": 5844,
             "range": "±2.39%",
+            "unit": "ops/sec",
+            "extra": "83 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fernandohur@gmail.com",
+            "name": "Fernando Hurtado",
+            "username": "fhur"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4e7b0a9174eb9ba791b0c2f1a76f4324b043dfd1",
+          "message": "docs: updated landing page (#25)",
+          "timestamp": "2024-06-19T09:31:04+02:00",
+          "tree_id": "f4dcf14023c672a26044ee04385ab3164ff2cc49",
+          "url": "https://github.com/synthql/SynthQL/commit/4e7b0a9174eb9ba791b0c2f1a76f4324b043dfd1"
+        },
+        "date": 1718782419798,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Find one matching row",
+            "value": 18940,
+            "range": "±39.66%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "Find one matching row with three-level-deep nested include",
+            "value": 5976,
+            "range": "±3.71%",
             "unit": "ops/sec",
             "extra": "83 samples"
           }
