@@ -1,31 +1,17 @@
 import { Column } from './Column';
 import { Table } from './Table';
 
-export interface AnySchema {
-    properties: Record<string, AnyTableDef>;
-}
-
-export interface Schema<DB> {
-    properties: Record<Table<DB>, TableDef<DB>>;
-}
-
-export interface AnyTableDef {
-    properties: AnyColumnDefs;
+export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
+    properties: Record<TTable | string, TableDef<DB>>;
 }
 
 export interface TableDef<DB> {
     properties: ColumnDefs<DB>;
 }
 
-export interface AnyColumnDefs {
+export interface ColumnDefs<DB, TTable extends Table<DB> = Table<DB>> {
     columns: {
-        properties: Record<string, AnyColumnDef>;
-    };
-}
-
-export interface ColumnDefs<DB> {
-    columns: {
-        properties: Record<Column<DB, Table<DB>>, ColumnDef>;
+        properties: Record<Column<DB, TTable> | string, ColumnDef>;
     };
 }
 

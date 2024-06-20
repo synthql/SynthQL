@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import { DB, schema } from '../generated';
-import { getPrimaryKeys } from './getPrimaryKeys';
+import { getTablePrimaryKeyColumns } from './getTablePrimaryKeyColumns';
 
-describe('getPrimaryKey', () => {
+describe('getTablePrimaryKeyColumns', () => {
     test('Get the primary keys for a table', () => {
-        const primaryKeys = getPrimaryKeys<DB>(schema, 'actor');
+        const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, 'actor');
 
         expect(primaryKeys).toEqual(['actor_id']);
     });

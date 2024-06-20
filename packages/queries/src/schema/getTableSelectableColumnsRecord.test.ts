@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import { DB, schema } from '../generated';
-import { getSelectableColumns } from './getSelectableColumns';
+import { getTableSelectableColumnsRecord } from './getTableSelectableColumnsRecord';
 
-describe('getSelectableColumns', () => {
+describe('getTableSelectableColumnsRecord', () => {
     test('Get all the selectable columns for a table', () => {
-        const select = getSelectableColumns<DB>(schema, 'actor');
+        const select = getTableSelectableColumnsRecord<DB>(schema, 'actor');
 
         expect(select).toEqual({
             actor_id: true,

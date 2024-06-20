@@ -1,4 +1,3 @@
-import { Column, Table } from '..';
 import { Exp, Primitive } from './Expression';
 
 export function equals<Context>(
@@ -84,6 +83,7 @@ export const json = {
     getAsNumeric: <Context>(exp: Exp<Context>, key: string): Exp<Context> => {
         const jsonText = json.getAsText(exp, key);
         const withDefault = coalesce<Context>(jsonText, literal('0'));
+
         return cast.asNumeric(withDefault);
     },
     agg: <Context>(exp: Exp<Context>): Exp<Context> => {

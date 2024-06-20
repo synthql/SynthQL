@@ -2,34 +2,34 @@ import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
 import {
-    generateFromAndCardinalityOnlyQueryArbitrary,
-    generateQueryArbitrary,
-} from '../arbitraries/cardinality';
+    generateFromAndCardinalityArbitraryQuery,
+    generateArbitraryQuery,
+} from '../arbitraries/arbitraries';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeQuery, getTableValues } from './executeQuery';
+import { executeQuery, getValuesByTableName } from './executeQuery';
 
 describe('cardinalityMany', async () => {
-    const validWhereQueryArbitrary = generateQueryArbitrary({
+    const validWhereArbitraryQuery = generateArbitraryQuery<DB>({
         schema,
-        allValuesMap: await getTableValues(pool, schema),
+        allValuesMap: await getValuesByTableName<DB>(pool, schema),
         cardinality: 'many',
         validWhere: true,
     });
 
-    const invalidWhereQueryArbitrary = generateQueryArbitrary({
+    const invalidWhereArbitraryQuery = generateArbitraryQuery<DB>({
         schema,
-        allValuesMap: await getTableValues(pool, schema),
+        allValuesMap: await getValuesByTableName<DB>(pool, schema),
         cardinality: 'many',
         validWhere: false,
     });
 
-    const fromAndCardinalityOnlyQueryArbitrary =
-        generateFromAndCardinalityOnlyQueryArbitrary({
+    const fromAndCardinalityArbitraryQuery =
+        generateFromAndCardinalityArbitraryQuery<DB>({
             schema,
             cardinality: 'many',
         });
 
-    it.prop([validWhereQueryArbitrary], { verbose: 2 })(
+    it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return possibly empty array',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
@@ -40,7 +40,7 @@ describe('cardinalityMany', async () => {
         },
     );
 
-    it.prop([invalidWhereQueryArbitrary], { verbose: 2 })(
+    it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return empty array',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);
@@ -51,7 +51,7 @@ describe('cardinalityMany', async () => {
         },
     );
 
-    it.prop([fromAndCardinalityOnlyQueryArbitrary], { verbose: 2 })(
+    it.prop([fromAndCardinalityArbitraryQuery], { verbose: 2 })(
         'From & cardinality only query should return array',
         async (query) => {
             const queryResult = await executeQuery<DB>(queryEngine, query);

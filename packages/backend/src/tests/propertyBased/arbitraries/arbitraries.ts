@@ -1,89 +1,76 @@
 import { fc } from '@fast-check/vitest';
 import {
-    AnySchema,
-    getSelectableColumnsFromGenericDbSchema,
-    getWhereableColumnsFromGenericDbSchema,
-    getTableNamesFromGenericDbSchema,
+    getTableSelectableColumns,
+    getTableWhereableColumns,
+    getTableNames,
+    Schema,
 } from '@synthql/queries';
 
 type Cardinality = 'one' | 'maybe' | 'many';
 
-type TableName = string;
+export type AllDatabaseTableRowsMap = Map<string, Array<any>>;
 
-type ColumnName = string;
-
-export type ValuesMap = Map<TableName, Array<any>>;
-
-interface QueryArbitrary {
-    schema: AnySchema;
-    allValuesMap: ValuesMap;
+interface QueryArbitrary<DB> {
+    schema: Schema<DB>;
+    allValuesMap: AllDatabaseTableRowsMap;
     cardinality: Cardinality;
     validWhere: boolean;
 }
 
-export function generateQueryArbitrary({
+export function generateArbitraryQuery<DB>({
     schema,
     allValuesMap,
     cardinality,
     validWhere,
-}: QueryArbitrary) {
-    return fc
-        .constantFrom(...getTableNamesFromGenericDbSchema(schema))
-        .chain((tableName) =>
-            fc.record({
-                from: tableNameArbitrary(tableName),
-                select: selectArbitrary({ schema, tableName }),
-                where: whereArbitrary({
-                    schema,
-                    allValuesMap,
-                    tableName,
-                    validWhere,
-                }),
-                limit: limitArbitrary(),
-                cardinality: cardinalityArbitrary(cardinality),
+}: QueryArbitrary<DB>) {
+    return fc.constantFrom(...getTableNames<DB>(schema)).chain((tableName) =>
+        fc.record({
+            from: arbitraryTableName(tableName),
+            select: arbitrarySelect({ schema, tableName }),
+            where: arbitraryWhere({
+                schema,
+                allValuesMap,
+                tableName,
+                validWhere,
             }),
-        );
+            limit: arbitraryLimit(),
+            cardinality: arbitraryCardinality(cardinality),
+        }),
+    );
 }
 
-export function generateFromAndCardinalityOnlyQueryArbitrary({
+export function generateFromAndCardinalityArbitraryQuery<DB>({
     schema,
     cardinality,
 }: {
-    schema: AnySchema;
+    schema: Schema<DB>;
     cardinality: Cardinality;
 }) {
-    return fc
-        .constantFrom(...getTableNamesFromGenericDbSchema(schema))
-        .chain((table) =>
-            fc.record({
-                from: fc.constant(table),
-                cardinality: fc.constant(cardinality),
-            }),
-        );
+    return fc.constantFrom(...getTableNames<DB>(schema)).chain((table) =>
+        fc.record({
+            from: fc.constant(table),
+            cardinality: fc.constant(cardinality),
+        }),
+    );
 }
 
-function tableNameArbitrary(tableName: TableName) {
+function arbitraryTableName(tableName: string): fc.Arbitrary<string> {
     return fc.constant(tableName);
 }
 
-function selectArbitrary({
+function arbitrarySelect<DB>({
     schema,
     tableName,
 }: {
-    schema: AnySchema;
-    tableName: TableName;
-}) {
+    schema: Schema<DB>;
+    tableName: string;
+}): fc.Arbitrary<unknown> {
     return fc
-        .constantFrom(
-            getSelectableColumnsFromGenericDbSchema(schema, tableName),
-        )
+        .constantFrom(getTableSelectableColumns<DB>(schema, tableName))
         .chain((keys) =>
             fc.object({
                 key: fc.constantFrom(
-                    ...getSelectableColumnsFromGenericDbSchema(
-                        schema,
-                        tableName,
-                    ),
+                    ...getTableSelectableColumns(schema, tableName),
                 ),
                 values: [fc.boolean()],
                 maxDepth: 0,
@@ -92,26 +79,25 @@ function selectArbitrary({
         );
 }
 
-function whereArbitrary({
+function arbitraryWhere<DB>({
     schema,
     allValuesMap,
     tableName,
     validWhere,
 }: {
-    schema: AnySchema;
-    allValuesMap: ValuesMap;
-    tableName: TableName;
+    schema: Schema<DB>;
+    allValuesMap: AllDatabaseTableRowsMap;
+    tableName: string;
     validWhere: boolean;
-}) {
+}): fc.Arbitrary<unknown> {
     return fc
-        .constantFrom(
-            ...getWhereableColumnsFromGenericDbSchema(schema, tableName),
-        )
+        .constantFrom(...getTableWhereableColumns(schema, tableName))
         .chain((columnName): fc.Arbitrary<unknown> => {
+            // TODO: We should remove this check once we resolve the `timestampz` issue
             if (
                 checkIfTimestampzColumn({ allValuesMap, tableName, columnName })
             ) {
-                return whereArbitrary({
+                return arbitraryWhere({
                     schema,
                     allValuesMap,
                     tableName,
@@ -120,7 +106,7 @@ function whereArbitrary({
             } else {
                 return fc.dictionary(
                     fc.constant(columnName),
-                    whereValueArbitrary({
+                    arbitraryWhereValue({
                         allValuesMap,
                         tableName,
                         columnName,
@@ -141,10 +127,10 @@ function checkIfTimestampzColumn({
     tableName,
     columnName,
 }: {
-    allValuesMap: ValuesMap;
-    tableName: TableName;
-    columnName: ColumnName;
-}) {
+    allValuesMap: AllDatabaseTableRowsMap;
+    tableName: string;
+    columnName: string;
+}): boolean {
     const tableValues = allValuesMap.get(tableName);
 
     const columnValues = tableValues?.map((row) => {
@@ -164,15 +150,15 @@ function checkIfTimestampzColumn({
     }
 }
 
-function whereValueArbitrary({
+function arbitraryWhereValue({
     allValuesMap,
     tableName,
     columnName,
     validWhere,
 }: {
-    allValuesMap: ValuesMap;
-    tableName: TableName;
-    columnName: ColumnName;
+    allValuesMap: AllDatabaseTableRowsMap;
+    tableName: string;
+    columnName: string;
     validWhere: boolean;
 }): fc.Arbitrary<unknown> {
     const tableValues = allValuesMap.get(tableName);
@@ -248,13 +234,13 @@ function whereValueArbitrary({
     }
 }
 
-function limitArbitrary() {
+function arbitraryLimit(): fc.Arbitrary<number> {
     return fc.integer({
         min: 1,
         max: 32767,
     });
 }
 
-function cardinalityArbitrary(cardinality: Cardinality) {
+function arbitraryCardinality(cardinality: Cardinality): fc.Arbitrary<string> {
     return fc.constant(cardinality);
 }

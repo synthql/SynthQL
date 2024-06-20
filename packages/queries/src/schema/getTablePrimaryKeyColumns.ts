@@ -1,29 +1,26 @@
 import { Schema } from '../types/Schema';
-import { Table } from '../types/Table';
-import {
-    getColumnNamesAndDefs,
-    getTableDef,
-    isPrimaryKeyColumn,
-} from './getTableDefs';
+import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
+import { getTableDef } from './getTableDef';
+import { isPrimaryKeyColumn } from './isPrimaryKeyColumn';
 
 /**
- * Get the primary key of a table, as defined in the database schema.
+ * Get the primary key columns of a table, as defined in the database schema.
  *
  * Example:
  *
  * ```ts
- * const primaryKey = getPrimaryKey<DB>(schema, 'actor');
+ * const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, 'actor');
  *
- * console.log(primaryKey); // Prints 'actor_id'
+ * console.log(primaryKeys); // Prints '[actor_id]'
  * ```
  *
  * @param schema The generated schema object for the database
  * @param table The name of the table
  */
 
-export function getPrimaryKeys<DB>(
+export function getTablePrimaryKeyColumns<DB>(
     schema: Schema<DB>,
-    table: Table<DB>,
+    table: string,
 ): Array<string> {
     const primaryKeys: Array<string> = [];
 

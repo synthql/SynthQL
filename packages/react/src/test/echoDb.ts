@@ -13,7 +13,14 @@ const schema = {
                     properties: {
                         id: {
                             properties: {
+                                type: {
+                                    type: 'integer',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },
@@ -25,7 +32,14 @@ const schema = {
                         },
                         name: {
                             properties: {
+                                type: {
+                                    type: 'string',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },

@@ -4,8 +4,8 @@ import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
 import { Schema } from './types/Schema';
-import { getSelectableColumns } from './schema/getSelectableColumns';
-import { getPrimaryKeys } from './schema/getPrimaryKeys';
+import { getTableSelectableColumnsRecord } from './schema/getTableSelectableColumnsRecord';
+import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 
 export class QueryBuilder<
     DB,
@@ -428,9 +428,9 @@ export function query<DB>(schema: Schema<DB>) {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;
 
-            const select = getSelectableColumns<DB>(schema, table);
+            const select = getTableSelectableColumnsRecord<DB>(schema, table);
 
-            const primaryKeys = getPrimaryKeys<DB>(schema, table);
+            const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, table);
 
             return new QueryBuilder<
                 DB,

@@ -46,7 +46,14 @@ const schemaWithVirtualTables = {
                     properties: {
                         film_id: {
                             properties: {
+                                type: {
+                                    type: 'integer',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },
@@ -58,7 +65,14 @@ const schemaWithVirtualTables = {
                         },
                         rating: {
                             properties: {
+                                type: {
+                                    type: 'string',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },
