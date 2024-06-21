@@ -4,7 +4,7 @@ import { AnyQuery } from '../../../types';
 import { arbitraryLimit } from './arbitraryLimit';
 import { arbitraryCardinality } from './arbitraryCardinality';
 import { AllTablesRowsMap } from '../properties/executeQuery';
-import { arbitraryWhere } from './rbitraryWhere';
+import { arbitraryWhere } from './arbitraryWhere';
 import { arbitraryTableName } from './arbitraryTableName';
 import { arbitrarySelect } from './arbitrarySelect';
 
