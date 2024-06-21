@@ -3,10 +3,10 @@ import { getTableNames, Schema, Cardinality } from '@synthql/queries';
 import { AnyQuery } from '../../../types';
 import { arbitraryLimit } from './arbitraryLimit';
 import { arbitraryCardinality } from './arbitraryCardinality';
-import { AllTablesRowsMap } from '../properties/executeAndWait';
 import { arbitraryWhere } from './arbitraryWhere';
 import { arbitraryTableName } from './arbitraryTableName';
 import { arbitrarySelect } from './arbitrarySelect';
+import { AllTablesRowsMap } from '../getTableRowsByTableName';
 
 interface ArbitraryQuery<DB> {
     schema: Schema<DB>;
@@ -15,7 +15,7 @@ interface ArbitraryQuery<DB> {
     validWhere: boolean;
 }
 
-export function generateArbitraryQuery<DB>({
+export function arbitraryQuery<DB>({
     schema,
     allTablesRowsMap,
     cardinality,

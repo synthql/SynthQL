@@ -1,5 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { AllTablesRowsMap } from '../properties/executeAndWait';
+import { AllTablesRowsMap } from '../getTableRowsByTableName';
 
 export function arbitraryWhereValue({
     allTablesRowsMap,

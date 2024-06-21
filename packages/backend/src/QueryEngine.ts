@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
-import { QueryPlan } from '.';
+import { QueryPlan, collectLast } from '.';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
 import { QueryExecutor } from './execution/types';
@@ -62,6 +62,25 @@ export class QueryEngine<DB> {
         }
 
         return gen;
+    }
+
+    async executeAndWait<
+        TTable extends Table<DB>,
+        TQuery extends Query<DB, TTable>,
+    >(
+        query: TQuery,
+        opts?: {
+            schema?: string;
+        },
+    ): Promise<QueryResult<DB, TQuery>> {
+        const queryResult = await collectLast(
+            this.execute(query, {
+                returnLastOnly: true,
+                schema: opts?.schema,
+            }),
+        );
+
+        return queryResult;
     }
 
     compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {

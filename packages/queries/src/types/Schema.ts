@@ -15,30 +15,11 @@ export interface ColumnDefs<DB, TTable extends Table<DB> = Table<DB>> {
     };
 }
 
-export interface AnyColumnDef {
-    properties: {
-        type: {
-            type: string;
-        };
-        selectable: {
-            type: string;
-            const: boolean;
-        };
-        whereable: {
-            type: string;
-            const: boolean;
-        };
-        isPrimaryKey: {
-            type: string;
-            const: boolean;
-        };
-    };
-}
-
 export interface ColumnDef {
     properties: {
         type: {
             type: string;
+            format?: string;
         };
         selectable: {
             type: string;

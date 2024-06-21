@@ -1,19 +1,20 @@
 import { it } from '@fast-check/vitest';
 import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
-import { generateArbitraryQuery } from '../arbitraries/arbitraryQuery';
+import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeAndWait, getTableRowsByTableName } from './executeAndWait';
+import { executeAndWait } from '../executeAndWait';
+import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
 describe('cardinalityMaybe', async () => {
-    const validWhereArbitraryQuery = generateArbitraryQuery<DB>({
+    const validWhereArbitraryQuery = arbitraryQuery<DB>({
         schema,
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'maybe',
         validWhere: true,
     });
 
-    const invalidWhereArbitraryQuery = generateArbitraryQuery<DB>({
+    const invalidWhereArbitraryQuery = arbitraryQuery<DB>({
         schema,
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'maybe',
