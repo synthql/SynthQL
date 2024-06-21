@@ -27,7 +27,9 @@ describe('cardinalityMany', async () => {
 
             expect(Array.isArray(queryResult)).toEqual(true);
 
-            expect(queryResult.length).toBeLessThanOrEqual(Number(query.limit));
+            expect(Number(queryResult.length)).toBeLessThanOrEqual(
+                Number(query.limit),
+            );
         },
     );
 
