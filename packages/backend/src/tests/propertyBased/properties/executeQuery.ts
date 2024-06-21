@@ -1,11 +1,16 @@
 import { Pool } from 'pg';
 import { QueryEngine, collectLast } from '../../..';
 import { Schema, getTableNames } from '@synthql/queries';
-import { AllDatabaseTableRowsMap } from '../arbitraries/arbitraries';
+import { AnyDb, AnyQuery } from '../../../types';
 
-export async function executeQuery<DB>(
-    queryEngine: QueryEngine<DB>,
-    query: any,
+type TableName = string;
+type TableRows = Array<any>;
+
+export type AllTablesRowsMap = Map<TableName, TableRows>;
+
+export async function executeQuery(
+    queryEngine: QueryEngine<AnyDb>,
+    query: AnyQuery,
 ): Promise<any> {
     const queryResult = await collectLast(
         queryEngine.execute(query, {
@@ -16,11 +21,11 @@ export async function executeQuery<DB>(
     return queryResult;
 }
 
-export async function getValuesByTableName<DB>(
+export async function getTableRowsByTableName<DB>(
     pool: Pool,
     schema: Schema<DB>,
-): Promise<AllDatabaseTableRowsMap> {
-    const allValuesMap: AllDatabaseTableRowsMap = new Map();
+): Promise<AllTablesRowsMap> {
+    const allTablesRowsMap: AllTablesRowsMap = new Map();
 
     const client = await pool.connect();
 
@@ -31,8 +36,8 @@ export async function getValuesByTableName<DB>(
 
         const rows = queryResult.rows;
 
-        allValuesMap.set(tableName, rows);
+        allTablesRowsMap.set(tableName, rows);
     }
 
-    return allValuesMap;
+    return allTablesRowsMap;
 }
