@@ -1,16 +1,15 @@
 import { Pool } from 'pg';
 import { QueryEngine, collectLast } from '../../..';
-import { Schema, getTableNames } from '@synthql/queries';
-import { AnyDb, AnyQuery } from '../../../types';
+import { Query, Schema, Table, getTableNames } from '@synthql/queries';
 
 type TableName = string;
 type TableRows = Array<any>;
 
 export type AllTablesRowsMap = Map<TableName, TableRows>;
 
-export async function executeQuery(
-    queryEngine: QueryEngine<AnyDb>,
-    query: AnyQuery,
+export async function executeAndWait<DB>(
+    queryEngine: QueryEngine<DB>,
+    query: Query<DB, Table<DB>>,
 ): Promise<any> {
     const queryResult = await collectLast(
         queryEngine.execute(query, {

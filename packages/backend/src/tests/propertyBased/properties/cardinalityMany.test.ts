@@ -3,7 +3,7 @@ import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
 import { generateArbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeQuery, getTableRowsByTableName } from './executeQuery';
+import { executeAndWait, getTableRowsByTableName } from './executeAndWait';
 
 describe('cardinalityMany', async () => {
     const validWhereArbitraryQuery = generateArbitraryQuery<DB>({
@@ -23,7 +23,7 @@ describe('cardinalityMany', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return possibly empty array',
         async (query) => {
-            const queryResult = await executeQuery(queryEngine, query);
+            const queryResult = await executeAndWait(queryEngine, query);
 
             expect(Array.isArray(queryResult)).toEqual(true);
 
@@ -36,7 +36,7 @@ describe('cardinalityMany', async () => {
     it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return empty array',
         async (query) => {
-            const queryResult = await executeQuery(queryEngine, query);
+            const queryResult = await executeAndWait(queryEngine, query);
 
             expect(Array.isArray(queryResult)).toEqual(true);
 

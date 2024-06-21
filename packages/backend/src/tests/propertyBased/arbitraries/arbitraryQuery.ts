@@ -3,7 +3,7 @@ import { getTableNames, Schema, Cardinality } from '@synthql/queries';
 import { AnyQuery } from '../../../types';
 import { arbitraryLimit } from './arbitraryLimit';
 import { arbitraryCardinality } from './arbitraryCardinality';
-import { AllTablesRowsMap } from '../properties/executeQuery';
+import { AllTablesRowsMap } from '../properties/executeAndWait';
 import { arbitraryWhere } from './arbitraryWhere';
 import { arbitraryTableName } from './arbitraryTableName';
 import { arbitrarySelect } from './arbitrarySelect';

@@ -1,5 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { AllTablesRowsMap } from '../properties/executeQuery';
+import { AllTablesRowsMap } from '../properties/executeAndWait';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
 import { Schema, Where, getTableWhereableColumns } from '@synthql/queries';
 import { AnyDb } from '../../../types';

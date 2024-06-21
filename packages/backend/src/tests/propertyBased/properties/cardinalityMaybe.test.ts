@@ -3,7 +3,7 @@ import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
 import { generateArbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeQuery, getTableRowsByTableName } from './executeQuery';
+import { executeAndWait, getTableRowsByTableName } from './executeAndWait';
 
 describe('cardinalityMaybe', async () => {
     const validWhereArbitraryQuery = generateArbitraryQuery<DB>({
@@ -23,7 +23,7 @@ describe('cardinalityMaybe', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return a possibly null, non-array, TS object result',
         async (query) => {
-            const queryResult = await executeQuery(queryEngine, query);
+            const queryResult = await executeAndWait(queryEngine, query);
 
             expect(queryResult).toBeTypeOf('object');
 
@@ -34,7 +34,7 @@ describe('cardinalityMaybe', async () => {
     it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return null',
         async (query) => {
-            const queryResult = await executeQuery(queryEngine, query);
+            const queryResult = await executeAndWait(queryEngine, query);
 
             expect(queryResult).toEqual(null);
         },
