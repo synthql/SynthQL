@@ -2,8 +2,6 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import { QueryEngine } from '../QueryEngine';
 import { DB } from './generated';
-import { AnyDb } from '../types';
-
 dotenv.config();
 
 export const pool = new Pool({
@@ -12,7 +10,7 @@ export const pool = new Pool({
         'postgres://postgres:postgres@localhost:5432/postgres',
 });
 
-export const queryEngine = new QueryEngine<DB | AnyDb>({
+export const queryEngine = new QueryEngine<DB>({
     pool,
     schema: 'public',
 });

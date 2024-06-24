@@ -1,9 +1,9 @@
 import { it } from '@fast-check/vitest';
-import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
+import { Query } from '@synthql/queries';
+import { DB, schema } from '../../generated';
 import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeAndWait } from '../executeAndWait';
 import { CardinalityError } from '../../../query/applyCardinality';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
@@ -25,13 +25,17 @@ describe('cardinalityOne', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return a non-null, non-array, TS object result',
         async (query) => {
-            const queryResult = await executeAndWait(queryEngine, query);
+            const typedQuery = query as Query<DB>;
 
-            expect(queryResult).toBeTypeOf('object');
+            const queryResult = await queryEngine.executeAndWait(typedQuery);
 
-            expect(Array.isArray(queryResult)).toEqual(false);
+            const result = queryResult as any;
 
-            expect(queryResult).not.toBeNull();
+            expect(result).toBeTypeOf('object');
+
+            expect(Array.isArray(result)).toEqual(false);
+
+            expect(result).not.toBeNull();
         },
     );
 
@@ -39,7 +43,9 @@ describe('cardinalityOne', async () => {
         'Invalid where query should throw error',
         async (query) => {
             try {
-                await executeAndWait(queryEngine, query);
+                const typedQuery = query as Query<DB>;
+
+                await queryEngine.executeAndWait(typedQuery);
             } catch (error) {
                 expect(error).toBeInstanceOf(CardinalityError);
             }

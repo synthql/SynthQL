@@ -1,9 +1,9 @@
 import { it } from '@fast-check/vitest';
-import { DB, schema } from '../../generated';
 import { describe, expect } from 'vitest';
+import { Query } from '@synthql/queries';
+import { DB, schema } from '../../generated';
 import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
-import { executeAndWait } from '../executeAndWait';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
 describe('cardinalityMaybe', async () => {
@@ -24,20 +24,28 @@ describe('cardinalityMaybe', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return a possibly null, non-array, TS object result',
         async (query) => {
-            const queryResult = await executeAndWait(queryEngine, query);
+            const typedQuery = query as Query<DB>;
 
-            expect(queryResult).toBeTypeOf('object');
+            const queryResult = await queryEngine.executeAndWait(typedQuery);
 
-            expect(Array.isArray(queryResult)).toEqual(false);
+            const result = queryResult as any;
+
+            expect(result).toBeTypeOf('object');
+
+            expect(Array.isArray(result)).toEqual(false);
         },
     );
 
     it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return null',
         async (query) => {
-            const queryResult = await executeAndWait(queryEngine, query);
+            const typedQuery = query as Query<DB>;
 
-            expect(queryResult).toEqual(null);
+            const queryResult = await queryEngine.executeAndWait(typedQuery);
+
+            const result = queryResult as any;
+
+            expect(result).toEqual(null);
         },
     );
 });
