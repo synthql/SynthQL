@@ -1,6 +1,5 @@
 import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
-import { assertHasKey } from '../util/asserts/assertHasKey';
 import { assertPresent } from '../util/asserts/assertPresent';
 import { DB } from './generated';
 import { ColumnDataTypes } from './getColumnDataTypes';
@@ -15,7 +14,7 @@ const defaultFilms: Film[] = [
         replacement_cost: 1,
         rental_duration: 1,
         rental_rate: 1,
-        last_update: '',
+        last_update: new Date(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -31,7 +30,7 @@ const defaultFilms: Film[] = [
         replacement_cost: 1,
         rental_duration: 1,
         rental_rate: 1,
-        last_update: '',
+        last_update: new Date(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -47,7 +46,7 @@ const defaultFilms: Film[] = [
         replacement_cost: 1,
         rental_duration: 1,
         rental_rate: 1,
-        last_update: '',
+        last_update: new Date(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -63,7 +62,7 @@ const defaultFilms: Film[] = [
         replacement_cost: 1,
         rental_duration: 1,
         rental_rate: 1,
-        last_update: '',
+        last_update: new Date(),
         fulltext: '',
         description: null,
         original_language_id: null,

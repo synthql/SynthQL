@@ -18,7 +18,6 @@ interface DbWithVirtualTables extends DB {
                 nullable: false;
                 isPrimaryKey: true;
             };
-
             rating: {
                 type: PgCatalogText;
                 selectable: true;
