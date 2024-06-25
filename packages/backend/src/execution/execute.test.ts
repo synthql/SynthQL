@@ -40,6 +40,7 @@ const schemaWithVirtualTables = {
                         film_id: {
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                 },
                                 selectable: {
@@ -59,6 +60,7 @@ const schemaWithVirtualTables = {
                         rating: {
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                 },
                                 selectable: {

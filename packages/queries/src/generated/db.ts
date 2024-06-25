@@ -28,7 +28,7 @@ export type PgCatalogTimestamptz = Date;
 /**
  * The year domain from the public schema
  */
-export type PublicYearDomain = number;
+export type PgCatalogInt41 = number;
 /**
  * A PG int2
  */
@@ -36,7 +36,7 @@ export type PgCatalogInt2 = number;
 /**
  * A PG numeric
  */
-export type PgCatalogNumeric = number;
+export type PgCatalogNumeric = string;
 /**
  * The mpaa_rating enum from the public schema
  */
@@ -504,7 +504,7 @@ export interface TableFilm {
          * - Generated: NEVER
          */
         release_year: {
-            type: PublicYearDomain;
+            type: PgCatalogInt41;
             selectable: true;
             includable: true;
             whereable: true;

@@ -277,10 +277,7 @@ function createDomainJsonSchema(
                 fullName: `${domain.schemaName}.${domain.name}`,
             })
         ] = {
-            id: createTypeDefId({
-                kind: 'domain',
-                fullName: `${domain.schemaName}.${domain.name}`,
-            }),
+            id: domain.innerType,
             type: domainType(domain.innerType),
             description:
                 domain.comment ??
@@ -343,7 +340,7 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         },
         'pg_catalog.numeric': {
             id: 'pg_catalog.numeric',
-            type: 'number',
+            type: 'string',
             description: 'A PG numeric',
         },
         'pg_catalog.int2': {

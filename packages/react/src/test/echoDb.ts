@@ -14,6 +14,7 @@ const schema = {
                         id: {
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                 },
                                 selectable: {
@@ -33,6 +34,7 @@ const schema = {
                         name: {
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                 },
                                 selectable: {

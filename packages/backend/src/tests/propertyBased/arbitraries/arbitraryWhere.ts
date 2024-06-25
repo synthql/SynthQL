@@ -2,8 +2,10 @@ import { fc } from '@fast-check/vitest';
 import { Schema, Where, getTableWhereableColumns } from '@synthql/queries';
 import { AnyDb } from '../../../types';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
-import { checkIfTimestampzColumn } from '../checkIfTimestampzColumn';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
+import { checkIfDateColumn } from '../checkIfDateColumn';
+import { checkIfDateTimeColumn } from '../checkIfDateTimeColumn';
+import { checkIfEnumColumn } from '../checkIfEnumColumn';
 
 export function arbitraryWhere<DB>({
     schema,
@@ -29,7 +31,17 @@ export function arbitraryWhere<DB>({
                 // the logic below to exempt columns that of the timestampz type from being
                 // used in this property test
 
-                !checkIfTimestampzColumn({
+                !checkIfDateColumn({
+                    schema,
+                    table: tableName,
+                    column: value,
+                }) &&
+                !checkIfDateTimeColumn({
+                    schema,
+                    table: tableName,
+                    column: value,
+                }) &&
+                !checkIfEnumColumn({
                     schema,
                     table: tableName,
                     column: value,
@@ -38,7 +50,8 @@ export function arbitraryWhere<DB>({
         .chain((columnName) => {
             return fc.dictionary(
                 fc.constant(columnName),
-                arbitraryWhereValue({
+                arbitraryWhereValue<DB>({
+                    schema,
                     allTablesRowsMap,
                     tableName,
                     columnName,

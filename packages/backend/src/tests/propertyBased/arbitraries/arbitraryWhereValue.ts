@@ -1,12 +1,21 @@
 import { fc } from '@fast-check/vitest';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
+import {
+    Schema,
+    getColumnDef,
+    getColumnEnumConstants,
+    getColumnPgType,
+    getTableDef,
+} from '@synthql/queries';
 
-export function arbitraryWhereValue({
+export function arbitraryWhereValue<DB>({
+    schema,
     allTablesRowsMap,
     tableName,
     columnName,
     validWhere,
 }: {
+    schema: Schema<DB>;
     allTablesRowsMap: AllTablesRowsMap;
     tableName: string;
     columnName: string;
@@ -21,29 +30,51 @@ export function arbitraryWhereValue({
     });
 
     if (columnValues && columnValues?.length > 0) {
-        if (validWhere) {
-            const columnValuesFromSet = Array.from(new Set(columnValues));
+        const columnValuesFromSet = Array.from(new Set(columnValues));
 
+        if (validWhere) {
             return fc.constantFrom(...columnValuesFromSet);
         } else {
-            const columnValuesFromSet = Array.from(
-                new Set(columnValues),
-            ).filter((item) => item !== null && item !== undefined);
+            const tableDef = getTableDef(schema, tableName);
+
+            const columnDef = getColumnDef(tableDef, columnName);
+
+            const columnPgType = getColumnPgType(columnDef);
+
+            // const columnValuesFromSet = Array.from(
+            //     new Set(columnValues),
+            // ).filter((item) => item !== null && item !== undefined);
 
             // Return an arbitrary value that matches two conditions
             // 1. It is of the type of the first column value in the column values array
             // 2. It does not exist in the column values array
 
-            const firstColumnValue = columnValuesFromSet[0];
-
-            if (typeof firstColumnValue === 'number') {
+            if (columnPgType === 'pg_catalog.int2') {
                 return fc
                     .integer({
                         min: 1,
                         max: 32767,
                     })
                     .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (typeof firstColumnValue === 'string') {
+            } else if (columnPgType === 'pg_catalog.int4') {
+                return fc
+                    .integer({
+                        min: 1,
+                        max: 2147483647,
+                    })
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.int8') {
+                return fc
+                    .bigInt({
+                        min: 2n,
+                        max: 52n,
+                    })
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.bool') {
+                return fc
+                    .boolean()
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.text') {
                 return fc
                     .string({
                         minLength: 1,
@@ -54,29 +85,69 @@ export function arbitraryWhereValue({
                             !columnValuesFromSet.includes(value) &&
                             !value.includes(' '),
                     );
-            } else if (typeof firstColumnValue === 'boolean') {
-                return fc
-                    .boolean()
-                    .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (typeof firstColumnValue === 'bigint') {
-                return fc
-                    .bigInt({
-                        min: 2n,
-                        max: 52n,
-                    })
-                    .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (typeof firstColumnValue === 'undefined') {
+            } else if (columnPgType === 'pg_catalog.tsvector') {
                 return fc
                     .string({
                         minLength: 1,
-                        maxLength: 5,
+                        maxLength: 10,
                     })
-                    .filter(
-                        (value) =>
-                            !columnValuesFromSet.includes(value) &&
-                            !value.includes(' '),
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.numeric') {
+                return fc
+                    .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
+                        size: 'xsmall',
+                    })
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.bytea') {
+                return fc
+                    .constant(
+                        // Buffer.from('7468697320697320612074c3a97374', 'hex'),
+                        1,
+                    )
+                    .filter((value) => !columnValuesFromSet.includes(value));
+
+                // return fc
+                //     .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
+                //         size: 'xsmall',
+                //     })
+                //     .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.bpchar') {
+                return fc
+                    .string({
+                        minLength: 1,
+                        maxLength: 19,
+                    })
+                    .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType.endsWith('.enum')) {
+                const enumConstants = getColumnEnumConstants(columnDef);
+
+                if (enumConstants) {
+                    return fc
+                        .string({
+                            minLength: 1,
+                            maxLength: 10,
+                        })
+                        .filter(
+                            (value) =>
+                                !columnValuesFromSet.includes(value) &&
+                                enumConstants.includes(value),
+                        );
+                } else {
+                    console.log(0, tableName, columnName, columnPgType);
+                    console.log(
+                        1,
+                        typeof columnValuesFromSet[0],
+                        columnValuesFromSet[0],
                     );
+                    return fc.constant(undefined);
+                }
             } else {
+                console.log(0, tableName, columnName, columnPgType);
+                console.log(
+                    1,
+                    typeof columnValuesFromSet[0],
+                    columnValuesFromSet[0],
+                );
                 return fc.constant(undefined);
             }
         }

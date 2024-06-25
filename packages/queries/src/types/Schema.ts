@@ -18,8 +18,10 @@ export interface ColumnDefs<DB, TTable extends Table<DB> = Table<DB>> {
 export interface ColumnDef {
     properties: {
         type: {
+            id: string;
             type: string;
             format?: string;
+            enum?: readonly string[];
         };
         selectable: {
             type: string;

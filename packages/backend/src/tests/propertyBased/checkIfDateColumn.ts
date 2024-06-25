@@ -2,10 +2,10 @@ import {
     Schema,
     getColumnDef,
     getTableDef,
-    isTimestampzColumn,
+    isDateColumn,
 } from '@synthql/queries';
 
-export function checkIfTimestampzColumn<DB>({
+export function checkIfDateColumn<DB>({
     schema,
     table,
     column,
@@ -18,5 +18,5 @@ export function checkIfTimestampzColumn<DB>({
 
     const columnDef = getColumnDef(tableDef, column);
 
-    return isTimestampzColumn(columnDef);
+    return isDateColumn(columnDef);
 }

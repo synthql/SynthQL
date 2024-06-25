@@ -921,7 +921,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'public.year.domain',
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -1093,7 +1093,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -1177,7 +1177,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -2899,7 +2899,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -4931,7 +4931,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'public.year.domain',
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -5103,7 +5103,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -5187,7 +5187,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -6909,7 +6909,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
-                                    type: 'number',
+                                    type: 'string',
                                     description: 'A PG numeric',
                                 },
                                 selectable: {
@@ -8041,7 +8041,7 @@ export const schema = {
         },
         'pg_catalog.numeric': {
             id: 'pg_catalog.numeric',
-            type: 'number',
+            type: 'string',
             description: 'A PG numeric',
         },
         'pg_catalog.int2': {
@@ -8113,12 +8113,12 @@ export const schema = {
             description: 'The mpaa_rating enum from the public schema',
         },
         'public.bıgınt.domain': {
-            id: 'public.bıgınt.domain',
+            id: 'pg_catalog.int8',
             type: 'integer',
             description: 'The bıgınt domain from the public schema',
         },
         'public.year.domain': {
-            id: 'public.year.domain',
+            id: 'pg_catalog.int4',
             type: 'integer',
             description: 'The year domain from the public schema',
         },
