@@ -3,7 +3,6 @@ import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import {
     Schema,
     getColumnDef,
-    getColumnEnumConstants,
     getColumnPgType,
     getTableDef,
 } from '@synthql/queries';
@@ -118,29 +117,6 @@ export function arbitraryWhereValue<DB>({
                         maxLength: 19,
                     })
                     .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (columnPgType.endsWith('.enum')) {
-                const enumConstants = getColumnEnumConstants(columnDef);
-
-                if (enumConstants) {
-                    return fc
-                        .string({
-                            minLength: 1,
-                            maxLength: 10,
-                        })
-                        .filter(
-                            (value) =>
-                                !columnValuesFromSet.includes(value) &&
-                                enumConstants.includes(value),
-                        );
-                } else {
-                    console.log(0, tableName, columnName, columnPgType);
-                    console.log(
-                        1,
-                        typeof columnValuesFromSet[0],
-                        columnValuesFromSet[0],
-                    );
-                    return fc.constant(undefined);
-                }
             } else {
                 console.log(0, tableName, columnName, columnPgType);
                 console.log(
