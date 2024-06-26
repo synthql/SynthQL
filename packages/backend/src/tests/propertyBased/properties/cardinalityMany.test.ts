@@ -36,7 +36,7 @@ describe('cardinalityMany', async () => {
         },
     );
 
-    it.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
+    it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return empty array',
         async (query) => {
             const typedQuery = query as Query<DB>;

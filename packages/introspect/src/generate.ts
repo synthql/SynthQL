@@ -278,6 +278,10 @@ function createDomainJsonSchema(
             })
         ] = {
             id: domain.innerType,
+            title: createTypeDefId({
+                kind: 'domain',
+                fullName: `${domain.schemaName}.${domain.name}`,
+            }),
             type: domainType(domain.innerType),
             description:
                 domain.comment ??

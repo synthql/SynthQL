@@ -3,9 +3,7 @@ import { Schema, Where, getTableWhereableColumns } from '@synthql/queries';
 import { AnyDb } from '../../../types';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
-import { checkIfDateColumn } from '../checkIfDateColumn';
 import { checkIfDateTimeColumn } from '../checkIfDateTimeColumn';
-import { checkIfEnumColumn } from '../checkIfEnumColumn';
 
 export function arbitraryWhere<DB>({
     schema,
@@ -22,7 +20,7 @@ export function arbitraryWhere<DB>({
         .constantFrom(...getTableWhereableColumns(schema, tableName))
         .filter(
             (value) =>
-                // TODO: We should remove this check once we resolve the `timestampz` issue
+                // TODO: We should remove this check once we resolve the `date-time` issue
                 // When there's a mismatch between the timezone of the data stored in the
                 // database and the timezone of the machine that is running the database,
                 // the value returned from the database is adjusted to match the timezone
@@ -31,17 +29,7 @@ export function arbitraryWhere<DB>({
                 // the logic below to exempt columns that of the timestampz type from being
                 // used in this property test
 
-                !checkIfDateColumn({
-                    schema,
-                    table: tableName,
-                    column: value,
-                }) &&
                 !checkIfDateTimeColumn({
-                    schema,
-                    table: tableName,
-                    column: value,
-                }) &&
-                !checkIfEnumColumn({
                     schema,
                     table: tableName,
                     column: value,

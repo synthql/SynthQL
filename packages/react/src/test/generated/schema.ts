@@ -922,6 +922,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -4932,6 +4933,7 @@ export const schema = {
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -8114,11 +8116,13 @@ export const schema = {
         },
         'public.bıgınt.domain': {
             id: 'pg_catalog.int8',
+            title: 'public.bıgınt.domain',
             type: 'integer',
             description: 'The bıgınt domain from the public schema',
         },
         'public.year.domain': {
             id: 'pg_catalog.int4',
+            title: 'public.year.domain',
             type: 'integer',
             description: 'The year domain from the public schema',
         },

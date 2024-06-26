@@ -40,13 +40,13 @@ export function arbitraryWhereValue<DB>({
 
             const columnPgType = getColumnPgType(columnDef);
 
-            // const columnValuesFromSet = Array.from(
-            //     new Set(columnValues),
-            // ).filter((item) => item !== null && item !== undefined);
+            // Return an arbitrary value that matches two conditions:
+            // 1. It is of the type of the PG column gotten from the schema
+            // 2. It currently does not exist in the column values array
 
-            // Return an arbitrary value that matches two conditions
-            // 1. It is of the type of the first column value in the column values array
-            // 2. It does not exist in the column values array
+            // The matching arms are presently incomplete
+            // We need to include more infomration in the schema
+            // to make them work better
 
             if (columnPgType === 'pg_catalog.int2') {
                 return fc
@@ -69,6 +69,12 @@ export function arbitraryWhereValue<DB>({
                         max: 52n,
                     })
                     .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.numeric') {
+                return fc
+                    .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
+                        size: 'xsmall',
+                    })
+                    .filter((value) => !columnValuesFromSet.includes(value));
             } else if (columnPgType === 'pg_catalog.bool') {
                 return fc
                     .boolean()
@@ -79,11 +85,7 @@ export function arbitraryWhereValue<DB>({
                         minLength: 1,
                         maxLength: 10,
                     })
-                    .filter(
-                        (value) =>
-                            !columnValuesFromSet.includes(value) &&
-                            !value.includes(' '),
-                    );
+                    .filter((value) => !columnValuesFromSet.includes(value));
             } else if (columnPgType === 'pg_catalog.tsvector') {
                 return fc
                     .string({
@@ -91,25 +93,6 @@ export function arbitraryWhereValue<DB>({
                         maxLength: 10,
                     })
                     .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (columnPgType === 'pg_catalog.numeric') {
-                return fc
-                    .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
-                        size: 'xsmall',
-                    })
-                    .filter((value) => !columnValuesFromSet.includes(value));
-            } else if (columnPgType === 'pg_catalog.bytea') {
-                return fc
-                    .constant(
-                        // Buffer.from('7468697320697320612074c3a97374', 'hex'),
-                        1,
-                    )
-                    .filter((value) => !columnValuesFromSet.includes(value));
-
-                // return fc
-                //     .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
-                //         size: 'xsmall',
-                //     })
-                //     .filter((value) => !columnValuesFromSet.includes(value));
             } else if (columnPgType === 'pg_catalog.bpchar') {
                 return fc
                     .string({
@@ -117,13 +100,11 @@ export function arbitraryWhereValue<DB>({
                         maxLength: 19,
                     })
                     .filter((value) => !columnValuesFromSet.includes(value));
+            } else if (columnPgType === 'pg_catalog.bytea') {
+                return fc
+                    .constant(Buffer.from('pg_catalog.bytea', 'hex'))
+                    .filter((value) => !columnValuesFromSet.includes(value));
             } else {
-                console.log(0, tableName, columnName, columnPgType);
-                console.log(
-                    1,
-                    typeof columnValuesFromSet[0],
-                    columnValuesFromSet[0],
-                );
                 return fc.constant(undefined);
             }
         }

@@ -19,6 +19,7 @@ export interface ColumnDef {
     properties: {
         type: {
             id: string;
+            title?: string;
             type: string;
             format?: string;
             enum?: readonly string[];
