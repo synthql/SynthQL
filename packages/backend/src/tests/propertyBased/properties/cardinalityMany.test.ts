@@ -33,6 +33,12 @@ describe('cardinalityMany', async () => {
             expect(Array.isArray(result)).toEqual(true);
 
             expect(result.length).toBeLessThanOrEqual(Number(query.limit));
+
+            for (const item of result) {
+                for (const column of Object.keys(query.select)) {
+                    expect(Object.keys(item)).toContain(column);
+                }
+            }
         },
     );
 

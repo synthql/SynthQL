@@ -36,6 +36,10 @@ describe('cardinalityOne', async () => {
             expect(Array.isArray(result)).toEqual(false);
 
             expect(result).not.toBeNull();
+
+            for (const column of Object.keys(query.select)) {
+                expect(Object.keys(result)).toContain(column);
+            }
         },
     );
 
@@ -44,7 +48,6 @@ describe('cardinalityOne', async () => {
         async (query) => {
             try {
                 const typedQuery = query as Query<DB>;
-
                 await queryEngine.executeAndWait(typedQuery);
             } catch (error) {
                 expect(error).toBeInstanceOf(CardinalityError);

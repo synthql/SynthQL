@@ -33,6 +33,10 @@ describe('cardinalityMaybe', async () => {
             expect(result).toBeTypeOf('object');
 
             expect(Array.isArray(result)).toEqual(false);
+
+            for (const column of Object.keys(query.select)) {
+                expect(Object.keys(result)).toContain(column);
+            }
         },
     );
 
