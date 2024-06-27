@@ -1,7 +1,5 @@
-import { runInThisContext } from 'vm';
 import { QueryProvider } from '../QueryProvider';
 import { assertArray } from '../util/asserts/assertArray';
-import { assertHasKey } from '../util/asserts/assertHasKey';
 import { assertPresent } from '../util/asserts/assertPresent';
 import { DB } from './generated';
 import { ColumnDataTypes } from './getColumnDataTypes';
@@ -12,12 +10,12 @@ const defaultLanguages: Language[] = [
     {
         language_id: 1,
         name: 'English',
-        last_update: new Date().toISOString(),
+        last_update: new Date(),
     },
     {
         language_id: 2,
         name: 'French',
-        last_update: new Date().toISOString(),
+        last_update: new Date(),
     },
 ];
 

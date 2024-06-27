@@ -15,7 +15,6 @@ interface DbWithVirtualTables extends DB {
                 nullable: false;
                 isPrimaryKey: true;
             };
-
             rating: {
                 type: PgCatalogText;
                 selectable: true;
@@ -36,14 +35,14 @@ describe('QueryProviderInput', () => {
         return {} as any;
     }
 
-    test('actor', () => {
+    test('actor that has columns with `{ whereable: true }`', () => {
         const result = fakeQueryResult<DB, 'actor'>();
 
         result satisfies {
             actor_id: number[] | undefined;
             first_name: string[] | undefined;
             last_name: string[] | undefined;
-            last_update: string[] | undefined;
+            last_update: Date[] | undefined;
         };
     });
 

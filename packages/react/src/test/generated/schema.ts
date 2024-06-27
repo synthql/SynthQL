@@ -17,6 +17,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -59,6 +60,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -101,6 +103,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -141,6 +144,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -181,6 +185,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -221,6 +226,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -263,6 +269,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
                                     description: 'A PG bool',
                                 },
@@ -303,8 +310,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.date',
                                     type: 'string',
                                     format: 'date',
+                                    tsType: 'Date',
                                     description: 'A PG date',
                                 },
                                 selectable: {
@@ -344,8 +353,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -385,6 +396,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -453,6 +465,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -495,6 +508,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -535,6 +549,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -575,8 +590,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -637,6 +654,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -679,6 +697,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -719,8 +738,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -775,6 +796,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -817,6 +839,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -857,6 +880,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -897,6 +921,8 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -938,6 +964,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -980,6 +1007,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: original_language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1022,6 +1050,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rental_duration\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int2',
                                     type: 'integer',
                                     minimum: -32768,
                                     maximum: 32767,
@@ -1064,8 +1093,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rental_rate\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1104,6 +1135,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int2',
                                     type: 'integer',
                                     minimum: -32768,
                                     maximum: 32767,
@@ -1146,8 +1178,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: replacement_cost\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1186,6 +1220,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'public.mpaa_rating.enum',
                                     type: 'string',
                                     enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
                                     description:
@@ -1228,8 +1263,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1269,6 +1306,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: special_features\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1309,6 +1347,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.tsvector',
                                     type: 'string',
                                     description: 'A PG tsvector',
                                 },
@@ -1380,6 +1419,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1422,6 +1462,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1464,8 +1505,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1521,6 +1564,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1563,6 +1607,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1605,8 +1650,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1661,6 +1708,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1703,6 +1751,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1743,6 +1792,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1783,6 +1833,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1823,6 +1874,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -1865,6 +1917,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1905,6 +1958,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -1945,8 +1999,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2010,6 +2066,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2052,6 +2109,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -2092,6 +2150,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2134,8 +2193,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2190,6 +2251,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2232,6 +2294,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -2272,8 +2335,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2329,6 +2394,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: inventory_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2371,6 +2437,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2413,6 +2480,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2455,8 +2523,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2517,6 +2587,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2559,6 +2630,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bpchar',
                                     type: 'string',
                                     description: 'A PG bpchar',
                                 },
@@ -2599,8 +2671,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2655,6 +2729,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2697,6 +2772,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2739,6 +2815,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2781,6 +2858,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2823,8 +2901,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2863,8 +2943,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2926,6 +3008,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -2968,8 +3051,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3009,6 +3094,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: inventory_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3051,6 +3137,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3093,8 +3180,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: return_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3134,6 +3223,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3176,8 +3266,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3240,6 +3332,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3282,6 +3375,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -3322,6 +3416,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -3362,6 +3457,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3404,6 +3500,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -3444,6 +3541,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3486,6 +3584,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
                                     description: 'A PG bool',
                                 },
@@ -3526,6 +3625,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -3566,6 +3666,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: password\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -3606,8 +3707,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3647,6 +3750,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: picture\n- PG type: pg_catalog.bytea\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bytea',
                                     type: 'string',
                                     description: 'A PG bytea',
                                 },
@@ -3714,6 +3818,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3756,6 +3861,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3798,6 +3904,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3840,8 +3947,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3922,6 +4031,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -3964,6 +4074,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4006,6 +4117,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4046,6 +4158,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4086,6 +4199,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4126,6 +4240,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4168,6 +4283,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
                                     description: 'A PG bool',
                                 },
@@ -4208,8 +4324,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.date',
                                     type: 'string',
                                     format: 'date',
+                                    tsType: 'Date',
                                     description: 'A PG date',
                                 },
                                 selectable: {
@@ -4249,8 +4367,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4290,6 +4410,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4358,6 +4479,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4400,6 +4522,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4440,6 +4563,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4480,8 +4604,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: actor\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4542,6 +4668,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4584,6 +4711,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4624,8 +4752,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: category\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4680,6 +4810,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4722,6 +4853,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4762,6 +4894,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -4802,6 +4935,8 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
                                     type: 'integer',
                                     description:
                                         'The year domain from the public schema',
@@ -4843,6 +4978,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4885,6 +5021,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: original_language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -4927,6 +5064,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rental_duration\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int2',
                                     type: 'integer',
                                     minimum: -32768,
                                     maximum: 32767,
@@ -4969,8 +5107,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rental_rate\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -5009,6 +5149,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int2',
                                     type: 'integer',
                                     minimum: -32768,
                                     maximum: 32767,
@@ -5051,8 +5192,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: replacement_cost\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -5091,6 +5234,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'public.mpaa_rating.enum',
                                     type: 'string',
                                     enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
                                     description:
@@ -5133,8 +5277,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5174,6 +5320,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: special_features\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5214,6 +5361,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.tsvector',
                                     type: 'string',
                                     description: 'A PG tsvector',
                                 },
@@ -5285,6 +5433,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5327,6 +5476,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5369,8 +5519,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_actor\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5426,6 +5578,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5468,6 +5621,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5510,8 +5664,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5566,6 +5722,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5608,6 +5765,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5648,6 +5806,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5688,6 +5847,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5728,6 +5888,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5770,6 +5931,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5810,6 +5972,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5850,8 +6013,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5915,6 +6080,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -5957,6 +6123,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -5997,6 +6164,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6039,8 +6207,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6095,6 +6265,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6137,6 +6308,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -6177,8 +6349,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6234,6 +6408,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: inventory_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6276,6 +6451,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6318,6 +6494,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6360,8 +6537,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6422,6 +6601,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: language_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6464,6 +6644,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bpchar',
                                     type: 'string',
                                     description: 'A PG bpchar',
                                 },
@@ -6504,8 +6685,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: language\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6560,6 +6743,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6602,6 +6786,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6644,6 +6829,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6686,6 +6872,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6728,8 +6915,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    type: 'number',
-                                    description: 'A PG numeric',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -6768,8 +6957,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6831,6 +7022,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6873,8 +7065,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6914,6 +7108,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: inventory_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6956,6 +7151,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -6998,8 +7194,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: return_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7039,6 +7237,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7081,8 +7280,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7145,6 +7346,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7187,6 +7389,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -7227,6 +7430,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -7267,6 +7471,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7309,6 +7514,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -7349,6 +7555,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7391,6 +7598,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
                                     description: 'A PG bool',
                                 },
@@ -7431,6 +7639,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -7471,6 +7680,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: password\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
                                 },
@@ -7511,8 +7721,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7552,6 +7764,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: staff\n- Column: picture\n- PG type: pg_catalog.bytea\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.bytea',
                                     type: 'string',
                                     description: 'A PG bytea',
                                 },
@@ -7619,6 +7832,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7661,6 +7875,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7703,6 +7918,7 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.int4',
                                     type: 'integer',
                                     minimum: -2147483648,
                                     maximum: 2147483647,
@@ -7745,8 +7961,10 @@ export const schema = {
                                 'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
+                                    id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
+                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7793,98 +8011,125 @@ export const schema = {
             required: ['columns'],
             additionalProperties: false,
         },
-        'pg_catalog.int4': {
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
         'pg_catalog.text': {
+            id: 'pg_catalog.text',
             type: 'string',
             description: 'A PG text',
         },
         'pg_catalog.varchar': {
+            id: 'pg_catalog.varchar',
             type: 'string',
             description: 'A PG varchar',
         },
         'pg_catalog.bool': {
+            id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
         },
         'pg_catalog.date': {
+            id: 'pg_catalog.date',
             type: 'string',
             format: 'date',
+            tsType: 'Date',
             description: 'A PG date',
         },
-        'pg_catalog.timestamptz': {
-            type: 'string',
-            format: 'date-time',
-            description: 'A PG timestamptz',
-        },
         'pg_catalog.timestamp': {
+            id: 'pg_catalog.timestamp',
             type: 'string',
             format: 'date-time',
+            tsType: 'Date',
             description: 'A PG timestamp',
         },
+        'pg_catalog.timestamptz': {
+            id: 'pg_catalog.timestamptz',
+            type: 'string',
+            format: 'date-time',
+            tsType: 'Date',
+            description: 'A PG timestamptz',
+        },
+        'pg_catalog.numeric': {
+            id: 'pg_catalog.numeric',
+            type: 'string',
+            description:
+                'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+        },
         'pg_catalog.int2': {
+            id: 'pg_catalog.int2',
             type: 'integer',
             minimum: -32768,
             maximum: 32767,
             description: 'A PG int2',
         },
+        'pg_catalog.int4': {
+            id: 'pg_catalog.int4',
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+        },
         'pg_catalog.int8': {
+            id: 'pg_catalog.int8',
             type: 'integer',
             minimum: -9223372036854776000,
             maximum: 9223372036854776000,
             description: 'A PG int8',
         },
         'pg_catalog.float4': {
+            id: 'pg_catalog.float4',
             type: 'number',
             description: 'A PG float4',
         },
-        'pg_catalog.numeric': {
-            type: 'number',
-            description: 'A PG numeric',
-        },
         'pg_catalog.float8': {
+            id: 'pg_catalog.float8',
             type: 'number',
             description: 'A PG float8',
         },
         'pg_catalog.tsvector': {
+            id: 'pg_catalog.tsvector',
             type: 'string',
             description: 'A PG tsvector',
         },
         'pg_catalog.bpchar': {
+            id: 'pg_catalog.bpchar',
             type: 'string',
             description: 'A PG bpchar',
         },
         'pg_catalog.bytea': {
+            id: 'pg_catalog.bytea',
             type: 'string',
             description: 'A PG bytea',
         },
         'pg_catalog.uuid': {
+            id: 'pg_catalog.uuid',
             type: 'string',
             format: 'uuid',
             description: 'A PG uuid',
         },
-        'pg_catalog.jsonb': {
-            type: 'object',
-            description: 'A PG jsonb',
-        },
         'pg_catalog.json': {
+            id: 'pg_catalog.json',
             type: 'object',
             description: 'A PG json',
         },
+        'pg_catalog.jsonb': {
+            id: 'pg_catalog.jsonb',
+            type: 'object',
+            description: 'A PG jsonb',
+        },
         'public.mpaa_rating.enum': {
+            id: 'public.mpaa_rating.enum',
             type: 'string',
             enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
             description: 'The mpaa_rating enum from the public schema',
         },
         'public.bıgınt.domain': {
+            id: 'pg_catalog.int8',
+            title: 'public.bıgınt.domain',
             type: 'integer',
             description: 'The bıgınt domain from the public schema',
         },
         'public.year.domain': {
+            id: 'pg_catalog.int4',
+            title: 'public.year.domain',
             type: 'integer',
             description: 'The year domain from the public schema',
         },

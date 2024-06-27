@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
+import { Pool } from 'pg';
 import { QueryEngine } from '../QueryEngine';
 import { DB } from './generated';
-import { Pool } from 'pg';
-
 dotenv.config();
 
 export const pool = new Pool({

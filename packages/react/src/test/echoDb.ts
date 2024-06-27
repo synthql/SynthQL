@@ -13,7 +13,15 @@ const schema = {
                     properties: {
                         id: {
                             properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },
@@ -25,7 +33,15 @@ const schema = {
                         },
                         name: {
                             properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },

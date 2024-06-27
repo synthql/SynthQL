@@ -8,8 +8,8 @@ import {
     TableDetails,
 } from 'extract-pg-schema';
 
-import fs from 'fs';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
+import fs from 'fs';
 import path from 'path';
 
 export async function generate({
@@ -59,6 +59,7 @@ export async function generate({
         additionalProperties: false,
         unreachableDefinitions: false,
     });
+
     writeFormattedFile(path.join(outDir, 'db.ts'), db);
 
     /**
@@ -66,6 +67,7 @@ export async function generate({
      * This leads to a more compact output as the types are inlined.
      */
     const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
+
     writeFormattedFile(
         path.join(outDir, 'schema.ts'),
         `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
@@ -95,6 +97,7 @@ function createTypeDefId(type: {
     if (type.kind === 'base') {
         return type.fullName;
     }
+
     return `${type.fullName}.${type.kind}`;
 }
 
@@ -102,11 +105,13 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
     if (type.schemaName === defaultSchema) {
         return `table_${type.name}`;
     }
+
     return `table_${type.schemaName}_${type.name}`;
 }
 
 function createTableJsonSchema(table: TableDetails): JSONSchema {
     const empty: Record<string, any> = {};
+
     const columns = table.columns.reduce((acc, column) => {
         acc[column.name] = {
             type: 'object',
@@ -142,6 +147,7 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
             ],
             additionalProperties: false,
         };
+
         return acc;
     }, empty);
 
@@ -214,6 +220,7 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
     if (table.schemaName === defaultSchema) {
         return table.name;
     }
+
     return `${table.schemaName}.${table.name}`;
 }
 
@@ -222,9 +229,11 @@ function createTableDefs(
     defaultSchema: string,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
+
     return tables.reduce((acc, table) => {
         acc[createTableDefId(table, defaultSchema)] =
             createTableJsonSchema(table);
+
         return acc;
     }, empty);
 }
@@ -233,6 +242,7 @@ function createEnumJsonSchema(
     enums: EnumDetails[],
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
+
     return enums.reduce((acc, enumType) => {
         acc[
             createTypeDefId({
@@ -240,12 +250,17 @@ function createEnumJsonSchema(
                 fullName: `${enumType.schemaName}.${enumType.name}`,
             })
         ] = {
+            id: createTypeDefId({
+                kind: 'enum',
+                fullName: `${enumType.schemaName}.${enumType.name}`,
+            }),
             type: 'string',
             enum: enumType.values,
             description:
                 enumType.comment ??
                 `The ${enumType.name} enum from the ${enumType.schemaName} schema`,
         };
+
         return acc;
     }, empty);
 }
@@ -262,11 +277,17 @@ function createDomainJsonSchema(
                 fullName: `${domain.schemaName}.${domain.name}`,
             })
         ] = {
+            id: domain.innerType,
+            title: createTypeDefId({
+                kind: 'domain',
+                fullName: `${domain.schemaName}.${domain.name}`,
+            }),
             type: domainType(domain.innerType),
             description:
                 domain.comment ??
                 `The ${domain.name} domain from the ${domain.schemaName} schema`,
         };
+
         return acc;
     }, empty);
 }
@@ -285,90 +306,114 @@ function domainType(
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
-        'pg_catalog.int4': {
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
         'pg_catalog.text': {
+            id: 'pg_catalog.text',
             type: 'string',
             description: 'A PG text',
         },
         'pg_catalog.varchar': {
+            id: 'pg_catalog.varchar',
             type: 'string',
             description: 'A PG varchar',
         },
         'pg_catalog.bool': {
+            id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
         },
         'pg_catalog.date': {
+            id: 'pg_catalog.date',
             type: 'string',
             format: 'date',
+            tsType: 'Date',
             description: 'A PG date',
         },
-        'pg_catalog.timestamptz': {
-            type: 'string',
-            format: 'date-time',
-            description: 'A PG timestamptz',
-        },
         'pg_catalog.timestamp': {
+            id: 'pg_catalog.timestamp',
             type: 'string',
             format: 'date-time',
+            tsType: 'Date',
             description: 'A PG timestamp',
         },
+        'pg_catalog.timestamptz': {
+            id: 'pg_catalog.timestamptz',
+            type: 'string',
+            format: 'date-time',
+            tsType: 'Date',
+            description: 'A PG timestamptz',
+        },
+        'pg_catalog.numeric': {
+            id: 'pg_catalog.numeric',
+            type: 'string',
+            description: [
+                'A PG numeric.',
+                'Note that values of the PG numeric type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
+        },
         'pg_catalog.int2': {
+            id: 'pg_catalog.int2',
             type: 'integer',
             minimum: -32768,
             maximum: 32767,
             description: 'A PG int2',
         },
+        'pg_catalog.int4': {
+            id: 'pg_catalog.int4',
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+        },
         'pg_catalog.int8': {
+            id: 'pg_catalog.int8',
             type: 'integer',
             minimum: -9223372036854775808,
             maximum: 9223372036854775807,
             description: 'A PG int8',
         },
-
         'pg_catalog.float4': {
+            id: 'pg_catalog.float4',
             type: 'number',
             description: 'A PG float4',
         },
-
-        'pg_catalog.numeric': {
-            type: 'number',
-            description: 'A PG numeric',
-        },
         'pg_catalog.float8': {
+            id: 'pg_catalog.float8',
             type: 'number',
             description: 'A PG float8',
         },
-
         'pg_catalog.tsvector': {
+            id: 'pg_catalog.tsvector',
             type: 'string',
             description: 'A PG tsvector',
         },
         'pg_catalog.bpchar': {
+            id: 'pg_catalog.bpchar',
             type: 'string',
             description: 'A PG bpchar',
         },
         'pg_catalog.bytea': {
+            id: 'pg_catalog.bytea',
             type: 'string',
             description: 'A PG bytea',
         },
         'pg_catalog.uuid': {
+            id: 'pg_catalog.uuid',
             type: 'string',
             format: 'uuid',
             description: 'A PG uuid',
         },
-        'pg_catalog.jsonb': {
-            type: 'object',
-            description: 'A PG jsonb',
-        },
         'pg_catalog.json': {
+            id: 'pg_catalog.json',
             type: 'object',
             description: 'A PG json',
+        },
+        'pg_catalog.jsonb': {
+            id: 'pg_catalog.jsonb',
+            type: 'object',
+            description: 'A PG jsonb',
         },
     };
 }

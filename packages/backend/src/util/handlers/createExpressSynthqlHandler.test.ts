@@ -24,7 +24,6 @@ interface DbWithVirtualTables extends DB {
                 nullable: false;
                 isPrimaryKey: true;
             };
-
             rating: {
                 type: PgCatalogText;
                 selectable: true;
@@ -46,7 +45,15 @@ const schemaWithVirtualTables = {
                     properties: {
                         film_id: {
                             properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },
@@ -58,7 +65,15 @@ const schemaWithVirtualTables = {
                         },
                         rating: {
                             properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                },
                                 selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
                                     type: 'boolean',
                                     const: true,
                                 },

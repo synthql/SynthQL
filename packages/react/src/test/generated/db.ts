@@ -20,11 +20,11 @@ export type PgCatalogBool = boolean;
 /**
  * A PG date
  */
-export type PgCatalogDate = string;
+export type PgCatalogDate = Date;
 /**
  * A PG timestamptz
  */
-export type PgCatalogTimestamptz = string;
+export type PgCatalogTimestamptz = Date;
 /**
  * The year domain from the public schema
  */
@@ -34,9 +34,13 @@ export type PublicYearDomain = number;
  */
 export type PgCatalogInt2 = number;
 /**
- * A PG numeric
+ * A PG numeric.
+ * Note that values of the PG numeric type,
+ * are returned as strings from the database.
+ * This is because that is how they can be best
+ * accurately processed in JavaScript/TypeScript
  */
-export type PgCatalogNumeric = number;
+export type PgCatalogNumeric = string;
 /**
  * The mpaa_rating enum from the public schema
  */

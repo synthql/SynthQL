@@ -5,8 +5,8 @@ import { Include } from './Include';
 
 export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     from: TTable;
-    where: Where<DB, TTable>;
     select: Select<DB, TTable>;
+    where: Where<DB, TTable>;
     include?: Include<DB>;
     limit?: number;
     offset?: number;

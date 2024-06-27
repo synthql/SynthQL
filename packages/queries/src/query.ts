@@ -3,9 +3,9 @@ import { Where } from './types/Where';
 import { Select } from './types/Select';
 import { Column } from './types/Column';
 import { Table } from './types/Table';
-import { DbSchema } from './types/DbSchema';
-import { getSelectableColumns } from './schema/getSelectableColumns';
-import { getPrimaryKey } from './schema/getPrimaryKey';
+import { Schema } from './types/Schema';
+import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
+import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 
 export class QueryBuilder<
     DB,
@@ -423,14 +423,14 @@ export class QueryBuilder<
     }
 }
 
-export function query<DB>(schema: DbSchema<DB>) {
+export function query<DB>(schema: Schema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
             type TKeys = Array<Column<DB, TTable>>;
 
-            const select = getSelectableColumns<DB>(schema, table);
+            const select = getTableSelectableColumns<DB>(schema, table);
 
-            const primaryKeys = getPrimaryKey<DB>(schema, table);
+            const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, table);
 
             return new QueryBuilder<
                 DB,
