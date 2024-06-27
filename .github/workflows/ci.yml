@@ -45,4 +45,5 @@ jobs:
             - name: Code Coverage Summary Report
               uses: romeovs/lcov-reporter-action@v0.3.1
               with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
                   lcov-file: ./packages/backend/coverage/lcov.info
