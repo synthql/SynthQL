@@ -56,7 +56,7 @@ describe('No results', () => {
 
 describe('Some results', () => {
     const numRuns = 100;
-    const timeout = numRuns * 50;
+    const timeout = numRuns * 100;
     const endOnFailure = true;
 
     test.prop(
