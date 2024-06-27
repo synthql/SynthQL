@@ -2,8 +2,8 @@ import { it } from '@fast-check/vitest';
 import { describe, expect } from 'vitest';
 import { Query } from '@synthql/queries';
 import { DB, schema } from '../../generated';
-import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
+import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { CardinalityError } from '../../../query/applyCardinality';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
@@ -37,14 +37,20 @@ describe('cardinalityOne', async () => {
 
             expect(result).not.toBeNull();
 
-            for (const column of Object.keys(query.select)) {
-                expect(Object.keys(result)).toContain(column);
-            }
+            const expectedKeys = Object.entries(query.select).flatMap(
+                ([key, selected]) => {
+                    return selected ? [key] : [];
+                },
+            );
+
+            const actualKeys = Object.keys(result);
+
+            expect(actualKeys).to.containSubset(expectedKeys);
         },
     );
 
     it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
-        'Invalid where query should throw error',
+        'Invalid where query should throw expected cardinality error',
         async (query) => {
             try {
                 const typedQuery = query as Query<DB>;

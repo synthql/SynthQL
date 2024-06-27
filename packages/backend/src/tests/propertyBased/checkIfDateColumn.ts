@@ -1,9 +1,7 @@
-import {
-    Schema,
-    getColumnDef,
-    getTableDef,
-    isDateColumn,
-} from '@synthql/queries';
+import { Schema } from '@synthql/queries';
+import { getTableDef } from './getTableDef';
+import { getColumnDef } from './getColumnDef';
+import { isDateColumn } from './isDateColumn';
 
 export function checkIfDateColumn<DB>({
     schema,

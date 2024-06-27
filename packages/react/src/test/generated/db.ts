@@ -34,7 +34,11 @@ export type PublicYearDomain = number;
  */
 export type PgCatalogInt2 = number;
 /**
- * A PG numeric
+ * A PG numeric.
+ * Note that values of the PG numeric type,
+ * are returned as strings from the database.
+ * This is because that is how they can be best
+ * accurately processed in JavaScript/TypeScript
  */
 export type PgCatalogNumeric = string;
 /**

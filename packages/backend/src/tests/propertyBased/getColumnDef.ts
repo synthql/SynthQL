@@ -1,4 +1,4 @@
-import { ColumnDef, TableDef } from '../types/Schema';
+import { ColumnDef, TableDef } from '@synthql/queries';
 
 export function getColumnDef<DB>(
     tableDef: TableDef<DB>,

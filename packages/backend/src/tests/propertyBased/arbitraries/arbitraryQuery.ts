@@ -1,12 +1,12 @@
 import { fc } from '@fast-check/vitest';
-import { getTableNames, Schema, Cardinality } from '@synthql/queries';
+import { Schema, Cardinality } from '@synthql/queries';
 import { AnyQuery } from '../../../types';
 import { arbitraryLimit } from './arbitraryLimit';
 import { arbitraryCardinality } from './arbitraryCardinality';
 import { arbitraryWhere } from './arbitraryWhere';
-import { arbitraryTableName } from './arbitraryTableName';
 import { arbitrarySelect } from './arbitrarySelect';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
+import { getTableNames } from '../getTableNames';
 
 interface ArbitraryQuery<DB> {
     schema: Schema<DB>;
@@ -23,7 +23,7 @@ export function arbitraryQuery<DB>({
 }: ArbitraryQuery<DB>): fc.Arbitrary<AnyQuery> {
     return fc.constantFrom(...getTableNames<DB>(schema)).chain((tableName) =>
         fc.record({
-            from: arbitraryTableName(tableName),
+            from: fc.constant(tableName),
             select: arbitrarySelect({ schema, tableName }),
             where: arbitraryWhere({
                 schema,

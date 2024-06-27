@@ -1,5 +1,6 @@
-import { Schema, getTableNames } from '@synthql/queries';
+import { Schema } from '@synthql/queries';
 import { Pool } from 'pg';
+import { getTableNames } from './getTableNames';
 
 type TableName = string;
 

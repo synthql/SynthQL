@@ -1,9 +1,7 @@
-import {
-    Schema,
-    getColumnDef,
-    getTableDef,
-    isEnumColumn,
-} from '@synthql/queries';
+import { Schema } from '@synthql/queries';
+import { getTableDef } from './getTableDef';
+import { getColumnDef } from './getColumnDef';
+import { isEnumColumn } from './isEnumColumn';
 
 export function checkIfEnumColumn<DB>({
     schema,

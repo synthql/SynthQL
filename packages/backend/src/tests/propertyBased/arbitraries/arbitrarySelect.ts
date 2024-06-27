@@ -1,6 +1,7 @@
 import { fc } from '@fast-check/vitest';
-import { Schema, Select, getTableSelectableColumns } from '@synthql/queries';
+import { Schema, Select } from '@synthql/queries';
 import { AnyDb } from '../../../types';
+import { getTableSelectableColumns } from '../getTableSelectableColumns';
 
 export function arbitrarySelect<DB>({
     schema,

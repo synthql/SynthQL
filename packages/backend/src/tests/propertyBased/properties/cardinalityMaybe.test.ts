@@ -2,8 +2,8 @@ import { it } from '@fast-check/vitest';
 import { describe, expect } from 'vitest';
 import { Query } from '@synthql/queries';
 import { DB, schema } from '../../generated';
-import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
+import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
 describe('cardinalityMaybe', async () => {
@@ -34,9 +34,15 @@ describe('cardinalityMaybe', async () => {
 
             expect(Array.isArray(result)).toEqual(false);
 
-            for (const column of Object.keys(query.select)) {
-                expect(Object.keys(result)).toContain(column);
-            }
+            const expectedKeys = Object.entries(query.select).flatMap(
+                ([key, selected]) => {
+                    return selected ? [key] : [];
+                },
+            );
+
+            const actualKeys = Object.keys(result);
+
+            expect(actualKeys).to.containSubset(expectedKeys);
         },
     );
 

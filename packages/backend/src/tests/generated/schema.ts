@@ -1095,7 +1095,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1179,7 +1180,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2901,7 +2903,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -5106,7 +5109,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -5190,7 +5194,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -6912,7 +6917,8 @@ export const schema = {
                                 type: {
                                     id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    description: 'A PG numeric',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -8044,7 +8050,8 @@ export const schema = {
         'pg_catalog.numeric': {
             id: 'pg_catalog.numeric',
             type: 'string',
-            description: 'A PG numeric',
+            description:
+                'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
         },
         'pg_catalog.int2': {
             id: 'pg_catalog.int2',

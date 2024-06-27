@@ -1,9 +1,10 @@
 import { fc } from '@fast-check/vitest';
-import { Schema, Where, getTableWhereableColumns } from '@synthql/queries';
+import { Schema, Where } from '@synthql/queries';
 import { AnyDb } from '../../../types';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { checkIfDateTimeColumn } from '../checkIfDateTimeColumn';
+import { getTableWhereableColumns } from '../getTableWhereableColumns';
 
 export function arbitraryWhere<DB>({
     schema,

@@ -2,8 +2,8 @@ import { it } from '@fast-check/vitest';
 import { describe, expect } from 'vitest';
 import { Query } from '@synthql/queries';
 import { DB, schema } from '../../generated';
-import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { pool, queryEngine } from '../../queryEngine';
+import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 
 describe('cardinalityMany', async () => {
@@ -34,10 +34,16 @@ describe('cardinalityMany', async () => {
 
             expect(result.length).toBeLessThanOrEqual(Number(query.limit));
 
+            const expectedKeys = Object.entries(query.select).flatMap(
+                ([key, selected]) => {
+                    return selected ? [key] : [];
+                },
+            );
+
             for (const item of result) {
-                for (const column of Object.keys(query.select)) {
-                    expect(Object.keys(item)).toContain(column);
-                }
+                const actualKeys = Object.keys(item);
+
+                expect(actualKeys).to.containSubset(expectedKeys);
             }
         },
     );

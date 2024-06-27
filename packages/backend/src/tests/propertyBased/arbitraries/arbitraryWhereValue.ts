@@ -1,11 +1,9 @@
 import { fc } from '@fast-check/vitest';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
-import {
-    Schema,
-    getColumnDef,
-    getColumnPgType,
-    getTableDef,
-} from '@synthql/queries';
+import { Schema } from '@synthql/queries';
+import { getTableDef } from '../getTableDef';
+import { getColumnDef } from '../getColumnDef';
+import { getColumnPgType } from '../getColumnPgType';
 
 export function arbitraryWhereValue<DB>({
     schema,

@@ -345,7 +345,13 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         'pg_catalog.numeric': {
             id: 'pg_catalog.numeric',
             type: 'string',
-            description: 'A PG numeric',
+            description: [
+                'A PG numeric.',
+                'Note that values of the PG numeric type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
         },
         'pg_catalog.int2': {
             id: 'pg_catalog.int2',
