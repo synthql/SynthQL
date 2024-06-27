@@ -91,17 +91,6 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
         return splitQueryAtBoundary(query, shouldSplit);
     }
-
-    collectRefValues(row: any, columns: ColumnRef[]): RefContext {
-        const refContext = createRefContext();
-
-        for (const column of columns) {
-            const value = row[column.column];
-            refContext.addValues(column, value);
-        }
-
-        return refContext;
-    }
 }
 
 function connectToPool(pool: Pool): Promise<PoolClient> {

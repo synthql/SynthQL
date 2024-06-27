@@ -45,15 +45,4 @@ export class QueryProviderExecutor implements QueryExecutor {
 
         return { query: queryWithoutChildren, remaining };
     }
-
-    collectRefValues(row: any, columns: ColumnRef[]): RefContext {
-        const refContext = createRefContext();
-
-        for (const column of columns) {
-            const value = row[column.column];
-            refContext.addValues(column, value);
-        }
-
-        return refContext;
-    }
 }
