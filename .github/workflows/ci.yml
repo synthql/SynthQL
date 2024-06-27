@@ -8,11 +8,6 @@ jobs:
     ci:
         name: Run CI
         runs-on: ubuntu-latest
-        # Grant GITHUB_TOKEN the permissions required to push changes to target branch
-        permissions:
-            contents: 'write'
-            packages: 'write'
-            actions: 'read'
         steps:
             - uses: actions/checkout@v4
               with:
@@ -46,9 +41,3 @@ jobs:
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn ci
-
-            - name: Code Coverage Summary Report
-              uses: romeovs/lcov-reporter-action@v0.3.1
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  lcov-file: ./packages/backend/coverage/lcov.info
