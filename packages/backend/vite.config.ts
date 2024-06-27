@@ -47,7 +47,7 @@ export default defineConfig({
             enabled: true,
             reportsDirectory: 'coverage',
             reportOnFailure: true,
-            reporter: ['html','cobertura'],
+            reporter: ['html', 'lcov'],
             include: ['src/**/*'],
         },
     },

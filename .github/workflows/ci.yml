@@ -43,6 +43,6 @@ jobs:
               run: yarn ci
 
             - name: Code Coverage Summary Report
-              uses: irongut/CodeCoverageSummary@v1.3.0
+              uses: romeovs/lcov-reporter-action@v0.3.1
               with:
-                  filename: ./packages/backend/coverage/cobertura-coverage.xml
+                  lcov-file: ./packages/backend/coverage/lcov.info
