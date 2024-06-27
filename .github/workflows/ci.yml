@@ -41,3 +41,8 @@ jobs:
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn ci
+
+            - name: Code Coverage Summary Report
+              uses: irongut/CodeCoverageSummary@v1.3.0
+              with:
+                  filename: ./packages/backend/coverage/cobertura-coverage.xml
