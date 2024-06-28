@@ -81,9 +81,9 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
         query: TQuery,
     ):
         | {
-            query: TQuery;
-            remaining: TQuery[];
-        }
+              query: TQuery;
+              remaining: TQuery[];
+          }
         | undefined;
 }
 

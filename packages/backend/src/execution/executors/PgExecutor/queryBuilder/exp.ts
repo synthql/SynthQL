@@ -32,7 +32,7 @@ function assertPrimitive(x: unknown, msg?: string): asserts x is Primitive {
     if (!isPrimitive(x)) {
         throw new Error(
             msg ??
-            `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
+                `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
         );
     }
 }
