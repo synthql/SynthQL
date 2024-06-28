@@ -32,16 +32,7 @@ function assertPrimitive(x: unknown, msg?: string): asserts x is Primitive {
     if (!isPrimitive(x)) {
         throw new Error(
             msg ??
-                `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
-        );
-    }
-}
-
-function assertArray(x: unknown, msg?: string): asserts x is Primitive[] {
-    if (!Array.isArray(x)) {
-        throw new Error(
-            msg ??
-                `Expected ${JSON.stringify(x)} to be an array but was ${typeof x}`,
+            `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
         );
     }
 }
@@ -473,5 +464,3 @@ export class SqlBuilder {
         return this.add('where ').addInterleaved(expressions, SqlBuilder.and());
     }
 }
-
-new SqlBuilder().select([]).addOp(['op', '=', 'a', 'b']);
