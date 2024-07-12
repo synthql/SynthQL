@@ -48,13 +48,10 @@ export async function generate({
     }
 
     // Step 2: Convert the pg-extract-schema schema to a JSON Schema
-    const schemaWithRefs: JSONSchema = createRootJsonSchema(
-        pgExtractSchema,
-        {
-            defaultSchema,
-        },
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
+        defaultSchema,
         includeTables,
-    );
+    });
 
     /**
      * Step 3: Compile the JSON schema into TypeScript files.
@@ -186,8 +183,10 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
 
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
-    { defaultSchema }: { defaultSchema: string },
-    includeTables: string[],
+    {
+        defaultSchema,
+        includeTables,
+    }: { defaultSchema: string; includeTables: string[] },
 ): JSONSchema {
     // Check if list of tables is passed, and if so, use as filter
     const tables =
