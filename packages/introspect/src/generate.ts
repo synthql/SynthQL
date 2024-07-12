@@ -19,8 +19,7 @@ export async function generate({
     includeTables = [],
     outDir,
     formatter = async (str) => str,
-    SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation = '@synthql/queries',
-    SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation = '@synthql/queries',
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
 }: {
     defaultSchema: string;
     connectionString: string;
@@ -28,8 +27,7 @@ export async function generate({
     outDir: string;
     includeTables?: string[];
     formatter?: (str: string) => Promise<string>;
-    SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation?: string;
-    SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation?: string;
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
 }) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
@@ -79,16 +77,16 @@ export async function generate({
     writeFormattedFile(
         path.join(outDir, 'schema.ts'),
         [
-            `import { Schema } from '${SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation}';`,
+            `import { Schema } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
             `import { DB } from './db';`,
-            `export const schema: Schema<DB> = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
+            `export const schema: Schema<DB> = ${JSON.stringify(schemaWithoutRefs, null, 2)};`,
         ].join('\n'),
     );
 
     writeFormattedFile(
         path.join(outDir, 'index.ts'),
         [
-            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation}';`,
+            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
             `import { DB } from './db';`,
             `import { schema } from './schema';`,
             `export type { DB } from './db';`,

@@ -8136,4 +8136,4 @@ export const schema: Schema<DB> = {
             description: 'The year domain from the public schema',
         },
     },
-} as const;
+};

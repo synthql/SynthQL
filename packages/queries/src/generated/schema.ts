@@ -1,4 +1,4 @@
-import { Schema } from '../types/Schema';
+import { Schema } from '../index';
 import { DB } from './db';
 export const schema: Schema<DB> = {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -8136,4 +8136,4 @@ export const schema: Schema<DB> = {
             description: 'The year domain from the public schema',
         },
     },
-} as const;
+};

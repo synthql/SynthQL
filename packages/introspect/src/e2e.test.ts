@@ -22,9 +22,7 @@ describe('e2e', () => {
                     parser: 'typescript',
                     ...prettierOptions,
                 }),
-            SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation: '../query',
-            SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation:
-                '../types/Schema',
+            SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation: '../index',
         });
 
         // Generate in `backend` package
