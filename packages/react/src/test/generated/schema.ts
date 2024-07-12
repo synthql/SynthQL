@@ -1,7 +1,9 @@
-export const schema = {
+import { Schema } from '@synthql/queries';
+import { DB } from './db';
+export const schema: Schema<DB> = {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
-    description: "Your database's schema",
     type: 'object',
+    description: "Your database's schema",
     properties: {
         customer: {
             type: 'object',

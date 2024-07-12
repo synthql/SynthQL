@@ -16,16 +16,20 @@ export async function generate({
     connectionString,
     includeSchemas,
     defaultSchema,
+    includeTables = [],
     outDir,
     formatter = async (str) => str,
-    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
+    SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation = '@synthql/queries',
+    SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation = '@synthql/queries',
 }: {
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
+    includeTables?: string[];
     formatter?: (str: string) => Promise<string>;
-    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
+    SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation?: string;
+    SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation?: string;
 }) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
@@ -46,9 +50,13 @@ export async function generate({
     }
 
     // Step 2: Convert the pg-extract-schema schema to a JSON Schema
-    const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
-        defaultSchema,
-    });
+    const schemaWithRefs: JSONSchema = createRootJsonSchema(
+        pgExtractSchema,
+        {
+            defaultSchema,
+        },
+        includeTables,
+    );
 
     /**
      * Step 3: Compile the JSON schema into TypeScript files.
@@ -70,13 +78,17 @@ export async function generate({
 
     writeFormattedFile(
         path.join(outDir, 'schema.ts'),
-        `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
+        [
+            `import { Schema } from '${SECRET_INTERNALS_DO_NOT_USE_schemaTypeImportLocation}';`,
+            `import { DB } from './db';`,
+            `export const schema: Schema<DB> = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
+        ].join('\n'),
     );
 
     writeFormattedFile(
         path.join(outDir, 'index.ts'),
         [
-            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
+            `import { query } from '${SECRET_INTERNALS_DO_NOT_USE_queryBuilderImportLocation}';`,
             `import { DB } from './db';`,
             `import { schema } from './schema';`,
             `export type { DB } from './db';`,
@@ -177,10 +189,17 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
     { defaultSchema }: { defaultSchema: string },
+    includeTables: string[],
 ): JSONSchema {
-    const tables = Object.values(schemas).flatMap((schema) => {
-        return schema.tables;
-    });
+    // Check if list of tables is passed, and if so, use as filter
+    const tables =
+        includeTables.length > 0
+            ? Object.values(schemas).flatMap((schema) =>
+                  schema.tables.filter((table) =>
+                      includeTables.includes(table.name),
+                  ),
+              )
+            : Object.values(schemas).flatMap((schema) => schema.tables);
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
@@ -192,8 +211,8 @@ function createRootJsonSchema(
 
     return {
         $schema: 'https://json-schema.org/draft/2020-12/schema',
-        description: "Your database's schema",
         type: 'object',
+        description: "Your database's schema",
         properties: tables
             .map((table) => {
                 return {

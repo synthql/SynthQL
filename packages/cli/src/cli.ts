@@ -40,7 +40,13 @@ export function cli({
                         'List of schemas to be included in the generation',
                     default: 'public',
                 })
-                .array('schemas');
+                .array('schemas')
+                .option('tables', {
+                    type: 'string',
+                    description:
+                        'List of tables to be included in the generation',
+                })
+                .array('tables');
         },
         async (argv) => {
             await generateSchema({
@@ -48,6 +54,7 @@ export function cli({
                 out: argv.out,
                 defaultSchema: argv.defaultSchema,
                 schemas: argv.schemas,
+                tables: argv.tables,
             });
 
             exit(0);
