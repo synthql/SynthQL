@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { generate } from '.';
+import { generate } from './generate';
 import * as prettier from 'prettier';
 
 describe('e2e', () => {
