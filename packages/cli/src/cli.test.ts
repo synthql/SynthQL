@@ -34,7 +34,7 @@ describe('CLI tests', () => {
         });
 
         it(
-            `Generate schema types with the CLI options default values, 
+            `Generate schema types with the CLI options default values,
              with the exception of the --out option set`,
             async () => {
                 const argv = [
@@ -51,7 +51,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -84,7 +84,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -117,7 +117,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -149,7 +149,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -182,7 +182,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -216,7 +216,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -250,7 +250,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -286,7 +286,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;
@@ -327,7 +327,7 @@ describe('CLI tests', () => {
                 expect(!fs.existsSync(outFilePath)).to.be.true;
 
                 // Generate schema file
-                const output = await cli({ argv, exit: () => {} }).parse();
+                const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
                 expect(fs.existsSync(outFilePath)).to.be.true;

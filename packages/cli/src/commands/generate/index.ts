@@ -21,7 +21,7 @@ export const generateSchema = async ({
         connectionString,
         includeSchemas: schemas,
         includeTables: tables,
-        outDir: path.resolve(path.join(process.cwd(), out)),
+        outDir: out,
     });
 
     return result;

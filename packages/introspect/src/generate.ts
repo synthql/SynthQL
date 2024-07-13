@@ -186,17 +186,18 @@ function createRootJsonSchema(
     {
         defaultSchema,
         includeTables,
-    }: { defaultSchema: string; includeTables: string[] },
+    }: {
+        defaultSchema: string;
+        includeTables: string[];
+    },
 ): JSONSchema {
     // Check if list of tables is passed, and if so, use as filter
+    const allTables = Object.values(schemas).flatMap((schema) => schema.tables);
+
     const tables =
-        includeTables.length > 0
-            ? Object.values(schemas).flatMap((schema) =>
-                  schema.tables.filter((table) =>
-                      includeTables.includes(table.name),
-                  ),
-              )
-            : Object.values(schemas).flatMap((schema) => schema.tables);
+        includeTables.length === 0
+            ? allTables
+            : allTables.filter((table) => includeTables.includes(table.name));
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
