@@ -1,4 +1,4 @@
-import { query } from '../query';
+import { query } from '../index';
 import { DB } from './db';
 import { schema } from './schema';
 export type { DB } from './db';

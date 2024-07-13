@@ -21,6 +21,7 @@
         "test:ci": "CI=1 vitest run --globals",
         "t": "vitest --ui",
         "typecheck": "tsc",
+        "run-cli": "yarn build && node ./build/src/index.cjs",
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",

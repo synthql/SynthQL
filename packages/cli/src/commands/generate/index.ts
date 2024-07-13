@@ -6,6 +6,7 @@ interface GenerateSchemaOptions {
     out: string;
     defaultSchema: string;
     schemas: string[];
+    tables?: string[];
 }
 
 export const generateSchema = async ({
@@ -13,12 +14,14 @@ export const generateSchema = async ({
     out,
     defaultSchema,
     schemas = [],
+    tables = [],
 }: GenerateSchemaOptions) => {
     const result = await generate({
         defaultSchema,
         connectionString,
         includeSchemas: schemas,
-        outDir: path.resolve(path.join(process.cwd(), out)),
+        includeTables: tables,
+        outDir: out,
     });
 
     return result;

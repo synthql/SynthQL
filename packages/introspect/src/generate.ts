@@ -16,6 +16,7 @@ export async function generate({
     connectionString,
     includeSchemas,
     defaultSchema,
+    includeTables = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -24,6 +25,7 @@ export async function generate({
     connectionString: string;
     includeSchemas: string[];
     outDir: string;
+    includeTables?: string[];
     formatter?: (str: string) => Promise<string>;
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
 }) {
@@ -48,6 +50,7 @@ export async function generate({
     // Step 2: Convert the pg-extract-schema schema to a JSON Schema
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
+        includeTables,
     });
 
     /**
@@ -70,7 +73,11 @@ export async function generate({
 
     writeFormattedFile(
         path.join(outDir, 'schema.ts'),
-        `export const schema = ${JSON.stringify(schemaWithoutRefs, null, 2)} as const`,
+        [
+            `import { Schema } from '${SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation}';`,
+            `import { DB } from './db';`,
+            `export const schema: Schema<DB> = ${JSON.stringify(schemaWithoutRefs, null, 2)};`,
+        ].join('\n'),
     );
 
     writeFormattedFile(
@@ -176,11 +183,21 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
 
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
-    { defaultSchema }: { defaultSchema: string },
+    {
+        defaultSchema,
+        includeTables,
+    }: {
+        defaultSchema: string;
+        includeTables: string[];
+    },
 ): JSONSchema {
-    const tables = Object.values(schemas).flatMap((schema) => {
-        return schema.tables;
-    });
+    // Check if list of tables is passed, and if so, use as filter
+    const allTables = Object.values(schemas).flatMap((schema) => schema.tables);
+
+    const tables =
+        includeTables.length === 0
+            ? allTables
+            : allTables.filter((table) => includeTables.includes(table.name));
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
@@ -192,8 +209,8 @@ function createRootJsonSchema(
 
     return {
         $schema: 'https://json-schema.org/draft/2020-12/schema',
-        description: "Your database's schema",
         type: 'object',
+        description: "Your database's schema",
         properties: tables
             .map((table) => {
                 return {
