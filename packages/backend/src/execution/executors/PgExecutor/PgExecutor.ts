@@ -41,10 +41,13 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         };
     }
 
-    async execute(query: AnyQuery): Promise<Array<PgQueryResult>> {
+    async execute(
+        query: AnyQuery,
+        { defaultSchema }: { defaultSchema: string },
+    ): Promise<Array<PgQueryResult>> {
         const client = await this.client;
         const { sqlBuilder, augmentedQuery } = composeQuery({
-            defaultSchema: this.props.defaultSchema,
+            defaultSchema,
             query,
         });
         const { params, sql } = sqlBuilder.build();

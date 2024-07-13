@@ -22,7 +22,7 @@ export class QueryEngine<DB> {
     private schema: string;
     private executors: Array<QueryExecutor> = [];
 
-    constructor(private config: QueryEngineProps<DB>) {
+    constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
         this.pool =
             config.pool ??
