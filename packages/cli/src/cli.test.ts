@@ -48,13 +48,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(out, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the command passed is correct
                 expect(output._).toEqual(['generate']);
@@ -81,13 +81,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.connectionString).toEqual(url);
@@ -114,13 +114,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.url).toEqual(url);
@@ -146,13 +146,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.out).toEqual(outDir);
@@ -179,13 +179,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.defaultSchema).toEqual(defaultSchema);
@@ -213,13 +213,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.schemas).toEqual(schemas);
@@ -247,13 +247,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.tables).toEqual(tables);
@@ -283,13 +283,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the --schemas option data is correct
                 expect(output.schemas).toEqual(schemas);
@@ -324,13 +324,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the options data passed is correct
                 expect(output.connectionString).toEqual(url);
