@@ -24,7 +24,7 @@
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
-        "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthqlExamples.test.tsx"
+        "compile-executable-examples": "node ../../scripts/compile-executable-examples.cjs ./src/useSynthql.test.tsx"
     },
     "dependencies": {
         "@synthql/backend": "0.70.4",
