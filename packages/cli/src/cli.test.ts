@@ -249,13 +249,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.tables).toEqual(tables);
@@ -285,13 +285,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the --schemas option data is correct
                 expect(output.schemas).toEqual(schemas);
@@ -321,13 +321,13 @@ describe('CLI tests', () => {
                 const outFilePath = path.join(outDir, `db.ts`);
 
                 // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).to.be.true;
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
 
                 // Generate schema file
                 const output = await cli({ argv, exit: () => {} });
 
                 // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).to.be.true;
+                expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
                 expect(output.configFile).toEqual(configFile);
