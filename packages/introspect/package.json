@@ -31,6 +31,7 @@
     },
     "dependencies": {
         "@apidevtools/json-schema-ref-parser": "^11.5.4",
+        "@synthql/queries": "0.66.4",
         "extract-pg-schema": "^5.1.1",
         "json-schema-to-typescript": "^13.1.2"
     },

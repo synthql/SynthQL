@@ -47,38 +47,47 @@ export interface ColumnDef {
     type: string;
     description: string;
     properties: {
-        type: {
-            id: string;
-            title?: string;
-            type: string;
-            tsType?: string;
-            description: string;
-            minimum?: unknown;
-            maximum?: unknown;
-            format?: string;
-            enum?: readonly string[];
-        };
-        selectable: {
-            type: string;
-            const: boolean;
-        };
-        includable: {
-            type: string;
-            const: boolean;
-        };
-        whereable: {
-            type: string;
-            const: boolean;
-        };
-        nullable: {
-            type: string;
-            const: boolean;
-        };
-        isPrimaryKey: {
-            type: string;
-            const: boolean;
-        };
+        type: ColumnDefTypeDef;
+        selectable: ColumnDefAttributeDef;
+        includable: ColumnDefAttributeDef;
+        whereable: ColumnDefAttributeDef;
+        nullable: ColumnDefAttributeDef;
+        isPrimaryKey: ColumnDefAttributeDef;
     };
     required: string[];
     additionalProperties: boolean;
+}
+
+export interface ColumnDefProperties {
+    type: ColumnDefTypeDef;
+    selectable: ColumnDefAttributeDef;
+    includable: ColumnDefAttributeDef;
+    whereable: ColumnDefAttributeDef;
+    nullable: ColumnDefAttributeDef;
+    isPrimaryKey: ColumnDefAttributeDef;
+}
+
+interface ColumnDefTypeDef {
+    id: string;
+    title?: string;
+    type: string;
+    tsType?: string;
+    description: string;
+    minimum?: unknown;
+    maximum?: unknown;
+    format?: string;
+    enum?: readonly string[];
+}
+
+interface ColumnDefAttributeDef {
+    type: string;
+    const: boolean;
+}
+
+export interface SchemaDefOverrides {
+    [x: string]: TableDefOverrides;
+}
+
+export interface TableDefOverrides {
+    [x: string]: Partial<ColumnDefProperties>;
 }

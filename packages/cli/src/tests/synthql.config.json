@@ -1,0 +1,21 @@
+{
+    "tables": ["actor", "customer"],
+    "schemaDefOverrides": {
+        "actor": {
+            "first_name": {
+                "includable": { "type": "boolean", "const": false }
+            },
+            "last_name": {
+                "includable": { "type": "boolean", "const": false }
+            }
+        },
+        "customer": {
+            "first_name": {
+                "includable": { "type": "boolean", "const": false }
+            },
+            "last_name": {
+                "includable": { "type": "boolean", "const": false }
+            }
+        }
+    }
+}

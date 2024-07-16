@@ -1,3 +1,4 @@
+import { SchemaDefOverrides, TableDefOverrides } from '@synthql/queries';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 import {
     DomainDetails,
@@ -7,7 +8,6 @@ import {
     TableColumnType,
     TableDetails,
 } from 'extract-pg-schema';
-
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
@@ -17,6 +17,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTables = [],
+    schemaDefOverrides,
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -24,8 +25,9 @@ export async function generate({
     defaultSchema: string;
     connectionString: string;
     includeSchemas: string[];
-    outDir: string;
     includeTables?: string[];
+    schemaDefOverrides?: SchemaDefOverrides;
+    outDir: string;
     formatter?: (str: string) => Promise<string>;
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
 }) {
@@ -51,6 +53,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
+        schemaDefOverrides,
     });
 
     /**
@@ -116,10 +119,25 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
     return `table_${type.schemaName}_${type.name}`;
 }
 
-function createTableJsonSchema(table: TableDetails): JSONSchema {
+function createTableJsonSchema(
+    table: TableDetails,
+    tableDefOverrides: TableDefOverrides | undefined,
+): JSONSchema {
     const empty: Record<string, any> = {};
 
+    // Here, we want to check if there was overriding table schema def
+    // passed down for a table
+    // If yes, for each column, we want to identify if a property
+    // was passed, and replace them if so
+    // Otherwise we generate the property as usual
+
     const columns = table.columns.reduce((acc, column) => {
+        const columnSchemaOverrides = tableDefOverrides
+            ? Object.keys(tableDefOverrides).includes(column.name)
+                ? tableDefOverrides[column.name]
+                : undefined
+            : undefined;
+
         acc[column.name] = {
             type: 'object',
             description:
@@ -136,13 +154,25 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                     `- Generated: ${column.generated}`,
                 ].join('\n'),
             properties: {
-                type: { $ref: `#/$defs/${createTypeDefId(column.type)}` },
-                // a constant value of true
-                selectable: { type: 'boolean', const: true },
-                includable: { type: 'boolean', const: true },
-                whereable: { type: 'boolean', const: true },
-                nullable: { type: 'boolean', const: column.isNullable },
-                isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
+                type: columnSchemaOverrides?.type
+                    ? columnSchemaOverrides.type
+                    : { $ref: `#/$defs/${createTypeDefId(column.type)}` },
+                // A constant value of true
+                selectable: columnSchemaOverrides?.selectable
+                    ? columnSchemaOverrides.selectable
+                    : { type: 'boolean', const: true },
+                includable: columnSchemaOverrides?.includable
+                    ? columnSchemaOverrides.includable
+                    : { type: 'boolean', const: true },
+                whereable: columnSchemaOverrides?.whereable
+                    ? columnSchemaOverrides.whereable
+                    : { type: 'boolean', const: true },
+                nullable: columnSchemaOverrides?.nullable
+                    ? columnSchemaOverrides.nullable
+                    : { type: 'boolean', const: column.isNullable },
+                isPrimaryKey: columnSchemaOverrides?.isPrimaryKey
+                    ? columnSchemaOverrides.isPrimaryKey
+                    : { type: 'boolean', const: column.isPrimaryKey },
             },
             required: [
                 'type',
@@ -186,9 +216,14 @@ function createRootJsonSchema(
     {
         defaultSchema,
         includeTables,
-    }: { defaultSchema: string; includeTables: string[] },
+        schemaDefOverrides,
+    }: {
+        defaultSchema: string;
+        includeTables: string[];
+        schemaDefOverrides: SchemaDefOverrides | undefined;
+    },
 ): JSONSchema {
-    // Check if list of tables is passed, and if so, use as filter
+    // Check if a list of tables is passed, and if so, use as filter
     const tables =
         includeTables.length > 0
             ? Object.values(schemas).flatMap((schema) =>
@@ -224,7 +259,7 @@ function createRootJsonSchema(
         required: tables.map((table) => fullTableName(table, defaultSchema)),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(tables, defaultSchema),
+            ...createTableDefs(tables, defaultSchema, schemaDefOverrides),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
@@ -243,12 +278,21 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 function createTableDefs(
     tables: TableDetails[],
     defaultSchema: string,
+    schemaDefOverrides: SchemaDefOverrides | undefined,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        acc[createTableDefId(table, defaultSchema)] =
-            createTableJsonSchema(table);
+        const tableSchemaOverrides = schemaDefOverrides
+            ? Object.keys(schemaDefOverrides).includes(table.name)
+                ? schemaDefOverrides[table.name]
+                : undefined
+            : undefined;
+
+        acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
+            table,
+            tableSchemaOverrides,
+        );
 
         return acc;
     }, empty);

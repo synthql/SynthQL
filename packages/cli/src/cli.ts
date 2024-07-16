@@ -25,7 +25,7 @@ export function cli({
                 .option('out', {
                     type: 'string',
                     description:
-                        'The path to the folder where the generated files will be created.',
+                        'Path to the folder where the generated files will be created.',
                     default: 'src/generated/synthql',
                 })
                 .option('defaultSchema', {
@@ -46,15 +46,23 @@ export function cli({
                     description:
                         'List of tables to be included in the generation',
                 })
-                .array('tables');
+                .array('tables')
+                .config('configFile')
+                .parserConfiguration({
+                    'dot-notation': false,
+                    'strip-aliased': true,
+                });
         },
         async (argv) => {
+            console.log(0, argv);
+
             await generateSchema({
                 connectionString: argv.connectionString,
                 out: argv.out,
                 defaultSchema: argv.defaultSchema,
                 schemas: argv.schemas,
                 tables: argv.tables,
+                schemaDefOverrides: argv.schemaDefOverrides,
             });
 
             exit(0);

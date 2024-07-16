@@ -18,9 +18,8 @@
     "scripts": {
         "link:pkg": "yarn link",
         "test": "vitest --globals",
-        "test:ci": "CI=1 vitest run --globals",
-        "t": "vitest --ui",
         "typecheck": "tsc",
+        "test:ci": "CI=1 vitest run --globals",
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
@@ -28,6 +27,7 @@
     },
     "dependencies": {
         "@synthql/introspect": "0.66.4",
+        "@synthql/queries": "0.66.4",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },
