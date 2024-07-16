@@ -1,7 +1,7 @@
 {
     "name": "@synthql/root",
     "type": "module",
-    "version": "0.66.4",
+    "version": "0.72.4",
     "license": "MIT",
     "private": true,
     "workspaces": [
@@ -13,11 +13,10 @@
         "typecheck": "yarn nx run-many -t typecheck",
         "test:ci": "yarn nx run-many -t test:ci",
         "build": "yarn nx run-many -t build",
-        "build:docs": "yarn nx build @synthql/docs",
-        "ci": "yarn nx run-many -t typecheck test:ci build",
+        "ci": "yarn nx run-many -t typecheck test:ci build format",
         "ci:force": "yarn nx run-many --skip-nx-cache -t typecheck test:ci build",
-        "compile-executable-examples": "yarn nx compile-executable-examples @synthql/react",
-        "benchmarks": "yarn nx benchmarks @synthql/backend",
+        "compile-executable-examples": "yarn nx run-many -t compile-executable-examples",
+        "benchmarks": "yarn nx run-many -t benchmarks",
         "publish-minor-versions": "node ./scripts/publish-minor-versions.cjs"
     },
     "devDependencies": {

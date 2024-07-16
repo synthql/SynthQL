@@ -20,7 +20,7 @@
             "cache": true
         },
         "compile-executable-examples": {
-            "dependsOn": ["test:ci", "format"],
+            "dependsOn": ["format"],
             "cache": true
         },
         "build:typedoc": {
@@ -32,7 +32,6 @@
             "dependsOn": [
                 "^build",
                 "build:typedoc",
-                "test:ci",
                 "lint",
                 "format",
                 "typecheck"

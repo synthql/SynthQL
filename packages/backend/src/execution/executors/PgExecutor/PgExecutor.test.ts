@@ -6,6 +6,7 @@ import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 
 describe('PgExecutor', () => {
+    const executeProps = { defaultSchema: 'public' };
     const executor = new PgExecutor({
         pool,
         defaultSchema: 'public',
@@ -48,7 +49,7 @@ describe('PgExecutor', () => {
     });
 
     it('Film table SynthQL query executes to expected result', async () => {
-        const result = await executor.execute(q1);
+        const result = await executor.execute(q1, executeProps);
 
         expect(result).toEqual([
             {
@@ -66,7 +67,7 @@ describe('PgExecutor', () => {
         .take(2);
 
     it('Actor table SynthQL query executes to expected result', async () => {
-        const result = await executor.execute(q2);
+        const result = await executor.execute(q2, executeProps);
 
         expect(result).toEqual([
             {
@@ -106,10 +107,12 @@ describe('PgExecutor', () => {
     it('Film table level 1 `include()` SynthQL query executes to expected result', async () => {
         const resultWithIncludedColumnSelected = await executor.execute(
             filmWithIncludedColumnSelected,
+            executeProps,
         );
 
         const resultWithoutIncludedColumnSelected = await executor.execute(
             filmWithoutIncludedColumnSelected,
+            executeProps,
         );
 
         const rows = [

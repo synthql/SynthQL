@@ -21,7 +21,7 @@ export const generateSchema = async ({
 }: GenerateSchemaOptions) => {
     if (schemaDefOverrides === undefined) {
         try {
-            await generate({
+            return await generate({
                 defaultSchema,
                 connectionString,
                 includeSchemas: schemas,
@@ -33,7 +33,7 @@ export const generateSchema = async ({
         }
     } else if (isValidSchemaDefOverrides(schemaDefOverrides)) {
         try {
-            await generate({
+            return await generate({
                 defaultSchema,
                 connectionString,
                 includeSchemas: schemas,
@@ -51,7 +51,7 @@ export const generateSchema = async ({
             `${JSON.stringify(schemaDefOverrides, null, 2)}`,
         ];
 
-        console.log(lines.join('\n'));
+        throw new Error(lines.join('\n'));
     }
 };
 

@@ -71,7 +71,7 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
     /**
      * Execute a query and return the result.
      */
-    execute: (query: AnyQuery) => Promise<Array<T>>;
+    execute: (query: AnyQuery, { defaultSchema: string }) => Promise<Array<T>>;
 
     /**
      * If the executor supports the query, it returns the query along with all it's supported subqueries.

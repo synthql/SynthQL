@@ -32,7 +32,9 @@ export function executePlan(
             }
 
             // Execute the query
-            const rows = await planNode.executor.execute(query);
+            const rows = await planNode.executor.execute(query, {
+                defaultSchema,
+            });
 
             // Collect refs from the result
             for (const { column, values: value } of iterateResultRows(

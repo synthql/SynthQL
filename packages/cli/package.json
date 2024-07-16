@@ -1,7 +1,7 @@
 {
     "name": "@synthql/cli",
     "type": "module",
-    "version": "0.66.4",
+    "version": "0.72.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
@@ -20,14 +20,15 @@
         "test": "vitest --globals",
         "typecheck": "tsc",
         "test:ci": "CI=1 vitest run --globals",
+        "run-cli": "yarn build && node ./build/src/index.cjs",
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "dependencies": {
-        "@synthql/introspect": "0.66.4",
-        "@synthql/queries": "0.66.4",
+        "@synthql/introspect": "0.72.4",
+        "@synthql/queries": "0.72.4",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },

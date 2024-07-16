@@ -8,10 +8,10 @@ const config: Config = {
     favicon: 'img/favicon.ico',
 
     // Set the production url of your site here
-    url: 'http://synthql.github.io/',
+    url: 'https://synthql.dev',
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
-    baseUrl: '/SynthQL/',
+    baseUrl: '/',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
@@ -87,7 +87,7 @@ const config: Config = {
                 },
                 { to: '/blog', label: 'Blog', position: 'left' },
                 {
-                    href: 'https://synthql.github.io/SynthQL/reference',
+                    href: 'https://synthql.dev/reference',
                     label: 'API',
                     position: 'right',
                 },
@@ -110,11 +110,11 @@ const config: Config = {
                         },
                         {
                             label: 'API Reference',
-                            to: 'https://synthql.github.io/SynthQL/reference',
+                            to: 'https://synthql.dev/reference',
                         },
                         {
                             label: 'Benchmarks',
-                            to: 'https://synthql.github.io/SynthQL/benchmarks/',
+                            to: 'https://synthql.dev/benchmarks/',
                         },
                     ],
                 },
