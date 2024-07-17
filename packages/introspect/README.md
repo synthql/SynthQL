@@ -1,8 +1,8 @@
 # @synthql/introspect
 
-This package provides functionality to generate SynthQL schemas from a PG database.
-If you are a SynthQL user you're most likely looking for the `@synthql/cli` package, which
-gives you a CLI to generate SynthQL schemas.
+This package provides functionality to generate SynthQL schemas from a Postgres database.
+
+If you are a SynthQL user, you're most likely looking for the `@synthql/cli` package, which gives you a CLI to generate SynthQL schemas.
 
 ## Links
 

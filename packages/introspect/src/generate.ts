@@ -17,7 +17,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTables = [],
-    schemaDefOverrides,
+    schemaDefOverrides = {},
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -132,7 +132,7 @@ function createTableJsonSchema(
     // Otherwise we generate the property as usual
 
     const columns = table.columns.reduce((acc, column) => {
-        const columnSchemaOverrides = tableDefOverrides
+        const columnDefOverrides = tableDefOverrides
             ? Object.keys(tableDefOverrides).includes(column.name)
                 ? tableDefOverrides[column.name]
                 : undefined
@@ -154,25 +154,14 @@ function createTableJsonSchema(
                     `- Generated: ${column.generated}`,
                 ].join('\n'),
             properties: {
-                type: columnSchemaOverrides?.type
-                    ? columnSchemaOverrides.type
-                    : { $ref: `#/$defs/${createTypeDefId(column.type)}` },
+                type: { $ref: `#/$defs/${createTypeDefId(column.type)}` },
                 // A constant value of true
-                selectable: columnSchemaOverrides?.selectable
-                    ? columnSchemaOverrides.selectable
-                    : { type: 'boolean', const: true },
-                includable: columnSchemaOverrides?.includable
-                    ? columnSchemaOverrides.includable
-                    : { type: 'boolean', const: true },
-                whereable: columnSchemaOverrides?.whereable
-                    ? columnSchemaOverrides.whereable
-                    : { type: 'boolean', const: true },
-                nullable: columnSchemaOverrides?.nullable
-                    ? columnSchemaOverrides.nullable
-                    : { type: 'boolean', const: column.isNullable },
-                isPrimaryKey: columnSchemaOverrides?.isPrimaryKey
-                    ? columnSchemaOverrides.isPrimaryKey
-                    : { type: 'boolean', const: column.isPrimaryKey },
+                selectable: { type: 'boolean', const: true },
+                includable: { type: 'boolean', const: true },
+                whereable: { type: 'boolean', const: true },
+                nullable: { type: 'boolean', const: column.isNullable },
+                isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
+                ...columnDefOverrides,
             },
             required: [
                 'type',
@@ -220,7 +209,7 @@ function createRootJsonSchema(
     }: {
         defaultSchema: string;
         includeTables: string[];
-        schemaDefOverrides: SchemaDefOverrides | undefined;
+        schemaDefOverrides: SchemaDefOverrides;
     },
 ): JSONSchema {
     // Check if a list of tables is passed, and if so, use as filter
@@ -276,20 +265,18 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 function createTableDefs(
     tables: TableDetails[],
     defaultSchema: string,
-    schemaDefOverrides: SchemaDefOverrides | undefined,
+    schemaDefOverrides: SchemaDefOverrides,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        const tableSchemaOverrides = schemaDefOverrides
-            ? Object.keys(schemaDefOverrides).includes(table.name)
-                ? schemaDefOverrides[table.name]
-                : undefined
-            : undefined;
+        const tableDefOverrideId = `${table.schemaName}.${table.name}`;
+
+        const tableDefOverrides = schemaDefOverrides[tableDefOverrideId];
 
         acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
             table,
-            tableSchemaOverrides,
+            tableDefOverrides,
         );
 
         return acc;

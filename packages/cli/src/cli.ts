@@ -66,16 +66,15 @@ export function cli({
                     schemaDefOverrides: argv.schemaDefOverrides,
                 });
 
-                if (result) {
-                    const tables = Object.keys(result.schema.properties ?? {});
+                // TODO: We want to check if there were any overrides passed
+                // TODO: that were not applied, and inform the user accordingly
 
-                    console.warn(
-                        `Generated schema with ${tables.length} table(s)`,
-                    );
+                const tables = Object.keys(result.schema.properties ?? {});
 
-                    for (const table of tables) {
-                        console.warn(`- ${table}`);
-                    }
+                console.warn(`Generated schema with ${tables.length} table(s)`);
+
+                for (const table of tables) {
+                    console.warn(`- ${table}`);
                 }
 
                 exit(0);

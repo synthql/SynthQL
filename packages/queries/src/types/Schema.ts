@@ -85,9 +85,8 @@ interface ColumnDefAttributeDef {
 }
 
 export interface SchemaDefOverrides {
-    [x: string]: TableDefOverrides;
+    [x: string]: TableDefOverrides | undefined;
 }
-
 export interface TableDefOverrides {
-    [x: string]: Partial<ColumnDefProperties>;
+    [x: string]: Partial<ColumnDefProperties> | undefined;
 }

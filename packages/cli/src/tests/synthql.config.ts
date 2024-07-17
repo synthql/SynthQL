@@ -6,7 +6,7 @@ export const config: CliConfig = {
     schemas: ['public'],
     tables: ['actor', 'customer'],
     schemaDefOverrides: {
-        actor: {
+        'public.actor': {
             first_name: {
                 includable: { type: 'boolean', const: false },
             },
@@ -14,7 +14,7 @@ export const config: CliConfig = {
                 includable: { type: 'boolean', const: false },
             },
         },
-        customer: {
+        'public.customer': {
             first_name: {
                 includable: { type: 'boolean', const: false },
             },

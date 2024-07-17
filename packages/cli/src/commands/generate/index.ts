@@ -1,6 +1,6 @@
-import { SchemaDefOverrides } from '@synthql/queries';
-import { generate } from '@synthql/introspect';
 import path from 'path';
+import { generate } from '@synthql/introspect';
+import { isValidSchemaDefOverrides } from '../../helpers/isValidSchemaDefOverrides';
 
 interface GenerateSchemaOptions {
     connectionString: string;
@@ -19,42 +19,25 @@ export const generateSchema = async ({
     tables = [],
     schemaDefOverrides,
 }: GenerateSchemaOptions) => {
-    if (schemaDefOverrides === undefined) {
-        try {
-            return await generate({
-                defaultSchema,
-                connectionString,
-                includeSchemas: schemas,
-                includeTables: tables,
-                outDir: path.resolve(path.join(process.cwd(), out)),
-            });
-        } catch (error) {
-            console.log('Error: ', JSON.stringify(error, null, 2));
-        }
-    } else if (isValidSchemaDefOverrides(schemaDefOverrides)) {
-        try {
-            return await generate({
-                defaultSchema,
-                connectionString,
-                includeSchemas: schemas,
-                includeTables: tables,
-                schemaDefOverrides,
-                outDir: path.resolve(path.join(process.cwd(), out)),
-            });
-        } catch (error) {
-            console.log('Error: ', JSON.stringify(error, null, 2));
-        }
-    } else {
+    if (!isValidSchemaDefOverrides(schemaDefOverrides)) {
         const lines = [
             'Invalid shape of schema def overrides:',
             '',
             `${JSON.stringify(schemaDefOverrides, null, 2)}`,
+            '',
+            'Please check your config file and make sure',
+            'it has the correct shape!',
         ];
 
-        throw new Error(lines.join('\n'));
+        throw Error(lines.join('\n'));
     }
-};
 
-function isValidSchemaDefOverrides(value: any): value is SchemaDefOverrides {
-    return value satisfies SchemaDefOverrides;
-}
+    return await generate({
+        defaultSchema,
+        connectionString,
+        includeSchemas: schemas,
+        includeTables: tables,
+        schemaDefOverrides: schemaDefOverrides,
+        outDir: path.resolve(path.join(process.cwd(), out)),
+    });
+};

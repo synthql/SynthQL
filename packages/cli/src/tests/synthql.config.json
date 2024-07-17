@@ -1,7 +1,7 @@
 {
     "tables": ["actor", "customer"],
     "schemaDefOverrides": {
-        "actor": {
+        "public.actor": {
             "first_name": {
                 "includable": { "type": "boolean", "const": false }
             },
@@ -9,7 +9,7 @@
                 "includable": { "type": "boolean", "const": false }
             }
         },
-        "customer": {
+        "public.customer": {
             "first_name": {
                 "includable": { "type": "boolean", "const": false }
             },
