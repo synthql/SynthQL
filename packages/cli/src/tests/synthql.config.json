@@ -17,7 +17,7 @@
                 "includable": { "type": "boolean", "const": false }
             }
         },
-        "public.niggas": {
+        "public.agents": {
             "first_name": {
                 "includable": { "type": "boolean", "const": false }
             },
@@ -25,7 +25,7 @@
                 "includable": { "type": "boolean", "const": false }
             }
         },
-        "luminovo.niggas": {
+        "luminovo.agents": {
             "first_name": {
                 "includable": { "type": "boolean", "const": false }
             },
