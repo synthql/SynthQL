@@ -16,6 +16,22 @@
             "last_name": {
                 "includable": { "type": "boolean", "const": false }
             }
+        },
+        "public.niggas": {
+            "first_name": {
+                "includable": { "type": "boolean", "const": false }
+            },
+            "last_name": {
+                "includable": { "type": "boolean", "const": false }
+            }
+        },
+        "luminovo.niggas": {
+            "first_name": {
+                "includable": { "type": "boolean", "const": false }
+            },
+            "last_name": {
+                "includable": { "type": "boolean", "const": false }
+            }
         }
     }
 }

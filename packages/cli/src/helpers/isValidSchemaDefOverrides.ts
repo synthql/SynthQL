@@ -15,8 +15,8 @@ export function isValidSchemaDefOverrides(
     value: unknown,
 ): value is SchemaDefOverrides | undefined {
     if (isObject(value)) {
-        for (const tableDefOverride of Object.values(value)) {
-            if (isObject(tableDefOverride)) {
+        for (const [tableDefName, tableDefOverride] of Object.entries(value)) {
+            if (containsSingleDot(tableDefName) && isObject(tableDefOverride)) {
                 for (const columnDefOverride of Object.values(
                     tableDefOverride,
                 )) {
@@ -52,6 +52,13 @@ export function isValidSchemaDefOverrides(
     return false;
 }
 
-function isObject(value: unknown): value is object {
+export function isObject(value: unknown): value is object {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function containsSingleDot(input: string): boolean {
+    // Regular expression to match a string containing exactly one dot
+    const regex = /^[^.]+\.[^.]+$/;
+
+    return regex.test(input);
 }

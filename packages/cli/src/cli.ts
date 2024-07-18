@@ -1,6 +1,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { generateSchema } from './commands/generate';
+import { getUnappliedSchemaOverridesTableNames } from './helpers/getUnappliedSchemaOverridesTableNames';
 
 export function cli({
     argv,
@@ -66,15 +67,35 @@ export function cli({
                     schemaDefOverrides: argv.schemaDefOverrides,
                 });
 
-                // TODO: We want to check if there were any overrides passed
-                // TODO: that were not applied, and inform the user accordingly
-
                 const tables = Object.keys(result.schema.properties ?? {});
 
-                console.warn(`Generated schema with ${tables.length} table(s)`);
+                console.warn(
+                    `Generated schema with ${tables.length} table(s):`,
+                );
 
                 for (const table of tables) {
                     console.warn(`- ${table}`);
+                }
+
+                const unappliedSchemaOverrideTableKeys =
+                    getUnappliedSchemaOverridesTableNames(
+                        tables,
+                        argv.schemaDefOverrides,
+                        argv.defaultSchema,
+                    );
+
+                if (unappliedSchemaOverrideTableKeys.length > 0) {
+                    const lines = [
+                        '',
+                        `Could not apply schema overrides for the following table(s):`,
+                        ...unappliedSchemaOverrideTableKeys,
+                        '',
+                        'If you are using the `--schemas` and/or `--tables` option via the CLI, ensure that',
+                        `you are passing the correct names of the schemas and tables these overrides are for`,
+                        '',
+                    ];
+
+                    console.warn(lines.join('\n'));
                 }
 
                 exit(0);
