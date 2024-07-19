@@ -1,6 +1,7 @@
 import { CliConfig } from '../types/CliConfig';
 
 export const config: CliConfig = {
+    $schema: '../validators/synthql.config.json',
     out: 'src/generated/synthql',
     defaultSchema: 'public',
     schemas: ['public'],

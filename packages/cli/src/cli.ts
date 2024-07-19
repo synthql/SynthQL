@@ -1,8 +1,9 @@
 import yargs from 'yargs';
+import fs from 'fs';
 import { hideBin } from 'yargs/helpers';
 import { generateSchema } from './commands/generate';
-import { getUnappliedSchemaOverridesTableNames } from './helpers/getUnappliedSchemaOverridesTableNames';
-import { validateJsonSchema } from './validators/validateJsonSchema';
+import { getUnappliedSchemaOverridesTableNames } from './validators/getUnappliedSchemaOverridesTableNames';
+import { validateCliArgv, validateConfigFile } from './validators/validators';
 
 export function cli({
     argv,
@@ -50,7 +51,19 @@ export function cli({
                             'List of tables to be included in the generation',
                     })
                     .array('tables')
-                    .config('configFile')
+                    .config('configFile', function (configPath) {
+                        const data = JSON.parse(
+                            fs.readFileSync(configPath, 'utf-8'),
+                        );
+
+                        if (validateConfigFile(data)) {
+                            return data;
+                        } else {
+                            throw new Error(
+                                validateConfigFile.errors?.join('\n'),
+                            );
+                        }
+                    })
                     .parserConfiguration({
                         'dot-notation': false,
                         'strip-aliased': true,
@@ -59,50 +72,52 @@ export function cli({
             async (argv) => {
                 console.warn('Connecting to database schema...');
 
-                const output = validateJsonSchema(argv.schemaDefOverrides);
+                // We do this so that we lose the types from yargs but we gain
+                // complete type-safety after we pass the data through the validator
+                const data = { ...argv, connectionString: undefined } as any;
 
-                console.log(0, output);
+                if (validateCliArgv(data)) {
+                    const result = await generateSchema({
+                        connectionString: argv.connectionString,
+                        out: data.out,
+                        defaultSchema: data.defaultSchema,
+                        schemas: data.schemas,
+                        tables: data.tables,
+                        schemaDefOverrides: data.schemaDefOverrides,
+                    });
 
-                // console.log(0, JSON.stringify(output, null, 2));
+                    const tables = Object.keys(result.schema.properties ?? {});
 
-                const result = await generateSchema({
-                    connectionString: argv.connectionString,
-                    out: argv.out,
-                    defaultSchema: argv.defaultSchema,
-                    schemas: argv.schemas,
-                    tables: argv.tables,
-                    schemaDefOverrides: argv.schemaDefOverrides,
-                });
-
-                const tables = Object.keys(result.schema.properties ?? {});
-
-                console.warn(
-                    `Generated schema with ${tables.length} table(s):`,
-                );
-
-                for (const table of tables) {
-                    console.warn(`- ${table}`);
-                }
-
-                const unappliedSchemaOverrideTableKeys =
-                    getUnappliedSchemaOverridesTableNames(
-                        tables,
-                        argv.schemaDefOverrides,
-                        argv.defaultSchema,
+                    console.warn(
+                        `Generated schema with ${tables.length} table(s):`,
                     );
 
-                if (unappliedSchemaOverrideTableKeys.length > 0) {
-                    const lines = [
-                        '',
-                        `Could not apply schema overrides for the following table(s):`,
-                        ...unappliedSchemaOverrideTableKeys,
-                        '',
-                        'If you are using the `--schemas` and/or `--tables` option via the CLI, ensure that',
-                        `you are passing the correct names of the schemas and tables these overrides are for`,
-                        '',
-                    ];
+                    for (const table of tables) {
+                        console.info(`- ${table}`);
+                    }
 
-                    console.warn(lines.join('\n'));
+                    const unappliedSchemaOverrideTableKeys =
+                        getUnappliedSchemaOverridesTableNames(
+                            tables,
+                            data.defaultSchema,
+                            data.schemaDefOverrides,
+                        );
+
+                    if (unappliedSchemaOverrideTableKeys.length > 0) {
+                        const lines = [
+                            '',
+                            `Could not apply schema overrides for the following table(s):`,
+                            ...unappliedSchemaOverrideTableKeys,
+                            '',
+                            'If you are using the `--schemas` and/or `--tables` option via the CLI, ensure that',
+                            `you are passing the correct names of the schemas and tables these overrides are for`,
+                            '',
+                        ];
+
+                        console.warn(lines.join('\n'));
+                    }
+                } else {
+                    throw new Error(validateCliArgv.errors?.join('\n'));
                 }
 
                 exit(0);

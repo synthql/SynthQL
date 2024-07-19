@@ -1,9 +1,9 @@
-import { isObject } from './isValidSchemaDefOverrides';
+import { SchemaDefOverrides } from '@synthql/queries';
 
 export function getUnappliedSchemaOverridesTableNames(
     tables: string[],
-    schemaDefOverrides: unknown,
     defaultSchema: string,
+    schemaDefOverrides?: SchemaDefOverrides,
 ) {
     const unappliedSchemaOverrideTableKeys: string[] = [];
 
@@ -26,4 +26,8 @@ export function getUnappliedSchemaOverridesTableNames(
     }
 
     return unappliedSchemaOverrideTableKeys;
+}
+
+export function isObject(value: unknown): value is object {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

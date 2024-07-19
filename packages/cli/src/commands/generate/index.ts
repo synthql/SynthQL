@@ -1,6 +1,7 @@
 import path from 'path';
 import { generate } from '@synthql/introspect';
-import { isValidSchemaDefOverrides } from '../../helpers/isValidSchemaDefOverrides';
+import { isValidSchemaDefOverrides } from '../../validators/isValidSchemaDefOverrides';
+import { SchemaDefOverrides } from '@synthql/queries';
 
 interface GenerateSchemaOptions {
     connectionString: string;
@@ -8,7 +9,7 @@ interface GenerateSchemaOptions {
     defaultSchema: string;
     schemas: string[];
     tables?: string[];
-    schemaDefOverrides?: unknown;
+    schemaDefOverrides?: SchemaDefOverrides;
 }
 
 export const generateSchema = async ({
@@ -19,19 +20,6 @@ export const generateSchema = async ({
     tables = [],
     schemaDefOverrides,
 }: GenerateSchemaOptions) => {
-    if (!isValidSchemaDefOverrides(schemaDefOverrides)) {
-        const lines = [
-            'Invalid shape of schema def overrides:',
-            '',
-            `${JSON.stringify(schemaDefOverrides, null, 2)}`,
-            '',
-            'Please check your config file and make sure',
-            'it has the correct shape!',
-        ];
-
-        throw Error(lines.join('\n'));
-    }
-
     return await generate({
         defaultSchema,
         connectionString,

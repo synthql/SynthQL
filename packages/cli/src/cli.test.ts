@@ -331,8 +331,6 @@ describe('CLI tests', () => {
 
                 // Verify that the option data is correct
                 expect(output.configFile).toEqual(configFile);
-
-                expect(1).toBe(2);
             },
             {
                 timeout: 10000,
