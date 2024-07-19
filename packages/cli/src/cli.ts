@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { generateSchema } from './commands/generate';
 import { getUnappliedSchemaOverridesTableNames } from './helpers/getUnappliedSchemaOverridesTableNames';
+import { validateJsonSchema } from './validators/validateJsonSchema';
 
 export function cli({
     argv,
@@ -57,6 +58,12 @@ export function cli({
             },
             async (argv) => {
                 console.warn('Connecting to database schema...');
+
+                const output = validateJsonSchema(argv.schemaDefOverrides);
+
+                console.log(0, output);
+
+                // console.log(0, JSON.stringify(output, null, 2));
 
                 const result = await generateSchema({
                     connectionString: argv.connectionString,

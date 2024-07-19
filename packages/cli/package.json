@@ -29,6 +29,7 @@
     "dependencies": {
         "@synthql/introspect": "0.72.4",
         "@synthql/queries": "0.72.4",
+        "json-schema-library": "^10.0.0-rc2",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },

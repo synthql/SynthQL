@@ -22,5 +22,21 @@ export const config: CliConfig = {
                 includable: { type: 'boolean', const: false },
             },
         },
+        'public.agents': {
+            first_name: {
+                includable: { type: 'boolean', const: false },
+            },
+            last_name: {
+                includable: { type: 'boolean', const: false },
+            },
+        },
+        'luminovo.agents': {
+            first_name: {
+                includable: { type: 'boolean', const: false },
+            },
+            last_name: {
+                includable: { type: 'boolean', const: false },
+            },
+        },
     },
 };

@@ -1,4 +1,5 @@
 {
+    "$schema": "../validators/synthql.config.json",
     "tables": ["actor", "customer"],
     "schemaDefOverrides": {
         "public.actor": {

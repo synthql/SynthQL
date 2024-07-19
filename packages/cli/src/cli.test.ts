@@ -304,7 +304,7 @@ describe('CLI tests', () => {
             },
         );
 
-        it(
+        it.only(
             `Generate schema types with a supplied config file option, --configFile`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
@@ -331,6 +331,8 @@ describe('CLI tests', () => {
 
                 // Verify that the option data is correct
                 expect(output.configFile).toEqual(configFile);
+
+                expect(1).toBe(2);
             },
             {
                 timeout: 10000,

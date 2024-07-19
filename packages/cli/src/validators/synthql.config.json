@@ -1,0 +1,148 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "out": {
+            "type": "string"
+        },
+        "defaultSchema": {
+            "type": "string"
+        },
+        "schemas": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "tables": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "schemaDefOverrides": {
+            "type": "object",
+            "patternProperties": {
+                "^[^.]+.[^.]+$": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^[^.]+$": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "tsType": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "minimum": {
+                                            "type": "number"
+                                        },
+                                        "maximum": {
+                                            "type": "number"
+                                        },
+                                        "format": {
+                                            "type": "string"
+                                        },
+                                        "enum": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "required": ["id", "type", "description"],
+                                    "additionalProperties": false
+                                },
+                                "selectable": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "const": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": ["type", "const"],
+                                    "additionalProperties": false
+                                },
+                                "includable": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "const": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": ["type", "const"],
+                                    "additionalProperties": false
+                                },
+                                "whereable": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "const": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": ["type", "const"],
+                                    "additionalProperties": false
+                                },
+                                "nullable": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "const": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": ["type", "const"],
+                                    "additionalProperties": false
+                                },
+                                "isPrimaryKey": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "const": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": ["type", "const"],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

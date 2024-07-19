@@ -69,12 +69,12 @@ export interface ColumnDefProperties {
 
 interface ColumnDefTypeDef {
     id: string;
-    title?: string;
-    type: string;
-    tsType?: string;
     description: string;
-    minimum?: unknown;
-    maximum?: unknown;
+    type: string;
+    title?: string;
+    tsType?: string;
+    minimum?: number;
+    maximum?: number;
     format?: string;
     enum?: readonly string[];
 }
