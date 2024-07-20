@@ -1,6 +1,5 @@
 import path from 'path';
 import { generate } from '@synthql/introspect';
-import { isValidSchemaDefOverrides } from '../../validators/isValidSchemaDefOverrides';
 import { SchemaDefOverrides } from '@synthql/queries';
 
 interface GenerateSchemaOptions {

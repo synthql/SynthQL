@@ -304,7 +304,7 @@ describe('CLI tests', () => {
             },
         );
 
-        it.only(
+        it(
             `Generate schema types with a supplied config file option, --configFile`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;

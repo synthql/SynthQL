@@ -56,13 +56,13 @@ export function cli({
                             fs.readFileSync(configPath, 'utf-8'),
                         );
 
-                        if (validateConfigFile(data)) {
-                            return data;
-                        } else {
-                            throw new Error(
-                                validateConfigFile.errors?.join('\n'),
-                            );
+                        if (!validateConfigFile(data)) {
+                            throw new Error([
+                                `Config file at path '${configPath}' does not match the schema:`,
+                                ...validateConfigFile.errors ?? []
+                            ].join('\n'));
                         }
+                        return data
                     })
                     .parserConfiguration({
                         'dot-notation': false,
