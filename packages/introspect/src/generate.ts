@@ -12,6 +12,35 @@ import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
 
+interface GenerateProps {
+    /**
+     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`
+     */
+    connectionString: string;
+    /**
+     * The schemas to include in generation e.g. `['public']`
+     */
+    includeSchemas: string[];
+    /**
+     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL.
+     */
+    defaultSchema: string;
+    /**
+     * The tables to include in generation e.g. `['users']`
+     */
+    includeTables?: string[];
+    schemaDefOverrides?: SchemaDefOverrides;
+    /**
+     * The output directory for the generated files
+     */
+    outDir: string;
+    /**
+     * A function to format the generated files, usually Prettier
+     */
+    formatter?: (str: string) => Promise<string>;
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
+}
+
 export async function generate({
     connectionString,
     includeSchemas,

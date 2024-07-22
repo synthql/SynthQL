@@ -57,12 +57,14 @@ export function cli({
                         );
 
                         if (!validateConfigFile(data)) {
-                            throw new Error([
-                                `Config file at path '${configPath}' does not match the schema:`,
-                                ...validateConfigFile.errors ?? []
-                            ].join('\n'));
+                            throw new Error(
+                                [
+                                    `Config file at path '${configPath}' does not match the schema:`,
+                                    ...(validateConfigFile.errors ?? []),
+                                ].join('\n'),
+                            );
                         }
-                        return data
+                        return data;
                     })
                     .parserConfiguration({
                         'dot-notation': false,
