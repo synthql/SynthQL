@@ -50,16 +50,7 @@ export async function generate({
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
-}: {
-    defaultSchema: string;
-    connectionString: string;
-    includeSchemas: string[];
-    includeTables?: string[];
-    schemaDefOverrides?: SchemaDefOverrides;
-    outDir: string;
-    formatter?: (str: string) => Promise<string>;
-    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
-}) {
+}: GenerateProps) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
@@ -150,23 +141,11 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
 
 function createTableJsonSchema(
     table: TableDetails,
-    tableDefOverrides: TableDefOverrides | undefined,
+    tableDefOverrides?: TableDefOverrides,
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
-    // Here, we want to check if there was overriding table schema def
-    // passed down for a table
-    // If yes, for each column, we want to identify if a property
-    // was passed, and replace them if so
-    // Otherwise we generate the property as usual
-
     const columns = table.columns.reduce((acc, column) => {
-        const columnDefOverrides = tableDefOverrides
-            ? Object.keys(tableDefOverrides).includes(column.name)
-                ? tableDefOverrides[column.name]
-                : undefined
-            : undefined;
-
         acc[column.name] = {
             type: 'object',
             description:
@@ -190,7 +169,10 @@ function createTableJsonSchema(
                 whereable: { type: 'boolean', const: true },
                 nullable: { type: 'boolean', const: column.isNullable },
                 isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
-                ...columnDefOverrides,
+                // If yes, for each column, we want to identify if any override properties
+                // were passed, and replace them if so
+                // Otherwise, we generate the property as usual
+                ...applyColumnDefOverrides(column.name, tableDefOverrides),
             },
             required: [
                 'type',
@@ -227,6 +209,20 @@ function createTableJsonSchema(
         required: ['columns'],
         additionalProperties: false,
     };
+}
+
+function applyColumnDefOverrides(
+    columnName: string,
+    tableDefOverrides?: TableDefOverrides,
+) {
+    // Here, we want to check if there was overriding column schema def
+    // passed down for a column in a table
+
+    return tableDefOverrides
+        ? Object.keys(tableDefOverrides).includes(columnName)
+            ? tableDefOverrides[columnName]
+            : undefined
+        : undefined;
 }
 
 function createRootJsonSchema(
