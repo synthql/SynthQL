@@ -1,6 +1,7 @@
 import path from 'path';
 import { generate } from '@synthql/introspect';
 import { SchemaDefOverrides } from '@synthql/queries';
+import { createTableDefOverriderList } from '../../validators/createTableDefOverriderList';
 
 interface GenerateSchemaOptions {
     connectionString: string;
@@ -24,7 +25,7 @@ export const generateSchema = async ({
         connectionString,
         includeSchemas: schemas,
         includeTables: tables,
-        schemaDefOverrides: schemaDefOverrides,
-        outDir: path.resolve(path.join(process.cwd(), out)),
+        tableDefOverriderList: createTableDefOverriderList(schemaDefOverrides),
+        outDir: out,
     });
 };

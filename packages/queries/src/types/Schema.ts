@@ -46,14 +46,7 @@ export interface ColumnDefs<DB, TTable extends Table<DB> = Table<DB>> {
 export interface ColumnDef {
     type: string;
     description: string;
-    properties: {
-        type: ColumnDefTypeDef;
-        selectable: ColumnDefAttributeDef;
-        includable: ColumnDefAttributeDef;
-        whereable: ColumnDefAttributeDef;
-        nullable: ColumnDefAttributeDef;
-        isPrimaryKey: ColumnDefAttributeDef;
-    };
+    properties: ColumnDefProperties;
     required: string[];
     additionalProperties: boolean;
 }

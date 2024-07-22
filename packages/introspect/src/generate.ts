@@ -1,4 +1,4 @@
-import { SchemaDefOverrides, TableDefOverrides } from '@synthql/queries';
+import { ColumnDefProperties } from '@synthql/queries';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 import {
     DomainDetails,
@@ -11,6 +11,15 @@ import {
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
+
+interface TableDefOverrider {
+    isValidQualifiedTableName: (qualifiedTableName: string) => boolean;
+    applyColumnDefOverride: (
+        columnName: string,
+    ) => Partial<ColumnDefProperties> | undefined;
+}
+
+type TableDefOverriderList = Array<TableDefOverrider>;
 
 interface GenerateProps {
     /**
@@ -29,7 +38,10 @@ interface GenerateProps {
      * The tables to include in generation e.g. `['users']`
      */
     includeTables?: string[];
-    schemaDefOverrides?: SchemaDefOverrides;
+    /**
+     * Custom values to override the schema definition for tables
+     */
+    tableDefOverriderList?: TableDefOverriderList;
     /**
      * The output directory for the generated files
      */
@@ -46,7 +58,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTables = [],
-    schemaDefOverrides = {},
+    tableDefOverriderList = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -73,7 +85,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
-        schemaDefOverrides,
+        tableDefOverriderList,
     });
 
     /**
@@ -141,7 +153,7 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
 
 function createTableJsonSchema(
     table: TableDetails,
-    tableDefOverrides?: TableDefOverrides,
+    tableDefOverrider?: TableDefOverrider,
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
@@ -169,10 +181,10 @@ function createTableJsonSchema(
                 whereable: { type: 'boolean', const: true },
                 nullable: { type: 'boolean', const: column.isNullable },
                 isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
-                // If yes, for each column, we want to identify if any override properties
+                // For each column, we want to identify if any override properties
                 // were passed, and replace them if so
                 // Otherwise, we generate the property as usual
-                ...applyColumnDefOverrides(column.name, tableDefOverrides),
+                ...tableDefOverrider?.applyColumnDefOverride(column.name),
             },
             required: [
                 'type',
@@ -211,30 +223,16 @@ function createTableJsonSchema(
     };
 }
 
-function applyColumnDefOverrides(
-    columnName: string,
-    tableDefOverrides?: TableDefOverrides,
-) {
-    // Here, we want to check if there was overriding column schema def
-    // passed down for a column in a table
-
-    return tableDefOverrides
-        ? Object.keys(tableDefOverrides).includes(columnName)
-            ? tableDefOverrides[columnName]
-            : undefined
-        : undefined;
-}
-
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
         defaultSchema,
         includeTables,
-        schemaDefOverrides,
+        tableDefOverriderList,
     }: {
         defaultSchema: string;
         includeTables: string[];
-        schemaDefOverrides: SchemaDefOverrides;
+        tableDefOverriderList: TableDefOverriderList;
     },
 ): JSONSchema {
     // Check if a list of tables is passed, and if so, use as filter
@@ -271,7 +269,7 @@ function createRootJsonSchema(
         required: tables.map((table) => fullTableName(table, defaultSchema)),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(tables, defaultSchema, schemaDefOverrides),
+            ...createTableDefs(tables, defaultSchema, tableDefOverriderList),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
@@ -290,18 +288,20 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 function createTableDefs(
     tables: TableDetails[],
     defaultSchema: string,
-    schemaDefOverrides: SchemaDefOverrides,
+    tableDefOverriderList: TableDefOverriderList,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        const tableDefOverrideId = `${table.schemaName}.${table.name}`;
+        const qualifiedTableName = `${table.schemaName}.${table.name}`;
 
-        const tableDefOverrides = schemaDefOverrides[tableDefOverrideId];
+        const tableDefOverrider = tableDefOverriderList.find((item) =>
+            item.isValidQualifiedTableName(qualifiedTableName),
+        );
 
         acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
             table,
-            tableDefOverrides,
+            tableDefOverrider,
         );
 
         return acc;
