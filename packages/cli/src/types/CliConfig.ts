@@ -33,7 +33,7 @@ export interface SchemaDefOverrides {
     /**
      * The column definitions for each table to be overriden
      * The key for each table should be the qualified name for the table,
-     * in the form `${schemaName.tableName}` e.g `'public.users'`
+     * in the form `${schemaName}.${tableName}` e.g. `public.users`
      */
     [x: string]: TableDefOverrides | undefined;
 }
