@@ -35,7 +35,7 @@ export interface SchemaDefOverrides {
      * The key for each table should be the qualified name for the table,
      * in the form `${schemaName}.${tableName}` e.g. `public.users`
      */
-    [x: string]: TableDefOverrides | undefined;
+    [table: string]: { [column: string]: Partial<ColumnDefProperties> }
 }
 export interface TableDefOverrides {
     /**
