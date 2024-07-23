@@ -1,4 +1,4 @@
-import { SchemaDefOverrides } from '@synthql/queries';
+import { SchemaDefOverrides } from '../types/CliConfig';
 
 export function getUnappliedSchemaOverridesTableNames(
     tables: string[],

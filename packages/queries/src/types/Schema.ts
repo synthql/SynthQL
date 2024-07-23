@@ -76,10 +76,3 @@ interface ColumnDefAttributeDef {
     type: string;
     const: boolean;
 }
-
-export interface SchemaDefOverrides {
-    [x: string]: TableDefOverrides | undefined;
-}
-export interface TableDefOverrides {
-    [x: string]: Partial<ColumnDefProperties> | undefined;
-}

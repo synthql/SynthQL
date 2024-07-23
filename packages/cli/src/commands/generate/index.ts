@@ -1,7 +1,7 @@
 import path from 'path';
 import { generate } from '@synthql/introspect';
-import { SchemaDefOverrides } from '@synthql/queries';
 import { createTableDefOverriderList } from '../../validators/createTableDefOverriderList';
+import { SchemaDefOverrides } from '../../types/CliConfig';
 
 interface GenerateSchemaOptions {
     connectionString: string;

@@ -39,7 +39,7 @@ interface GenerateProps {
      */
     includeTables?: string[];
     /**
-     * Custom values to override the schema definition for tables
+     * Custom overriders list to override the schema definition for tables
      */
     tableDefOverriderList?: TableDefOverriderList;
     /**

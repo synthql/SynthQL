@@ -4,18 +4,22 @@
     "properties": {
         "$schema": {
             "type": "string",
+            "description": "Specifies which draft of the JSON Schema standard\nthe schema adheres to",
             "nullable": true
         },
         "out": {
             "type": "string",
+            "description": "The output directory for the generated files\ne.g. `\"src/generated\"`",
             "nullable": true
         },
         "defaultSchema": {
             "type": "string",
+            "description": "The default schema to use e.g. `\"public\"`\nThis is similar to the `search_path` in PostgreSQL",
             "nullable": true
         },
         "schemas": {
             "type": "array",
+            "description": "The schemas to include in generation\ne.g. `[\"public\", \"company_name\"]`",
             "items": {
                 "type": "string"
             },
@@ -23,6 +27,7 @@
         },
         "tables": {
             "type": "array",
+            "description": "The tables to include in generation\ne.g. `[\"users\", \"accounts\"]`",
             "items": {
                 "type": "string"
             },
@@ -30,12 +35,15 @@
         },
         "schemaDefOverrides": {
             "$schema": "http://json-schema.org/draft-07/schema",
+            "description": "The table definitions for any tables you want\nto be overriden during the schema generation",
             "type": "object",
             "patternProperties": {
                 "^[^.]+.[^.]+$": {
                     "type": "object",
+                    "description": "The column definitions for each table to be overriden\nThe key for each table should be the qualified name for the table,\nin the form `${schemaName.tableName}` e.g `\"public.users\"`",
                     "patternProperties": {
                         "^[^.]+$": {
+                            "description": "The attribute definitions for each column to be overriden\nThe key for each column should be the name of the column,\nin the form `${columnName}` e.g `\"first_name\"`",
                             "type": "object",
                             "properties": {
                                 "type": {

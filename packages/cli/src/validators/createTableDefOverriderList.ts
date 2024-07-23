@@ -1,4 +1,5 @@
-import { ColumnDefProperties, SchemaDefOverrides } from '@synthql/queries';
+import { ColumnDefProperties } from '@synthql/queries';
+import { SchemaDefOverrides } from '../types/CliConfig';
 
 interface TableDefOverrider {
     isValidQualifiedTableName: (qualifiedTableName: string) => boolean;
