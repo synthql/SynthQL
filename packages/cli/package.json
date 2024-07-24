@@ -30,6 +30,7 @@
         "@synthql/introspect": "0.72.4",
         "@synthql/queries": "0.72.4",
         "ajv": "^8.17.1",
+        "extract-pg-schema": "5.1.1",
         "pg": "^8.11.3",
         "yargs": "^17.7.2"
     },

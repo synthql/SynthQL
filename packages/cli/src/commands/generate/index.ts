@@ -1,15 +1,9 @@
-import path from 'path';
 import { generate } from '@synthql/introspect';
-import { createTableDefOverriderList } from '../../validators/createTableDefOverriderList';
-import { SchemaDefOverrides } from '../../types/CliConfig';
+import { CliConfig } from '../../types/CliConfig';
+import { createTableDefTransformers } from '../../validators/createTableDefTransformers';
 
-interface GenerateSchemaOptions {
+interface GenerateSchemaOptions extends CliConfig {
     connectionString: string;
-    out: string;
-    defaultSchema: string;
-    schemas: string[];
-    tables?: string[];
-    schemaDefOverrides?: SchemaDefOverrides;
 }
 
 export const generateSchema = async ({
@@ -25,7 +19,7 @@ export const generateSchema = async ({
         connectionString,
         includeSchemas: schemas,
         includeTables: tables,
-        tableDefOverriderList: createTableDefOverriderList(schemaDefOverrides),
+        tableDefTransformers: createTableDefTransformers(schemaDefOverrides),
         outDir: out,
     });
 };

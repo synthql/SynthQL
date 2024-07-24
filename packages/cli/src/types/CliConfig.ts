@@ -8,11 +8,11 @@ export interface CliConfig {
     $schema?: string;
     /**
      * The output directory for the generated files.
-     * e.g. `'src/generated'`.
+     * e.g. `src/generated`.
      */
     out: string;
     /**
-     * The default schema to use e.g. `'public'`.
+     * The default schema to use e.g. `public`.
      * This is similar to the `search_path` in PostgreSQL.
      */
     defaultSchema: string;
@@ -29,10 +29,10 @@ export interface CliConfig {
      * to be overriden during the schema generation.
      *
      * The key for each table should be the qualified name for the table,
-     * in the form `'${schemaName}.${tableName}'` e.g. `'public.users'`.
+     * in the form `${schemaName}.${tableName}` e.g. `public.users`.
      *
      * The key for each column should be the name of the column,
-     * in the form `${columnName}` e.g `'first_name'`.
+     * in the form `${columnName}` e.g `first_name`.
      */
     schemaDefOverrides?: SchemaDefOverrides;
 }
@@ -40,13 +40,13 @@ export interface SchemaDefOverrides {
     /**
      * The column definitions for each table to be overriden.
      * The key for each table should be the qualified name for the table,
-     * in the form `'${schemaName}.${tableName}'` e.g. `'public.users'`.
+     * in the form `${schemaName}.${tableName}` e.g. `public.users`.
      */
     [table: string]: {
         /**
          * The attribute definitions for each column to be overriden.
          * The key for each column should be the name of the column,
-         * in the form `${columnName}` e.g `'first_name'`.
+         * in the form `${columnName}` e.g `first_name`.
          */
         [column: string]: Partial<ColumnDefProperties>;
     };

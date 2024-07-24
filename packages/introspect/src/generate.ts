@@ -5,6 +5,7 @@ import {
     EnumDetails,
     extractSchemas,
     Schema,
+    TableColumn,
     TableColumnType,
     TableDetails,
 } from 'extract-pg-schema';
@@ -12,14 +13,10 @@ import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
 
-interface TableDefOverrider {
-    isValidQualifiedTableName: (qualifiedTableName: string) => boolean;
-    applyColumnDefOverride: (
-        columnName: string,
-    ) => Partial<ColumnDefProperties> | undefined;
+interface TableDefTransformer {
+    test: (tableDetails: TableDetails) => boolean;
+    transform: (tableColumn: TableColumn) => Partial<ColumnDefProperties>;
 }
-
-type TableDefOverriderList = Array<TableDefOverrider>;
 
 interface GenerateProps {
     /**
@@ -39,11 +36,12 @@ interface GenerateProps {
      */
     includeTables?: string[];
     /**
-     * Custom overriders list to override the schema definition for tables
+     * Custom transformers that can be used to modify/extend
+     * the default generation data for the applicable table columns
      */
-    tableDefOverriderList?: TableDefOverriderList;
+    tableDefTransformers?: Array<TableDefTransformer>;
     /**
-     * The output directory for the generated files
+     * The output directory for the generated files e.g. `src/generated`
      */
     outDir: string;
     /**
@@ -58,7 +56,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTables = [],
-    tableDefOverriderList = [],
+    tableDefTransformers = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -85,7 +83,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
-        tableDefOverriderList,
+        tableDefTransformers,
     });
 
     /**
@@ -153,7 +151,7 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
 
 function createTableJsonSchema(
     table: TableDetails,
-    tableDefOverrider?: TableDefOverrider,
+    tableDefTransformer?: TableDefTransformer,
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
@@ -184,7 +182,7 @@ function createTableJsonSchema(
                 // For each column, we want to identify if any override properties
                 // were passed, and replace them if so
                 // Otherwise, we generate the property as usual
-                ...tableDefOverrider?.applyColumnDefOverride(column.name),
+                ...tableDefTransformer?.transform(column),
             },
             required: [
                 'type',
@@ -228,11 +226,11 @@ function createRootJsonSchema(
     {
         defaultSchema,
         includeTables,
-        tableDefOverriderList,
+        tableDefTransformers,
     }: {
         defaultSchema: string;
         includeTables: string[];
-        tableDefOverriderList: TableDefOverriderList;
+        tableDefTransformers: Array<TableDefTransformer>;
     },
 ): JSONSchema {
     // Check if a list of tables is passed, and if so, use as filter
@@ -269,7 +267,7 @@ function createRootJsonSchema(
         required: tables.map((table) => fullTableName(table, defaultSchema)),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(tables, defaultSchema, tableDefOverriderList),
+            ...createTableDefs(tables, defaultSchema, tableDefTransformers),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
@@ -288,20 +286,18 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 function createTableDefs(
     tables: TableDetails[],
     defaultSchema: string,
-    tableDefOverriderList: TableDefOverriderList,
+    tableDefTransformers: Array<TableDefTransformer>,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        const qualifiedTableName = `${table.schemaName}.${table.name}`;
-
-        const tableDefOverrider = tableDefOverriderList.find((item) =>
-            item.isValidQualifiedTableName(qualifiedTableName),
+        const tableDefTransformer = tableDefTransformers.find(
+            (tableDefTransformer) => tableDefTransformer.test(table),
         );
 
         acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
             table,
-            tableDefOverrider,
+            tableDefTransformer,
         );
 
         return acc;

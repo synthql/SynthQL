@@ -16,14 +16,14 @@ export const schemaDefOverridesSchema: JSONSchemaType<
             description: [
                 'The column definitions for each table to be overriden',
                 'The key for each table should be the qualified name for the table,',
-                'in the form `${schemaName.tableName}` e.g `"public.users"`',
+                'in the form `${schemaName}.${tableName}` e.g `public.users`',
             ].join('\n'),
             patternProperties: {
                 '^[^.]+$': {
                     description: [
                         'The attribute definitions for each column to be overriden',
                         'The key for each column should be the name of the column,',
-                        'in the form `${columnName}` e.g `"first_name"`',
+                        'in the form `${columnName}` e.g `first_name`',
                     ].join('\n'),
                     type: 'object',
                     properties: {
@@ -170,14 +170,14 @@ export const configFileSchema: JSONSchemaType<Partial<CliConfig>> = {
             type: 'string',
             description: [
                 'The output directory for the generated files',
-                'e.g. `"src/generated"`',
+                'e.g. `src/generated`',
             ].join('\n'),
             nullable: true,
         },
         defaultSchema: {
             type: 'string',
             description: [
-                'The default schema to use e.g. `"public"`',
+                'The default schema to use e.g. `public`',
                 'This is similar to the `search_path` in PostgreSQL',
             ].join('\n'),
             nullable: true,
