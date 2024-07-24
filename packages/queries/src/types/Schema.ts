@@ -9,7 +9,7 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
     required: string[];
     additionalProperties: boolean;
     $defs: {
-        [x: string]: {
+        [key: string]: {
             id?: string;
             type: string;
             description: string;
@@ -19,8 +19,8 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
             additionalProperties?: boolean;
             title?: string;
             tsType?: string;
-            minimum?: unknown;
-            maximum?: unknown;
+            minimum?: number;
+            maximum?: number;
             enum?: readonly string[];
         };
     };

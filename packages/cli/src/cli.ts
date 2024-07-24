@@ -2,7 +2,7 @@ import yargs from 'yargs';
 import fs from 'fs';
 import { hideBin } from 'yargs/helpers';
 import { generateSchema } from './commands/generate';
-import { getUnappliedSchemaOverridesTableNames } from './validators/getUnappliedSchemaOverridesTableNames';
+import { findUnusedSchemaOverrides } from './validators/findUnusedSchemaOverrides';
 import {
     validateSchemaDefOverrides,
     validateConfigFile,
@@ -32,7 +32,7 @@ export function cli({
                     .option('out', {
                         type: 'string',
                         description:
-                            'Path to the folder where the generated files will be created.',
+                            'Path to the folder where the generated files will be created',
                         default: 'src/generated/synthql',
                     })
                     .option('defaultSchema', {
@@ -109,21 +109,23 @@ export function cli({
                     console.info(`- ${table}`);
                 }
 
-                const unappliedSchemaOverrideTableKeys =
-                    getUnappliedSchemaOverridesTableNames(
-                        tables,
-                        argv.defaultSchema,
-                        argv.schemaDefOverrides,
-                    );
+                const unusedSchemaOverrides = findUnusedSchemaOverrides(
+                    tables,
+                    argv.defaultSchema,
+                    argv.schemaDefOverrides,
+                );
 
-                if (unappliedSchemaOverrideTableKeys.length > 0) {
+                if (unusedSchemaOverrides.length > 0) {
                     const lines = [
                         '',
                         `Could not apply schema overrides for the following table(s):`,
-                        ...unappliedSchemaOverrideTableKeys,
+                        ...unusedSchemaOverrides.map(
+                            (qualifiedTableName) => `- ${qualifiedTableName}`,
+                        ),
                         '',
-                        'If you are using the `--schemas` and/or `--tables` option via the CLI, ensure that',
-                        `you are passing the correct names of the schemas and tables these overrides are for`,
+                        'If you are using the `--schemas` and/or `--tables` option',
+                        'via the CLI, ensure that you are passing the correct names',
+                        `of the schemas and tables these overrides are for`,
                         '',
                     ];
 

@@ -1,21 +1,14 @@
-import {
-    afterAll,
-    beforeAll,
-    beforeEach,
-    describe,
-    expect,
-    test,
-    vitest,
-} from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import * as prettier from 'prettier';
 import fs from 'fs';
 import path from 'path';
-import { configFileSchema } from './validators/schemas';
-import { cli } from './cli';
 import { randomUUID } from 'crypto';
+import { cli } from './cli';
+import { configFileSchema } from './validators/schemas';
+import { validateSchemaDefOverrides } from './validators/validators';
 
 describe('e2e', () => {
-    const out = 'generated/synthql/e2e/tests';
+    const out = ' /tmp/synthql/e2e/tests';
     const configFile = 'src/tests/synthql.config.json';
 
     beforeAll(() => {
@@ -25,12 +18,7 @@ describe('e2e', () => {
         });
     });
 
-    beforeEach(() => {
-        vitest.resetModules();
-        vitest.resetAllMocks();
-    });
-
-    test('Write schema to files', async () => {
+    test('Write configuration file validation schema to files', async () => {
         const prettierOptions = await prettier.resolveConfig(
             '../../.prettier.config.js',
         );
@@ -38,6 +26,8 @@ describe('e2e', () => {
         expect(prettierOptions).not.toBe(null);
 
         // Generate in `cli` package
+        // This is a copy of the validation schema; it is used in
+        // validating the CLI JSON config file used in the CLI tests
         const cliOutDir = '../cli/src/tests';
 
         if (!fs.existsSync(cliOutDir)) {
@@ -53,6 +43,9 @@ describe('e2e', () => {
         );
 
         // Generate in `docs` package
+        // This is a copy of the validation schema, exposed via
+        // a public link from the documentation site, to be used
+        // by users in composing their own CLI JSON config file
         const docsOutDir = '../docs/static/schemas';
 
         if (!fs.existsSync(docsOutDir)) {
@@ -69,7 +62,7 @@ describe('e2e', () => {
     }, 100_000);
 
     test(
-        `Generate schema types with a supplied config file option, --configFile`,
+        `Test that the schema overrides are being applied`,
         async () => {
             const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
@@ -100,66 +93,37 @@ describe('e2e', () => {
             const schemaFilePath = path.join(outDir, `schema.ts`);
 
             const file = await import(schemaFilePath);
-            const schema = file.schema.properties;
+            const schema = file?.schema?.properties;
 
-            const schemaDefOverrides = output.schemaDefOverrides as any;
+            if (!validateSchemaDefOverrides(output.schemaDefOverrides)) {
+                throw Error();
+            }
 
-            for (const qualifiedTableName in schemaDefOverrides) {
+            for (const [
+                qualifiedTableName,
+                tableDefOverrides,
+            ] of Object.entries(output.schemaDefOverrides ?? {})) {
                 const [schemaName, tableName] = qualifiedTableName.split('.');
 
-                if (schemaName === output.defaultSchema) {
-                    const tableDef = schema[tableName];
+                const isDefaultSchema = schemaName === output.defaultSchema;
 
-                    if (tableDef) {
-                        const tableDefColumnProperties =
-                            schema[tableName].properties.columns.properties;
+                const tableToCheck = isDefaultSchema
+                    ? tableName
+                    : qualifiedTableName;
 
-                        for (const columnName in tableDefColumnProperties) {
-                            const columnDef =
-                                tableDefColumnProperties[columnName].properties;
+                for (const [columnName, columnDefOverrides] of Object.entries(
+                    tableDefOverrides,
+                )) {
+                    for (const [
+                        attributeName,
+                        attributeDefOverrides,
+                    ] of Object.entries(columnDefOverrides)) {
+                        const attributeDef =
+                            schema[tableToCheck]?.properties?.columns
+                                ?.properties[columnName][attributeName];
 
-                            const columnDefOverride =
-                                schemaDefOverrides[qualifiedTableName][
-                                    columnName
-                                ];
-
-                            if (columnDefOverride) {
-                                for (const attribute in columnDefOverride) {
-                                    if (columnDef[attribute]) {
-                                        expect(columnDef[attribute]).toEqual(
-                                            columnDefOverride[attribute],
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    const tableDef = schema[qualifiedTableName];
-
-                    if (tableDef) {
-                        const tableDefColumnProperties =
-                            schema[qualifiedTableName].properties.columns
-                                .properties;
-
-                        for (const columnName in tableDefColumnProperties) {
-                            const columnDef =
-                                tableDefColumnProperties[columnName].properties;
-
-                            const columnDefOverride =
-                                schemaDefOverrides[qualifiedTableName][
-                                    columnName
-                                ];
-
-                            if (columnDefOverride) {
-                                for (const attribute in columnDefOverride) {
-                                    if (columnDef[attribute]) {
-                                        expect(columnDef[attribute]).toEqual(
-                                            columnDefOverride[attribute],
-                                        );
-                                    }
-                                }
-                            }
+                        if (attributeDef) {
+                            expect(attributeDef).toEqual(attributeDefOverrides);
                         }
                     }
                 }
