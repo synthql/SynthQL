@@ -229,7 +229,7 @@ const query = from('users')
 const {data, fetchNextPage} = useSynthql(query)`,
         ].join('\n'),
         description: [
-            `Pagination in SynthQL just works. You don't need to do anything special to enable it!`,
+            `Pagination in SynthQL just works! You don't need to do anything special to enable it!`,
         ].join('\n'),
     },
     {

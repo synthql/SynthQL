@@ -38,7 +38,6 @@ export default defineConfig({
         alias: resolveXqlAliases,
     },
     test: {
-        allowOnly: true,
         globals: true,
         environment: 'node',
         coverage: {

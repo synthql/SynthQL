@@ -76,7 +76,7 @@ export function cli({
                     });
             },
             async (argv) => {
-                console.warn('Connecting to database schema...');
+                console.info('Connecting to database schema...');
 
                 if (
                     argv.schemaDefOverrides !== undefined &&
@@ -85,7 +85,7 @@ export function cli({
                     throw new Error(
                         [
                             `Schema definition overrides does not match the validation schema:`,
-                            ...(validateConfigFile.errors ?? []),
+                            ...(validateSchemaDefOverrides.errors ?? []),
                         ].join('\n'),
                     );
                 }
@@ -101,7 +101,7 @@ export function cli({
 
                 const tables = Object.keys(result.schema.properties ?? {});
 
-                console.warn(
+                console.info(
                     `Generated schema with ${tables.length} table(s):`,
                 );
 

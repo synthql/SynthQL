@@ -96,7 +96,12 @@ describe('e2e', () => {
             const schema = file?.schema?.properties;
 
             if (!validateSchemaDefOverrides(output.schemaDefOverrides)) {
-                throw Error();
+                throw new Error(
+                    [
+                        `Schema definition overrides does not match the validation schema:`,
+                        ...(validateSchemaDefOverrides.errors ?? []),
+                    ].join('\n'),
+                );
             }
 
             for (const [

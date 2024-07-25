@@ -5,11 +5,7 @@ export function findUnusedSchemaOverrides(
     defaultSchema: string,
     schemaOverrides?: SchemaDefOverrides,
 ): string[] {
-    if (schemaOverrides === undefined) {
-        return [];
-    }
-
-    return Object.keys(schemaOverrides).flatMap((qualifiedTableName) => {
+    return Object.keys(schemaOverrides ?? {}).flatMap((qualifiedTableName) => {
         const [schemaName, tableName] = qualifiedTableName.split('.');
 
         const isDefaultSchema = schemaName === defaultSchema;

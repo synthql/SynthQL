@@ -14,14 +14,14 @@ export const schemaDefOverridesSchema: JSONSchemaType<
         '^[^.]+.[^.]+$': {
             type: 'object',
             description: [
-                'The column definitions for each table to be overriden',
+                'The column definitions for each table to be overriden.',
                 'The key for each table should be the qualified name for the table,',
                 'in the form `${schemaName}.${tableName}` e.g `public.users`',
             ].join('\n'),
             patternProperties: {
                 '^[^.]+$': {
                     description: [
-                        'The attribute definitions for each column to be overriden',
+                        'The attribute definitions for each column to be overriden.',
                         'The key for each column should be the name of the column,',
                         'in the form `${columnName}` e.g `first_name`',
                     ].join('\n'),
