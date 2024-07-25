@@ -9,7 +9,7 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
     required: string[];
     additionalProperties: boolean;
     $defs: {
-        [x: string]: {
+        [key: string]: {
             id?: string;
             type: string;
             description: string;
@@ -19,8 +19,8 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
             additionalProperties?: boolean;
             title?: string;
             tsType?: string;
-            minimum?: unknown;
-            maximum?: unknown;
+            minimum?: number;
+            maximum?: number;
             enum?: readonly string[];
         };
     };
@@ -46,39 +46,33 @@ export interface ColumnDefs<DB, TTable extends Table<DB> = Table<DB>> {
 export interface ColumnDef {
     type: string;
     description: string;
-    properties: {
-        type: {
-            id: string;
-            title?: string;
-            type: string;
-            tsType?: string;
-            description: string;
-            minimum?: unknown;
-            maximum?: unknown;
-            format?: string;
-            enum?: readonly string[];
-        };
-        selectable: {
-            type: string;
-            const: boolean;
-        };
-        includable: {
-            type: string;
-            const: boolean;
-        };
-        whereable: {
-            type: string;
-            const: boolean;
-        };
-        nullable: {
-            type: string;
-            const: boolean;
-        };
-        isPrimaryKey: {
-            type: string;
-            const: boolean;
-        };
-    };
+    properties: ColumnDefProperties;
     required: string[];
     additionalProperties: boolean;
+}
+
+export interface ColumnDefProperties {
+    type: ColumnDefTypeDef;
+    selectable: ColumnDefAttributeDef;
+    includable: ColumnDefAttributeDef;
+    whereable: ColumnDefAttributeDef;
+    nullable: ColumnDefAttributeDef;
+    isPrimaryKey: ColumnDefAttributeDef;
+}
+
+interface ColumnDefTypeDef {
+    id: string;
+    description: string;
+    type: string;
+    title?: string;
+    tsType?: string;
+    minimum?: number;
+    maximum?: number;
+    format?: string;
+    enum?: readonly string[];
+}
+
+interface ColumnDefAttributeDef {
+    type: string;
+    const: boolean;
 }

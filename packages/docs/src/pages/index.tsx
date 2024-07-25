@@ -1,12 +1,7 @@
-import clsx from 'clsx';
 import CodeBlock from '@theme/CodeBlock';
 import Link from '@docusaurus/Link';
-
 import Layout from '@theme/Layout';
-
 import Heading from '@theme/Heading';
-
-import styles from './index.module.css';
 
 export default function Home(): JSX.Element {
     return (
@@ -46,7 +41,7 @@ export default function Home(): JSX.Element {
                     />
                     <h1 style={{ textAlign: 'center' }}>SynthQL</h1>
                     <p>
-                        The type-safe http client for your PostgreSQL database.
+                        The type-safe HTTP client for your PostgreSQL database.
                     </p>
 
                     <Link to="/docs/getting-started">
@@ -234,7 +229,7 @@ const query = from('users')
 const {data, fetchNextPage} = useSynthql(query)`,
         ].join('\n'),
         description: [
-            `Pagination in SynthQL just works. You don't need to do anything special to enable it.`,
+            `Pagination in SynthQL just works! You don't need to do anything special to enable it!`,
         ].join('\n'),
     },
     {
@@ -262,8 +257,7 @@ const query = from('store')
         products
     })
 
-// Over the network this results in two
-// JSON lines
+// Over the network, this results in two JSON lines
 [{ id: "store 1", name: "Fnacy store", products: { status: 'pending' } }]
 [{ id: "store 1", name: "Fancy store", products: { status: "done", data: [...] } }]
             `,

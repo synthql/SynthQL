@@ -15,11 +15,13 @@ import path from 'path';
 
 describe('CLI tests', () => {
     describe('`generate` command tests', () => {
-        const url = 'postgres://postgres:postgres@localhost:5432/postgres';
+        const connectionString =
+            'postgres://postgres:postgres@localhost:5432/postgres';
         const out = 'generated/synthql/tests';
         const defaultSchema = 'public';
         const schemas = ['public'];
         const tables = ['actor', 'customer'];
+        const configFile = 'src/tests/synthql.config.json';
 
         beforeAll(() => {
             fs.rmSync(out, {
@@ -73,7 +75,7 @@ describe('CLI tests', () => {
                     'node',
                     'generate-with-connection-string.js',
                     'generate',
-                    `--connectionString=${url}`,
+                    `--connectionString=${connectionString}`,
                     `--out=${outDir}`,
                 ];
 
@@ -90,7 +92,7 @@ describe('CLI tests', () => {
                 expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
-                expect(output.connectionString).toEqual(url);
+                expect(output.connectionString).toEqual(connectionString);
             },
             {
                 timeout: 10000,
@@ -106,7 +108,7 @@ describe('CLI tests', () => {
                     'node',
                     'generate-with-connection-string-alias.js',
                     'generate',
-                    `--url=${url}`,
+                    `--url=${connectionString}`,
                     `--out=${outDir}`,
                 ];
 
@@ -123,7 +125,7 @@ describe('CLI tests', () => {
                 expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
-                expect(output.url).toEqual(url);
+                expect(output.connectionString).toEqual(connectionString);
             },
             {
                 timeout: 10000,
@@ -303,6 +305,39 @@ describe('CLI tests', () => {
         );
 
         it(
+            `Generate schema types with a supplied config file option, --configFile`,
+            async () => {
+                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
+
+                const argv = [
+                    'node',
+                    'generate-with-default-schema.js',
+                    'generate',
+                    `--configFile=${configFile}`,
+                    `--out=${outDir}`,
+                ];
+
+                // Compose file path
+                const outFilePath = path.join(outDir, `db.ts`);
+
+                // Check that file with the name doesn't exist yet
+                expect(!fs.existsSync(outFilePath)).toEqual(true);
+
+                // Generate schema file
+                const output = await cli({ argv, exit: () => {} });
+
+                // Check that the file now exists
+                expect(fs.existsSync(outFilePath)).toEqual(true);
+
+                // Verify that the option data is correct
+                expect(output.configFile).toEqual(configFile);
+            },
+            {
+                timeout: 10000,
+            },
+        );
+
+        it(
             `Generate schema types with all options supplied`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
@@ -311,7 +346,7 @@ describe('CLI tests', () => {
                     'node',
                     'generate.js',
                     'generate',
-                    `--connectionString=${url}`,
+                    `--connectionString=${connectionString}`,
                     `--out=${outDir}`,
                     `--defaultSchema=${defaultSchema}`,
                     '--schemas',
@@ -333,8 +368,7 @@ describe('CLI tests', () => {
                 expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the options data passed is correct
-                expect(output.connectionString).toEqual(url);
-                expect(output.url).toEqual(url);
+                expect(output.connectionString).toEqual(connectionString);
                 expect(output.out).toEqual(outDir);
                 expect(output.defaultSchema).toEqual(defaultSchema);
                 expect(output.schemas).toEqual(schemas);

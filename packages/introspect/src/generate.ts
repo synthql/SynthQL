@@ -1,34 +1,66 @@
+import { ColumnDefProperties } from '@synthql/queries';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 import {
     DomainDetails,
     EnumDetails,
     extractSchemas,
     Schema,
+    TableColumn,
     TableColumnType,
     TableDetails,
 } from 'extract-pg-schema';
-
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
+
+interface TableDefTransformer {
+    test: (tableDetails: TableDetails) => boolean;
+    transform: (tableColumn: TableColumn) => Partial<ColumnDefProperties>;
+}
+
+interface GenerateProps {
+    /**
+     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`
+     */
+    connectionString: string;
+    /**
+     * The schemas to include in generation e.g. `['public']`
+     */
+    includeSchemas: string[];
+    /**
+     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL.
+     */
+    defaultSchema: string;
+    /**
+     * The tables to include in generation e.g. `['users']`
+     */
+    includeTables?: string[];
+    /**
+     * Custom transformers that can be used to modify/extend
+     * the default generation data for the applicable table columns
+     */
+    tableDefTransformers?: Array<TableDefTransformer>;
+    /**
+     * The output directory for the generated files e.g. `src/generated`
+     */
+    outDir: string;
+    /**
+     * A function to format the generated files, usually Prettier
+     */
+    formatter?: (str: string) => Promise<string>;
+    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
+}
 
 export async function generate({
     connectionString,
     includeSchemas,
     defaultSchema,
     includeTables = [],
+    tableDefTransformers = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
-}: {
-    defaultSchema: string;
-    connectionString: string;
-    includeSchemas: string[];
-    outDir: string;
-    includeTables?: string[];
-    formatter?: (str: string) => Promise<string>;
-    SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
-}) {
+}: GenerateProps) {
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
@@ -51,6 +83,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
+        tableDefTransformers,
     });
 
     /**
@@ -116,7 +149,10 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
     return `table_${type.schemaName}_${type.name}`;
 }
 
-function createTableJsonSchema(table: TableDetails): JSONSchema {
+function createTableJsonSchema(
+    table: TableDetails,
+    tableDefTransformer?: TableDefTransformer,
+): JSONSchema {
     const empty: Record<string, any> = {};
 
     const columns = table.columns.reduce((acc, column) => {
@@ -137,12 +173,16 @@ function createTableJsonSchema(table: TableDetails): JSONSchema {
                 ].join('\n'),
             properties: {
                 type: { $ref: `#/$defs/${createTypeDefId(column.type)}` },
-                // a constant value of true
+                // A constant value of true
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
                 whereable: { type: 'boolean', const: true },
                 nullable: { type: 'boolean', const: column.isNullable },
                 isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
+                // For each column, we want to identify if any override properties
+                // were passed, and replace them if so
+                // Otherwise, we generate the property as usual
+                ...tableDefTransformer?.transform(column),
             },
             required: [
                 'type',
@@ -186,12 +226,14 @@ function createRootJsonSchema(
     {
         defaultSchema,
         includeTables,
+        tableDefTransformers,
     }: {
         defaultSchema: string;
         includeTables: string[];
+        tableDefTransformers: Array<TableDefTransformer>;
     },
 ): JSONSchema {
-    // Check if list of tables is passed, and if so, use as filter
+    // Check if a list of tables is passed, and if so, use as filter
     const allTables = Object.values(schemas).flatMap((schema) => schema.tables);
 
     const tables =
@@ -225,7 +267,7 @@ function createRootJsonSchema(
         required: tables.map((table) => fullTableName(table, defaultSchema)),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(tables, defaultSchema),
+            ...createTableDefs(tables, defaultSchema, tableDefTransformers),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
@@ -244,12 +286,19 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 function createTableDefs(
     tables: TableDetails[],
     defaultSchema: string,
+    tableDefTransformers: Array<TableDefTransformer>,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        acc[createTableDefId(table, defaultSchema)] =
-            createTableJsonSchema(table);
+        const tableDefTransformer = tableDefTransformers.find(
+            (tableDefTransformer) => tableDefTransformer.test(table),
+        );
+
+        acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
+            table,
+            tableDefTransformer,
+        );
 
         return acc;
     }, empty);
