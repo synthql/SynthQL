@@ -13,7 +13,7 @@ import {
 
 export function executePlan(
     planTree: ExecPlanTree,
-    { defaultSchema }: ExecuteProps,
+    { defaultSchema, prependSql }: ExecuteProps,
 ): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext };
     return mapTree<ExecutionPlanNode, ExecutionResultNode>(
@@ -26,7 +26,8 @@ export function executePlan(
                 defaultSchema,
             );
 
-            // Remove the limit for child nodes, since we don't know how many rows the references will resolve to
+            // Remove the limit for child nodes, since we don't
+            // know how many rows the references will resolve to
             if (parentNode) {
                 query.limit = undefined;
             }
@@ -34,6 +35,7 @@ export function executePlan(
             // Execute the query
             const rows = await planNode.executor.execute(query, {
                 defaultSchema,
+                prependSql,
             });
 
             // Collect refs from the result

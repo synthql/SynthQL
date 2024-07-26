@@ -13,6 +13,7 @@ import { SynthqlError } from './SynthqlError';
 export interface QueryEngineProps<DB> {
     url?: string;
     schema?: string;
+    prependSql?: string;
     providers?: Array<QueryProvider<DB, Table<DB>>>;
     pool?: Pool;
 }
@@ -20,10 +21,12 @@ export interface QueryEngineProps<DB> {
 export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
+    private prependSql: string;
     private executors: Array<QueryExecutor> = [];
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
+        this.prependSql = config.prependSql ?? '';
         this.pool =
             config.pool ??
             new Pool({
@@ -46,6 +49,7 @@ export class QueryEngine<DB> {
         query: TQuery,
         opts?: {
             schema?: string;
+            prependSql?: string;
             /**
              * If true, the generator will only return the last result.
              */
@@ -55,6 +59,7 @@ export class QueryEngine<DB> {
         const gen = execute<DB, TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
+            prependSql: opts?.prependSql ?? this.prependSql,
         });
 
         if (opts?.returnLastOnly) {
@@ -71,12 +76,14 @@ export class QueryEngine<DB> {
         query: TQuery,
         opts?: {
             schema?: string;
+            prependSql?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
         const queryResult = await collectLast(
             this.execute(query, {
                 returnLastOnly: true,
                 schema: opts?.schema,
+                prependSql: opts?.prependSql,
             }),
         );
 
