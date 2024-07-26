@@ -13,7 +13,7 @@ import {
 
 export function executePlan(
     planTree: ExecPlanTree,
-    { defaultSchema, prependSql }: ExecuteProps,
+    { defaultSchema, transformSql }: ExecuteProps,
 ): AsyncGenerator<ExecResultTree> {
     const executionContext = { refContext: planTree.refContext };
     return mapTree<ExecutionPlanNode, ExecutionResultNode>(
@@ -35,7 +35,7 @@ export function executePlan(
             // Execute the query
             const rows = await planNode.executor.execute(query, {
                 defaultSchema,
-                prependSql,
+                transformSql,
             });
 
             // Collect refs from the result

@@ -44,8 +44,8 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         query: AnyQuery,
         {
             defaultSchema,
-            prependSql,
-        }: { defaultSchema: string; prependSql?: string },
+            transformSql,
+        }: { defaultSchema: string; transformSql?: (sql: string) => string },
     ): Promise<Array<PgQueryResult>> {
         const client = await this.client;
 
@@ -61,11 +61,9 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
                 console.log(format(sql, { language: 'postgresql' }));
             }
 
-            if (prependSql) {
-                await client.query(prependSql);
-            }
-
-            const queryResult = await client.query(sql, params);
+            const queryResult = transformSql
+                ? await client.query(transformSql(sql), params)
+                : await client.query(sql, params);
             const rows = queryResult.rows;
 
             return hydrate(rows, augmentedQuery) as Array<PgQueryResult>;

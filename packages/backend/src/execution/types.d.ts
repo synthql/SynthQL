@@ -78,7 +78,7 @@ export interface QueryExecutor<T extends ResultRow = ResultRow> {
      */
     execute: (
         query: AnyQuery,
-        opts: { defaultSchema: string; prependSql?: string },
+        opts: { defaultSchema: string; transformSql?: (sql: string) => string },
     ) => Promise<Array<T>>;
 
     /**

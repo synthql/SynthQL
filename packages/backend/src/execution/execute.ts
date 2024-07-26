@@ -7,7 +7,7 @@ import { QueryExecutor } from './types';
 export interface ExecuteProps {
     executors: Array<QueryExecutor>;
     defaultSchema: string;
-    prependSql?: string;
+    transformSql?: (sql: string) => string;
 }
 
 /**

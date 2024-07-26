@@ -46,7 +46,7 @@ export class QueryEngine<DB> {
         query: TQuery,
         opts?: {
             schema?: string;
-            prependSql?: string;
+            transformSql?: (sql: string) => string;
             /**
              * If true, the generator will only return the last result.
              */
@@ -56,7 +56,7 @@ export class QueryEngine<DB> {
         const gen = execute<DB, TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
-            prependSql: opts?.prependSql,
+            transformSql: opts?.transformSql,
         });
 
         if (opts?.returnLastOnly) {
@@ -73,14 +73,14 @@ export class QueryEngine<DB> {
         query: TQuery,
         opts?: {
             schema?: string;
-            prependSql?: string;
+            transformSql?: (sql: string) => string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
         const queryResult = await collectLast(
             this.execute(query, {
                 returnLastOnly: true,
                 schema: opts?.schema,
-                prependSql: opts?.prependSql,
+                transformSql: opts?.transformSql,
             }),
         );
 
