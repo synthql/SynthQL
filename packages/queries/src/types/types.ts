@@ -12,5 +12,5 @@ export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     offset?: number;
     cardinality?: 'one' | 'maybe' | 'many';
     lazy?: true;
-    groupingId?: string[];
+    groupBy?: string[];
 };

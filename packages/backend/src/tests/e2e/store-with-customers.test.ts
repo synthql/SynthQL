@@ -15,7 +15,7 @@ import { sortRecursively } from '../sortRecursively';
 // Skipping for now, not sure why this isn't working
 describe.skip('e2e', () => {
     const payments = from('payment')
-        .groupingId('payment_id', 'payment_date')
+        .groupBy('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
         .where({ customer_id: col('customer.customer_id') })
         .many();

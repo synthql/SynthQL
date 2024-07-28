@@ -79,7 +79,7 @@ export default from('information_schema.table_constraints')
     .include({
         keys,
     })
-    .groupingId(
+    .groupBy(
         'constraint_schema',
         'constraint_name',
         'table_schema',
