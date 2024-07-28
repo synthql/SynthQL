@@ -2,21 +2,13 @@ import { Query } from './types';
 import { ColumnValue } from './ColumnValue';
 import { Column } from './Column';
 import { Table } from './Table';
+import { Simplify } from './Simplify';
 
 export type QueryResult<DB, TQuery> = Simplify<
     TQuery extends Query<DB, infer TTable>
         ? ApplyCardinality<DB, TTable, TQuery>
         : never
 >;
-
-type Simplify<T> =
-    T extends Array<infer U>
-        ? Simplify<U>[]
-        : T extends Date
-          ? T
-          : T extends object
-            ? { [K in keyof T]: Simplify<T[K]> }
-            : T;
 
 type QueryResultInner<
     DB,

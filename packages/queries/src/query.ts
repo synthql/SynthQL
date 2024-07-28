@@ -6,6 +6,7 @@ import { Table } from './types/Table';
 import { Schema } from './types/Schema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
+import { Exp } from './expression/Exp';
 
 export class QueryBuilder<
     DB,
@@ -18,6 +19,7 @@ export class QueryBuilder<
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupBy extends string[],
+    TAggregates extends Record<string, Exp> | undefined,
 > {
     constructor(
         private _from: TTable,
@@ -29,6 +31,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
+        private _aggregates: TAggregates,
     ) {}
 
     private build(): {
@@ -41,6 +44,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        aggregates: TAggregates;
     } {
         return {
             from: this._from,
@@ -52,7 +56,39 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            aggregates: this._aggregates,
         };
+    }
+
+    count() {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            { count: true },
+            TInclude,
+            TLimit,
+            TOffset,
+            'one',
+            TLazy,
+            TGroupBy,
+            {
+                count: { type: 'fn'; fn: 'count'; args: [1] };
+            }
+        >(
+            this._from,
+            this._where,
+            { count: true },
+            this._include,
+            this._limit,
+            this._offset,
+            'one',
+            this._lazy,
+            this._groupBy,
+            {
+                count: { type: 'fn', fn: 'count', args: [1] },
+            },
+        ).build();
     }
 
     /**
@@ -69,7 +105,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -80,6 +117,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -97,7 +135,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -108,6 +147,7 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -125,7 +165,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -136,6 +177,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -155,7 +197,8 @@ export class QueryBuilder<
             TOffset,
             'one',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -166,6 +209,7 @@ export class QueryBuilder<
             'one',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -183,7 +227,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -194,6 +239,7 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -211,7 +257,8 @@ export class QueryBuilder<
             TOffset,
             'maybe',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -222,6 +269,7 @@ export class QueryBuilder<
             'maybe',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -236,7 +284,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -247,6 +296,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -283,7 +333,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -294,6 +345,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -308,7 +360,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -319,6 +372,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -333,7 +387,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -344,6 +399,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -362,7 +418,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             where,
@@ -373,6 +430,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -387,7 +445,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             true,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -398,6 +457,7 @@ export class QueryBuilder<
             this._cardinality,
             true,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -412,7 +472,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -423,6 +484,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             id,
+            this._aggregates,
         );
     }
 }
@@ -446,7 +508,8 @@ export function query<DB>(schema: Schema<DB>) {
                 number | undefined,
                 'many',
                 undefined,
-                typeof primaryKeys
+                typeof primaryKeys,
+                undefined
             >(
                 table,
                 {},
@@ -457,6 +520,7 @@ export function query<DB>(schema: Schema<DB>) {
                 'many',
                 undefined,
                 primaryKeys,
+                undefined,
             );
         },
     };
