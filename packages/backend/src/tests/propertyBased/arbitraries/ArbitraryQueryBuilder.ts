@@ -114,7 +114,7 @@ export class ArbitraryQueryBuilder<DB> {
         return fc.constant({});
     }
 
-    private arbGroupingId(tableName: Table<DB>): fc.Arbitrary<string[]> {
+    private arbGroupBy(tableName: Table<DB>): fc.Arbitrary<string[]> {
         return fc.constant(getPrimaryKeyColumns(this.schema, tableName));
     }
 
@@ -139,7 +139,7 @@ export class ArbitraryQueryBuilder<DB> {
                 select: this.arbSelect(tableName),
                 cardinality: this.arbCardinality(),
                 where: this.arbWhere(tableName),
-                groupingId: this.arbGroupingId(tableName),
+                groupBy: this.arbGroupBy(tableName),
                 limit: this.arbLimit(),
             });
         });

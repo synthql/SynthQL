@@ -17,7 +17,7 @@ export class QueryBuilder<
     TOffset extends number | undefined,
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
-    TGroupingId extends string[],
+    TGroupBy extends string[],
 > {
     constructor(
         private _from: TTable,
@@ -28,7 +28,7 @@ export class QueryBuilder<
         private _offset: TOffset,
         private _cardinality: TCardinality,
         private _lazy: TLazy,
-        private _groupingId: TGroupingId,
+        private _groupBy: TGroupBy,
     ) {}
 
     private build(): {
@@ -40,7 +40,7 @@ export class QueryBuilder<
         offset: TOffset;
         cardinality: TCardinality;
         lazy: TLazy;
-        groupingId: TGroupingId;
+        groupBy: TGroupBy;
     } {
         return {
             from: this._from,
@@ -51,7 +51,7 @@ export class QueryBuilder<
             offset: this._offset,
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
-            groupingId: this._groupingId,
+            groupBy: this._groupBy,
         };
     }
 
@@ -69,7 +69,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -79,7 +79,7 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -97,7 +97,7 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -107,7 +107,7 @@ export class QueryBuilder<
             this._offset,
             'many',
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         ).build();
     }
 
@@ -125,7 +125,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -135,7 +135,7 @@ export class QueryBuilder<
             offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -155,7 +155,7 @@ export class QueryBuilder<
             TOffset,
             'one',
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -165,7 +165,7 @@ export class QueryBuilder<
             this._offset,
             'one',
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         ).build();
     }
 
@@ -183,7 +183,7 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -193,7 +193,7 @@ export class QueryBuilder<
             this._offset,
             'many',
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         ).build();
     }
 
@@ -211,7 +211,7 @@ export class QueryBuilder<
             TOffset,
             'maybe',
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -221,7 +221,7 @@ export class QueryBuilder<
             this._offset,
             'maybe',
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         ).build();
     }
 
@@ -236,7 +236,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -246,7 +246,7 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -283,7 +283,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -293,7 +293,7 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -308,7 +308,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -318,7 +318,7 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -333,7 +333,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -343,11 +343,15 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
     where<TWhere extends Where<DB, TTable>>(where: TWhere) {
+        return this.filter(where);
+    }
+
+    filter<TWhere extends Where<DB, TTable>>(where: TWhere) {
         return new QueryBuilder<
             DB,
             TTable,
@@ -358,7 +362,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             where,
@@ -368,7 +372,7 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             this._lazy,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
@@ -383,7 +387,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             true,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -393,11 +397,11 @@ export class QueryBuilder<
             this._offset,
             this._cardinality,
             true,
-            this._groupingId,
+            this._groupBy,
         );
     }
 
-    groupingId<TGroupingId extends Column<DB, TTable>[]>(...id: TGroupingId) {
+    groupBy<TGroupBy extends Column<DB, TTable>[]>(...id: TGroupBy) {
         return new QueryBuilder<
             DB,
             TTable,
@@ -408,7 +412,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupingId
+            TGroupBy
         >(
             this._from,
             this._where,

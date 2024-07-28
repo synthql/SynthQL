@@ -11,7 +11,7 @@ import { sql } from '../postgres';
 describe('e2e', () => {
     const q = from('payment')
         .columns('payment_id', 'amount', 'payment_date')
-        .groupingId('payment_id', 'payment_date')
+        .groupBy('payment_id', 'payment_date')
         .many();
 
     test(describeQuery(q), async () => {
