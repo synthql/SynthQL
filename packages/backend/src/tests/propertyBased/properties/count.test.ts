@@ -11,7 +11,7 @@ const numRuns = 100;
 const timeout = numRuns * 1000;
 const endOnFailure = true;
 
-test.prop([queryBuilder.withCardinality('many').withGroupBy(...[]).withSomeResults().build()], {
+test.prop([queryBuilder.withCardinality('many').withNoLimit().withSomeResults().build()], {
     verbose: true,
     numRuns,
     timeout,
@@ -38,15 +38,11 @@ test.prop([queryBuilder.withCardinality('many').withGroupBy(...[]).withSomeResul
             cardinality: 'one',
         };
 
-
         const countResult = (await queryEngine.executeAndWait(
             countQuery,
         )) as any;
 
-        console.log(queryEngine.compile(countQuery).sql)
-
         expect(typeof countResult.count).toEqual('number');
-        console.log(query, countQuery);
 
         expect(queryResult.length).toEqual(countResult.count);
     },
