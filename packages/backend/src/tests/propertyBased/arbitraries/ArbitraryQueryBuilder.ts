@@ -19,7 +19,8 @@ export class ArbitraryQueryBuilder<DB> {
         private cardinalities: Cardinality[] = ['many', 'maybe', 'one'],
         private tables: Table<DB>[] = getTableNames(schema) as Table<DB>[],
         private hasResults: boolean = true,
-    ) {}
+        private groupBy?: string[],
+    ) { }
 
     /**
      * Creates a new ArbitraryQueryBuilder from the Pagila DB.
@@ -34,6 +35,16 @@ export class ArbitraryQueryBuilder<DB> {
             cardinality,
             this.tables,
             this.hasResults,
+        );
+    }
+
+    withGroupBy(...groupBy: string[]) {
+        return new ArbitraryQueryBuilder<DB>(
+            this.schema,
+            this.cardinalities,
+            this.tables,
+            this.hasResults,
+            groupBy,
         );
     }
 
@@ -115,7 +126,10 @@ export class ArbitraryQueryBuilder<DB> {
     }
 
     private arbGroupBy(tableName: Table<DB>): fc.Arbitrary<string[]> {
-        return fc.constant(getPrimaryKeyColumns(this.schema, tableName));
+        if (this.groupBy === undefined) {
+            return fc.constant(getPrimaryKeyColumns(this.schema, tableName));
+        }
+        return fc.constant(this.groupBy);
     }
 
     private arbCardinality(): fc.Arbitrary<Cardinality> {

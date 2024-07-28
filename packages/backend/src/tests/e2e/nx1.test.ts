@@ -1,4 +1,4 @@
-import { Where, col } from '@synthql/queries';
+import { QueryResult, Where, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -165,5 +165,11 @@ describe('n x 1', () => {
         test.each(cases)('#%#', (c) => {
             expect(c.expected).toEqual(c.expected);
         });
+    });
+
+    test('x', async () => {
+        const q = from('film').count();
+
+        type x = QueryResult<DB, typeof q>;
     });
 });

@@ -1,8 +1,6 @@
 import { Pool, PoolClient } from 'pg';
 import { format } from 'sql-formatter';
 import { splitQueryAtBoundary } from '../../../query/splitQueryAtBoundary';
-import { ColumnRef } from '../../../refs/ColumnRef';
-import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { AnyQuery } from '../../../types';
 import { QueryExecutor } from '../../types';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';

@@ -1,5 +1,5 @@
 export { col } from './col';
-export * from './types/types';
+export * from './types/Query';
 export * from './types/BinaryOp';
 export * from './types/Cardinality';
 export * from './types/Column';

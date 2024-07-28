@@ -32,7 +32,7 @@ export class QueryBuilder<
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
         private _aggregates: TAggregates,
-    ) { }
+    ) {}
 
     private build(): {
         from: TTable;
@@ -60,15 +60,32 @@ export class QueryBuilder<
         };
     }
 
+    /**
+     * Returns a query that counts the number of rows that match the query.
+     *
+     * Example:
+     *
+     * ```ts
+     * const query = from('actor')
+     *  .where({ actor_id: {in: [1,2,3]} })
+     *  .count()
+     *
+     * const { data } = useSynthql({query})
+     *
+     * console.log(data.count) // 3
+     * ```
+     *
+     * This will return a query that counts the number of rows in the `actor` table where `actor_id = 1`.
+     */
     count() {
         return new QueryBuilder<
             DB,
             TTable,
             TWhere,
-            { count: true },
+            {},
             TInclude,
-            TLimit,
-            TOffset,
+            undefined,
+            undefined,
             'one',
             TLazy,
             TGroupBy,
@@ -78,10 +95,10 @@ export class QueryBuilder<
         >(
             this._from,
             this._where,
-            { count: true },
+            {},
             this._include,
-            this._limit,
-            this._offset,
+            undefined,
+            undefined,
             'one',
             this._lazy,
             this._groupBy,

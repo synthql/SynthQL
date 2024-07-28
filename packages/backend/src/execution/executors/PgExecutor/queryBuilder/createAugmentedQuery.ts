@@ -6,6 +6,7 @@ import { SelectionJsonbAgg } from './SelectionJsonbAgg';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';
 import { Join, Selection } from './types';
+import { AggregationsSelection } from './AggregationsSelection';
 
 export interface AugmentedQuery {
     selection: Selection[];
@@ -29,13 +30,14 @@ export function createAugmentedQuery(
         rootQuery,
         defaultSchema,
     );
+    const aggregates = AggregationsSelection.fromQuery(rootQuery, defaultSchema);
     const wheres = collectWhere(rootQuery, defaultSchema);
     const joins = collectJoins(rootQuery, defaultSchema);
     const groupingColumns =
         rootQuery.groupBy?.map((col) => rootTable.column(col)) ?? [];
 
     return {
-        selection: selectionColumn.concat(jsonbAggColumn),
+        selection: selectionColumn.concat(jsonbAggColumn).concat(aggregates),
         rootQuery,
         rootTable,
         joins,

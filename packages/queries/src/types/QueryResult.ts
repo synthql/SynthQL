@@ -1,4 +1,4 @@
-import { Query } from './types';
+import { Query } from './Query';
 import { ColumnValue } from './ColumnValue';
 import { Column } from './Column';
 import { Table } from './Table';
