@@ -32,7 +32,7 @@ export class QueryBuilder<
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
         private _aggregates: TAggregates,
-    ) {}
+    ) { }
 
     private build(): {
         from: TTable;
