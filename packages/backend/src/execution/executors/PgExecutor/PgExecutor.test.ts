@@ -92,7 +92,7 @@ describe('PgExecutor', () => {
         expected result with SQL to prepend included`, async () => {
         const result = await executor.execute(q3, {
             ...executeProps,
-            prependSql: 'BEGIN',
+            prependSql: 'SET search_path TO public',
         });
 
         expect(result).toEqual([
