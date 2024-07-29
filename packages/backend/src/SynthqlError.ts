@@ -40,7 +40,6 @@ export class SynthqlError extends Error {
 
         return new SynthqlError(error, type, lines.join('\n'));
     }
-
     static createSqlExecutionError({
         error,
         props,
@@ -53,6 +52,27 @@ export class SynthqlError extends Error {
         const message = composeMessage(error, props);
 
         return new SynthqlError(error, type, message);
+    }
+
+    static createPrependSqlExecutionError({
+        error,
+        prependSql,
+    }: {
+        error: any;
+        prependSql: string;
+    }): SynthqlError {
+        const type = 'PrependSqlExecutionError';
+
+        const lines: string[] = [
+            '# Error executing prepended SQL query',
+            '',
+            printError(error),
+            '',
+            'This error was caused by the following prepended SQL query:',
+            tryFormatSql(prependSql),
+        ];
+
+        return new SynthqlError(error, type, lines.join('\n'));
     }
 
     static createResponseStreamingError({

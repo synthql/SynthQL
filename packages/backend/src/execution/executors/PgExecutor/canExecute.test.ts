@@ -9,7 +9,6 @@ import { describe, expect, test } from 'vitest';
 import { col } from '@synthql/queries';
 import { PgExecutor } from '.';
 import { pool } from '../../../tests/queryEngine';
-import { DB } from '../../../tests/generated';
 
 describe('PgExecutor', () => {
     const executor = new PgExecutor({

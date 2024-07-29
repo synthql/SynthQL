@@ -44,10 +44,25 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         query: AnyQuery,
         {
             defaultSchema,
-            transformSql,
-        }: { defaultSchema: string; transformSql?: (sql: string) => string },
+            prependSql,
+        }: { defaultSchema: string; prependSql?: string },
     ): Promise<Array<PgQueryResult>> {
         const client = await this.client;
+
+        if (prependSql) {
+            try {
+                if (this.props.logging) {
+                    console.log(format(prependSql, { language: 'postgresql' }));
+                }
+
+                await client.query(prependSql);
+            } catch (err) {
+                throw SynthqlError.createPrependSqlExecutionError({
+                    error: err,
+                    prependSql,
+                });
+            }
+        }
 
         const { sqlBuilder, augmentedQuery } = composeQuery({
             defaultSchema,
@@ -61,9 +76,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
                 console.log(format(sql, { language: 'postgresql' }));
             }
 
-            const queryResult = transformSql
-                ? await client.query(transformSql(sql), params)
-                : await client.query(sql, params);
+            const queryResult = await client.query(sql, params);
             const rows = queryResult.rows;
 
             return hydrate(rows, augmentedQuery) as Array<PgQueryResult>;
