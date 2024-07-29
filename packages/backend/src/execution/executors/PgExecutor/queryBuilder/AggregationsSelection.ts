@@ -4,7 +4,7 @@ import { SqlBuilder } from './exp';
 
 // TODO(fhur): this is actually only supporting count(*) for now.
 export class AggregationsSelection implements Selection {
-    public constructor() { }
+    public constructor() {}
 
     static fromQuery(
         rootQuery: AnyQuery,
@@ -16,7 +16,7 @@ export class AggregationsSelection implements Selection {
         if (Object.keys(rootQuery.aggregates).length === 0) {
             return [];
         }
-        return [new AggregationsSelection()]
+        return [new AggregationsSelection()];
     }
 
     toSql() {

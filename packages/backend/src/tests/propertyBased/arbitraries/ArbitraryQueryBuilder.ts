@@ -21,7 +21,7 @@ export class ArbitraryQueryBuilder<DB> {
         private hasResults: boolean = true,
         private groupBy?: string[],
         private skipLimit?: boolean,
-    ) { }
+    ) {}
 
     /**
      * Creates a new ArbitraryQueryBuilder from the Pagila DB.
@@ -37,7 +37,7 @@ export class ArbitraryQueryBuilder<DB> {
             this.tables,
             this.hasResults,
             this.groupBy,
-            this.skipLimit
+            this.skipLimit,
         );
     }
 
@@ -48,7 +48,7 @@ export class ArbitraryQueryBuilder<DB> {
             this.tables,
             this.hasResults,
             groupBy,
-            this.skipLimit
+            this.skipLimit,
         );
     }
 
@@ -59,7 +59,7 @@ export class ArbitraryQueryBuilder<DB> {
             tables,
             this.hasResults,
             this.groupBy,
-            this.skipLimit
+            this.skipLimit,
         );
     }
 
@@ -75,7 +75,7 @@ export class ArbitraryQueryBuilder<DB> {
             this.tables,
             false,
             this.groupBy,
-            this.skipLimit
+            this.skipLimit,
         );
     }
 
@@ -91,7 +91,7 @@ export class ArbitraryQueryBuilder<DB> {
             this.tables,
             true,
             this.groupBy,
-            this.skipLimit
+            this.skipLimit,
         );
     }
 
@@ -102,7 +102,7 @@ export class ArbitraryQueryBuilder<DB> {
             this.tables,
             this.hasResults,
             this.groupBy,
-            true
+            true,
         );
     }
 

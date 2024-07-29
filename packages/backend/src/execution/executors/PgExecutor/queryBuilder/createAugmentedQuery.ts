@@ -30,7 +30,10 @@ export function createAugmentedQuery(
         rootQuery,
         defaultSchema,
     );
-    const aggregates = AggregationsSelection.fromQuery(rootQuery, defaultSchema);
+    const aggregates = AggregationsSelection.fromQuery(
+        rootQuery,
+        defaultSchema,
+    );
     const wheres = collectWhere(rootQuery, defaultSchema);
     const joins = collectJoins(rootQuery, defaultSchema);
     const groupingColumns =
