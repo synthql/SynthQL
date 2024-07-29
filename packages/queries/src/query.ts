@@ -6,6 +6,7 @@ import { Table } from './types/Table';
 import { Schema } from './types/Schema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
+import { Exp } from './expression/Exp';
 
 export class QueryBuilder<
     DB,
@@ -18,6 +19,7 @@ export class QueryBuilder<
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupBy extends string[],
+    TAggregates extends Record<string, Exp> | undefined,
 > {
     constructor(
         private _from: TTable,
@@ -29,6 +31,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
+        private _aggregates: TAggregates,
     ) {}
 
     private build(): {
@@ -41,6 +44,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        aggregates: TAggregates;
     } {
         return {
             from: this._from,
@@ -52,7 +56,56 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            aggregates: this._aggregates,
         };
+    }
+
+    /**
+     * Returns a query that counts the number of rows that match the query.
+     *
+     * Example:
+     *
+     * ```ts
+     * const query = from('actor')
+     *  .where({ actor_id: {in: [1,2,3]} })
+     *  .count()
+     *
+     * const { data } = useSynthql({query})
+     *
+     * console.log(data.count) // 3
+     * ```
+     *
+     * This will return a query that counts the number of rows in the `actor` table where `actor_id = 1`.
+     */
+    count() {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            {},
+            TInclude,
+            undefined,
+            undefined,
+            'one',
+            TLazy,
+            TGroupBy,
+            {
+                count: { type: 'fn'; fn: 'count'; args: [1] };
+            }
+        >(
+            this._from,
+            this._where,
+            {},
+            this._include,
+            undefined,
+            undefined,
+            'one',
+            this._lazy,
+            this._groupBy,
+            {
+                count: { type: 'fn', fn: 'count', args: [1] },
+            },
+        ).build();
     }
 
     /**
@@ -69,7 +122,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -80,6 +134,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -97,7 +152,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -108,6 +164,7 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -125,7 +182,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -136,6 +194,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -155,7 +214,8 @@ export class QueryBuilder<
             TOffset,
             'one',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -166,6 +226,7 @@ export class QueryBuilder<
             'one',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -183,7 +244,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -194,6 +256,7 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -211,7 +274,8 @@ export class QueryBuilder<
             TOffset,
             'maybe',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -222,6 +286,7 @@ export class QueryBuilder<
             'maybe',
             this._lazy,
             this._groupBy,
+            this._aggregates,
         ).build();
     }
 
@@ -236,7 +301,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -247,6 +313,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -283,7 +350,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -294,6 +362,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -308,7 +377,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -319,6 +389,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -333,7 +404,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -344,6 +416,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -362,7 +435,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             where,
@@ -373,6 +447,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -387,7 +462,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             true,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -398,6 +474,7 @@ export class QueryBuilder<
             this._cardinality,
             true,
             this._groupBy,
+            this._aggregates,
         );
     }
 
@@ -412,7 +489,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TAggregates
         >(
             this._from,
             this._where,
@@ -423,6 +501,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             id,
+            this._aggregates,
         );
     }
 }
@@ -446,7 +525,8 @@ export function query<DB>(schema: Schema<DB>) {
                 number | undefined,
                 'many',
                 undefined,
-                typeof primaryKeys
+                typeof primaryKeys,
+                undefined
             >(
                 table,
                 {},
@@ -457,6 +537,7 @@ export function query<DB>(schema: Schema<DB>) {
                 'many',
                 undefined,
                 primaryKeys,
+                undefined,
             );
         },
     };

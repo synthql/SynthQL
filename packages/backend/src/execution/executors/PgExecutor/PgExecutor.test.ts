@@ -48,6 +48,29 @@ describe('PgExecutor', () => {
     `);
     });
 
+    it('.count() ', async () => {
+        const q = from('film')
+            .where({
+                film_id: { in: [1, 2, 3] },
+            })
+            .groupBy()
+            .count();
+        const { sql } = executor.compile(q);
+
+        expect(sql).toMatchInlineSnapshot(`
+      "select
+        count(1) as "count"
+      from
+        "public"."film" "public::film"
+      where
+        ("public::film".film_id = any ($1))"
+    `);
+
+        const result = await executor.execute(q, executeProps);
+
+        expect(result).toEqual([{ count: 3 }]);
+    });
+
     it('Film table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q1, executeProps);
 

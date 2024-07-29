@@ -229,7 +229,6 @@ export class SqlBuilder {
     }
 
     addOperator(op: BinaryOperator) {
-        const unknownOp = op as unknown;
         if (!OPERATORS.includes(op as any)) {
             throw new Error(`Invalid operator: ${op}`);
         }

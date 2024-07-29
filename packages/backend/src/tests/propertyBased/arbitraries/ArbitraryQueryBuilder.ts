@@ -19,6 +19,8 @@ export class ArbitraryQueryBuilder<DB> {
         private cardinalities: Cardinality[] = ['many', 'maybe', 'one'],
         private tables: Table<DB>[] = getTableNames(schema) as Table<DB>[],
         private hasResults: boolean = true,
+        private groupBy?: string[],
+        private skipLimit?: boolean,
     ) {}
 
     /**
@@ -34,6 +36,19 @@ export class ArbitraryQueryBuilder<DB> {
             cardinality,
             this.tables,
             this.hasResults,
+            this.groupBy,
+            this.skipLimit,
+        );
+    }
+
+    withGroupBy(...groupBy: string[]) {
+        return new ArbitraryQueryBuilder<DB>(
+            this.schema,
+            this.cardinalities,
+            this.tables,
+            this.hasResults,
+            groupBy,
+            this.skipLimit,
         );
     }
 
@@ -43,6 +58,8 @@ export class ArbitraryQueryBuilder<DB> {
             this.cardinalities,
             tables,
             this.hasResults,
+            this.groupBy,
+            this.skipLimit,
         );
     }
 
@@ -57,6 +74,8 @@ export class ArbitraryQueryBuilder<DB> {
             this.cardinalities,
             this.tables,
             false,
+            this.groupBy,
+            this.skipLimit,
         );
     }
 
@@ -70,6 +89,19 @@ export class ArbitraryQueryBuilder<DB> {
             this.schema,
             this.cardinalities,
             this.tables,
+            true,
+            this.groupBy,
+            this.skipLimit,
+        );
+    }
+
+    withNoLimit() {
+        return new ArbitraryQueryBuilder<DB>(
+            this.schema,
+            this.cardinalities,
+            this.tables,
+            this.hasResults,
+            this.groupBy,
             true,
         );
     }
@@ -115,14 +147,20 @@ export class ArbitraryQueryBuilder<DB> {
     }
 
     private arbGroupBy(tableName: Table<DB>): fc.Arbitrary<string[]> {
-        return fc.constant(getPrimaryKeyColumns(this.schema, tableName));
+        if (this.groupBy === undefined) {
+            return fc.constant(getPrimaryKeyColumns(this.schema, tableName));
+        }
+        return fc.constant(this.groupBy);
     }
 
     private arbCardinality(): fc.Arbitrary<Cardinality> {
         return fc.constantFrom(...this.cardinalities);
     }
 
-    private arbLimit(): fc.Arbitrary<number> {
+    private arbLimit(): fc.Arbitrary<number | undefined> {
+        if (this.skipLimit) {
+            return fc.constant(undefined);
+        }
         if (!this.hasResults) {
             return fc.constant(0);
         }
