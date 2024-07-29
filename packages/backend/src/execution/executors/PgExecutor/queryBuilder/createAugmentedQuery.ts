@@ -32,7 +32,7 @@ export function createAugmentedQuery(
     const wheres = collectWhere(rootQuery, defaultSchema);
     const joins = collectJoins(rootQuery, defaultSchema);
     const groupingColumns =
-        rootQuery.groupingId?.map((col) => rootTable.column(col)) ?? [];
+        rootQuery.groupBy?.map((col) => rootTable.column(col)) ?? [];
 
     return {
         selection: selectionColumn.concat(jsonbAggColumn),
