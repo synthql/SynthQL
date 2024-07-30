@@ -13,6 +13,7 @@ import { SynthqlError } from './SynthqlError';
 export interface QueryEngineProps<DB> {
     url?: string;
     schema?: string;
+    prependSql?: string;
     providers?: Array<QueryProvider<DB, Table<DB>>>;
     pool?: Pool;
 }
@@ -20,10 +21,12 @@ export interface QueryEngineProps<DB> {
 export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
+    private prependSql: string;
     private executors: Array<QueryExecutor> = [];
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
+        this.prependSql = config.prependSql ?? '';
         this.pool =
             config.pool ??
             new Pool({
@@ -45,9 +48,14 @@ export class QueryEngine<DB> {
     execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
         query: TQuery,
         opts?: {
+            /**
+             * The name of the database schema to execute
+             * your SynthQL query against e.g `public`
+             */
             schema?: string;
             /**
-             * If true, the generator will only return the last result.
+             * If true, the query result generator will wait for query
+             * execution completion, and then return only the last result
              */
             returnLastOnly?: boolean;
         },
@@ -55,6 +63,7 @@ export class QueryEngine<DB> {
         const gen = execute<DB, TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
+            prependSql: this.prependSql,
         });
 
         if (opts?.returnLastOnly) {
@@ -70,17 +79,22 @@ export class QueryEngine<DB> {
     >(
         query: TQuery,
         opts?: {
+            /**
+             * The name of the database schema to execute
+             * your SynthQL query against e.g `public`
+             */
             schema?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
-        const queryResult = await collectLast(
-            this.execute(query, {
-                returnLastOnly: true,
-                schema: opts?.schema,
-            }),
+        return await collectLast(
+            generateLast(
+                execute<DB, TQuery>(query, {
+                    executors: this.executors,
+                    defaultSchema: opts?.schema ?? this.schema,
+                    prependSql: this.prependSql,
+                }),
+            ),
         );
-
-        return queryResult;
     }
 
     compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {

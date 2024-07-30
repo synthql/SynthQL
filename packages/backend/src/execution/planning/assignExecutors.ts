@@ -1,7 +1,5 @@
 import { describeQuery } from '../../query/describeQuery';
-import { iterateQuery } from '../../query/iterateQuery';
 import { ColumnRef } from '../../refs/ColumnRef';
-import { AnyQuery } from '../../types';
 import { ExecuteProps } from '../execute';
 import { ExecutionPlanNode, PlanningQuery } from '../types';
 import { selectRefdColumns } from './selectRefdColumns';

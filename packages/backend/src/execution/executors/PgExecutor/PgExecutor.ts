@@ -1,8 +1,6 @@
 import { Pool, PoolClient } from 'pg';
 import { format } from 'sql-formatter';
 import { splitQueryAtBoundary } from '../../../query/splitQueryAtBoundary';
-import { ColumnRef } from '../../../refs/ColumnRef';
-import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { AnyQuery } from '../../../types';
 import { QueryExecutor } from '../../types';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
@@ -33,6 +31,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
             query,
             defaultSchema: this.props.defaultSchema,
         });
+
         const { sql, params } = sqlBuilder.build();
 
         return {
@@ -43,13 +42,33 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
     async execute(
         query: AnyQuery,
-        { defaultSchema }: { defaultSchema: string },
+        {
+            defaultSchema,
+            prependSql,
+        }: { defaultSchema: string; prependSql?: string },
     ): Promise<Array<PgQueryResult>> {
         const client = await this.client;
+
+        if (prependSql) {
+            try {
+                if (this.props.logging) {
+                    console.log(format(prependSql, { language: 'postgresql' }));
+                }
+
+                await client.query(prependSql);
+            } catch (err) {
+                throw SynthqlError.createPrependSqlExecutionError({
+                    error: err,
+                    prependSql,
+                });
+            }
+        }
+
         const { sqlBuilder, augmentedQuery } = composeQuery({
             defaultSchema,
             query,
         });
+
         const { params, sql } = sqlBuilder.build();
 
         try {
