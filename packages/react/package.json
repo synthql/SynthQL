@@ -41,7 +41,7 @@
         "typescript": "^5.4.5"
     },
     "peerDependencies": {
-        "@tanstack/react-query": "^4",
-        "react": "^17"
+        "@tanstack/react-query": "^4 || ^5",
+        "react": "^17 || ^18"
     }
 }

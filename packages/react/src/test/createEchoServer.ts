@@ -31,7 +31,7 @@ export function createEchoServer(
                     res.write(JSON.stringify(line) + '\n');
                 }
 
-                // flush the buffer
+                // Flush the buffer
                 res.end();
             });
         });
