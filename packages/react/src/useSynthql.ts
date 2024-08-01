@@ -25,7 +25,7 @@ export function useSynthql<
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.from}`.replace('//', '/');
+    const enrichedEndpoint = `${endpoint}/${query.from}`;
 
     const mergedRequestInit: RequestInit = {
         ...requestInit,
