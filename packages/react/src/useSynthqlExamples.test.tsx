@@ -1,10 +1,10 @@
+import React from 'react';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { EchoServer, createEchoServer } from './test/createEchoServer';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
 import { DB, from } from './test/echoDb';
 import { Providers } from './test/Providers';
-import React from 'react';
 
 describe('useSynthql test examples', () => {
     let echoServer: EchoServer | undefined;

@@ -26,5 +26,6 @@ export function useSynthqlContext(): SynthqlContext {
     if (!context) {
         throw new Error('useSynthql must be used within a SynthqlProvider');
     }
+
     return context;
 }

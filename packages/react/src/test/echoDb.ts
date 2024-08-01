@@ -1,26 +1,42 @@
+import { query } from '@synthql/queries';
+
 export interface DB {
     users: {
-        id: string;
-        name: string;
+        id: {
+            type: number;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        name: {
+            type: string;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
     };
 }
 
 const schema = {
-    $schema: '',
-    type: '',
-    description: '',
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    type: 'object',
+    description: "Your database's schema",
     required: [],
     additionalProperties: false,
     $defs: {},
     properties: {
         users: {
-            type: '',
+            type: 'object',
             description: '',
             required: [],
             additionalProperties: false,
             properties: {
                 columns: {
-                    type: '',
+                    type: 'object',
                     description: '',
                     required: [],
                     additionalProperties: false,
@@ -97,7 +113,5 @@ const schema = {
         },
     },
 };
-
-import { query } from '@synthql/queries';
 
 export const from = query<DB>(schema).from;

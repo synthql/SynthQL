@@ -1,14 +1,12 @@
+import React from 'react';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { Query, Table } from '@synthql/queries';
+import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
 import { DB, from } from './test/generated';
-
 import { Providers } from './test/Providers';
-import React from 'react';
 import { QueryEngine } from '@synthql/backend';
-import { col } from '@synthql/queries';
+import { col, Query, Table } from '@synthql/queries';
 
 function renderSynthqlQuery<
     DB,
