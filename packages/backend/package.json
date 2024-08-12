@@ -45,6 +45,7 @@
         "dotenv": "^16.3.1",
         "fast-check": "^3.19.0",
         "kysely-codegen": "^0.11.0",
+        "next": "^14.2.5",
         "postgres": "^3.4.3",
         "rollup-plugin-node-externals": "^7.1.1",
         "typescript": "^5.4.5",

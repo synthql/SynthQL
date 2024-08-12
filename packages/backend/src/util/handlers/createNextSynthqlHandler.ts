@@ -1,46 +1,46 @@
+import { ReadableStream } from 'stream/web';
 import { QueryEngine, collectLast } from '../..';
-import type { Request, Response } from 'express';
 import { SynthqlError } from '../../SynthqlError';
+import { NextRequest, NextResponse } from 'next/server';
 import { dateReplacer } from '../dateReplacer';
 
-export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
-export type ExpressSynthqlHandlerResponse = Pick<
-    Response,
-    'statusCode' | 'write' | 'setHeader' | 'end'
+export type NextSynthqlHandlerRequest = Pick<
+    NextRequest,
+    'body' | 'headers' | 'text'
 >;
-export type ExpressSynthqlHandler = (
-    req: ExpressSynthqlHandlerRequest,
-    res: ExpressSynthqlHandlerResponse,
-) => Promise<void>;
+export type NextSynthqlHandler = (
+    req: NextSynthqlHandlerRequest,
+) => Promise<NextResponse>;
 
-export function createExpressSynthqlHandler<DB>(
+export function createNextSynthqlHandler<DB>(
     queryEngine: QueryEngine<DB>,
-): ExpressSynthqlHandler {
-    return async (req, res) => {
+): NextSynthqlHandler {
+    return async (req) => {
         // First, there should be a global error handler that catches all errors
         // 1. Known errors (i.e. `SynthqlError`s) should be converted to a JSON response
         // 2. Unknown errors should be passed on to the next layer
 
         try {
-            await executeSynthqlRequest<DB>(queryEngine, req, res);
-        } catch (e) {
+            return await executeSynthqlRequest<DB>(queryEngine, req);
+        } catch (error) {
             // Handle known `SynthqlError`s
-            if (e instanceof SynthqlError) {
-                res.statusCode = 400;
-                res.setHeader('Content-Type', 'application/json');
-
-                res.write(
+            if (error instanceof SynthqlError) {
+                return new NextResponse(
                     JSON.stringify(
                         {
-                            type: e.type,
-                            error: e.message,
+                            type: error.type,
+                            error: error.message,
                         },
                         dateReplacer,
                     ),
+                    {
+                        status: 400,
+                        headers: { 'Content-Type': 'application/json' },
+                    },
                 );
             } else {
                 // Let another layer handle the error
-                throw e;
+                throw error;
             }
         }
     };
@@ -48,9 +48,8 @@ export function createExpressSynthqlHandler<DB>(
 
 async function executeSynthqlRequest<DB>(
     queryEngine: QueryEngine<DB>,
-    req: ExpressSynthqlHandlerRequest,
-    res: ExpressSynthqlHandlerResponse,
-) {
+    req: NextSynthqlHandlerRequest,
+): Promise<NextResponse> {
     // First try to parse the request body as JSON
     const { query, returnLastOnly } = await tryParseRequest(req);
 
@@ -64,17 +63,16 @@ async function executeSynthqlRequest<DB>(
         returnLastOnly,
     );
 
-    // Now that we have the generator, we want to iterate over the items
-    // and depending on `returnLastOnly`, we will write the status code
-    // either before, or after iteration
-    await writeBody(res, query, resultGenerator, returnLastOnly);
-
-    res.end();
+    // Now that we have the generator, we want to iterate over
+    // the items and depending on `returnLastOnly`, we will
+    // write the status code either before, or after iteration
+    return await writeBody(query, resultGenerator, returnLastOnly);
 }
 
-async function tryParseRequest(req: ExpressSynthqlHandlerRequest) {
-    const body = req.body;
-    const returnLastOnly = req.headers['x-return-last-only'] === 'true';
+async function tryParseRequest(req: NextSynthqlHandlerRequest) {
+    const body = await req.text();
+    const requestHeaders = Object.fromEntries(req.headers);
+    const returnLastOnly = requestHeaders['x-return-last-only'] === 'true';
 
     try {
         const query = JSON.parse(body);
@@ -97,7 +95,6 @@ async function tryExecuteQuery<DB>(
 }
 
 async function writeBody(
-    res: ExpressSynthqlHandlerResponse,
     query: any,
     generator: AsyncGenerator<any>,
     returnLastOnly: boolean,
@@ -106,22 +103,21 @@ async function writeBody(
         // If this fails, fail early and use the global error handler
         const lastResult = await collectLast(generator);
 
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-
-        res.write(JSON.stringify(lastResult, dateReplacer));
+        return new NextResponse(JSON.stringify(lastResult, dateReplacer), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
     } else {
         try {
-            // This is a streaming request, so albeit
-            // counterintuitively, we always need to return 2xx
+            const stream = generatorToStream(generator);
 
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/x-ndjson');
+            return new NextResponse(stream, {
+                // This is a streaming request, so albeit
+                // counterintuitively, we always need to return 2xx
 
-            for await (const intermediateResult of generator) {
-                res.write(JSON.stringify(intermediateResult, dateReplacer));
-                res.write('\n');
-            }
+                status: 200,
+                headers: { 'Content-Type': 'application/x-ndjson' },
+            });
         } catch (e) {
             // First, wrap the error in a SynthqlError to capture
             // the fact that it happened during streaming
@@ -138,7 +134,7 @@ async function writeBody(
             // We need to catch errors here and write them to the streaming response
             // We can't throw them because that would break the stream
 
-            res.write(
+            return new NextResponse(
                 JSON.stringify(
                     {
                         type: error.type,
@@ -146,7 +142,26 @@ async function writeBody(
                     },
                     dateReplacer,
                 ),
+                {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' },
+                },
             );
         }
     }
+}
+
+function generatorToStream(iterator: any) {
+    return new ReadableStream({
+        async pull(controller) {
+            const { value, done } = await iterator.next();
+
+            if (done) {
+                controller.close();
+            } else {
+                controller.enqueue(JSON.stringify(value, dateReplacer));
+                controller.enqueue('\n');
+            }
+        },
+    });
 }

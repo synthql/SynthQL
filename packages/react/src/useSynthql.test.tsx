@@ -75,7 +75,7 @@ describe('useSynthql', () => {
             actor_id: 1,
             first_name: 'PENELOPE',
             last_name: 'GUINESS',
-            last_update: '2022-02-15T09:34:33.000Z',
+            last_update: new Date('2022-02-15T09:34:33.000Z'),
         });
     }, 1000);
 
@@ -306,7 +306,12 @@ describe('useSynthql', () => {
         // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const store = from('store')
-            .columns('store_id', 'address_id', 'manager_staff_id')
+            .columns(
+                'store_id',
+                'address_id',
+                'manager_staff_id',
+                'last_update',
+            )
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -319,6 +324,7 @@ describe('useSynthql', () => {
                 'first_name',
                 'last_name',
                 'email',
+                'last_update',
             )
             .where({ customer_id: { in: [1] } })
             .include({ store })
@@ -339,10 +345,12 @@ describe('useSynthql', () => {
             first_name: 'MARY',
             last_name: 'SMITH',
             email: 'MARY.SMITH@sakilacustomer.org',
+            last_update: new Date('2022-02-15T09:57:20.000Z'),
             store: {
                 store_id: 1,
                 address_id: 129,
                 manager_staff_id: 1,
+                last_update: new Date('2022-02-15T09:57:12.000Z'),
             },
         });
     }, 1000);
@@ -352,14 +360,25 @@ describe('useSynthql', () => {
         // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const address = from('address')
-            .columns('address_id', 'address', 'district')
+            .columns(
+                'address_id',
+                'city_id',
+                'address',
+                'district',
+                'last_update',
+            )
             .where({
                 address_id: col('store.address_id'),
             })
             .one();
 
         const store = from('store')
-            .columns('store_id', 'address_id', 'manager_staff_id')
+            .columns(
+                'store_id',
+                'address_id',
+                'manager_staff_id',
+                'last_update',
+            )
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -373,6 +392,7 @@ describe('useSynthql', () => {
                 'first_name',
                 'last_name',
                 'email',
+                'last_update',
             )
             .where({ customer_id: { in: [4] } })
             .include({ store })
@@ -394,14 +414,18 @@ describe('useSynthql', () => {
             first_name: 'BARBARA',
             last_name: 'JONES',
             email: 'BARBARA.JONES@sakilacustomer.org',
+            last_update: new Date('2022-02-15T09:57:20.000Z'),
             store: {
                 store_id: 2,
                 address_id: 12,
                 manager_staff_id: 2,
+                last_update: new Date('2022-02-15T09:57:12+00:00'),
                 address: {
                     address_id: 12,
+                    city_id: 200,
                     address: '478 Joliet Way',
                     district: 'Hamilton',
+                    last_update: new Date('2022-02-15T09:45:30.000Z'),
                 },
             },
         });
@@ -412,14 +436,20 @@ describe('useSynthql', () => {
         // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
         const city = from('city')
-            .columns('city_id', 'city')
+            .columns('city_id', 'country_id', 'city', 'last_update')
             .where({
                 city_id: col('address.city_id'),
             })
             .one();
 
         const address = from('address')
-            .columns('address_id', 'city_id', 'address', 'district')
+            .columns(
+                'address_id',
+                'city_id',
+                'address',
+                'district',
+                'last_update',
+            )
             .where({
                 address_id: col('store.address_id'),
             })
@@ -427,7 +457,12 @@ describe('useSynthql', () => {
             .one();
 
         const store = from('store')
-            .columns('store_id', 'address_id', 'manager_staff_id')
+            .columns(
+                'store_id',
+                'address_id',
+                'manager_staff_id',
+                'last_update',
+            )
             .where({
                 store_id: col('customer.store_id'),
             })
@@ -441,6 +476,7 @@ describe('useSynthql', () => {
                 'first_name',
                 'last_name',
                 'email',
+                'last_update',
             )
             .where({ customer_id: { in: [4] } })
             .include({ store })
@@ -462,18 +498,126 @@ describe('useSynthql', () => {
             first_name: 'BARBARA',
             last_name: 'JONES',
             email: 'BARBARA.JONES@sakilacustomer.org',
+            last_update: new Date('2022-02-15T09:57:20.000Z'),
             store: {
                 store_id: 2,
                 address_id: 12,
                 manager_staff_id: 2,
+                last_update: new Date('2022-02-15T09:57:12+00:00'),
                 address: {
                     address_id: 12,
                     city_id: 200,
                     address: '478 Joliet Way',
                     district: 'Hamilton',
+                    last_update: new Date('2022-02-15T09:45:30.000Z'),
                     city: {
                         city_id: 200,
+                        country_id: 68,
                         city: 'Hamilton',
+                        last_update: new Date('2022-02-15T09:45:25+00:00'),
+                    },
+                },
+            },
+        });
+    }, 1000);
+
+    test('Fetching a single result from the Pagila database with four-level-deep nested data', async () => {
+        // @@start-example@@ Find a single customer by id with a four-level-deep `include()`
+        // @@desc@@ Finds 1 record in the `customers` table where the `id` is in the list of ids
+
+        const country = from('country')
+            .columns('country_id', 'country', 'last_update')
+            .where({
+                country_id: col('city.country_id'),
+            })
+            .one();
+
+        const city = from('city')
+            .columns('city_id', 'city', 'country_id', 'last_update')
+            .where({
+                city_id: col('address.city_id'),
+            })
+            .include({ country })
+            .one();
+
+        const address = from('address')
+            .columns(
+                'address_id',
+                'city_id',
+                'address',
+                'district',
+                'last_update',
+            )
+            .where({
+                address_id: col('store.address_id'),
+            })
+            .include({ city })
+            .one();
+
+        const store = from('store')
+            .columns(
+                'store_id',
+                'address_id',
+                'manager_staff_id',
+                'last_update',
+            )
+            .where({
+                store_id: col('customer.store_id'),
+            })
+            .include({ address })
+            .one();
+
+        const q = from('customer')
+            .columns(
+                'customer_id',
+                'store_id',
+                'first_name',
+                'last_name',
+                'email',
+                'last_update',
+            )
+            .where({ customer_id: { in: [4] } })
+            .include({ store })
+            .one();
+
+        // @@end-example@@
+
+        const result = renderSynthqlQuery<DB, 'customer', typeof q>({
+            query: q,
+            returnLastOnly: true,
+            server: pagilaServer,
+        });
+
+        await result.waitFor(() => result.result.current.data !== undefined);
+
+        expect(result.result.current.data).toEqual({
+            customer_id: 4,
+            store_id: 2,
+            first_name: 'BARBARA',
+            last_name: 'JONES',
+            email: 'BARBARA.JONES@sakilacustomer.org',
+            last_update: new Date('2022-02-15T09:57:20.000Z'),
+            store: {
+                store_id: 2,
+                address_id: 12,
+                manager_staff_id: 2,
+                last_update: new Date('2022-02-15T09:57:12+00:00'),
+                address: {
+                    address_id: 12,
+                    city_id: 200,
+                    address: '478 Joliet Way',
+                    district: 'Hamilton',
+                    last_update: new Date('2022-02-15T09:45:30.000Z'),
+                    city: {
+                        city_id: 200,
+                        country_id: 68,
+                        city: 'Hamilton',
+                        last_update: new Date('2022-02-15T09:45:25+00:00'),
+                        country: {
+                            country: 'New Zealand',
+                            country_id: 68,
+                            last_update: new Date('2022-02-15T09:44:00.000Z'),
+                        },
                     },
                 },
             },
