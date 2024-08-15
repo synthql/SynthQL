@@ -115,6 +115,16 @@ async function writeBody(
                 headers: { 'Content-Type': 'application/x-ndjson' },
             });
         } catch (e) {
+            // TODO: FIX: This logic is never trigerred, because
+            // the error is thrown directly inside the NextResponse
+            // stream, so its simply thrown as an exception when the
+            // stream is read by the client. We'll need to rewrite
+            // the streaming logic, if we still want to return
+            // ResponseStreamingError errors, but with the way
+            // NextResponse works, I don't think we need to,
+            // and we can keep the ResponseStreamingError
+            // to be used in Express-like handlers
+
             // First, wrap the error in a SynthqlError to capture
             // the fact that it happened during streaming
 
@@ -135,10 +145,6 @@ async function writeBody(
                     type: error.type,
                     error: error.message,
                 }),
-                {
-                    status: 400,
-                    headers: { 'Content-Type': 'application/json' },
-                },
             );
         }
     }

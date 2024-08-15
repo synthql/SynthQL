@@ -11,7 +11,7 @@ import { store } from '../queries.v2';
 import { pool } from '../queryEngine';
 import { sortRecursively } from '../sortRecursively';
 
-describe.skip('e2e', () => {
+describe('e2e', () => {
     const payments = from('payment')
         .groupBy('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
