@@ -1,4 +1,4 @@
-import { Pool, PoolClient } from 'pg';
+import { Pool, PoolClient, types } from 'pg';
 import { format } from 'sql-formatter';
 import { splitQueryAtBoundary } from '../../../query/splitQueryAtBoundary';
 import { AnyQuery } from '../../../types';
@@ -7,6 +7,19 @@ import { QueryProviderExecutor } from '../QueryProviderExecutor';
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 import { SynthqlError } from '../../../SynthqlError';
+
+const TIME_OID = types.builtins.TIME;
+const TIMETZ_OID = types.builtins.TIMETZ;
+const DATE_OID = types.builtins.DATE;
+const TIMESTAMP_OID = types.builtins.TIMESTAMP;
+const TIMESTAMPTZ_OID = types.builtins.TIMESTAMPTZ;
+
+// Override parsing of DATE types
+types.setTypeParser(TIME_OID, (value) => value);
+types.setTypeParser(TIMETZ_OID, (value) => value);
+types.setTypeParser(DATE_OID, (value) => value);
+types.setTypeParser(TIMESTAMP_OID, (value) => value);
+types.setTypeParser(TIMESTAMPTZ_OID, (value) => value);
 
 type PgQueryResult = {
     [key: string]: any;

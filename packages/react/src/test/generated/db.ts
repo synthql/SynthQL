@@ -20,11 +20,11 @@ export type PgCatalogBool = boolean;
 /**
  * A PG date
  */
-export type PgCatalogDate = Date;
+export type PgCatalogDate = string;
 /**
  * A PG timestamptz
  */
-export type PgCatalogTimestamptz = Date;
+export type PgCatalogTimestamptz = string;
 /**
  * The year domain from the public schema
  */

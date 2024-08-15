@@ -75,7 +75,7 @@ describe('useSynthql', () => {
             actor_id: 1,
             first_name: 'PENELOPE',
             last_name: 'GUINESS',
-            last_update: new Date('2022-02-15T09:34:33.000Z'),
+            last_update: '2022-02-15 09:34:33+00',
         });
     }, 1000);
 
@@ -345,12 +345,12 @@ describe('useSynthql', () => {
             first_name: 'MARY',
             last_name: 'SMITH',
             email: 'MARY.SMITH@sakilacustomer.org',
-            last_update: new Date('2022-02-15T09:57:20.000Z'),
+            last_update: '2022-02-15 09:57:20+00',
             store: {
                 store_id: 1,
                 address_id: 129,
                 manager_staff_id: 1,
-                last_update: new Date('2022-02-15T09:57:12.000Z'),
+                last_update: '2022-02-15T09:57:12+00:00',
             },
         });
     }, 1000);
@@ -414,18 +414,18 @@ describe('useSynthql', () => {
             first_name: 'BARBARA',
             last_name: 'JONES',
             email: 'BARBARA.JONES@sakilacustomer.org',
-            last_update: new Date('2022-02-15T09:57:20.000Z'),
+            last_update: '2022-02-15 09:57:20+00',
             store: {
                 store_id: 2,
                 address_id: 12,
                 manager_staff_id: 2,
-                last_update: new Date('2022-02-15T09:57:12+00:00'),
+                last_update: '2022-02-15T09:57:12+00:00',
                 address: {
                     address_id: 12,
                     city_id: 200,
                     address: '478 Joliet Way',
                     district: 'Hamilton',
-                    last_update: new Date('2022-02-15T09:45:30.000Z'),
+                    last_update: '2022-02-15 09:45:30+00',
                 },
             },
         });
@@ -498,23 +498,23 @@ describe('useSynthql', () => {
             first_name: 'BARBARA',
             last_name: 'JONES',
             email: 'BARBARA.JONES@sakilacustomer.org',
-            last_update: new Date('2022-02-15T09:57:20.000Z'),
+            last_update: '2022-02-15 09:57:20+00',
             store: {
                 store_id: 2,
                 address_id: 12,
                 manager_staff_id: 2,
-                last_update: new Date('2022-02-15T09:57:12+00:00'),
+                last_update: '2022-02-15T09:57:12+00:00',
                 address: {
                     address_id: 12,
                     city_id: 200,
                     address: '478 Joliet Way',
                     district: 'Hamilton',
-                    last_update: new Date('2022-02-15T09:45:30.000Z'),
+                    last_update: '2022-02-15 09:45:30+00',
                     city: {
                         city_id: 200,
                         country_id: 68,
                         city: 'Hamilton',
-                        last_update: new Date('2022-02-15T09:45:25+00:00'),
+                        last_update: '2022-02-15T09:45:25+00:00',
                     },
                 },
             },
@@ -596,27 +596,27 @@ describe('useSynthql', () => {
             first_name: 'BARBARA',
             last_name: 'JONES',
             email: 'BARBARA.JONES@sakilacustomer.org',
-            last_update: new Date('2022-02-15T09:57:20.000Z'),
+            last_update: '2022-02-15 09:57:20+00',
             store: {
                 store_id: 2,
                 address_id: 12,
                 manager_staff_id: 2,
-                last_update: new Date('2022-02-15T09:57:12+00:00'),
+                last_update: '2022-02-15T09:57:12+00:00',
                 address: {
                     address_id: 12,
                     city_id: 200,
                     address: '478 Joliet Way',
                     district: 'Hamilton',
-                    last_update: new Date('2022-02-15T09:45:30.000Z'),
+                    last_update: '2022-02-15 09:45:30+00',
                     city: {
                         city_id: 200,
                         country_id: 68,
                         city: 'Hamilton',
-                        last_update: new Date('2022-02-15T09:45:25+00:00'),
+                        last_update: '2022-02-15T09:45:25+00:00',
                         country: {
                             country: 'New Zealand',
                             country_id: 68,
-                            last_update: new Date('2022-02-15T09:44:00.000Z'),
+                            last_update: '2022-02-15 09:44:00+00',
                         },
                     },
                 },

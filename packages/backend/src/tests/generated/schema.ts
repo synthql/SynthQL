@@ -315,7 +315,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.date',
                                     type: 'string',
                                     format: 'date',
-                                    tsType: 'Date',
                                     description: 'A PG date',
                                 },
                                 selectable: {
@@ -358,7 +357,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -595,7 +593,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -743,7 +740,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1268,7 +1264,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1510,7 +1505,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -1655,7 +1649,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2004,7 +1997,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2198,7 +2190,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2340,7 +2331,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2528,7 +2518,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2676,7 +2665,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -2948,7 +2936,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3056,7 +3043,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3185,7 +3171,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3271,7 +3256,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3712,7 +3696,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -3952,7 +3935,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4329,7 +4311,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.date',
                                     type: 'string',
                                     format: 'date',
-                                    tsType: 'Date',
                                     description: 'A PG date',
                                 },
                                 selectable: {
@@ -4372,7 +4353,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4609,7 +4589,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -4757,7 +4736,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5282,7 +5260,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5524,7 +5501,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -5669,7 +5645,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6018,7 +5993,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6212,7 +6186,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6354,7 +6327,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6542,7 +6514,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6690,7 +6661,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -6962,7 +6932,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7070,7 +7039,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7199,7 +7167,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7285,7 +7252,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7726,7 +7692,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -7966,7 +7931,6 @@ export const schema: Schema<DB> = {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
                                     format: 'date-time',
-                                    tsType: 'Date',
                                     description: 'A PG timestamptz',
                                 },
                                 selectable: {
@@ -8028,25 +7992,34 @@ export const schema: Schema<DB> = {
             type: 'boolean',
             description: 'A PG bool',
         },
+        'pg_catalog.time': {
+            id: 'pg_catalog.time',
+            type: 'string',
+            format: 'time',
+            description: 'A PG time',
+        },
+        'pg_catalog.timetz': {
+            id: 'pg_catalog.timetz',
+            type: 'string',
+            format: 'time',
+            description: 'A PG timetz',
+        },
         'pg_catalog.date': {
             id: 'pg_catalog.date',
             type: 'string',
             format: 'date',
-            tsType: 'Date',
             description: 'A PG date',
         },
         'pg_catalog.timestamp': {
             id: 'pg_catalog.timestamp',
             type: 'string',
             format: 'date-time',
-            tsType: 'Date',
             description: 'A PG timestamp',
         },
         'pg_catalog.timestamptz': {
             id: 'pg_catalog.timestamptz',
             type: 'string',
             format: 'date-time',
-            tsType: 'Date',
             description: 'A PG timestamptz',
         },
         'pg_catalog.numeric': {

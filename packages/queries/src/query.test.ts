@@ -39,7 +39,7 @@ describe('queries', () => {
             actor_id: number;
             first_name: string;
             last_name: string;
-            last_update: Date;
+            last_update: string;
         };
     });
 
@@ -88,7 +88,7 @@ describe('queries', () => {
             actor_id: number;
             first_name: string;
             last_name: string;
-            last_update: Date;
+            last_update: string;
         };
     });
 
@@ -106,7 +106,7 @@ describe('queries', () => {
             actor_id: number;
             first_name: string;
             last_name: string;
-            last_update: Date;
+            last_update: string;
         };
     });
 

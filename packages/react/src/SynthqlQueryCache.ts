@@ -1,5 +1,4 @@
 import { Query, QueryCache } from '@tanstack/react-query';
-import { SynthqlQueryKey } from '.';
 
 type QueryCacheConfig = ConstructorParameters<typeof QueryCache>[0];
 

@@ -42,7 +42,7 @@ describe('QueryProviderInput', () => {
             actor_id: number[] | undefined;
             first_name: string[] | undefined;
             last_name: string[] | undefined;
-            last_update: Date[] | undefined;
+            last_update: string[] | undefined;
         };
     });
 
@@ -51,6 +51,7 @@ describe('QueryProviderInput', () => {
 
         result satisfies {
             film_id: number[] | undefined;
+            rating?: never;
         };
     });
 });

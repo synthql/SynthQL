@@ -1,19 +1,9 @@
-/**
- * Fetches a JSONL file and yields each line as a parsed JSON object.
- */
+import { ReadableStream } from 'stream/web';
+
 export async function* fetchJsonLines<T = any>(
-    url: string,
-    requestInit?: RequestInit,
+    stream: ReadableStream<any> | null,
 ): AsyncGenerator<T> {
-    const response = await fetch(url, requestInit);
-
-    if (!response.ok) {
-        throw new Error(
-            `Failed to fetch: ${url} - Status: ${response.status} ${response.statusText}`,
-        );
-    }
-
-    const reader = response.body?.getReader();
+    const reader = stream?.getReader();
 
     if (!reader) {
         throw new Error('No reader available for the response body!');
@@ -25,6 +15,7 @@ export async function* fetchJsonLines<T = any>(
 
     while (!done) {
         const { value, done: chunkDone } = await reader.read();
+
         done = chunkDone;
 
         if (value) {
@@ -36,6 +27,7 @@ export async function* fetchJsonLines<T = any>(
             // and we need the entire buffer for the next chunk
             if (boundary !== -1) {
                 const lines = buffer.substring(0, boundary).split('\n');
+
                 buffer = buffer.substring(boundary + 1);
 
                 for (const line of lines) {

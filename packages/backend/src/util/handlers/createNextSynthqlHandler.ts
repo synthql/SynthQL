@@ -2,7 +2,6 @@ import { ReadableStream } from 'stream/web';
 import { QueryEngine, collectLast } from '../..';
 import { SynthqlError } from '../../SynthqlError';
 import { NextRequest, NextResponse } from 'next/server';
-import { dateReplacer } from '../dateReplacer';
 
 export type NextSynthqlHandlerRequest = Pick<
     NextRequest,
@@ -26,13 +25,10 @@ export function createNextSynthqlHandler<DB>(
             // Handle known `SynthqlError`s
             if (error instanceof SynthqlError) {
                 return new NextResponse(
-                    JSON.stringify(
-                        {
-                            type: error.type,
-                            error: error.message,
-                        },
-                        dateReplacer,
-                    ),
+                    JSON.stringify({
+                        type: error.type,
+                        error: error.message,
+                    }),
                     {
                         status: 400,
                         headers: { 'Content-Type': 'application/json' },
@@ -103,7 +99,7 @@ async function writeBody(
         // If this fails, fail early and use the global error handler
         const lastResult = await collectLast(generator);
 
-        return new NextResponse(JSON.stringify(lastResult, dateReplacer), {
+        return new NextResponse(JSON.stringify(lastResult), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
         });
@@ -135,13 +131,10 @@ async function writeBody(
             // We can't throw them because that would break the stream
 
             return new NextResponse(
-                JSON.stringify(
-                    {
-                        type: error.type,
-                        error: error.message,
-                    },
-                    dateReplacer,
-                ),
+                JSON.stringify({
+                    type: error.type,
+                    error: error.message,
+                }),
                 {
                     status: 400,
                     headers: { 'Content-Type': 'application/json' },
@@ -151,16 +144,19 @@ async function writeBody(
     }
 }
 
-function generatorToStream(iterator: any) {
+function generatorToStream(generator: AsyncGenerator<any>) {
     return new ReadableStream({
         async pull(controller) {
-            const { value, done } = await iterator.next();
+            const { value, done } = await generator.next();
 
             if (done) {
                 controller.close();
             } else {
-                controller.enqueue(JSON.stringify(value, dateReplacer));
-                controller.enqueue('\n');
+                controller.enqueue(
+                    new TextEncoder().encode(JSON.stringify(value)),
+                );
+
+                controller.enqueue(new TextEncoder().encode('\n'));
             }
         },
     });

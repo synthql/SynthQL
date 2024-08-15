@@ -1,7 +1,6 @@
 import { QueryEngine, collectLast } from '../..';
 import type { Request, Response } from 'express';
 import { SynthqlError } from '../../SynthqlError';
-import { dateReplacer } from '../dateReplacer';
 
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 export type ExpressSynthqlHandlerResponse = Pick<
@@ -30,13 +29,10 @@ export function createExpressSynthqlHandler<DB>(
                 res.setHeader('Content-Type', 'application/json');
 
                 res.write(
-                    JSON.stringify(
-                        {
-                            type: e.type,
-                            error: e.message,
-                        },
-                        dateReplacer,
-                    ),
+                    JSON.stringify({
+                        type: e.type,
+                        error: e.message,
+                    }),
                 );
             } else {
                 // Let another layer handle the error
@@ -109,7 +105,7 @@ async function writeBody(
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
 
-        res.write(JSON.stringify(lastResult, dateReplacer));
+        res.write(JSON.stringify(lastResult));
     } else {
         try {
             // This is a streaming request, so albeit
@@ -119,7 +115,7 @@ async function writeBody(
             res.setHeader('Content-Type', 'application/x-ndjson');
 
             for await (const intermediateResult of generator) {
-                res.write(JSON.stringify(intermediateResult, dateReplacer));
+                res.write(JSON.stringify(intermediateResult));
                 res.write('\n');
             }
         } catch (e) {
@@ -139,13 +135,10 @@ async function writeBody(
             // We can't throw them because that would break the stream
 
             res.write(
-                JSON.stringify(
-                    {
-                        type: error.type,
-                        error: error.message,
-                    },
-                    dateReplacer,
-                ),
+                JSON.stringify({
+                    type: error.type,
+                    error: error.message,
+                }),
             );
         }
     }
