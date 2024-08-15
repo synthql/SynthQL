@@ -12,3 +12,4 @@ export {
 } from './util/handlers/createNextSynthqlHandler';
 export type * from './types/QueryPlan';
 export * from './QueryEngine';
+export * from './SynthqlError';

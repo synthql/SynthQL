@@ -11,6 +11,7 @@ describe('PgExecutor', () => {
         pool,
         defaultSchema: 'public',
         qpe: new QueryProviderExecutor([]),
+        prependSql: `SET search_path TO "public";`,
     });
 
     const q1 = from('film')
@@ -79,27 +80,6 @@ describe('PgExecutor', () => {
                 actor_id: 2,
                 first_name: 'NICK',
                 last_name: 'WAHLBERG',
-            },
-        ]);
-    });
-
-    const q3 = from('actor')
-        .columns('actor_id', 'first_name', 'last_name')
-        .where({ actor_id: 1 })
-        .one();
-
-    it(`Actor table SynthQL query executes to 
-        expected result with SQL to prepend included`, async () => {
-        const result = await executor.execute(q3, {
-            ...executeProps,
-            prependSql: 'SET search_path TO public',
-        });
-
-        expect(result).toEqual([
-            {
-                actor_id: 1,
-                first_name: 'PENELOPE',
-                last_name: 'GUINESS',
             },
         ]);
     });

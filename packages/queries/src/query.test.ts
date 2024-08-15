@@ -77,7 +77,7 @@ describe('queries', () => {
     test('Find one actor by ID', () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name', 'last_update')
-            .where({
+            .filter({
                 actor_id: 1,
             })
             .one();
@@ -114,7 +114,7 @@ describe('queries', () => {
         const language = from('language')
             .columns('language_id', 'name')
             .where({ language_id: col('film.language_id') })
-            .one();
+            .maybe();
 
         const filmActor = from('film_actor')
             .select({})
@@ -142,7 +142,7 @@ describe('queries', () => {
             language: {
                 language_id: number;
                 name: string;
-            };
+            } | null;
             actors: Array<{
                 actor_id: number;
                 first_name: string;

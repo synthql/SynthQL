@@ -16,6 +16,7 @@ static/reference/
 .env.test.local
 .env.production.local
 
+# Package manager log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

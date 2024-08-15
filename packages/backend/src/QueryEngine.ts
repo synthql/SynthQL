@@ -21,12 +21,12 @@ export interface QueryEngineProps<DB> {
 export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
-    private prependSql: string;
+    private prependSql?: string;
     private executors: Array<QueryExecutor> = [];
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
-        this.prependSql = config.prependSql ?? '';
+        this.prependSql = config.prependSql;
         this.pool =
             config.pool ??
             new Pool({
@@ -41,6 +41,7 @@ export class QueryEngine<DB> {
                 pool: this.pool,
                 defaultSchema: this.schema,
                 qpe,
+                prependSql: this.prependSql,
             }),
         ];
     }
