@@ -14,7 +14,7 @@ const defaultFilms: Film[] = [
         replacement_cost: '1.99',
         rental_duration: 1,
         rental_rate: '1.99',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -30,7 +30,7 @@ const defaultFilms: Film[] = [
         replacement_cost: '1.99',
         rental_duration: 1,
         rental_rate: '1.99',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -46,7 +46,7 @@ const defaultFilms: Film[] = [
         replacement_cost: '1.99',
         rental_duration: 1,
         rental_rate: '1.99',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -62,7 +62,7 @@ const defaultFilms: Film[] = [
         replacement_cost: '1.99',
         rental_duration: 1,
         rental_rate: '1.99',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
         fulltext: '',
         description: null,
         original_language_id: null,
@@ -78,6 +78,7 @@ export function provideFilm(films = defaultFilms): QueryProvider<DB, 'film'> {
         table: 'film',
         execute: async ({ film_id: filmIds }): Promise<Film[]> => {
             assertPresent(filmIds);
+
             assertArray(filmIds);
 
             if (filmIds.length === 0) {

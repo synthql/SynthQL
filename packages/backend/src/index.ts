@@ -5,7 +5,6 @@ export {
     type ExpressSynthqlHandlerResponse,
     createExpressSynthqlHandler,
 } from './util/handlers/createExpressSynthqlHandler';
-
 export type * from './types/QueryPlan';
 export * from './QueryEngine';
 export * from './SynthqlError';

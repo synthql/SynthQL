@@ -23,8 +23,13 @@ describe('select', () => {
         )('select an actor by ID %s ', async (actorId) => {
             const result = await run(findActorById(actorId));
 
-            const expected =
-                await sql`SELECT * FROM actor WHERE actor_id = ${actorId}`;
+            const expected = await sql`
+                SELECT 
+                    actor.actor_id,
+                    actor.first_name,
+                    actor.last_name,
+                    to_char(actor.last_update, 'YYYY-MM-DD HH24:MI:SS+00') AS last_update
+                FROM actor WHERE actor_id = ${actorId}`;
 
             expect(result ?? undefined).toEqual(expected[0]);
         });
@@ -42,7 +47,10 @@ describe('select', () => {
             const result = await run(findCityById(cityId));
             const expected = await sql`
             select
-                city.*,
+                city.city_id,
+                city.city,
+                to_char(city.last_update, 'YYYY-MM-DD HH24:MI:SS+00') AS last_update,
+                city.country_id,
                 jsonb_agg(co) #> '{0}' as country
             from city
             left join country co

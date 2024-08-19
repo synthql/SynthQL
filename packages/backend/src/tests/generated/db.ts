@@ -18,13 +18,25 @@ export type PgCatalogText = string;
  */
 export type PgCatalogBool = boolean;
 /**
- * A PG date
+ * A PG date.
+ * Note that values of the PG date type,
+ * are returned as ISO 8601 strings from the database.
+ * This is because that is how they can be best
+ * accurately processed in JavaScript/TypeScript.
+ * To convert the string into a `Date` object,
+ * use `new Date(dateString)` or `Date.parse(dateString)`
  */
-export type PgCatalogDate = Date;
+export type PgCatalogDate = string;
 /**
- * A PG timestamptz
+ * A PG timestamptz.
+ * Note that values of the PG timestamptz type,
+ * are returned as ISO 8601 strings from the database.
+ * This is because that is how they can be best
+ * accurately processed in JavaScript/TypeScript
+ * To convert the string into a `Date` object,
+ * use `new Date(dateTimeString)` or `Date.parse(dateTimeString)`
  */
-export type PgCatalogTimestamptz = Date;
+export type PgCatalogTimestamptz = string;
 /**
  * The year domain from the public schema
  */

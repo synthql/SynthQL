@@ -6,6 +6,7 @@ export async function* fetchJsonLines<T = any>(
     requestInit?: RequestInit,
 ): AsyncGenerator<T> {
     const response = await fetch(url, requestInit);
+
     if (!response.ok) {
         throw new Error(
             `Failed to fetch: ${url} - Status: ${response.status} ${response.statusText}`,
@@ -13,8 +14,9 @@ export async function* fetchJsonLines<T = any>(
     }
 
     const reader = response.body?.getReader();
+
     if (!reader) {
-        throw new Error('No reader available for the response body.');
+        throw new Error('No reader available for the response body!');
     }
 
     const decoder = new TextDecoder('utf-8');
@@ -27,9 +29,11 @@ export async function* fetchJsonLines<T = any>(
 
         if (value) {
             buffer += decoder.decode(value, { stream: !done });
+
             let boundary = buffer.lastIndexOf('\n');
 
-            // If no newline is found, boundary will be -1, and we need the entire buffer for the next chunk.
+            // If no newline is found, boundary will be -1,
+            // and we need the entire buffer for the next chunk
             if (boundary !== -1) {
                 const lines = buffer.substring(0, boundary).split('\n');
                 buffer = buffer.substring(boundary + 1);
@@ -48,7 +52,7 @@ export async function* fetchJsonLines<T = any>(
         }
     }
 
-    // Process any remaining line after the loop.
+    // Process any remaining line after the loop
     if (buffer.trim()) {
         try {
             yield JSON.parse(buffer);

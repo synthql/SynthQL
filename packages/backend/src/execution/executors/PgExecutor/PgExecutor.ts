@@ -1,4 +1,4 @@
-import { Pool, PoolClient } from 'pg';
+import { Pool, PoolClient, types } from 'pg';
 import { format } from 'sql-formatter';
 import { splitQueryAtBoundary } from '../../../query/splitQueryAtBoundary';
 import { AnyQuery } from '../../../types';
@@ -7,6 +7,13 @@ import { QueryProviderExecutor } from '../QueryProviderExecutor';
 import { composeQuery } from './composeQuery';
 import { hydrate } from './hydrate';
 import { SynthqlError } from '../../../SynthqlError';
+
+// Use the OIDs imported from pg.types to set custom type parsers
+types.setTypeParser(types.builtins.TIME, (value) => value);
+types.setTypeParser(types.builtins.TIMETZ, (value) => value);
+types.setTypeParser(types.builtins.DATE, (value) => value);
+types.setTypeParser(types.builtins.TIMESTAMP, (value) => value);
+types.setTypeParser(types.builtins.TIMESTAMPTZ, (value) => value);
 
 type PgQueryResult = {
     [key: string]: any;
@@ -143,6 +150,7 @@ async function executeInsidePool<T>(
     fn: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
     const client = await connectToPool(pool);
+
     try {
         return fn(client);
     } finally {
