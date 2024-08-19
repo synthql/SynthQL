@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { DB, from, schema } from '../../tests/generated';
 import { queryEngine } from '../../tests/queryEngine';
 import { PgCatalogInt4, PgCatalogText } from '../../tests/generated/db';
@@ -10,7 +10,7 @@ import {
     NextSynthqlHandlerRequest,
 } from './createNextSynthqlHandler';
 import { NextRequest } from 'next/server';
-import { fetchJsonLines } from '../tree/fetchJsonLines';
+import { fetchJsonLines } from '../../tests/fetchJsonLines';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {

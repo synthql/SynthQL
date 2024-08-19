@@ -32,7 +32,7 @@ describe('e2e', () => {
             SELECT
                 payment_id,
                 amount,
-                to_json(payment_date::timestamptz) as payment_date -- // TODO: fix this line
+                to_json(payment_date::timestamptz) as payment_date -- // TODO: format the payment_date to match the shape returned from the SynthQL query result: "2022-03-23 10:10:40.26828+00", which has any zeros after last significant microsecond digit removed
             FROM
                 public.payment
             GROUP BY
