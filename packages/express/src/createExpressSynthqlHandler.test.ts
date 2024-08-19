@@ -1,17 +1,15 @@
 import { describe, expect, test, vi } from 'vitest';
 import type { Response } from 'express';
-
-import { DB, from, schema } from '../../tests/generated';
 import {
     ExpressSynthqlHandlerRequest,
     ExpressSynthqlHandlerResponse,
     createExpressSynthqlHandler,
 } from './createExpressSynthqlHandler';
-import { queryEngine } from '../../tests/queryEngine';
-import { PgCatalogInt4, PgCatalogText } from '../../tests/generated/db';
 import { query } from '@synthql/queries';
-import { SynthqlError } from '../../SynthqlError';
-import { composeQuery } from '../../execution/executors/PgExecutor/composeQuery';
+import { queryEngine } from './tests/queryEngine';
+import { composeQuery, SynthqlError } from '@synthql/backend';
+import { DB, from, schema } from './tests/generated';
+import { PgCatalogInt4, PgCatalogText } from './tests/generated/db';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {

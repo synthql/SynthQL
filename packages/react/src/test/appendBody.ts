@@ -3,7 +3,7 @@ import {
     ExpressSynthqlHandler,
     ExpressSynthqlHandlerRequest,
     ExpressSynthqlHandlerResponse,
-} from '@synthql/backend';
+} from '@synthql/express';
 
 function readBody(req: IncomingMessage): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -25,7 +25,6 @@ function readBody(req: IncomingMessage): Promise<string> {
 
 export type IncomingMessageWithBody = IncomingMessage &
     ExpressSynthqlHandlerRequest;
-
 export type ServerResponseWithEnd = ServerResponse &
     ExpressSynthqlHandlerResponse;
 

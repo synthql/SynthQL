@@ -10,6 +10,48 @@ describe('e2e', () => {
 
         expect(prettierOptions).not.toBe(null);
 
+        // Generate in `backend` package
+        await generate({
+            connectionString:
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: '../backend/src/tests/generated',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
+        });
+
+        // Generate in `express` package
+        await generate({
+            connectionString:
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: '../express/src/tests/generated',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
+        });
+
+        // Generate in `next` package
+        await generate({
+            connectionString:
+                'postgresql://postgres:postgres@localhost:5432/postgres',
+            includeSchemas: ['public'],
+            defaultSchema: 'public',
+            outDir: '../next/src/tests/generated',
+            formatter: (str) =>
+                prettier.format(str, {
+                    parser: 'typescript',
+                    ...prettierOptions,
+                }),
+        });
+
         // Generate in `queries` package
         await generate({
             connectionString:
@@ -23,20 +65,6 @@ describe('e2e', () => {
                     ...prettierOptions,
                 }),
             SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation: '../index',
-        });
-
-        // Generate in `backend` package
-        await generate({
-            connectionString:
-                'postgresql://postgres:postgres@localhost:5432/postgres',
-            includeSchemas: ['public'],
-            defaultSchema: 'public',
-            outDir: '../backend/src/tests/generated',
-            formatter: (str) =>
-                prettier.format(str, {
-                    parser: 'typescript',
-                    ...prettierOptions,
-                }),
         });
 
         // Generate in `react` package

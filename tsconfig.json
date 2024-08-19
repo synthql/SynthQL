@@ -5,7 +5,9 @@
         "paths": {
             "@synthql/backend/*": ["./packages/backend/src/*"],
             "@synthql/cli/*": ["./packages/cli/src/*"],
+            "@synthql/express/*": ["./packages/express/src/*"],
             "@synthql/introspect/*": ["./packages/introspect/src/*"],
+            "@synthql/next/*": ["./packages/next/src/*"],
             "@synthql/queries/*": ["./packages/queries/src/*"],
             "@synthql/react/*": ["./packages/react/src/*"],
         },
@@ -15,7 +17,9 @@
     "include": [
         "./packages/backend/src",
         "./packages/cli/src",
+        "./packages/express/src",
         "./packages/introspect/src",
+        "./packages/next/src",
         "./packages/queries/src",
         "./packages/react/src",
     ],
