@@ -5,9 +5,9 @@
         "paths": {
             "@synthql/backend/*": ["./packages/backend/src/*"],
             "@synthql/cli/*": ["./packages/cli/src/*"],
-            "@synthql/express/*": ["./packages/express/src/*"],
+            "@synthql/handler-express/*": ["./packages/express/src/*"],
             "@synthql/introspect/*": ["./packages/introspect/src/*"],
-            "@synthql/next/*": ["./packages/next/src/*"],
+            "@synthql/handler-next/*": ["./packages/next/src/*"],
             "@synthql/queries/*": ["./packages/queries/src/*"],
             "@synthql/react/*": ["./packages/react/src/*"],
         },

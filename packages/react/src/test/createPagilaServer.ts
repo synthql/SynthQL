@@ -1,6 +1,6 @@
 import http from 'http';
 import { QueryEngine } from '@synthql/backend';
-import { createExpressSynthqlHandler } from '@synthql/express';
+import { createExpressSynthqlHandler } from '@synthql/handler-express';
 import { DB } from './generated';
 import { appendBody } from './appendBody';
 

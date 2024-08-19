@@ -3,7 +3,7 @@ import {
     ExpressSynthqlHandler,
     ExpressSynthqlHandlerRequest,
     ExpressSynthqlHandlerResponse,
-} from '@synthql/express';
+} from '@synthql/handler-express';
 
 function readBody(req: IncomingMessage): Promise<string> {
     return new Promise((resolve, reject) => {

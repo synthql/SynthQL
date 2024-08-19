@@ -1,5 +1,5 @@
 {
-    "name": "@synthql/next",
+    "name": "@synthql/handler-next",
     "type": "module",
     "version": "0.80.4",
     "main": "build/src/index.cjs",

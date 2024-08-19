@@ -1,4 +1,4 @@
-# @synthql/express
+# @synthql/handler-express
 
 SynthQL-compatible route handler function for use in Express.js server app.
 
@@ -12,7 +12,7 @@ export const queryEngine = new QueryEngine({
 
 // src/index.ts
 import express from 'express';
-import { createExpressSynthqlHandler } from '@synthql/express';
+import { createExpressSynthqlHandler } from '@synthql/handler-express';
 import { queryEngine } from './queryEngine';
 
 const app = express();

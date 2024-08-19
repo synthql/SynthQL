@@ -1,5 +1,5 @@
 {
-    "name": "@synthql/express",
+    "name": "@synthql/handler-express",
     "type": "module",
     "version": "0.80.4",
     "main": "build/src/index.cjs",

@@ -1,4 +1,4 @@
-# @synthql/next
+# @synthql/handler-next
 
 SynthQL-compatible route handler function for use in Next.js App Router.
 
@@ -11,7 +11,7 @@ export const queryEngine = new QueryEngine({
 });
 
 // src/app/[...synthql]/route.ts
-import { createNextSynthqlHandler } from '@synthql/next';
+import { createNextSynthqlHandler } from '@synthql/handler-next';
 import { queryEngine } from './queryEngine';
 
 const nextSynthqlRequestHandler = createNextSynthqlHandler(queryEngine);
