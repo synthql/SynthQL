@@ -31,7 +31,7 @@
         "@synthql/queries": "0.80.4"
     },
     "devDependencies": {
-        "@synthql/express": "0.79.4",
+        "@synthql/express": "0.80.4",
         "@tanstack/react-query": "^4",
         "@testing-library/react-hooks": "^8.0.1",
         "jsdom": "^24.0.0",
