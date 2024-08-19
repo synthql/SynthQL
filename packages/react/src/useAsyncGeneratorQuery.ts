@@ -28,9 +28,11 @@ export function useAyncGeneratorQuery<TData>({
         queryKey: [...queryKey, 'generator-fetcher'],
         queryFn: async (queryProps): Promise<AsyncGenerator<TData>> => {
             const generator = await queryFn!(queryProps);
+
             for await (const line of generator) {
                 queryClient.setQueryData(streamingQueryKey, line);
             }
+
             return generator;
         },
         ...opts,

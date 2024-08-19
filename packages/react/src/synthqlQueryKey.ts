@@ -25,6 +25,7 @@ export function synthqlQueryKey<
     if (opts) {
         return ['synthql', query, opts];
     }
+
     return ['synthql', query];
 }
 
@@ -32,5 +33,6 @@ export function isSynthqlQueryKey(key: QueryKey | SynthqlQueryKey): boolean {
     if (key.length < 1) {
         return false;
     }
+
     return key[0] === 'synthql';
 }

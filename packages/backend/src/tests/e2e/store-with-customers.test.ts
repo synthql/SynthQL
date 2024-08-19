@@ -6,14 +6,12 @@ import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
 import { DB, from } from '../generated';
-
 import { sql } from '../postgres';
 import { store } from '../queries.v2';
 import { pool } from '../queryEngine';
 import { sortRecursively } from '../sortRecursively';
 
-// Skipping for now, not sure why this isn't working
-describe.skip('e2e', () => {
+describe('e2e', () => {
     const payments = from('payment')
         .groupBy('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
@@ -46,7 +44,8 @@ describe.skip('e2e', () => {
         executors: [pgExecutor],
     };
 
-    test(`${describeQuery(q)}`, async () => {
+    // TODO: fix the test by fixing the sorting function and unskip
+    test.skip(`${describeQuery(q)}`, async () => {
         const rows: QueryResult<DB, typeof q>[] = await sql`
         SELECT
             s.store_id,
@@ -73,16 +72,21 @@ describe.skip('e2e', () => {
         `;
 
         const result = await collectLast(execute<DB, typeof q>(q, execProps));
+
         assertPresent(result);
+
         const expected = rows[0];
+
         expect(result.store_id).toEqual(expected.store_id);
 
         const sliceIndex = 1;
 
+        // TODO: fix `sortRecursively` to work well for both results
         const expectedInventory = sortRecursively(expected.customers).slice(
             0,
             sliceIndex,
         );
+
         const resultInventory = sortRecursively(result.customers).slice(
             0,
             sliceIndex,

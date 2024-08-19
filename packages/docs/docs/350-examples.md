@@ -76,14 +76,21 @@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
 ```ts
 const store = from('store')
-    .columns('store_id', 'address_id', 'manager_staff_id')
+    .columns('store_id', 'address_id', 'manager_staff_id', 'last_update')
     .where({
         store_id: col('customer.store_id'),
     })
     .one();
 
 const q = from('customer')
-    .columns('customer_id', 'store_id', 'first_name', 'last_name', 'email')
+    .columns(
+        'customer_id',
+        'store_id',
+        'first_name',
+        'last_name',
+        'email',
+        'last_update',
+    )
     .where({ customer_id: { in: [1] } })
     .include({ store })
     .one();
@@ -95,14 +102,14 @@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
 ```ts
 const address = from('address')
-    .columns('address_id', 'address', 'district')
+    .columns('address_id', 'city_id', 'address', 'district', 'last_update')
     .where({
         address_id: col('store.address_id'),
     })
     .one();
 
 const store = from('store')
-    .columns('store_id', 'address_id', 'manager_staff_id')
+    .columns('store_id', 'address_id', 'manager_staff_id', 'last_update')
     .where({
         store_id: col('customer.store_id'),
     })
@@ -110,7 +117,14 @@ const store = from('store')
     .one();
 
 const q = from('customer')
-    .columns('customer_id', 'store_id', 'first_name', 'last_name', 'email')
+    .columns(
+        'customer_id',
+        'store_id',
+        'first_name',
+        'last_name',
+        'email',
+        'last_update',
+    )
     .where({ customer_id: { in: [4] } })
     .include({ store })
     .one();
@@ -122,14 +136,14 @@ Finds 1 record in the `customers` table where the `id` is in the list of ids
 
 ```ts
 const city = from('city')
-    .columns('city_id', 'city')
+    .columns('city_id', 'country_id', 'city', 'last_update')
     .where({
         city_id: col('address.city_id'),
     })
     .one();
 
 const address = from('address')
-    .columns('address_id', 'city_id', 'address', 'district')
+    .columns('address_id', 'city_id', 'address', 'district', 'last_update')
     .where({
         address_id: col('store.address_id'),
     })
@@ -137,7 +151,7 @@ const address = from('address')
     .one();
 
 const store = from('store')
-    .columns('store_id', 'address_id', 'manager_staff_id')
+    .columns('store_id', 'address_id', 'manager_staff_id', 'last_update')
     .where({
         store_id: col('customer.store_id'),
     })
@@ -145,7 +159,64 @@ const store = from('store')
     .one();
 
 const q = from('customer')
-    .columns('customer_id', 'store_id', 'first_name', 'last_name', 'email')
+    .columns(
+        'customer_id',
+        'store_id',
+        'first_name',
+        'last_name',
+        'email',
+        'last_update',
+    )
+    .where({ customer_id: { in: [4] } })
+    .include({ store })
+    .one();
+```
+
+## Find a single customer by id with a four-level-deep `include()`
+
+Finds 1 record in the `customers` table where the `id` is in the list of ids
+
+```ts
+const country = from('country')
+    .columns('country_id', 'country', 'last_update')
+    .where({
+        country_id: col('city.country_id'),
+    })
+    .one();
+
+const city = from('city')
+    .columns('city_id', 'city', 'country_id', 'last_update')
+    .where({
+        city_id: col('address.city_id'),
+    })
+    .include({ country })
+    .one();
+
+const address = from('address')
+    .columns('address_id', 'city_id', 'address', 'district', 'last_update')
+    .where({
+        address_id: col('store.address_id'),
+    })
+    .include({ city })
+    .one();
+
+const store = from('store')
+    .columns('store_id', 'address_id', 'manager_staff_id', 'last_update')
+    .where({
+        store_id: col('customer.store_id'),
+    })
+    .include({ address })
+    .one();
+
+const q = from('customer')
+    .columns(
+        'customer_id',
+        'store_id',
+        'first_name',
+        'last_name',
+        'email',
+        'last_update',
+    )
     .where({ customer_id: { in: [4] } })
     .include({ store })
     .one();

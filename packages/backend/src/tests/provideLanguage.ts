@@ -10,12 +10,12 @@ const defaultLanguages: Language[] = [
     {
         language_id: 1,
         name: 'English',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
     },
     {
         language_id: 2,
         name: 'French',
-        last_update: new Date(),
+        last_update: new Date().toISOString(),
     },
 ];
 
@@ -26,6 +26,7 @@ export function provideLanguage(
         table: 'language',
         execute: async ({ language_id: languageIds }): Promise<Language[]> => {
             assertPresent(languageIds);
+
             assertArray(languageIds);
 
             if (languageIds.length === 0) {

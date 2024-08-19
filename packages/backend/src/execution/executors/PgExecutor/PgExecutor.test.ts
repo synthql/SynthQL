@@ -84,11 +84,6 @@ describe('PgExecutor', () => {
         ]);
     });
 
-    const q3 = from('actor')
-        .columns('actor_id', 'first_name', 'last_name')
-        .where({ actor_id: 1 })
-        .one();
-
     const language = from('language')
         .columns('language_id', 'name')
         .where({
