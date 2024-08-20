@@ -24,8 +24,8 @@ const packagesToUpdate = [
     '@synthql/backend',
     '@synthql/cli',
     '@synthql/handler-express',
-    '@synthql/introspect',
     '@synthql/handler-next',
+    '@synthql/introspect',
     '@synthql/queries',
     '@synthql/react',
 ];
