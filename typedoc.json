@@ -2,6 +2,8 @@
     "entryPoints": [
         "packages/backend/src/index.ts",
         "packages/cli/src/index.ts",
+        "packages/handler-express/src/index.ts",
+        "packages/handler-next/src/index.ts",
         "packages/introspect/src/index.ts",
         "packages/queries/src/index.ts",
         "packages/react/src/index.ts"

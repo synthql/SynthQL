@@ -24,13 +24,13 @@ describe('e2e', () => {
                 }),
         });
 
-        // Generate in `express` package
+        // Generate in `handler-express` package
         await generate({
             connectionString:
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
-            outDir: '../express/src/tests/generated',
+            outDir: '../handler-express/src/tests/generated',
             formatter: (str) =>
                 prettier.format(str, {
                     parser: 'typescript',
@@ -38,13 +38,13 @@ describe('e2e', () => {
                 }),
         });
 
-        // Generate in `next` package
+        // Generate in `handler-next` package
         await generate({
             connectionString:
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
-            outDir: '../next/src/tests/generated',
+            outDir: '../handler-next/src/tests/generated',
             formatter: (str) =>
                 prettier.format(str, {
                     parser: 'typescript',
