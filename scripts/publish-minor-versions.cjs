@@ -23,6 +23,8 @@ console.log('Bumping minor version to', nextVersion);
 const packagesToUpdate = [
     '@synthql/backend',
     '@synthql/cli',
+    '@synthql/handler-express',
+    '@synthql/handler-next',
     '@synthql/introspect',
     '@synthql/queries',
     '@synthql/react',

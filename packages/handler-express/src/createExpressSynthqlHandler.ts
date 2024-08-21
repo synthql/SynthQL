@@ -1,6 +1,5 @@
-import { QueryEngine, collectLast } from '../..';
+import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
 import type { Request, Response } from 'express';
-import { SynthqlError } from '../../SynthqlError';
 
 export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
 export type ExpressSynthqlHandlerResponse = Pick<

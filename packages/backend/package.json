@@ -36,7 +36,6 @@
     "devDependencies": {
         "@fast-check/vitest": "^0.1.1",
         "@types/benchmark": "^2.1.4",
-        "@types/express": "^4.17.21",
         "@types/node": "^20.10.5",
         "@types/pg": "^8.10.9",
         "@vitest/coverage-v8": "^1.2.2",
