@@ -1,10 +1,17 @@
 import { ColumnDefProperties } from '@synthql/queries';
 import { SchemaDefOverrides } from '../types/CliConfig';
-import { TableColumn, TableDetails } from 'extract-pg-schema';
+import {
+    TableColumn,
+    TableDetails,
+    ViewColumn,
+    ViewDetails,
+} from 'extract-pg-schema';
 
 interface TableDefTransformer {
-    test: (tableDetails: TableDetails) => boolean;
-    transform: (tableColumn: TableColumn) => Partial<ColumnDefProperties>;
+    test: (tableDetails: TableDetails | ViewDetails) => boolean;
+    transform: (
+        tableColumn: TableColumn | ViewColumn,
+    ) => Partial<ColumnDefProperties>;
 }
 
 export function createTableDefTransformers(
