@@ -70,6 +70,19 @@ interface ColumnDefTypeDef {
     maximum?: number;
     format?: string;
     enum?: readonly string[];
+    properties?: Record<string, ColumnDefPropertyDef>;
+}
+
+interface ColumnDefPropertyDef {
+    type: string;
+    id?: string;
+    description?: string;
+    title?: string;
+    tsType?: string;
+    minimum?: number;
+    maximum?: number;
+    format?: string;
+    enum?: readonly string[];
 }
 
 interface ColumnDefAttributeDef {

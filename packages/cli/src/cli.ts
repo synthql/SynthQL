@@ -63,7 +63,11 @@ export function cli({
                             throw new Error(
                                 [
                                     `Config file at path '${configPath}' does not match the schema:`,
-                                    ...(validateConfigFile.errors ?? []),
+                                    ...(JSON.stringify(
+                                        validateConfigFile.errors,
+                                        null,
+                                        2,
+                                    ) ?? []),
                                 ].join('\n'),
                             );
                         }
@@ -85,7 +89,11 @@ export function cli({
                     throw new Error(
                         [
                             `Schema definition overrides does not match the validation schema:`,
-                            ...(validateSchemaDefOverrides.errors ?? []),
+                            ...(JSON.stringify(
+                                validateSchemaDefOverrides.errors,
+                                null,
+                                2,
+                            ) ?? []),
                         ].join('\n'),
                     );
                 }

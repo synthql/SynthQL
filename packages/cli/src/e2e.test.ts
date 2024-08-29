@@ -99,7 +99,11 @@ describe('e2e', () => {
                 throw new Error(
                     [
                         `Schema definition overrides does not match the validation schema:`,
-                        ...(validateSchemaDefOverrides.errors ?? []),
+                        ...(JSON.stringify(
+                            validateSchemaDefOverrides.errors,
+                            null,
+                            2,
+                        ) ?? []),
                     ].join('\n'),
                 );
             }

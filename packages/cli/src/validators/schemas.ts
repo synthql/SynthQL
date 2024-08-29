@@ -7,7 +7,30 @@ export const schemaDefOverridesSchema: JSONSchemaType<
     $schema: 'http://json-schema.org/draft-07/schema',
     description: [
         'The table definitions for any tables you want',
-        'to be overriden during the schema generation',
+        'to be overriden during the schema generation.',
+        `e.g.:`,
+        `"schemaDefOverrides": {
+            "public.actor": {
+                "name": {
+                    "includable": { "type": "boolean", "const": false }
+                },
+            },
+            "accounts.customer": {
+                "quantity": {
+                    "type": {
+                        "type": "object",
+                        "id": "QuantityUnit",
+                        "properties": {
+                            "unit": {
+                                "type": "string",
+                                "description": "A unit string, property in JSONB object"
+                            }
+                        },
+                        "description": "A QuantityUnit object, casted from a JSONB column"
+                    }
+                },
+            },
+        }`,
     ].join('\n'),
     type: 'object',
     patternProperties: {
@@ -66,10 +89,68 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                     },
                                     nullable: true,
                                 },
+                                properties: {
+                                    type: 'object',
+                                    patternProperties: {
+                                        '^[^.]+$': {
+                                            description: [
+                                                'The property definitions for each object property to be overriden.',
+                                                'The key for each property should be the name of the property,',
+                                                'in the form `${propertyName}` e.g `unit`',
+                                            ].join('\n'),
+                                            type: 'object',
+                                            properties: {
+                                                type: {
+                                                    type: 'string',
+                                                },
+                                                id: {
+                                                    type: 'string',
+                                                    nullable: true,
+                                                },
+                                                description: {
+                                                    type: 'string',
+                                                    nullable: true,
+                                                },
+                                                title: {
+                                                    type: 'string',
+                                                    nullable: true,
+                                                },
+                                                tsType: {
+                                                    type: 'string',
+                                                    nullable: true,
+                                                },
+                                                minimum: {
+                                                    type: 'number',
+                                                    nullable: true,
+                                                },
+                                                maximum: {
+                                                    type: 'number',
+                                                    nullable: true,
+                                                },
+                                                format: {
+                                                    type: 'string',
+                                                    nullable: true,
+                                                },
+                                                enum: {
+                                                    type: 'array',
+                                                    items: {
+                                                        type: 'string',
+                                                    },
+                                                    nullable: true,
+                                                },
+                                            },
+                                            required: ['type'],
+                                            additionalProperties: true,
+                                        },
+                                    },
+                                    nullable: true,
+                                    required: [],
+                                    additionalProperties: true,
+                                },
                             },
                             nullable: true,
                             required: ['id', 'type', 'description'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                         selectable: {
                             type: 'object',
@@ -83,7 +164,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                             },
                             nullable: true,
                             required: ['type', 'const'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                         includable: {
                             type: 'object',
@@ -97,7 +178,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                             },
                             nullable: true,
                             required: ['type', 'const'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                         whereable: {
                             type: 'object',
@@ -111,7 +192,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                             },
                             nullable: true,
                             required: ['type', 'const'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                         nullable: {
                             type: 'object',
@@ -125,7 +206,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                             },
                             nullable: true,
                             required: ['type', 'const'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                         isPrimaryKey: {
                             type: 'object',
@@ -139,19 +220,19 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                             },
                             nullable: true,
                             required: ['type', 'const'],
-                            additionalProperties: false,
+                            additionalProperties: true,
                         },
                     },
                     required: [],
-                    additionalProperties: false,
+                    additionalProperties: true,
                 },
             },
             required: [],
-            additionalProperties: false,
+            additionalProperties: true,
         },
     },
     required: [],
-    additionalProperties: false,
+    additionalProperties: true,
 };
 
 export const configFileSchema: JSONSchemaType<Partial<CliConfig>> = {
@@ -210,5 +291,5 @@ export const configFileSchema: JSONSchemaType<Partial<CliConfig>> = {
         },
     },
     required: [],
-    additionalProperties: false,
+    additionalProperties: true,
 };
