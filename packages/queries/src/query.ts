@@ -347,15 +347,18 @@ export class QueryBuilder<
         );
     }
 
-    where<TWhere extends Where<DB, TTable>>(where: TWhere) {
+    where(where: Where<DB, TTable>) {
         return this.filter(where);
     }
 
-    filter<TWhere extends Where<DB, TTable>>(where: TWhere) {
+    filter(where: Where<DB, TTable>) {
         return new QueryBuilder<
             DB,
             TTable,
-            TWhere,
+            // Note that we don't merge the literal types, we are fine
+            // with the low resultion Where type, as the Where doesn't
+            // impact the QueryResult.
+            Where<DB, TTable>,
             TSelect,
             TInclude,
             TLimit,
