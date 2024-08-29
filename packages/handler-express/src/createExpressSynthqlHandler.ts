@@ -33,6 +33,7 @@ export function createExpressSynthqlHandler<DB>(
                         error: e.message,
                     }),
                 );
+                res.end();
             } else {
                 // Let another layer handle the error
                 throw e;

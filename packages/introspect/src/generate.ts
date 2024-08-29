@@ -8,14 +8,17 @@ import {
     TableColumn,
     TableColumnType,
     TableDetails,
+    ViewDetails,
 } from 'extract-pg-schema';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
 
 interface TableDefTransformer {
-    test: (tableDetails: TableDetails) => boolean;
-    transform: (tableColumn: TableColumn) => Partial<ColumnDefProperties>;
+    test: (tableDetails: TableOrView) => boolean;
+    transform: (
+        tableColumn: TableOrView['columns'][number],
+    ) => Partial<ColumnDefProperties>;
 }
 
 interface GenerateProps {
@@ -64,6 +67,7 @@ export async function generate({
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
+    const { stderr } = process;
 
     // Step 1: Use pg-extract-schema to get the schema
     const pgExtractSchema = await extractSchemas(
@@ -72,6 +76,10 @@ export async function generate({
         },
         {
             schemas: includeSchemas,
+            onProgressStart: (total) =>
+                console.error(`Extracting ${total} types...`),
+            onProgress: () => stderr.write('.'),
+            onProgressEnd: () => console.log('Done!'),
         },
     );
 
@@ -141,7 +149,7 @@ function createTypeDefId(type: {
     return `${type.fullName}.${type.kind}`;
 }
 
-function createTableDefId(type: TableDetails, defaultSchema: string) {
+function createTableDefId(type: TableOrView, defaultSchema: string) {
     if (type.schemaName === defaultSchema) {
         return `table_${type.name}`;
     }
@@ -150,7 +158,7 @@ function createTableDefId(type: TableDetails, defaultSchema: string) {
 }
 
 function createTableJsonSchema(
-    table: TableDetails,
+    table: TableOrView,
     tableDefTransformer?: TableDefTransformer,
 ): JSONSchema {
     const empty: Record<string, any> = {};
@@ -220,6 +228,7 @@ function createTableJsonSchema(
         additionalProperties: false,
     };
 }
+type TableOrView = TableDetails | ViewDetails;
 
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
@@ -234,12 +243,21 @@ function createRootJsonSchema(
     },
 ): JSONSchema {
     // Check if a list of tables is passed, and if so, use as filter
-    const allTables = Object.values(schemas).flatMap((schema) => schema.tables);
+    const allTables: TableOrView[] = Object.values(schemas).flatMap(
+        (schema) => schema.tables,
+    );
+    const allViews: TableOrView[] = Object.values(schemas).flatMap(
+        (schema) => schema.views,
+    );
+
+    const tablesAndViews: TableOrView[] = allTables.concat(allViews);
 
     const tables =
         includeTables.length === 0
-            ? allTables
-            : allTables.filter((table) => includeTables.includes(table.name));
+            ? tablesAndViews
+            : tablesAndViews.filter((table) =>
+                  includeTables.includes(table.name),
+              );
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
@@ -275,7 +293,7 @@ function createRootJsonSchema(
     };
 }
 
-function fullTableName(table: TableDetails, defaultSchema: string) {
+function fullTableName(table: TableOrView, defaultSchema: string) {
     if (table.schemaName === defaultSchema) {
         return table.name;
     }
@@ -284,7 +302,7 @@ function fullTableName(table: TableDetails, defaultSchema: string) {
 }
 
 function createTableDefs(
-    tables: TableDetails[],
+    tables: TableOrView[],
     defaultSchema: string,
     tableDefTransformers: Array<TableDefTransformer>,
 ): Record<string, JSONSchema> {
