@@ -11,10 +11,54 @@ import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
 
 export interface QueryEngineProps<DB> {
+    /**
+     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`.
+     *
+     * If you use this option, SynthQL will create a conection pool for you internally.
+     */
     url?: string;
+    /**
+     * The name of the database schema to
+     * execute your SynthQL queries against.
+     *
+     * e.g `public`
+     */
     schema?: string;
+    /**
+     * An optional SQL statement that will be sent before every SynthQL query.
+     *
+     * e.g `SET search_path TO "public";`
+     */
     prependSql?: string;
+    /**
+     * A list of providers that you want to be used
+     * to execute your SynthQL queries against.
+     *
+     * e.g:
+     *
+     * ```ts
+     *      const films = [{
+     *          film_id: 1
+     *      }, {
+     *          film_id: 2
+     *      }];
+     *
+     *      const filmIds = [1, 2, 3];
+     *
+     *      const filmProvider = {
+     *          table: 'film',
+     *          execute: async ({ film_id: filmIds }): Promise<{ film_id: number }[]> => {
+     *              return films.filter((f) => filmIds.includes(f.film_id));
+     *          },
+     *      };
+     * ```
+     */
     providers?: Array<QueryProvider<DB, Table<DB>>>;
+    /**
+     * The connection pool to which the executor will send SQL queries to.
+     *
+     * You can use this instead of passing a connection string.
+     */
     pool?: Pool;
 }
 
@@ -51,7 +95,9 @@ export class QueryEngine<DB> {
         opts?: {
             /**
              * The name of the database schema to execute
-             * your SynthQL query against e.g `public`
+             * your SynthQL query against
+             *
+             * e.g `public`
              */
             schema?: string;
             /**
@@ -82,7 +128,9 @@ export class QueryEngine<DB> {
         opts?: {
             /**
              * The name of the database schema to execute
-             * your SynthQL query against e.g `public`
+             * your SynthQL query against
+             *
+             * e.g `public`
              */
             schema?: string;
         },
