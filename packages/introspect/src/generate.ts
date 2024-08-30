@@ -70,7 +70,7 @@ export async function generate({
     }
     const { stderr } = process;
 
-    // Step 1: Use pg-extract-schema to get the schema
+    // Step 1: Use pg-extract-schema to get the schema.
     const pgExtractSchema = await extractSchemas(
         {
             connectionString,
@@ -89,7 +89,7 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    // Step 2: Convert the pg-extract-schema schema to a JSON Schema
+    // Step 2: Convert the pg-extract-schema schema to a JSON Schema.
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
@@ -99,7 +99,7 @@ export async function generate({
     /**
      * Step 3: Compile the JSON schema into TypeScript files.
      * Generate types from the schema with refs.
-     * This leads to a more readable output as the types are not inlined
+     * This leads to a more readable output as the types are not inlined.
      */
     const db = await compile(schemaWithRefs, 'DB', {
         additionalProperties: false,
@@ -110,7 +110,7 @@ export async function generate({
 
     /**
      * Generate types from the schema without refs.
-     * This leads to a more compact output as the types are inlined
+     * This leads to a more compact output as the types are inlined.
      */
     const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
 
