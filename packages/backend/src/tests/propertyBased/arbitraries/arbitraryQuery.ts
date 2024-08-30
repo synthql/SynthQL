@@ -7,6 +7,7 @@ import { arbitraryWhere } from './arbitraryWhere';
 import { arbitrarySelect } from './arbitrarySelect';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { getTableNames } from '../getTableNames';
+import { tablesToSkip } from '../tablesToSkip';
 
 interface ArbitraryQuery<DB> {
     schema: Schema<DB>;
@@ -21,18 +22,24 @@ export function arbitraryQuery<DB>({
     cardinality,
     validWhere,
 }: ArbitraryQuery<DB>): fc.Arbitrary<AnyQuery> {
-    return fc.constantFrom(...getTableNames<DB>(schema)).chain((tableName) =>
-        fc.record({
-            from: fc.constant(tableName),
-            select: arbitrarySelect({ schema, tableName }),
-            where: arbitraryWhere({
-                schema,
-                allTablesRowsMap,
-                tableName,
-                validWhere,
+    return fc
+        .constantFrom(
+            ...getTableNames<DB>(schema).filter(
+                (table) => !tablesToSkip.includes(table),
+            ),
+        )
+        .chain((tableName) =>
+            fc.record({
+                from: fc.constant(tableName),
+                select: arbitrarySelect({ schema, tableName }),
+                where: arbitraryWhere({
+                    schema,
+                    allTablesRowsMap,
+                    tableName,
+                    validWhere,
+                }),
+                limit: arbitraryLimit(),
+                cardinality: arbitraryCardinality(cardinality),
             }),
-            limit: arbitraryLimit(),
-            cardinality: arbitraryCardinality(cardinality),
-        }),
-    );
+        );
 }

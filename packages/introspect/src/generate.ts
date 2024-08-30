@@ -5,7 +5,6 @@ import {
     EnumDetails,
     extractSchemas,
     Schema,
-    TableColumn,
     TableColumnType,
     TableDetails,
     ViewDetails,
@@ -13,6 +12,8 @@ import {
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
+
+type TableOrView = TableDetails | ViewDetails;
 
 interface TableDefTransformer {
     test: (tableDetails: TableOrView) => boolean;
@@ -31,7 +32,7 @@ interface GenerateProps {
      */
     includeSchemas: string[];
     /**
-     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL.
+     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL
      */
     defaultSchema: string;
     /**
@@ -76,6 +77,7 @@ export async function generate({
         },
         {
             schemas: includeSchemas,
+            resolveViews: true,
             onProgressStart: (total) =>
                 console.error(`Extracting ${total} types...`),
             onProgress: () => stderr.write('.'),
@@ -97,7 +99,7 @@ export async function generate({
     /**
      * Step 3: Compile the JSON schema into TypeScript files.
      * Generate types from the schema with refs.
-     * This leads to a more readable output as the types are not inlined.
+     * This leads to a more readable output as the types are not inlined
      */
     const db = await compile(schemaWithRefs, 'DB', {
         additionalProperties: false,
@@ -108,7 +110,7 @@ export async function generate({
 
     /**
      * Generate types from the schema without refs.
-     * This leads to a more compact output as the types are inlined.
+     * This leads to a more compact output as the types are inlined
      */
     const schemaWithoutRefs = await $RefParser.dereference(schemaWithRefs);
 
@@ -185,10 +187,16 @@ function createTableJsonSchema(
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
                 whereable: { type: 'boolean', const: true },
-                nullable: { type: 'boolean', const: column.isNullable },
-                isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
-                // For each column, we want to identify if any override properties
-                // were passed, and replace them if so
+                nullable: {
+                    type: 'boolean',
+                    const: column.isNullable ?? false,
+                },
+                isPrimaryKey: {
+                    type: 'boolean',
+                    const: column.isPrimaryKey ?? false,
+                },
+                // For each column, we want to identify if any override
+                // properties were passed, and replace them if so
                 // Otherwise, we generate the property as usual
                 ...tableDefTransformer?.transform(column),
             },
@@ -197,8 +205,8 @@ function createTableJsonSchema(
                 'selectable',
                 'includable',
                 'whereable',
-                'isPrimaryKey',
                 'nullable',
+                'isPrimaryKey',
             ],
             additionalProperties: false,
         };
@@ -228,7 +236,6 @@ function createTableJsonSchema(
         additionalProperties: false,
     };
 }
-type TableOrView = TableDetails | ViewDetails;
 
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
