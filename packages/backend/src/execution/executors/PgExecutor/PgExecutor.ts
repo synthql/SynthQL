@@ -32,6 +32,8 @@ interface PgExecutorProps {
     logging?: boolean;
     /**
      * An SQL statement that will be sent before every SynthQL query.
+     *
+     * e.g `SET search_path TO "public";`
      */
     prependSql?: string;
 }

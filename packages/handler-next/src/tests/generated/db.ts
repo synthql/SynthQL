@@ -89,6 +89,13 @@ export interface DB {
     rental: TableRental;
     staff: TableStaff;
     store: TableStore;
+    actor_info: TableActorInfo;
+    customer_list: TableCustomerList;
+    film_list: TableFilmList;
+    nicer_but_slower_film_list: TableNicerButSlowerFilmList;
+    sales_by_film_category: TableSalesByFilmCategory;
+    sales_by_store: TableSalesByStore;
+    staff_list: TableStaffList;
 }
 /**
  * Table details:
@@ -1885,6 +1892,874 @@ export interface TableStore {
          */
         last_update: {
             type: PgCatalogTimestamptz;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: actor_info
+ */
+export interface TableActorInfo {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: actor_info
+         * - Column: actor_id
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        actor_id: {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: actor_info
+         * - Column: first_name
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        first_name: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: actor_info
+         * - Column: last_name
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        last_name: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: actor_info
+         * - Column: film_info
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        film_info: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: customer_list
+ */
+export interface TableCustomerList {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: id
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'id': {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: name
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        'name': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: address
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'address': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: zip code
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        'zip code': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: phone
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'phone': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: city
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'city': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: country
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'country': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: notes
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        'notes': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: customer_list
+         * - Column: sid
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'sid': {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: film_list
+ */
+export interface TableFilmList {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: fid
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        fid: {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: title
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        title: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: description
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        description: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: category
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        category: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: price
+         * - PG type: pg_catalog.numeric
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        price: {
+            type: PgCatalogNumeric;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: length
+         * - PG type: pg_catalog.int2
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        length: {
+            type: PgCatalogInt2;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: rating
+         * - PG type: public.mpaa_rating
+         * - PG kind: enum
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        rating: {
+            type: PublicMpaaRatingEnum;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: film_list
+         * - Column: actors
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        actors: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: nicer_but_slower_film_list
+ */
+export interface TableNicerButSlowerFilmList {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: fid
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        fid: {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: title
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        title: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: description
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        description: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: category
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        category: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: price
+         * - PG type: pg_catalog.numeric
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        price: {
+            type: PgCatalogNumeric;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: length
+         * - PG type: pg_catalog.int2
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        length: {
+            type: PgCatalogInt2;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: rating
+         * - PG type: public.mpaa_rating
+         * - PG kind: enum
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        rating: {
+            type: PublicMpaaRatingEnum;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: nicer_but_slower_film_list
+         * - Column: actors
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        actors: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: sales_by_film_category
+ */
+export interface TableSalesByFilmCategory {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: sales_by_film_category
+         * - Column: category
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        category: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: sales_by_film_category
+         * - Column: total_sales
+         * - PG type: pg_catalog.numeric
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        total_sales: {
+            type: PgCatalogNumeric;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: sales_by_store
+ */
+export interface TableSalesByStore {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: sales_by_store
+         * - Column: store
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        store: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: sales_by_store
+         * - Column: manager
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        manager: {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: sales_by_store
+         * - Column: total_sales
+         * - PG type: pg_catalog.numeric
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        total_sales: {
+            type: PgCatalogNumeric;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+    };
+}
+/**
+ * Table details:
+ *
+ * - Schema: public
+ * - Table: staff_list
+ */
+export interface TableStaffList {
+    columns: {
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: id
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'id': {
+            type: PgCatalogInt4;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: true;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: name
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: undefined
+         * - Generated: NEVER
+         */
+        'name': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: address
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'address': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: zip code
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: true
+         * - Generated: NEVER
+         */
+        'zip code': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: true;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: phone
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'phone': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: city
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'city': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: country
+         * - PG type: pg_catalog.text
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'country': {
+            type: PgCatalogText;
+            selectable: true;
+            includable: true;
+            whereable: true;
+            nullable: false;
+            isPrimaryKey: false;
+        };
+        /**
+         * Column details:
+         *
+         * - Schema: public
+         * - Table: staff_list
+         * - Column: sid
+         * - PG type: pg_catalog.int4
+         * - PG kind: base
+         * - Nullable: false
+         * - Generated: NEVER
+         */
+        'sid': {
+            type: PgCatalogInt4;
             selectable: true;
             includable: true;
             whereable: true;

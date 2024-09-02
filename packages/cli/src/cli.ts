@@ -63,7 +63,10 @@ export function cli({
                             throw new Error(
                                 [
                                     `Config file at path '${configPath}' does not match the schema:`,
-                                    ...(validateConfigFile.errors ?? []),
+                                    ...(validateConfigFile.errors?.map(
+                                        (error) =>
+                                            JSON.stringify(error, null, 2),
+                                    ) ?? []),
                                 ].join('\n'),
                             );
                         }
@@ -85,7 +88,9 @@ export function cli({
                     throw new Error(
                         [
                             `Schema definition overrides does not match the validation schema:`,
-                            ...(validateSchemaDefOverrides.errors ?? []),
+                            ...(validateSchemaDefOverrides.errors?.map(
+                                (error) => JSON.stringify(error, null, 2),
+                            ) ?? []),
                         ].join('\n'),
                     );
                 }
@@ -100,7 +105,6 @@ export function cli({
                 });
 
                 const tables = Object.keys(result.schema.properties ?? {});
-
                 console.info(
                     `Generated schema with ${tables.length} table(s):`,
                 );

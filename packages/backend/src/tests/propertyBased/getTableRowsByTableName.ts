@@ -3,7 +3,6 @@ import { Pool } from 'pg';
 import { getTableNames } from './getTableNames';
 
 type TableName = string;
-
 type TableRows = Array<any>;
 
 export type AllTablesRowsMap = Map<TableName, TableRows>;

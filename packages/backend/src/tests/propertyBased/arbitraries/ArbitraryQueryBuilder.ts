@@ -12,12 +12,15 @@ import { schema, DB as PagilaDB } from '../../generated';
 import { getTableNames } from '../getTableNames';
 import { getTableSelectableColumns } from '../getTableSelectableColumns';
 import { getTableDef } from '../getTableDef';
+import { tablesToSkip } from '../tablesToSkip';
 
 export class ArbitraryQueryBuilder<DB> {
     constructor(
         private schema: Schema<DB>,
         private cardinalities: Cardinality[] = ['many', 'maybe', 'one'],
-        private tables: Table<DB>[] = getTableNames(schema) as Table<DB>[],
+        private tables: Table<DB>[] = getTableNames(schema).filter(
+            (table) => !tablesToSkip.includes(table),
+        ) as Table<DB>[],
         private hasResults: boolean = true,
     ) {}
 

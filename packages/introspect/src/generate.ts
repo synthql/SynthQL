@@ -5,7 +5,6 @@ import {
     EnumDetails,
     extractSchemas,
     Schema,
-    TableColumn,
     TableColumnType,
     TableDetails,
     ViewDetails,
@@ -13,6 +12,8 @@ import {
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
 import path from 'path';
+
+type TableOrView = TableDetails | ViewDetails;
 
 interface TableDefTransformer {
     test: (tableDetails: TableOrView) => boolean;
@@ -31,7 +32,7 @@ interface GenerateProps {
      */
     includeSchemas: string[];
     /**
-     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL.
+     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL
      */
     defaultSchema: string;
     /**
@@ -69,13 +70,14 @@ export async function generate({
     }
     const { stderr } = process;
 
-    // Step 1: Use pg-extract-schema to get the schema
+    // Step 1: Use pg-extract-schema to get the schema.
     const pgExtractSchema = await extractSchemas(
         {
             connectionString,
         },
         {
             schemas: includeSchemas,
+            resolveViews: true,
             onProgressStart: (total) =>
                 console.error(`Extracting ${total} types...`),
             onProgress: () => stderr.write('.'),
@@ -87,7 +89,7 @@ export async function generate({
         fs.mkdirSync(outDir, { recursive: true });
     }
 
-    // Step 2: Convert the pg-extract-schema schema to a JSON Schema
+    // Step 2: Convert the pg-extract-schema schema to a JSON Schema.
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
@@ -185,10 +187,16 @@ function createTableJsonSchema(
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
                 whereable: { type: 'boolean', const: true },
-                nullable: { type: 'boolean', const: column.isNullable },
-                isPrimaryKey: { type: 'boolean', const: column.isPrimaryKey },
-                // For each column, we want to identify if any override properties
-                // were passed, and replace them if so
+                nullable: {
+                    type: 'boolean',
+                    const: column.isNullable ?? false,
+                },
+                isPrimaryKey: {
+                    type: 'boolean',
+                    const: column.isPrimaryKey ?? false,
+                },
+                // For each column, we want to identify if any override
+                // properties were passed, and replace them if so
                 // Otherwise, we generate the property as usual
                 ...tableDefTransformer?.transform(column),
             },
@@ -197,8 +205,8 @@ function createTableJsonSchema(
                 'selectable',
                 'includable',
                 'whereable',
-                'isPrimaryKey',
                 'nullable',
+                'isPrimaryKey',
             ],
             additionalProperties: false,
         };
@@ -228,7 +236,6 @@ function createTableJsonSchema(
         additionalProperties: false,
     };
 }
-type TableOrView = TableDetails | ViewDetails;
 
 function createRootJsonSchema(
     schemas: Record<string, Schema>,

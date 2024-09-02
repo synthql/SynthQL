@@ -91,7 +91,6 @@ describe('e2e', () => {
 
             // Verify that the passed attribute overrides were applied
             const schemaFilePath = path.join(outDir, `schema.ts`);
-
             const file = await import(schemaFilePath);
             const schema = file?.schema?.properties;
 
@@ -99,7 +98,9 @@ describe('e2e', () => {
                 throw new Error(
                     [
                         `Schema definition overrides does not match the validation schema:`,
-                        ...(validateSchemaDefOverrides.errors ?? []),
+                        ...(validateSchemaDefOverrides.errors?.map((error) =>
+                            JSON.stringify(error, null, 2),
+                        ) ?? []),
                     ].join('\n'),
                 );
             }
