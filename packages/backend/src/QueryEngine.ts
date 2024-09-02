@@ -27,7 +27,7 @@ export interface QueryEngineProps<DB> {
     /**
      * An optional SQL statement that will be sent before every SynthQL query.
      *
-     * e.g `SET search_path TO "public";`
+     * e.g `SELECT version();`
      */
     prependSql?: string;
     /**
