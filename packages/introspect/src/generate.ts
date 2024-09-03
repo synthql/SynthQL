@@ -77,7 +77,7 @@ export async function generate({
         },
         {
             schemas: includeSchemas,
-            resolveViews: true,
+            resolveViews: false,
             onProgressStart: (total) =>
                 console.error(`Extracting ${total} types...`),
             onProgress: () => stderr.write('.'),
