@@ -1916,7 +1916,7 @@ export interface TableActorInfo {
          * - Column: actor_id
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         actor_id: {
@@ -1925,7 +1925,7 @@ export interface TableActorInfo {
             includable: true;
             whereable: true;
             nullable: false;
-            isPrimaryKey: true;
+            isPrimaryKey: false;
         };
         /**
          * Column details:
@@ -1935,7 +1935,7 @@ export interface TableActorInfo {
          * - Column: first_name
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         first_name: {
@@ -1954,7 +1954,7 @@ export interface TableActorInfo {
          * - Column: last_name
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         last_name: {
@@ -2002,7 +2002,7 @@ export interface TableCustomerList {
          * - Column: id
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'id': {
@@ -2011,7 +2011,7 @@ export interface TableCustomerList {
             includable: true;
             whereable: true;
             nullable: false;
-            isPrimaryKey: true;
+            isPrimaryKey: false;
         };
         /**
          * Column details:
@@ -2040,7 +2040,7 @@ export interface TableCustomerList {
          * - Column: address
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'address': {
@@ -2059,7 +2059,7 @@ export interface TableCustomerList {
          * - Column: zip code
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'zip code': {
@@ -2067,7 +2067,7 @@ export interface TableCustomerList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2078,7 +2078,7 @@ export interface TableCustomerList {
          * - Column: phone
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'phone': {
@@ -2097,7 +2097,7 @@ export interface TableCustomerList {
          * - Column: city
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'city': {
@@ -2116,7 +2116,7 @@ export interface TableCustomerList {
          * - Column: country
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'country': {
@@ -2154,7 +2154,7 @@ export interface TableCustomerList {
          * - Column: sid
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'sid': {
@@ -2183,7 +2183,7 @@ export interface TableFilmList {
          * - Column: fid
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         fid: {
@@ -2192,7 +2192,7 @@ export interface TableFilmList {
             includable: true;
             whereable: true;
             nullable: false;
-            isPrimaryKey: true;
+            isPrimaryKey: false;
         };
         /**
          * Column details:
@@ -2202,7 +2202,7 @@ export interface TableFilmList {
          * - Column: title
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         title: {
@@ -2221,7 +2221,7 @@ export interface TableFilmList {
          * - Column: description
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         description: {
@@ -2229,7 +2229,7 @@ export interface TableFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2240,7 +2240,7 @@ export interface TableFilmList {
          * - Column: category
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         category: {
@@ -2259,7 +2259,7 @@ export interface TableFilmList {
          * - Column: price
          * - PG type: pg_catalog.numeric
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         price: {
@@ -2278,7 +2278,7 @@ export interface TableFilmList {
          * - Column: length
          * - PG type: pg_catalog.int2
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         length: {
@@ -2286,7 +2286,7 @@ export interface TableFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2297,7 +2297,7 @@ export interface TableFilmList {
          * - Column: rating
          * - PG type: public.mpaa_rating
          * - PG kind: enum
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         rating: {
@@ -2305,7 +2305,7 @@ export interface TableFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2345,7 +2345,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: fid
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         fid: {
@@ -2354,7 +2354,7 @@ export interface TableNicerButSlowerFilmList {
             includable: true;
             whereable: true;
             nullable: false;
-            isPrimaryKey: true;
+            isPrimaryKey: false;
         };
         /**
          * Column details:
@@ -2364,7 +2364,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: title
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         title: {
@@ -2383,7 +2383,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: description
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         description: {
@@ -2391,7 +2391,7 @@ export interface TableNicerButSlowerFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2402,7 +2402,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: category
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         category: {
@@ -2421,7 +2421,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: price
          * - PG type: pg_catalog.numeric
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         price: {
@@ -2440,7 +2440,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: length
          * - PG type: pg_catalog.int2
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         length: {
@@ -2448,7 +2448,7 @@ export interface TableNicerButSlowerFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2459,7 +2459,7 @@ export interface TableNicerButSlowerFilmList {
          * - Column: rating
          * - PG type: public.mpaa_rating
          * - PG kind: enum
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         rating: {
@@ -2467,7 +2467,7 @@ export interface TableNicerButSlowerFilmList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2507,7 +2507,7 @@ export interface TableSalesByFilmCategory {
          * - Column: category
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         category: {
@@ -2622,7 +2622,7 @@ export interface TableStaffList {
          * - Column: id
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'id': {
@@ -2631,7 +2631,7 @@ export interface TableStaffList {
             includable: true;
             whereable: true;
             nullable: false;
-            isPrimaryKey: true;
+            isPrimaryKey: false;
         };
         /**
          * Column details:
@@ -2660,7 +2660,7 @@ export interface TableStaffList {
          * - Column: address
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'address': {
@@ -2679,7 +2679,7 @@ export interface TableStaffList {
          * - Column: zip code
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: true
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'zip code': {
@@ -2687,7 +2687,7 @@ export interface TableStaffList {
             selectable: true;
             includable: true;
             whereable: true;
-            nullable: true;
+            nullable: false;
             isPrimaryKey: false;
         };
         /**
@@ -2698,7 +2698,7 @@ export interface TableStaffList {
          * - Column: phone
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'phone': {
@@ -2717,7 +2717,7 @@ export interface TableStaffList {
          * - Column: city
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'city': {
@@ -2736,7 +2736,7 @@ export interface TableStaffList {
          * - Column: country
          * - PG type: pg_catalog.text
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'country': {
@@ -2755,7 +2755,7 @@ export interface TableStaffList {
          * - Column: sid
          * - PG type: pg_catalog.int4
          * - PG kind: base
-         * - Nullable: false
+         * - Nullable: undefined
          * - Generated: NEVER
          */
         'sid': {

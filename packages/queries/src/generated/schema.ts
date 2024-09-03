@@ -4010,7 +4010,7 @@ export const schema: Schema<DB> = {
                         actor_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -4037,7 +4037,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -4053,7 +4053,7 @@ export const schema: Schema<DB> = {
                         first_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4094,7 +4094,7 @@ export const schema: Schema<DB> = {
                         last_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4197,7 +4197,7 @@ export const schema: Schema<DB> = {
                         'id': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -4224,7 +4224,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -4281,7 +4281,7 @@ export const schema: Schema<DB> = {
                         'address': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4322,7 +4322,7 @@ export const schema: Schema<DB> = {
                         'zip code': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4343,7 +4343,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -4363,7 +4363,7 @@ export const schema: Schema<DB> = {
                         'phone': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4404,7 +4404,7 @@ export const schema: Schema<DB> = {
                         'city': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4445,7 +4445,7 @@ export const schema: Schema<DB> = {
                         'country': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4527,7 +4527,7 @@ export const schema: Schema<DB> = {
                         'sid': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -4596,7 +4596,7 @@ export const schema: Schema<DB> = {
                         fid: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -4623,7 +4623,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -4639,7 +4639,7 @@ export const schema: Schema<DB> = {
                         title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4680,7 +4680,7 @@ export const schema: Schema<DB> = {
                         description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4701,7 +4701,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -4721,7 +4721,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -4762,7 +4762,7 @@ export const schema: Schema<DB> = {
                         price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
@@ -4804,7 +4804,7 @@ export const schema: Schema<DB> = {
                         length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int2',
@@ -4827,7 +4827,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -4847,7 +4847,7 @@ export const schema: Schema<DB> = {
                         rating: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'public.mpaa_rating.enum',
@@ -4870,7 +4870,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -4956,7 +4956,7 @@ export const schema: Schema<DB> = {
                         fid: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -4983,7 +4983,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -4999,7 +4999,7 @@ export const schema: Schema<DB> = {
                         title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5040,7 +5040,7 @@ export const schema: Schema<DB> = {
                         description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5061,7 +5061,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -5081,7 +5081,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5122,7 +5122,7 @@ export const schema: Schema<DB> = {
                         price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
@@ -5164,7 +5164,7 @@ export const schema: Schema<DB> = {
                         length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int2',
@@ -5187,7 +5187,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -5207,7 +5207,7 @@ export const schema: Schema<DB> = {
                         rating: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'public.mpaa_rating.enum',
@@ -5230,7 +5230,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -5316,7 +5316,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5555,7 +5555,7 @@ export const schema: Schema<DB> = {
                         'id': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -5582,7 +5582,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -5639,7 +5639,7 @@ export const schema: Schema<DB> = {
                         'address': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5680,7 +5680,7 @@ export const schema: Schema<DB> = {
                         'zip code': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5701,7 +5701,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -5721,7 +5721,7 @@ export const schema: Schema<DB> = {
                         'phone': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5762,7 +5762,7 @@ export const schema: Schema<DB> = {
                         'city': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5803,7 +5803,7 @@ export const schema: Schema<DB> = {
                         'country': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5844,7 +5844,7 @@ export const schema: Schema<DB> = {
                         'sid': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -9933,7 +9933,7 @@ export const schema: Schema<DB> = {
                         actor_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -9960,7 +9960,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -9976,7 +9976,7 @@ export const schema: Schema<DB> = {
                         first_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10017,7 +10017,7 @@ export const schema: Schema<DB> = {
                         last_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10120,7 +10120,7 @@ export const schema: Schema<DB> = {
                         'id': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -10147,7 +10147,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -10204,7 +10204,7 @@ export const schema: Schema<DB> = {
                         'address': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10245,7 +10245,7 @@ export const schema: Schema<DB> = {
                         'zip code': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10266,7 +10266,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -10286,7 +10286,7 @@ export const schema: Schema<DB> = {
                         'phone': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10327,7 +10327,7 @@ export const schema: Schema<DB> = {
                         'city': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10368,7 +10368,7 @@ export const schema: Schema<DB> = {
                         'country': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10450,7 +10450,7 @@ export const schema: Schema<DB> = {
                         'sid': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -10519,7 +10519,7 @@ export const schema: Schema<DB> = {
                         fid: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -10546,7 +10546,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -10562,7 +10562,7 @@ export const schema: Schema<DB> = {
                         title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10603,7 +10603,7 @@ export const schema: Schema<DB> = {
                         description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10624,7 +10624,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -10644,7 +10644,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10685,7 +10685,7 @@ export const schema: Schema<DB> = {
                         price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
@@ -10727,7 +10727,7 @@ export const schema: Schema<DB> = {
                         length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int2',
@@ -10750,7 +10750,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -10770,7 +10770,7 @@ export const schema: Schema<DB> = {
                         rating: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'public.mpaa_rating.enum',
@@ -10793,7 +10793,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -10879,7 +10879,7 @@ export const schema: Schema<DB> = {
                         fid: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -10906,7 +10906,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -10922,7 +10922,7 @@ export const schema: Schema<DB> = {
                         title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10963,7 +10963,7 @@ export const schema: Schema<DB> = {
                         description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -10984,7 +10984,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -11004,7 +11004,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11045,7 +11045,7 @@ export const schema: Schema<DB> = {
                         price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.numeric',
@@ -11087,7 +11087,7 @@ export const schema: Schema<DB> = {
                         length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int2',
@@ -11110,7 +11110,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -11130,7 +11130,7 @@ export const schema: Schema<DB> = {
                         rating: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'public.mpaa_rating.enum',
@@ -11153,7 +11153,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -11239,7 +11239,7 @@ export const schema: Schema<DB> = {
                         category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11478,7 +11478,7 @@ export const schema: Schema<DB> = {
                         'id': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -11505,7 +11505,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                             },
                             required: [
@@ -11562,7 +11562,7 @@ export const schema: Schema<DB> = {
                         'address': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11603,7 +11603,7 @@ export const schema: Schema<DB> = {
                         'zip code': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11624,7 +11624,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -11644,7 +11644,7 @@ export const schema: Schema<DB> = {
                         'phone': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11685,7 +11685,7 @@ export const schema: Schema<DB> = {
                         'city': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11726,7 +11726,7 @@ export const schema: Schema<DB> = {
                         'country': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11767,7 +11767,7 @@ export const schema: Schema<DB> = {
                         'sid': {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
