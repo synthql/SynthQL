@@ -23,6 +23,8 @@ export class QueryBuilderError extends Error {
         const type = 'NestedQueryMissingRefOpWhereClauseError';
 
         const lines = [
+            'Nested query missing RefOp where clause error!',
+            '',
             'The nested SynthQL query:',
             '',
             JSON.stringify(nestedQuery, null, 2),
@@ -57,6 +59,8 @@ export class QueryBuilderError extends Error {
         const type = 'NestedQueryInvalidRefOpWhereClauseError';
 
         const lines = [
+            'Nested query invalid RefOp where clause error!',
+            '',
             'The RefOp where clause:',
             '',
             JSON.stringify(refOpWhereClause, null, 2),
