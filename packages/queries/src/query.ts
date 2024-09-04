@@ -6,6 +6,7 @@ import { Table } from './types/Table';
 import { Schema } from './types/Schema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
+import { validateNestedQueriesHaveAValidRefOp } from './validators/validateNestedQueriesHaveAValidRefOp';
 
 export class QueryBuilder<
     DB,
@@ -29,7 +30,19 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
-    ) {}
+    ) {
+        validateNestedQueriesHaveAValidRefOp<DB>({
+            from: this._from,
+            where: this._where,
+            select: this._select,
+            include: this._include,
+            limit: this._limit,
+            offset: this._offset,
+            cardinality: this._cardinality ?? 'many',
+            lazy: this._lazy,
+            groupBy: this._groupBy,
+        });
+    }
 
     private build(): {
         from: TTable;

@@ -56,13 +56,14 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                 id: {
                                     type: 'string',
                                 },
-                                description: {
-                                    type: 'string',
-                                },
                                 type: {
                                     type: 'string',
                                 },
                                 title: {
+                                    type: 'string',
+                                    nullable: true,
+                                },
+                                description: {
                                     type: 'string',
                                     nullable: true,
                                 },
@@ -149,7 +150,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                 },
                             },
                             nullable: true,
-                            required: ['id', 'type', 'description'],
+                            required: ['id', 'type'],
                             additionalProperties: true,
                         },
                         selectable: {

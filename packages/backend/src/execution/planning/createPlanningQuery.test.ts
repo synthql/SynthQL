@@ -185,7 +185,11 @@ describe('createPlanningQuery', () => {
         const q = createPlanningQuery(
             from('store')
                 .include({
-                    addresses: from('address').many(),
+                    addresses: from('address')
+                        .where({
+                            address_id: col('store.address_id'),
+                        })
+                        .many(),
                 })
                 .many(),
         );
@@ -209,8 +213,15 @@ describe('createPlanningQuery', () => {
             from('store')
                 .include({
                     addresses: from('address')
+                        .where({
+                            address_id: col('store.address_id'),
+                        })
                         .include({
-                            cities: from('city').many(),
+                            cities: from('city')
+                                .where({
+                                    city_id: col('address.city_id'),
+                                })
+                                .many(),
                         })
                         .many(),
                 })
@@ -238,9 +249,23 @@ describe('createPlanningQuery', () => {
     });
 
     test('store -> many(addresses) -> maybe(city) -> maybe(language)', () => {
-        const language = from('language').maybe();
-        const city = from('city').include({ language }).maybe();
-        const addresses = from('address').include({ city }).many();
+        const language = from('language')
+            .where({
+                language_id: col('film.language_id'),
+            })
+            .maybe();
+        const city = from('city')
+            .where({
+                city_id: col('address.city_id'),
+            })
+            .include({ language })
+            .maybe();
+        const addresses = from('address')
+            .where({
+                address_id: col('store.address_id'),
+            })
+            .include({ city })
+            .many();
         const store = from('store').include({ addresses }).many();
 
         const q = createPlanningQuery(store);
@@ -272,9 +297,23 @@ describe('createPlanningQuery', () => {
     });
 
     test('maybe(store) -> many(addresses) -> maybe(city) -> maybe(language)', () => {
-        const language = from('language').maybe();
-        const city = from('city').include({ language }).maybe();
-        const addresses = from('address').include({ city }).many();
+        const language = from('language')
+            .where({
+                language_id: col('film.language_id'),
+            })
+            .maybe();
+        const city = from('city')
+            .where({
+                city_id: col('address.city_id'),
+            })
+            .include({ language })
+            .maybe();
+        const addresses = from('address')
+            .where({
+                address_id: col('store.address_id'),
+            })
+            .include({ city })
+            .many();
         const store = from('store').include({ addresses }).maybe();
 
         const q = createPlanningQuery(store);
