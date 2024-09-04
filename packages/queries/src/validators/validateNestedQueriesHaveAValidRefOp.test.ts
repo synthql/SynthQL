@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { col } from '../col';
 import { from } from '../generated';
 
-describe('validateNestedQueriesHaveAValidRefO', () => {
+describe('validateNestedQueriesHaveAValidRefOp', () => {
     test('Check that included query without RefOp where clause throws', () => {
         expect(() =>
             from('film')
@@ -10,7 +10,7 @@ describe('validateNestedQueriesHaveAValidRefO', () => {
                     lang: from('language').many(),
                 })
                 .many(),
-        ).toThrow('Nested query missing RefOp where clause error!');
+        ).toThrow('The table "film" is including table "language",');
     });
 
     test('Check that included query with RefOp where clause does not throw', () => {
