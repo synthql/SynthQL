@@ -3,6 +3,7 @@ import { from } from '../tests/generated';
 import { iterateQuery } from './iterateQuery';
 import { AnyQuery } from '../types';
 import { Path } from '../execution/types';
+import { col } from '@synthql/queries';
 
 describe('iterateQuery', () => {
     const cases: Array<{
@@ -19,29 +20,11 @@ describe('iterateQuery', () => {
         {
             input: from('film')
                 .include({
-                    lang: from('language').many(),
-                })
-                .many(),
-
-            expected: [
-                {
-                    query: from('film')
-                        .include({ lang: from('language').many() })
+                    lang: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
                         .many(),
-                    insertionPath: [],
-                },
-                {
-                    query: from('language').many(),
-                    insertionPath: ['lang'],
-                },
-            ],
-        },
-
-        {
-            input: from('film')
-                .include({
-                    lang: from('language').many(),
-                    actors: from('actor').many(),
                 })
                 .many(),
 
@@ -49,18 +32,21 @@ describe('iterateQuery', () => {
                 {
                     query: from('film')
                         .include({
-                            lang: from('language').many(),
-                            actors: from('actor').many(),
+                            lang: from('language')
+                                .where({
+                                    language_id: col('film.language_id'),
+                                })
+                                .many(),
                         })
                         .many(),
                     insertionPath: [],
                 },
                 {
-                    query: from('actor').many(),
-                    insertionPath: ['actors'],
-                },
-                {
-                    query: from('language').many(),
+                    query: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
                     insertionPath: ['lang'],
                 },
             ],
@@ -69,10 +55,14 @@ describe('iterateQuery', () => {
         {
             input: from('film')
                 .include({
-                    lang: from('language').many(),
+                    lang: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
                     actors: from('actor')
-                        .include({
-                            lang: from('language').many(),
+                        .where({
+                            actor_id: col('film_actor.actor_id'),
                         })
                         .many(),
                 })
@@ -82,10 +72,14 @@ describe('iterateQuery', () => {
                 {
                     query: from('film')
                         .include({
-                            lang: from('language').many(),
+                            lang: from('language')
+                                .where({
+                                    language_id: col('film.language_id'),
+                                })
+                                .many(),
                             actors: from('actor')
-                                .include({
-                                    lang: from('language').many(),
+                                .where({
+                                    actor_id: col('film_actor.actor_id'),
                                 })
                                 .many(),
                         })
@@ -94,16 +88,101 @@ describe('iterateQuery', () => {
                 },
                 {
                     query: from('actor')
-                        .include({ lang: from('language').many() })
+                        .where({
+                            actor_id: col('film_actor.actor_id'),
+                        })
                         .many(),
                     insertionPath: ['actors'],
                 },
                 {
-                    query: from('language').many(),
+                    query: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
+                    insertionPath: ['lang'],
+                },
+            ],
+        },
+
+        {
+            input: from('film')
+                .include({
+                    lang: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
+                    actors: from('actor')
+                        .where({
+                            actor_id: col('film_actor.actor_id'),
+                        })
+                        .include({
+                            lang: from('language')
+                                .where({
+                                    language_id: col('film.language_id'),
+                                })
+                                .many(),
+                        })
+                        .many(),
+                })
+                .many(),
+
+            expected: [
+                {
+                    query: from('film')
+                        .include({
+                            lang: from('language')
+                                .where({
+                                    language_id: col('film.language_id'),
+                                })
+                                .many(),
+                            actors: from('actor')
+                                .where({
+                                    actor_id: col('film_actor.actor_id'),
+                                })
+                                .include({
+                                    lang: from('language')
+                                        .where({
+                                            language_id:
+                                                col('film.language_id'),
+                                        })
+                                        .many(),
+                                })
+                                .many(),
+                        })
+                        .many(),
+                    insertionPath: [],
+                },
+                {
+                    query: from('actor')
+                        .where({
+                            actor_id: col('film_actor.actor_id'),
+                        })
+                        .include({
+                            lang: from('language')
+                                .where({
+                                    language_id: col('film.language_id'),
+                                })
+                                .many(),
+                        })
+                        .many(),
+                    insertionPath: ['actors'],
+                },
+                {
+                    query: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
                     insertionPath: ['actors', 'lang'],
                 },
                 {
-                    query: from('language').many(),
+                    query: from('language')
+                        .where({
+                            language_id: col('film.language_id'),
+                        })
+                        .many(),
                     insertionPath: ['lang'],
                 },
             ],

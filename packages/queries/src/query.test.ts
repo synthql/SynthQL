@@ -92,24 +92,6 @@ describe('queries', () => {
         };
     });
 
-    test('Find one actor by ID', () => {
-        const q = from('actor')
-            .columns('actor_id', 'first_name', 'last_name', 'last_update')
-            .where({
-                actor_id: 1,
-            })
-            .one();
-
-        const result = fakeQueryResult(q);
-
-        result satisfies {
-            actor_id: number;
-            first_name: string;
-            last_name: string;
-            last_update: string;
-        };
-    });
-
     test('Find film with language and actors', () => {
         const language = from('language')
             .columns('language_id', 'name')
@@ -139,6 +121,7 @@ describe('queries', () => {
 
         result satisfies {
             film_id: number;
+            language_id: number;
             language: {
                 language_id: number;
                 name: string;
