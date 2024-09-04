@@ -23,25 +23,11 @@ export class QueryBuilderError extends Error {
         const type = 'NestedQueryMissingRefOpWhereClauseError';
 
         const lines = [
-            'Nested query missing RefOp where clause error!',
+            `The table "${query.from}" is including table "${nestedQuery.from}",`,
+            `but "${nestedQuery.from}" is missing a join predicate!`,
             '',
-            'The nested SynthQL query:',
-            '',
-            JSON.stringify(nestedQuery, null, 2),
-            '',
-            'in the parent SynthQL query:',
-            '',
-            JSON.stringify(query, null, 2),
-            '',
-            'is missing a valid RefOp where clause!',
-            '',
-            'You need to add one like:',
-            '',
-            `.where({ columnName: col('rootQueryTableName.columnName') })`,
-            '',
-            'to your SynthQL query builder,',
-            'to connect (i.e. `JOIN`) the nested query to its parent query',
-            '',
+            `Hint: are you missing \`.where({some_id: "${query.from}.some_id"})\``,
+            `on the "${nestedQuery.from}" query?`,
         ];
 
         return new QueryBuilderError(type, lines.join('\n'));
