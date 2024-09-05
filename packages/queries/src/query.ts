@@ -19,6 +19,7 @@ export class QueryBuilder<
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupBy extends string[],
+    TName extends string | undefined,
 > {
     constructor(
         private _from: TTable,
@@ -30,6 +31,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
+        private _name: TName,
     ) {
         validateNestedQueriesHaveAValidRefOp<DB>({
             from: this._from,
@@ -54,6 +56,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        name: TName;
     } {
         return {
             from: this._from,
@@ -65,6 +68,7 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            name: this._name,
         };
     }
 
@@ -82,7 +86,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -93,11 +98,14 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
     /**
-     * Sets the number (n) of results to return for the query. Shorthand for `.limit(n).many()`.
+     * Sets the number (n) of results to return
+     * for the query, and then builds the query.
+     * Shorthand for `.limit(n).many()`.
      */
     take(take: TLimit) {
         return new QueryBuilder<
@@ -110,7 +118,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -121,6 +130,7 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._name,
         ).build();
     }
 
@@ -138,7 +148,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -149,11 +160,13 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
     /**
-     * Builds a query that returns exactly one row. Will throw an error if the query returns 0.
+     * Builds a query that returns exactly one row.
+     * Will throw an error if the query returns 0.
      *
      * Also sets the limit to 1.
      */
@@ -168,7 +181,8 @@ export class QueryBuilder<
             TOffset,
             'one',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -179,6 +193,7 @@ export class QueryBuilder<
             'one',
             this._lazy,
             this._groupBy,
+            this._name,
         ).build();
     }
 
@@ -196,7 +211,8 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -207,11 +223,13 @@ export class QueryBuilder<
             'many',
             this._lazy,
             this._groupBy,
+            this._name,
         ).build();
     }
 
     /**
-     * Builds a query with a cardinality of 'maybe'. This means that the query will return 0 or 1 rows.
+     * Builds a query with a cardinality of 'maybe'.
+     * This means that the query will return 0 or 1 rows.
      */
     maybe() {
         return new QueryBuilder<
@@ -224,7 +242,8 @@ export class QueryBuilder<
             TOffset,
             'maybe',
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -235,6 +254,7 @@ export class QueryBuilder<
             'maybe',
             this._lazy,
             this._groupBy,
+            this._name,
         ).build();
     }
 
@@ -249,7 +269,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -260,23 +281,27 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
     /**
-     * Select specific columns from the table. `columns` is a shorthand for `select`. Example:
+     * Select specific columns from the table.
+     * `columns` is a shorthand for `select`.
+     *
+     * Example:
      *
      * ```ts
      * const q = from('actor')
      *   .columns('actor_id', 'last_name')
-     *   .many()
+     *   .many();
      *
      * // is equivalent to
      * const q = from('actor')
      *   .select({
      *      actor_id: true,
      *      last_name: true,
-     *   })
+     *   });
      * ```
      */
     columns<TKeys extends Array<Column<DB, TTable>>>(...keys: TKeys) {
@@ -296,7 +321,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -307,6 +333,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
@@ -321,7 +348,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -332,6 +360,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
@@ -346,7 +375,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -357,6 +387,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
@@ -378,7 +409,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             where,
@@ -389,6 +421,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._name,
         );
     }
 
@@ -403,7 +436,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             true,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -414,6 +448,7 @@ export class QueryBuilder<
             this._cardinality,
             true,
             this._groupBy,
+            this._name,
         );
     }
 
@@ -428,7 +463,8 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy
+            TGroupBy,
+            TName
         >(
             this._from,
             this._where,
@@ -439,6 +475,46 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             id,
+            this._name,
+        );
+    }
+
+    /**
+     * Sets the name of the query.
+     *
+     * Example:
+     *
+     * ```ts
+     * const q = from('actor')
+     *   .columns('actor_id', 'last_name')
+     *   .name('findActors')
+     *   .many();
+     * ```
+     */
+    name(name: TName) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TSelect,
+            TInclude,
+            TLimit,
+            TOffset,
+            'many',
+            TLazy,
+            TGroupBy,
+            TName
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            this._offset,
+            'many',
+            this._lazy,
+            this._groupBy,
+            name,
         );
     }
 }
@@ -462,7 +538,8 @@ export function query<DB>(schema: Schema<DB>) {
                 number | undefined,
                 'many',
                 undefined,
-                typeof primaryKeys
+                typeof primaryKeys,
+                string | undefined
             >(
                 table,
                 {},
@@ -473,6 +550,7 @@ export function query<DB>(schema: Schema<DB>) {
                 'many',
                 undefined,
                 primaryKeys,
+                undefined,
             );
         },
     };
