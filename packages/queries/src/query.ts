@@ -19,7 +19,6 @@ export class QueryBuilder<
     TCardinality extends 'one' | 'maybe' | 'many',
     TLazy extends true | undefined,
     TGroupBy extends string[],
-    TName extends string | undefined,
 > {
     constructor(
         private _from: TTable,
@@ -31,7 +30,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
-        private _name: TName,
+        private _name?: string,
     ) {
         validateNestedQueriesHaveAValidRefOp<DB>({
             from: this._from,
@@ -56,7 +55,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
-        name: TName;
+        name?: string;
     } {
         return {
             from: this._from,
@@ -86,8 +85,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -118,8 +116,7 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -148,8 +145,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -181,8 +177,7 @@ export class QueryBuilder<
             TOffset,
             'one',
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -211,8 +206,7 @@ export class QueryBuilder<
             TOffset,
             'many',
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -242,8 +236,7 @@ export class QueryBuilder<
             TOffset,
             'maybe',
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -269,8 +262,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -321,8 +313,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -348,8 +339,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -375,8 +365,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -409,8 +398,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             where,
@@ -436,8 +424,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             true,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -463,8 +450,7 @@ export class QueryBuilder<
             TOffset,
             TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -491,7 +477,7 @@ export class QueryBuilder<
      *   .many();
      * ```
      */
-    name(name: TName) {
+    name(name: string) {
         return new QueryBuilder<
             DB,
             TTable,
@@ -500,10 +486,9 @@ export class QueryBuilder<
             TInclude,
             TLimit,
             TOffset,
-            'many',
+            TCardinality,
             TLazy,
-            TGroupBy,
-            TName
+            TGroupBy
         >(
             this._from,
             this._where,
@@ -511,7 +496,7 @@ export class QueryBuilder<
             this._include,
             this._limit,
             this._offset,
-            'many',
+            this._cardinality,
             this._lazy,
             this._groupBy,
             name,
@@ -538,8 +523,7 @@ export function query<DB>(schema: Schema<DB>) {
                 number | undefined,
                 'many',
                 undefined,
-                typeof primaryKeys,
-                string | undefined
+                typeof primaryKeys
             >(
                 table,
                 {},
