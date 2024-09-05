@@ -60,6 +60,11 @@ export interface QueryEngineProps<DB> {
      * You can use this instead of passing a connection string.
      */
     pool?: Pool;
+
+    /**
+     * Whether to log SQL statements or not.
+     */
+    logging?: boolean;
 }
 
 export class QueryEngine<DB> {
@@ -86,6 +91,7 @@ export class QueryEngine<DB> {
                 defaultSchema: this.schema,
                 qpe,
                 prependSql: this.prependSql,
+                logging: config.logging,
             }),
         ];
     }
