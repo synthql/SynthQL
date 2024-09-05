@@ -9,6 +9,17 @@ describe('queries', () => {
         return {} as any;
     }
 
+    test('Find one actor with `name()`', () => {
+        const q = from('actor')
+            .columns('actor_id', 'first_name')
+            .name('findActor')
+            .one();
+
+        const result = fakeQueryResult(q);
+
+        result satisfies { actor_id: number; first_name: string };
+    });
+
     test('Find one actor with `columns()`', () => {
         const q = from('actor').columns('actor_id', 'first_name').one();
 

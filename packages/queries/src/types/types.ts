@@ -13,4 +13,5 @@ export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     cardinality?: 'one' | 'maybe' | 'many';
     lazy?: true;
     groupBy?: string[];
+    name?: string;
 };
