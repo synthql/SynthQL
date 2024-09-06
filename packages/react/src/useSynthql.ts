@@ -1,4 +1,4 @@
-import { Query, QueryResult, Table } from '@synthql/queries';
+import { hashQuery, Query, QueryResult, Table } from '@synthql/queries';
 import { useSynthqlContext } from './SynthqlProvider';
 import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 import { synthqlQueryKey } from './synthqlQueryKey';
@@ -25,7 +25,15 @@ export function useSynthql<
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.from}`;
+    const hash = hashQuery(query);
+
+    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${hash}`;
+
+    // TODO: convert a query into a new HTTP request
+    // body object using the following three rules:
+    // 1. A query with parameters is sent as a registered query
+    // 2. A query with a name is sent as a registered query
+    // 3. All other queries are sent as non-registered queries
 
     const mergedRequestInit: RequestInit = {
         ...requestInit,

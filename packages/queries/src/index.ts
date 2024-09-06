@@ -1,4 +1,3 @@
-export { col } from './col';
 export * from './types/types';
 export * from './types/BinaryOp';
 export * from './types/Cardinality';
@@ -14,4 +13,6 @@ export * from './types/Select';
 export * from './types/Table';
 export * from './types/Where';
 export * from './types/WhereClause';
+export { col } from './col';
+export { hashQuery } from './hashQuery';
 export { query } from './query';
