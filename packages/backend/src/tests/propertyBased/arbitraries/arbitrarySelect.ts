@@ -1,6 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { Schema, Select } from '@synthql/queries';
-import { AnyDb } from '../../../types';
+import { AnyDB, Schema, Select } from '@synthql/queries';
 import { getTableSelectableColumns } from '../getTableSelectableColumns';
 
 export function arbitrarySelect<DB>({
@@ -9,7 +8,7 @@ export function arbitrarySelect<DB>({
 }: {
     schema: Schema<DB>;
     tableName: string;
-}): fc.Arbitrary<Select<AnyDb, string>> {
+}): fc.Arbitrary<Select<AnyDB, string>> {
     return fc
         .constantFrom(getTableSelectableColumns<DB>(schema, tableName))
         .chain((keys) =>

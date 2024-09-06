@@ -1,5 +1,5 @@
+import { AnyQuery } from '@synthql/queries';
 import { Path } from '../execution/types';
-import { AnyQuery } from '../types';
 import { setIn } from '../util/tree/setIn';
 import { getIn } from '../util/tree/getIn';
 

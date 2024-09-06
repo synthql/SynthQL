@@ -1,8 +1,7 @@
-import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
+import { AnyQuery, QueryResult, col } from '@synthql/queries';
 import { DB, from } from '../tests/generated';
 import { city } from '../tests/queries.v2';
-import { AnyQuery } from '../types';
 import { collectColumnReferences } from './collectColumnReferences';
 
 describe('collectColumnReferences', () => {

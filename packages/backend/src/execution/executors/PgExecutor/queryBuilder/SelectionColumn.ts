@@ -1,4 +1,4 @@
-import { AnyQuery } from '../../../../types';
+import { AnyQuery } from '@synthql/queries';
 import { Selection } from './types';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';

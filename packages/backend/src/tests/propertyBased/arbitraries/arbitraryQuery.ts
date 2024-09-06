@@ -1,6 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { Schema, Cardinality } from '@synthql/queries';
-import { AnyQuery } from '../../../types';
+import { AnyQuery, Cardinality, Schema } from '@synthql/queries';
 import { arbitraryLimit } from './arbitraryLimit';
 import { arbitraryCardinality } from './arbitraryCardinality';
 import { arbitraryWhere } from './arbitraryWhere';

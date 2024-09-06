@@ -1,5 +1,4 @@
-import { JoinOp, Where, isRefOp } from '@synthql/queries';
-import { AnyDb, AnyQuery } from '../../../../types';
+import { AnyDB, AnyQuery, Where, isRefOp } from '@synthql/queries';
 import { collectFromQuery } from '../../../../query/collectFromQuery';
 import { SelectionColumn } from './SelectionColumn';
 import { SelectionJsonbAgg } from './SelectionJsonbAgg';
@@ -12,7 +11,7 @@ export interface AugmentedQuery {
     rootQuery: AnyQuery;
     rootTable: TableRef;
     joins: Array<Join>;
-    wheres: { table: TableRef; where: Where<AnyDb, string> }[];
+    wheres: { table: TableRef; where: Where<AnyDB, string> }[];
     groupingColumns: ColumnRef[];
 }
 
@@ -80,7 +79,7 @@ function collectJoins(query: AnyQuery, defaultSchema: string): Array<Join> {
 function collectWhere(
     query: AnyQuery,
     defaultSchema: string,
-): Array<{ table: TableRef; where: Where<AnyDb, string> }> {
+): Array<{ table: TableRef; where: Where<AnyDB, string> }> {
     return collectFromQuery(query, (query) => {
         return [
             {

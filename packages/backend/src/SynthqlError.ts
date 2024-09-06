@@ -1,6 +1,6 @@
-import { format } from 'sql-formatter';
+import { AnyQuery } from '@synthql/queries';
 import { DatabaseError } from 'pg';
-import { AnyQuery } from './types';
+import { format } from 'sql-formatter';
 
 interface SqlExecutionErrorProps {
     query: AnyQuery;

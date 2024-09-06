@@ -1,5 +1,4 @@
-import { Table, Where } from '@synthql/queries';
-import { AnyQuery } from '../../../types';
+import { AnyQuery, Table, Where } from '@synthql/queries';
 import { QueryProviderInput } from '../../../types/QueryProviderInput';
 
 /**
