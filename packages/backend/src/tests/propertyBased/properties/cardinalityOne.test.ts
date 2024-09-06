@@ -4,8 +4,8 @@ import { Query } from '@synthql/queries';
 import { DB, schema } from '../../generated';
 import { pool, queryEngine } from '../../queryEngine';
 import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
-import { CardinalityError } from '../../../query/applyCardinality';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
+import { SynthqlError } from '../../../SynthqlError';
 
 describe('cardinalityOne', async () => {
     const validWhereArbitraryQuery = arbitraryQuery<DB>({
@@ -56,7 +56,7 @@ describe('cardinalityOne', async () => {
                 const typedQuery = query as Query<DB>;
                 await queryEngine.executeAndWait(typedQuery);
             } catch (error) {
-                expect(error).toBeInstanceOf(CardinalityError);
+                expect(error).toBeInstanceOf(SynthqlError);
             }
         },
     );
