@@ -101,9 +101,40 @@ export class QueryBuilder<
     }
 
     /**
+     * Returns all rows that match the query filters.
+     *
+     * Does not override the limit set by `.limit()`.
+     *
+     * Alias for `.many()`.
+     */
+    all() {
+        return this.many();
+    }
+
+    /**
+     * Builds a query that can return 0 or 1 rows. When no rows are found,
+     * the query will return `null`.
+     *
+     * Also sets the limit to 1.
+     */
+    first() {
+        return this.maybe();
+    }
+
+    /**
+     * Builds a query that returns exactly one row. Will throw an error if no rows match
+     * the query filters.
+     *
+     * Also sets the limit to 1.
+     */
+    firstOrThrow() {
+        return this.one();
+    }
+
+    /**
      * Sets the number (n) of results to return
      * for the query, and then builds the query.
-     * Shorthand for `.limit(n).many()`.
+     * Shorthand for `.limit(n).all()`.
      */
     take(take: TLimit) {
         return new QueryBuilder<
@@ -161,10 +192,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query that returns exactly one row.
-     * Will throw an error if the query returns 0.
-     *
-     * Also sets the limit to 1.
+     * Alias for {@link firstOrThrow()}
      */
     one() {
         return new QueryBuilder<
@@ -193,7 +221,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query that returns many rows.
+     * @alias {@link all}
      */
     many() {
         return new QueryBuilder<
@@ -222,8 +250,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query with a cardinality of 'maybe'.
-     * This means that the query will return 0 or 1 rows.
+     * @alias {@link first}
      */
     maybe() {
         return new QueryBuilder<
