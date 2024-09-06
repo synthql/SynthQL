@@ -48,7 +48,9 @@ describe('No results', () => {
         async (query) => {
             expect(
                 async () => await queryEngine.executeAndWait(query),
-            ).rejects.toThrow('Expected cardinality one but got none.');
+            ).rejects.toThrow(
+                'A query with a cardinality of `one` returned no results!',
+            );
         },
         timeout,
     );

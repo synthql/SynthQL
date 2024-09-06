@@ -1,9 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import {
-    ExpressSynthqlHandler,
-    ExpressSynthqlHandlerRequest,
-    ExpressSynthqlHandlerResponse,
-} from '@synthql/handler-express';
+import {} from '@synthql/handler-express';
+import { Request, Response, RequestHandler, NextFunction } from 'express';
 
 function readBody(req: IncomingMessage): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -23,12 +20,10 @@ function readBody(req: IncomingMessage): Promise<string> {
     });
 }
 
-export type IncomingMessageWithBody = IncomingMessage &
-    ExpressSynthqlHandlerRequest;
-export type ServerResponseWithEnd = ServerResponse &
-    ExpressSynthqlHandlerResponse;
+export type IncomingMessageWithBody = IncomingMessage & Request;
+export type ServerResponseWithEnd = ServerResponse & Response;
 
-export function appendBody(expressHandler: ExpressSynthqlHandler) {
+export function appendBody(expressHandler: RequestHandler) {
     return async (req: IncomingMessage, res: ServerResponse) => {
         const body = await readBody(req);
 
@@ -40,6 +35,6 @@ export function appendBody(expressHandler: ExpressSynthqlHandler) {
 
         const newRes = res as ServerResponseWithEnd;
 
-        expressHandler(newReq, newRes);
+        expressHandler(newReq, newRes, () => {});
     };
 }
