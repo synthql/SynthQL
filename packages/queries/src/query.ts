@@ -101,11 +101,11 @@ export class QueryBuilder<
     }
 
     /**
-     * Returns all rows that match the query filters.
+     * Builds a query that returns all rows that match the query filters.
      *
      * Does not override the limit set by `.limit()`.
      *
-     * Alias for `.many()`.
+     * Note: {@link many} is an alias for {@link all}.
      */
     all() {
         return this.many();
@@ -116,6 +116,8 @@ export class QueryBuilder<
      * the query will return `null`.
      *
      * Also sets the limit to 1.
+     *
+     * Note: {@link maybe} is an alias for {@link first}.
      */
     first() {
         return this.maybe();
@@ -126,6 +128,8 @@ export class QueryBuilder<
      * the query filters.
      *
      * Also sets the limit to 1.
+     *
+     * Note: {@link one} is an alias for {@link firstOrThrow}.
      */
     firstOrThrow() {
         return this.one();
@@ -192,7 +196,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Alias for {@link firstOrThrow()}
+     * @alias {@link firstOrThrow}
      */
     one() {
         return new QueryBuilder<
