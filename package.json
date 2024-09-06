@@ -1,7 +1,7 @@
 {
     "name": "@synthql/root",
     "type": "module",
-    "version": "0.88.4",
+    "version": "0.89.4",
     "license": "MIT",
     "private": true,
     "workspaces": [
