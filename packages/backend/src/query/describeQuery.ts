@@ -1,5 +1,4 @@
-import { isRefOp } from '@synthql/queries';
-import { AnyQuery } from '../types';
+import { AnyQuery, isRefOp } from '@synthql/queries';
 import { iterateQuery } from './iterateQuery';
 
 export function describeQuery(q: AnyQuery): string {

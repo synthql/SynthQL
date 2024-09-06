@@ -1,6 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { Schema, Where } from '@synthql/queries';
-import { AnyDb } from '../../../types';
+import { AnyDB, Schema, Where } from '@synthql/queries';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { checkIfDateTimeColumn } from '../checkIfDateTimeColumn';
@@ -16,7 +15,7 @@ export function arbitraryWhere<DB>({
     allTablesRowsMap: AllTablesRowsMap;
     tableName: string;
     validWhere: boolean;
-}): fc.Arbitrary<Where<AnyDb, string>> {
+}): fc.Arbitrary<Where<AnyDB, string>> {
     return fc
         .constantFrom(...getTableWhereableColumns(schema, tableName))
         .filter(

@@ -1,4 +1,4 @@
-import { AnyQuery } from '../types';
+import { AnyQuery } from '@synthql/queries';
 import { assertPresent } from '../util/asserts/assertPresent';
 import { iterateQuery } from './iterateQuery';
 
@@ -16,12 +16,12 @@ export function splitQueryAtBoundary<TQuery extends AnyQuery>(
         const isRoot = parentQuery === undefined || includeKey === undefined;
 
         if (partOfSplitSubtree.has(parentQuery)) {
-            // don't split if the parent query is already part of the split
+            // Don't split if the parent query is already part of the split
             partOfSplitSubtree.add(query);
             continue;
         }
         if (isRoot || !shouldSplit(query, { depth })) {
-            // never split the root
+            // Never split the root
             continue;
         }
 

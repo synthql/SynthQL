@@ -1,4 +1,5 @@
 export * from './types/types';
+export * from './types/AnyQuery';
 export * from './types/BinaryOp';
 export * from './types/Cardinality';
 export * from './types/Column';

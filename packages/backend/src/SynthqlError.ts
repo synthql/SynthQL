@@ -1,6 +1,6 @@
-import { format } from 'sql-formatter';
+import { AnyQuery } from '@synthql/queries';
 import { DatabaseError } from 'pg';
-import { AnyQuery } from './types';
+import { format } from 'sql-formatter';
 
 interface SqlExecutionErrorProps {
     query: AnyQuery;
@@ -13,6 +13,7 @@ export class SynthqlError extends Error {
         public err: Error | any,
         public type: string,
         public message: string,
+        public code: number = 500,
     ) {
         super(message);
         Error.captureStackTrace(this, SynthqlError);
@@ -118,6 +119,21 @@ export class SynthqlError extends Error {
         ];
 
         return new SynthqlError(error, type, lines.join('\n'));
+    }
+
+    static createCardinalityError() {
+        const type = 'CardinalityError';
+
+        // Two ways this error can happen:
+        // 1. The top level query returned no results.
+        // 2. A subquery returned no results.
+
+        const lines = [
+            'A query with a cardinality of `one` returned no results!',
+            'Hint: are you using .one() when you should be using .maybe()?',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'), 404);
     }
 }
 

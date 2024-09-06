@@ -1,20 +1,24 @@
 import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
-import type { Request, Response } from 'express';
+import type { Request, Response, RequestHandler } from 'express';
 
-export type ExpressSynthqlHandlerRequest = Pick<Request, 'body' | 'headers'>;
-export type ExpressSynthqlHandlerResponse = Pick<
-    Response,
-    'statusCode' | 'write' | 'setHeader' | 'end'
->;
-export type ExpressSynthqlHandler = (
-    req: ExpressSynthqlHandlerRequest,
-    res: ExpressSynthqlHandlerResponse,
-) => Promise<void>;
-
+/**
+ * Create an Express request handler that can handle SynthQL requests.
+ *
+ * Usage:
+ *
+ * ```typescript
+ * import express from 'express';
+ * import { createExpressSynthqlHandler } from '@synthql/handler-express';
+ *
+ * const app = express();
+ * app.use(createExpressSynthqlHandler(queryEngine));
+ * ```
+ *
+ */
 export function createExpressSynthqlHandler<DB>(
     queryEngine: QueryEngine<DB>,
-): ExpressSynthqlHandler {
-    return async (req, res) => {
+): RequestHandler {
+    return async (req, res, next) => {
         // First, there should be a global error handler that catches all errors
         // 1. Known errors (i.e. `SynthqlError`s) should be converted to a JSON response
         // 2. Unknown errors should be passed on to the next layer
@@ -24,7 +28,7 @@ export function createExpressSynthqlHandler<DB>(
         } catch (e) {
             // Handle known `SynthqlError`s
             if (e instanceof SynthqlError) {
-                res.statusCode = 400;
+                res.statusCode = e.code;
                 res.setHeader('Content-Type', 'application/json');
 
                 res.write(
@@ -36,7 +40,7 @@ export function createExpressSynthqlHandler<DB>(
                 res.end();
             } else {
                 // Let another layer handle the error
-                throw e;
+                next(e);
             }
         }
     };
@@ -44,8 +48,8 @@ export function createExpressSynthqlHandler<DB>(
 
 async function executeSynthqlRequest<DB>(
     queryEngine: QueryEngine<DB>,
-    req: ExpressSynthqlHandlerRequest,
-    res: ExpressSynthqlHandlerResponse,
+    req: Request,
+    res: Response,
 ) {
     // First try to parse the request body as JSON
     const { query, returnLastOnly } = await tryParseRequest(req);
@@ -68,7 +72,7 @@ async function executeSynthqlRequest<DB>(
     res.end();
 }
 
-async function tryParseRequest(req: ExpressSynthqlHandlerRequest) {
+async function tryParseRequest(req: Request) {
     const body = req.body;
     const returnLastOnly = req.headers['x-return-last-only'] === 'true';
 
@@ -93,7 +97,7 @@ async function tryExecuteQuery<DB>(
 }
 
 async function writeBody(
-    res: ExpressSynthqlHandlerResponse,
+    res: Response,
     query: any,
     generator: AsyncGenerator<any>,
     returnLastOnly: boolean,

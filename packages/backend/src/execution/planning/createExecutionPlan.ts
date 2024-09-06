@@ -1,9 +1,8 @@
+import { AnyQuery } from '@synthql/queries';
 import { collectColumnReferences } from '../../query/collectColumnReferences';
-import { mapQuery } from '../../query/mapQuery';
 import { createRefContext } from '../../refs/RefContext';
-import { AnyQuery } from '../../types';
 import { ExecuteProps } from '../execute';
-import { ExecPlanTree, PlanningQuery } from '../types';
+import { ExecPlanTree } from '../types';
 import { assignExecutors } from './assignExecutors';
 import { createPlanningQuery } from './createPlanningQuery';
 

@@ -1,5 +1,4 @@
-import { RefOp } from '@synthql/queries';
-import { AnyDb, AnyQuery } from '../types';
+import { AnyDB, AnyQuery, RefOp } from '@synthql/queries';
 import { RefContext } from '../refs/RefContext';
 import { ColumnRef } from '../refs/ColumnRef';
 import { QueryNode } from '../query/createQueryTree';

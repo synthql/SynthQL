@@ -1,5 +1,5 @@
-import { AnyQuery } from '../types';
-import { Cardinality } from '@synthql/queries';
+import { AnyQuery, Cardinality } from '@synthql/queries';
+import { SynthqlError } from '../SynthqlError';
 
 type CardinalityResult<
     TCardinality extends Cardinality,
@@ -18,7 +18,7 @@ export function applyCardinality<T, TCardinality extends Cardinality>(
     switch (cardinality) {
         case 'one': {
             if (result.length === 0) {
-                throw new CardinalityError(cardinality, opts?.query, opts?.row);
+                throw SynthqlError.createCardinalityError();
             }
             const first = result[0];
             return first as CardinalityResult<TCardinality, T>;
@@ -34,16 +34,4 @@ export function applyCardinality<T, TCardinality extends Cardinality>(
         }
     }
     throw new Error(`applyCardinality(...,${cardinality}): Unreachable`);
-}
-
-export class CardinalityError extends Error {
-    constructor(cardinality: Cardinality, query?: AnyQuery, row?: any) {
-        super(
-            [
-                `Expected cardinality ${cardinality} but got none.`,
-                `The query was ${JSON.stringify(query, null, 2)}`,
-                `The row was ${JSON.stringify(row, null, 2)}`,
-            ].join('\n'),
-        );
-    }
 }

@@ -1,4 +1,4 @@
-import { AnyQuery } from '../types';
+import { AnyQuery } from '@synthql/queries';
 
 export interface QueryNode {
     includeKey: string | undefined;

@@ -1,5 +1,5 @@
+import { AnyQuery } from '@synthql/queries';
 import { escapeRef } from './escapeRef';
-import { AnyQuery } from '../types';
 import { ColumnRef } from './ColumnRef';
 
 export class TableRef {
