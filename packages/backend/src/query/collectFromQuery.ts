@@ -1,5 +1,5 @@
+import { AnyQuery } from '@synthql/queries';
 import { Path } from '../execution/types';
-import { AnyQuery } from '../types';
 import { iterateQuery } from './iterateQuery';
 
 /**

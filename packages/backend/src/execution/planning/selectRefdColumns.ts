@@ -1,6 +1,6 @@
+import { AnyQuery } from '@synthql/queries';
 import { ColumnRef } from '../../refs/ColumnRef';
 import { TableRef } from '../../refs/TableRef';
-import { AnyQuery } from '../../types';
 
 /**
  * Recursively select all referenced columns in the query.

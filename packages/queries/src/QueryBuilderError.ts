@@ -1,5 +1,4 @@
 import { Query } from './types/types';
-import { RefOp } from './types/RefOp';
 
 export class QueryBuilderError extends Error {
     constructor(

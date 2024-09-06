@@ -1,5 +1,5 @@
+import { AnyQuery } from '@synthql/queries';
 import { mapQuery } from '../../query/mapQuery';
-import { AnyQuery } from '../../types';
 import { PlanningQuery } from '../types';
 
 export function createPlanningQuery(query: AnyQuery): PlanningQuery {

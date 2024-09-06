@@ -1,5 +1,5 @@
+import { AnyQuery } from '@synthql/queries';
 import { applyCardinality } from '../../../../query/applyCardinality';
-import { AnyQuery } from '../../../../types';
 import { SqlBuilder, as, coalesce, compileExp, jsonb, jsonbAgg } from './exp';
 import { TableRef } from '../../../../refs/TableRef';
 import { Selection } from './types';
