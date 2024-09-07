@@ -1,21 +1,27 @@
-import { AnyQuery } from './types/AnyQuery';
+import { AnyQuery } from '../types/AnyQuery';
+import { isQueryParam } from '../validators/isQueryParam';
 
 // Copied from: https://github.com/TanStack/query/blob/353e4ad7291645f27de6585e9897b45e46c666fb/packages/query-core/src/utils.ts#L205
 /**
  * Default query & mutation keys hash function.
  * Hashes the value into a stable hash.
  */
-export function hashQuery(query: AnyQuery): string {
-    return JSON.stringify(query, (_, val) =>
-        isPlainObject(val)
+export function hashQuery(query: Omit<AnyQuery, 'hash'>): string {
+    return JSON.stringify(query, (_, val) => {
+        if (isQueryParam(val)) {
+            return val.id;
+        }
+
+        // Sort keys to guarantee a stable output
+        return isPlainObject(val)
             ? Object.keys(val)
                   .sort()
                   .reduce((result, key) => {
                       result[key] = val[key];
                       return result;
                   }, {} as any)
-            : val,
-    );
+            : val;
+    });
 }
 
 // Copied from: https://github.com/jonschlinkert/is-plain-object

@@ -16,7 +16,7 @@ export class QueryBuilderError extends Error {
         query,
         nestedQuery,
     }: {
-        query: Query<DB>;
+        query: Omit<Query<DB>, 'hash'>;
         nestedQuery: Query<DB>;
     }): QueryBuilderError {
         const type = 'NestedQueryMissingRefOpWhereClauseError';

@@ -39,6 +39,7 @@ export function arbitraryQuery<DB>({
                 }),
                 limit: arbitraryLimit(),
                 cardinality: arbitraryCardinality(cardinality),
+                hash: fc.constant(''),
             }),
         );
 }

@@ -1,12 +1,14 @@
-import { Include } from './types/Include';
-import { Where } from './types/Where';
-import { Select } from './types/Select';
-import { Column } from './types/Column';
 import { Table } from './types/Table';
+import { Column } from './types/Column';
+import { Select } from './types/Select';
+import { Where } from './types/Where';
+import { Include } from './types/Include';
+import { Cardinality } from './types/Cardinality';
 import { Schema } from './types/Schema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 import { validateNestedQueriesHaveAValidRefOp } from './validators/validateNestedQueriesHaveAValidRefOp';
+import { hashQuery } from './util/hashQuery';
 
 export class QueryBuilder<
     DB,
@@ -16,7 +18,7 @@ export class QueryBuilder<
     TInclude extends Include<DB>,
     TLimit extends number | undefined,
     TOffset extends number | undefined,
-    TCardinality extends 'one' | 'maybe' | 'many',
+    TCardinality extends Cardinality,
     TLazy extends true | undefined,
     TGroupBy extends string[],
 > {
@@ -42,6 +44,7 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            name: this._name,
         });
     }
 
@@ -55,6 +58,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        hash: string;
         name?: string;
     } {
         return {
@@ -67,6 +71,18 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            hash: hashQuery({
+                from: this._from,
+                where: this._where,
+                select: this._select,
+                include: this._include,
+                limit: this._limit,
+                offset: this._offset,
+                cardinality: this._cardinality ?? 'many',
+                lazy: this._lazy,
+                groupBy: this._groupBy,
+                name: this._name,
+            }),
             name: this._name,
         };
     }

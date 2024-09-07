@@ -1,11 +1,13 @@
 import { QueryBuilderError } from '../QueryBuilderError';
 import { Query } from '../types/types';
-import { isRefOp } from '../types/isRefOp';
+import { isRefOp } from './isRefOp';
 
 /**
  Validate that every included sub-query has at least one RefOp
  */
-export function validateNestedQueriesHaveAValidRefOp<DB>(query: Query<DB>) {
+export function validateNestedQueriesHaveAValidRefOp<DB>(
+    query: Omit<Query<DB>, 'hash'>,
+) {
     const nestedQueries = Object.values(query.include ?? {});
 
     for (const nestedQuery of nestedQueries) {
