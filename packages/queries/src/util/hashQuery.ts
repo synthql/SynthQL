@@ -7,21 +7,23 @@ import { isQueryParameter } from '../validators/isQueryParam';
  * Hashes the value into a stable hash.
  */
 export function hashQuery(query: AnyQuery): string {
-    return JSON.stringify(query, (_, val) => {
-        if (isQueryParameter(val)) {
-            return val.id;
-        }
+    return djb2Hash(
+        JSON.stringify(query, (_, val) => {
+            if (isQueryParameter(val)) {
+                return val.id;
+            }
 
-        // Sort keys to guarantee a stable output
-        return isPlainObject(val)
-            ? Object.keys(val)
-                  .sort()
-                  .reduce((result, key) => {
-                      result[key] = val[key];
-                      return result;
-                  }, {} as any)
-            : val;
-    });
+            // Sort keys to guarantee a stable output
+            return isPlainObject(val)
+                ? Object.keys(val)
+                      .sort()
+                      .reduce((result, key) => {
+                          result[key] = val[key];
+                          return result;
+                      }, {} as any)
+                : val;
+        }),
+    );
 }
 
 // Copied from: https://github.com/jonschlinkert/is-plain-object
@@ -58,4 +60,14 @@ function isPlainObject(o: any): o is Object {
 
 function hasObjectPrototype(o: any): boolean {
     return Object.prototype.toString.call(o) === '[object Object]';
+}
+
+export function djb2Hash(str: string) {
+    let hash = 5381;
+
+    for (let i = 0; i < str.length; i++) {
+        hash = (hash * 33) ^ str.charCodeAt(i);
+    }
+
+    return (hash >>> 0).toString();
 }
