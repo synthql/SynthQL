@@ -1,5 +1,5 @@
-export type QueryParam<T = unknown> = {
+export type QueryParam<TValue = unknown> = {
     type: 'synthql::param';
-    id: string;
-    value: T;
+    id: string | number;
+    value: TValue;
 };
