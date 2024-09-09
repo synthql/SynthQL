@@ -1,6 +1,6 @@
 import { QueryBuilderError } from '../QueryBuilderError';
 import { Query } from '../types/types';
-import { isRefOp } from '../types/isRefOp';
+import { isRefOp } from './isRefOp';
 
 /**
  Validate that every included sub-query has at least one RefOp

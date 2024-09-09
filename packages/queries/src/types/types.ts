@@ -2,6 +2,7 @@ import { Table } from './Table';
 import { Select } from './Select';
 import { Where } from './Where';
 import { Include } from './Include';
+import { Cardinality } from './Cardinality';
 
 export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     from: TTable;
@@ -10,8 +11,9 @@ export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     include?: Include<DB>;
     limit?: number;
     offset?: number;
-    cardinality?: 'one' | 'maybe' | 'many';
+    cardinality?: Cardinality;
     lazy?: true;
     groupBy?: string[];
+    hash?: string;
     name?: string;
 };

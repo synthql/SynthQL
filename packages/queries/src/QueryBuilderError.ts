@@ -1,10 +1,8 @@
-import { Query } from './types/types';
+import { AnyQuery } from './types/AnyQuery';
 
 export class QueryBuilderError extends Error {
     constructor(
-        // TODO: extend the class to include the query. Blocker from doing
-        // this now, is that `AnyQuery`, still lives in the backend package
-        // public query: AnyQuery,
+        public query: AnyQuery,
         public type: string,
         public message: string,
     ) {
@@ -12,12 +10,12 @@ export class QueryBuilderError extends Error {
         Error.captureStackTrace(this, QueryBuilderError);
     }
 
-    static createNestedQueryMissingRefOpWhereClauseError<DB>({
+    static createNestedQueryMissingRefOpWhereClauseError({
         query,
         nestedQuery,
     }: {
-        query: Query<DB>;
-        nestedQuery: Query<DB>;
+        query: AnyQuery;
+        nestedQuery: AnyQuery;
     }): QueryBuilderError {
         const type = 'NestedQueryMissingRefOpWhereClauseError';
 
@@ -27,8 +25,9 @@ export class QueryBuilderError extends Error {
             '',
             `Hint: are you missing \`.where({some_id: "${query.from}.some_id"})\``,
             `on the "${nestedQuery.from}" query?`,
+            ``,
         ];
 
-        return new QueryBuilderError(type, lines.join('\n'));
+        return new QueryBuilderError(query, type, lines.join('\n'));
     }
 }

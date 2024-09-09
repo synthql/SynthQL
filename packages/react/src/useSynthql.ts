@@ -25,7 +25,7 @@ export function useSynthql<
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.from}`;
+    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${query.hash}`;
 
     const mergedRequestInit: RequestInit = {
         ...requestInit,
