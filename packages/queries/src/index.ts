@@ -6,7 +6,7 @@ export * from './types/Column';
 export * from './types/ColumnValue';
 export * from './types/Include';
 export * from './types/JoinOp';
-export * from './types/QueryParam';
+export * from './types/QueryParameter';
 export * from './types/QueryResult';
 export * from './types/RefOp';
 export * from './types/Schema';

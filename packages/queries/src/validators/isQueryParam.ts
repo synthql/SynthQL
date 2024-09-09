@@ -1,9 +1,5 @@
-import { QueryParam } from '../types/QueryParam';
+import { QueryParameter } from '../types/QueryParameter';
 
-export function isQueryParam(x: any): x is QueryParam {
-    return (
-        x?.type === 'synthql::param' &&
-        (typeof x?.id === 'string' || typeof x?.id === 'number') &&
-        typeof x?.value !== 'undefined'
-    );
+export function isQueryParameter(x: any): x is QueryParameter {
+    return x !== null && x !== undefined && x?.type === 'synthql::parameter';
 }

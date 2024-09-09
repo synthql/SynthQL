@@ -5,9 +5,7 @@ import { isRefOp } from './isRefOp';
 /**
  Validate that every included sub-query has at least one RefOp
  */
-export function validateNestedQueriesHaveAValidRefOp<DB>(
-    query: Omit<Query<DB>, 'hash'>,
-) {
+export function validateNestedQueriesHaveAValidRefOp<DB>(query: Query<DB>) {
     const nestedQueries = Object.values(query.include ?? {});
 
     for (const nestedQuery of nestedQueries) {

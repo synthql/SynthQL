@@ -144,7 +144,6 @@ export class ArbitraryQueryBuilder<DB> {
                 where: this.arbWhere(tableName),
                 groupBy: this.arbGroupBy(tableName),
                 limit: this.arbLimit(),
-                hash: fc.constant(''),
             });
         });
     }

@@ -1,11 +1,11 @@
-import { QueryParam } from './types/QueryParam';
+import { QueryParameter } from './types/QueryParameter';
 
 export function param<TValue = unknown>(
     id: string,
     value: TValue,
-): QueryParam<TValue> {
+): QueryParameter<TValue> {
     return {
-        type: 'synthql::param',
+        type: 'synthql::parameter',
         id,
         value,
     };
