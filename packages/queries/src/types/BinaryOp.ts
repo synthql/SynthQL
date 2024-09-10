@@ -1,6 +1,7 @@
 import { Table } from './Table';
 import { Column } from './Column';
 import { ColumnValue } from './ColumnValue';
+import { QueryParameter } from './QueryParameter';
 import { RefOp } from './RefOp';
 
 export const BINARY_OPERATORS = [
@@ -68,7 +69,6 @@ export type BinaryOperator = (typeof BINARY_OPERATORS)[number];
  *    [operator]: value
  * }
  * ```
- *
  */
 export type BinaryOp<
     DB,
@@ -78,5 +78,6 @@ export type BinaryOp<
     [op in BinaryOperator | '= any']?:
         | ColumnValue<DB, TTable, TColumn>
         | Array<ColumnValue<DB, TTable, TColumn>>
+        | QueryParameter<ColumnValue<DB, TTable, TColumn>>
         | RefOp<DB>;
 };
