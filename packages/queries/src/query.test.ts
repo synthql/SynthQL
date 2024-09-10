@@ -58,8 +58,8 @@ describe('queries', () => {
         const q = from('actor')
             .columns('actor_id', 'first_name')
             .where({
-                actor_id: param('id', 1),
-                first_name: param('name', 'John'),
+                actor_id: param(1, 'id'),
+                first_name: param('John', 'name'),
             })
             .one();
 

@@ -14,7 +14,7 @@ export function composeQuery({
 }): { sqlBuilder: SqlBuilder; augmentedQuery: AugmentedQuery } {
     const augQuery: AugmentedQuery = createAugmentedQuery(query, defaultSchema);
 
-    let sqlBuilder = new SqlBuilder()
+    const sqlBuilder = new SqlBuilder()
         .select(augQuery.selection.map((s) => s.toSql()))
         .from(augQuery.rootTable)
         .leftJoins(augQuery.joins)

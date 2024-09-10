@@ -19,7 +19,7 @@ import { WhereClause } from './WhereClause';
  * which translates to `WHERE age = users.bio`.
  *
  * 1. `{column: param(value)}`, example: `{age: param(18)}`,
- * which also translates to `WHERE age = 18`, but adds some metadata
+ * which also translates to `WHERE age = ?`, and adds some metadata
  * that 'marks' your query to be processed as a persisted query
  * (after registering it via `QueryEngine.registerQueries()`),
  * for even faster query execution.

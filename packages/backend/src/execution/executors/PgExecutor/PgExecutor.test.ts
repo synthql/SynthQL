@@ -1,4 +1,4 @@
-import { col } from '@synthql/queries';
+import { col, param } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
 import { from } from '../../../tests/generated';
@@ -14,7 +14,7 @@ describe('PgExecutor', () => {
         prependSql: `SET search_path TO "public";`,
     });
 
-    const q1 = from('film')
+    const q = from('film')
         .columns('film_id', 'title')
         .include({
             lang: from('language')
@@ -30,7 +30,7 @@ describe('PgExecutor', () => {
         .one();
 
     it('Film table SynthQL query compiles to expected SQL query', () => {
-        const { sql } = executor.compile(q1);
+        const { sql } = executor.compile(q);
 
         expect(sql).toMatchInlineSnapshot(`
       "select
@@ -50,7 +50,7 @@ describe('PgExecutor', () => {
     });
 
     it('Film table SynthQL query executes to expected result', async () => {
-        const result = await executor.execute(q1, executeProps);
+        const result = await executor.execute(q, executeProps);
 
         expect(result).toEqual([
             {
@@ -59,6 +59,42 @@ describe('PgExecutor', () => {
                     name: 'English             ',
                 },
                 title: 'ACE GOLDFINGER',
+            },
+        ]);
+    });
+
+    const q0 = from('actor')
+        .columns('actor_id', 'first_name')
+        .where({
+            actor_id: param(2, 'id'),
+        })
+        .one();
+
+    it('Actor table SynthQL query with `({ column: param(value) })` executes to expected result', async () => {
+        const result = await executor.execute(q0, executeProps);
+
+        expect(result).toEqual([
+            {
+                actor_id: 2,
+                first_name: 'NICK',
+            },
+        ]);
+    });
+
+    const q1 = from('actor')
+        .columns('actor_id', 'first_name')
+        .where({
+            actor_id: { '>': param(3, 'id') },
+        })
+        .one();
+
+    it('Actor table SynthQL query with param({ column: { op: param(value) } }) executes to expected result', async () => {
+        const result = await executor.execute(q1, executeProps);
+
+        expect(result).toEqual([
+            {
+                actor_id: 4,
+                first_name: 'JENNIFER',
             },
         ]);
     });

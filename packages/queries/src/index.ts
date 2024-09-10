@@ -14,7 +14,7 @@ export * from './types/Select';
 export * from './types/Table';
 export * from './types/Where';
 export * from './types/WhereClause';
-export * from './validators/isQueryParam';
+export * from './validators/isQueryParameter';
 export * from './validators/isRefOp';
 export { col } from './col';
 export { param } from './param';
