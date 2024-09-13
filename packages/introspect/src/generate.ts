@@ -70,6 +70,8 @@ export async function generate({
     }
     const { stderr } = process;
 
+    let total = 0;
+    let current = 0;
     // Step 1: Use pg-extract-schema to get the schema.
     const pgExtractSchema = await extractSchemas(
         {
@@ -78,10 +80,25 @@ export async function generate({
         {
             schemas: includeSchemas,
             resolveViews: false,
-            onProgressStart: (total) =>
-                console.error(`Extracting ${total} types...`),
-            onProgress: () => stderr.write('.'),
-            onProgressEnd: () => console.log('Done!'),
+            onProgressStart: (newTotal) => {
+                current = 0;
+                total = newTotal;
+                stderr.write(
+                    `⏱️  Extracting ${total} types, this may take a while`,
+                );
+                stderr.write('\n');
+            },
+            onProgress: () => {
+                current += 1;
+                const percentage = Math.round((current / total) * 100);
+
+                stderr.clearLine(0);
+                stderr.cursorTo(0);
+                stderr.write(
+                    `⏱️  [${'='.repeat(percentage)}${' '.repeat(100 - percentage)}] ${percentage}%`,
+                );
+            },
+            onProgressEnd: () => console.log('✅ Done extracting types.'),
         },
     );
 
@@ -166,6 +183,13 @@ function createTableJsonSchema(
     const empty: Record<string, any> = {};
 
     const columns = table.columns.reduce((acc, column) => {
+        const isComposite = column.type.kind === 'composite';
+        // TODO(fhur): for now, when a type is composite use the "unknown" type.
+        // In the future we should add support for composite types.
+        const type = isComposite
+            ? {}
+            : { $ref: `#/$defs/${createTypeDefId(column.type)}` };
+
         acc[column.name] = {
             type: 'object',
             description:
@@ -182,7 +206,7 @@ function createTableJsonSchema(
                     `- Generated: ${column.generated}`,
                 ].join('\n'),
             properties: {
-                type: { $ref: `#/$defs/${createTypeDefId(column.type)}` },
+                type,
                 // A constant value of true
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
