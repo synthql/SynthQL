@@ -1,7 +1,7 @@
+import { AnyQuery } from '@synthql/queries';
 import { Pool, PoolClient, types } from 'pg';
 import { format } from 'sql-formatter';
 import { splitQueryAtBoundary } from '../../../query/splitQueryAtBoundary';
-import { AnyQuery } from '../../../types';
 import { QueryExecutor } from '../../types';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 import { composeQuery } from './composeQuery';

@@ -1,14 +1,12 @@
+import { AnyDB, AnyQuery } from '@synthql/queries';
 import { QueryProvider } from '../../../QueryProvider';
-import { AnyDb, AnyQuery } from '../../../types';
-import { RefContext, createRefContext } from '../../../refs/RefContext';
 import { QueryExecutor } from '../../types';
-import { ColumnRef } from '../../../refs/ColumnRef';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
 export class QueryProviderExecutor implements QueryExecutor {
-    private providersByTable: Map<string, QueryProvider<AnyDb, string>>;
+    private providersByTable: Map<string, QueryProvider<AnyDB, string>>;
 
-    constructor(providers: QueryProvider<AnyDb, string>[]) {
+    constructor(providers: QueryProvider<AnyDB, string>[]) {
         this.providersByTable = new Map(providers.map((p) => [p.table, p]));
     }
 

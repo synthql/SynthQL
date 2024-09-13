@@ -79,7 +79,7 @@ export function cli({
                     });
             },
             async (argv) => {
-                console.info('Connecting to database schema...');
+                console.info('⏱️  Connecting to database schema...');
 
                 if (
                     argv.schemaDefOverrides !== undefined &&
