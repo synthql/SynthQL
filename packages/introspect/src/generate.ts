@@ -78,10 +78,16 @@ export async function generate({
         {
             schemas: includeSchemas,
             resolveViews: false,
-            onProgressStart: (total) =>
-                console.error(`Extracting ${total} types...`),
-            onProgress: () => stderr.write('.'),
-            onProgressEnd: () => console.log('Done!'),
+            onProgressStart: (total) => {
+                stderr.write(
+                    `⏱️  Extracting ${total} types, this may take a while`,
+                );
+                stderr.write('\n');
+            },
+            onProgress: () => {
+                stderr.write('.');
+            },
+            onProgressEnd: () => console.log('✅ Done extracting types.'),
         },
     );
 
@@ -166,6 +172,13 @@ function createTableJsonSchema(
     const empty: Record<string, any> = {};
 
     const columns = table.columns.reduce((acc, column) => {
+        const isComposite = column.type.kind === 'composite';
+        // TODO(fhur): for now, when a type is composite use the "unknown" type.
+        // In the future we should add support for composite types.
+        const type = isComposite
+            ? {}
+            : { $ref: `#/$defs/${createTypeDefId(column.type)}` };
+
         acc[column.name] = {
             type: 'object',
             description:
@@ -182,7 +195,7 @@ function createTableJsonSchema(
                     `- Generated: ${column.generated}`,
                 ].join('\n'),
             properties: {
-                type: { $ref: `#/$defs/${createTypeDefId(column.type)}` },
+                type,
                 // A constant value of true
                 selectable: { type: 'boolean', const: true },
                 includable: { type: 'boolean', const: true },
