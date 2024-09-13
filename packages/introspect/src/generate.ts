@@ -70,8 +70,6 @@ export async function generate({
     }
     const { stderr } = process;
 
-    let total = 0;
-    let current = 0;
     // Step 1: Use pg-extract-schema to get the schema.
     const pgExtractSchema = await extractSchemas(
         {
@@ -80,23 +78,14 @@ export async function generate({
         {
             schemas: includeSchemas,
             resolveViews: false,
-            onProgressStart: (newTotal) => {
-                current = 0;
-                total = newTotal;
+            onProgressStart: (total) => {
                 stderr.write(
                     `⏱️  Extracting ${total} types, this may take a while`,
                 );
                 stderr.write('\n');
             },
             onProgress: () => {
-                current += 1;
-                const percentage = Math.round((current / total) * 100);
-
-                stderr.clearLine(0);
-                stderr.cursorTo(0);
-                stderr.write(
-                    `⏱️  [${'='.repeat(percentage)}${' '.repeat(100 - percentage)}] ${percentage}%`,
-                );
+                stderr.write('.');
             },
             onProgressEnd: () => console.log('✅ Done extracting types.'),
         },
