@@ -279,8 +279,8 @@ function createRootJsonSchema(
         includeTables.length === 0
             ? tablesAndViews
             : tablesAndViews.filter((table) =>
-                includeTables.includes(table.name),
-            );
+                  includeTables.includes(table.name),
+              );
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
