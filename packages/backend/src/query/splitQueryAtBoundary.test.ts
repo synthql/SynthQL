@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
+import { AnyQuery } from '@synthql/queries';
 import { film, store } from '../tests/queries.v2';
 import { describeQuery } from './describeQuery';
 import { splitQueryAtBoundary } from './splitQueryAtBoundary';
 import { removeIndentation } from '../tests/removeIndentation';
-import { AnyQuery } from '../types';
 
 describe('splitQueryAtBoundary', () => {
     test('film', () => {

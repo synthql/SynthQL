@@ -1,7 +1,6 @@
-import { isRefOp } from '@synthql/queries';
+import { AnyQuery, isRefOp } from '@synthql/queries';
 import { TableRef } from '../refs/TableRef';
 import { ColumnRef } from '../refs/ColumnRef';
-import { AnyQuery } from '../types';
 import { collectFromQuery } from './collectFromQuery';
 import { Path } from '../execution/types';
 

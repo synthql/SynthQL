@@ -1,12 +1,14 @@
-import { Include } from './types/Include';
-import { Where } from './types/Where';
-import { Select } from './types/Select';
-import { Column } from './types/Column';
 import { Table } from './types/Table';
+import { Column } from './types/Column';
+import { Select } from './types/Select';
+import { Where } from './types/Where';
+import { Include } from './types/Include';
+import { Cardinality } from './types/Cardinality';
 import { Schema } from './types/Schema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 import { validateNestedQueriesHaveAValidRefOp } from './validators/validateNestedQueriesHaveAValidRefOp';
+import { hashQuery } from './util/hashQuery';
 
 export class QueryBuilder<
     DB,
@@ -16,7 +18,7 @@ export class QueryBuilder<
     TInclude extends Include<DB>,
     TLimit extends number | undefined,
     TOffset extends number | undefined,
-    TCardinality extends 'one' | 'maybe' | 'many',
+    TCardinality extends Cardinality,
     TLazy extends true | undefined,
     TGroupBy extends string[],
 > {
@@ -42,6 +44,7 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            name: this._name,
         });
     }
 
@@ -55,6 +58,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        hash: string;
         name?: string;
     } {
         return {
@@ -67,6 +71,18 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            hash: hashQuery({
+                from: this._from,
+                where: this._where,
+                select: this._select,
+                include: this._include,
+                limit: this._limit,
+                offset: this._offset,
+                cardinality: this._cardinality ?? 'many',
+                lazy: this._lazy,
+                groupBy: this._groupBy,
+                name: this._name,
+            }),
             name: this._name,
         };
     }
@@ -101,9 +117,44 @@ export class QueryBuilder<
     }
 
     /**
+     * Builds a query that returns all rows that match the query filters.
+     *
+     * Does not override the limit set by `.limit()`.
+     *
+     * Note: {@link many} is an alias for {@link all}.
+     */
+    all() {
+        return this.many();
+    }
+
+    /**
+     * Builds a query that can return 0 or 1 rows. When no rows are found,
+     * the query will return `null`.
+     *
+     * Also sets the limit to 1.
+     *
+     * Note: {@link maybe} is an alias for {@link first}.
+     */
+    first() {
+        return this.maybe();
+    }
+
+    /**
+     * Builds a query that returns exactly one row. Will throw an error if no rows match
+     * the query filters.
+     *
+     * Also sets the limit to 1.
+     *
+     * Note: {@link one} is an alias for {@link firstOrThrow}.
+     */
+    firstOrThrow() {
+        return this.one();
+    }
+
+    /**
      * Sets the number (n) of results to return
      * for the query, and then builds the query.
-     * Shorthand for `.limit(n).many()`.
+     * Shorthand for `.limit(n).all()`.
      */
     take(take: TLimit) {
         return new QueryBuilder<
@@ -161,10 +212,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query that returns exactly one row.
-     * Will throw an error if the query returns 0.
-     *
-     * Also sets the limit to 1.
+     * @alias {@link firstOrThrow}
      */
     one() {
         return new QueryBuilder<
@@ -193,7 +241,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query that returns many rows.
+     * @alias {@link all}
      */
     many() {
         return new QueryBuilder<
@@ -222,8 +270,7 @@ export class QueryBuilder<
     }
 
     /**
-     * Builds a query with a cardinality of 'maybe'.
-     * This means that the query will return 0 or 1 rows.
+     * @alias {@link first}
      */
     maybe() {
         return new QueryBuilder<

@@ -1,6 +1,5 @@
-import { Cardinality } from '@synthql/queries';
+import { AnyQuery, Cardinality } from '@synthql/queries';
 import { Path } from '../execution/types';
-import { AnyQuery } from '../types';
 
 type Context<TQuery> = {
     parentQuery?: TQuery;

@@ -1,6 +1,5 @@
+import { AnyQuery, Cardinality } from '@synthql/queries';
 import { SynthqlError } from '../SynthqlError';
-import { AnyQuery } from '../types';
-import { Cardinality } from '@synthql/queries';
 
 type CardinalityResult<
     TCardinality extends Cardinality,

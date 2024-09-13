@@ -1,6 +1,7 @@
-import { Query, Table } from '@synthql/queries';
+import { Table } from './Table';
+import { Query } from './types';
 
-type AnyTableDef = {
+export type AnyTableDef = {
     columns: Record<
         string,
         {
@@ -13,8 +14,6 @@ type AnyTableDef = {
         }
     >;
 };
-
-export type AnyDb = Record<string, AnyTableDef>;
-
-export type AnyTable = Table<AnyDb>;
-export type AnyQuery = Query<AnyDb, AnyTable>;
+export type AnyDB = Record<string, AnyTableDef>;
+export type AnyTable = Table<AnyDB>;
+export type AnyQuery = Query<AnyDB, AnyTable>;

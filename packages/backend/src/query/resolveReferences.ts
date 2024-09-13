@@ -1,6 +1,6 @@
+import { AnyQuery } from '@synthql/queries';
 import { ColumnRef } from '../refs/ColumnRef';
 import { RefContext } from '../refs/RefContext';
-import { AnyQuery } from '../types';
 import { mapRefs } from './mapRefs';
 
 /**

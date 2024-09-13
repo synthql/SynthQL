@@ -1,6 +1,5 @@
-import { RefOp } from '@synthql/queries';
+import { AnyDB, RefOp } from '@synthql/queries';
 import { escapeRef } from './escapeRef';
-import { AnyDb } from '../types';
 import { TableRef } from './TableRef';
 import { ResultRow } from '../execution/types';
 
@@ -32,7 +31,7 @@ export class ColumnRef {
         return value;
     }
 
-    static fromRefOp(op: RefOp<AnyDb>, defaultSchema: string): ColumnRef {
+    static fromRefOp(op: RefOp<AnyDB>, defaultSchema: string): ColumnRef {
         const table = TableRef.parse(op.$ref.table, defaultSchema);
         return table.column(op.$ref.column);
     }

@@ -1,9 +1,8 @@
-import { RefOp, Where, WhereClause, isRefOp } from '@synthql/queries';
-import { AnyDb } from '../types';
+import { AnyDB, RefOp, Where, WhereClause, isRefOp } from '@synthql/queries';
 
 export function mapRefs(
-    where: Where<AnyDb, string>,
-    mapper: (ref: RefOp<AnyDb>) => WhereClause<AnyDb, string, string>,
+    where: Where<AnyDB, string>,
+    mapper: (ref: RefOp<AnyDB>) => WhereClause<AnyDB, string, string>,
 ) {
     const copy = { ...where };
     for (const key in copy) {

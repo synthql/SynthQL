@@ -1,5 +1,5 @@
+import { AnyDB } from '@synthql/queries';
 import { OPERATORS, UnaryOperator } from 'kysely';
-import { AnyDb } from '../../../../types';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';
 import { Where, isRefOp } from '@synthql/queries';
@@ -414,7 +414,7 @@ export class SqlBuilder {
         where = {},
     }: {
         table: TableRef;
-        where?: Where<AnyDb, any>;
+        where?: Where<AnyDB, any>;
     }) {
         const expressions = Object.entries(where)
             .map(([column, op]): Exp | undefined => {
@@ -453,7 +453,7 @@ export class SqlBuilder {
     }
 
     expressionFromManyWhere(
-        where: { table: TableRef; where?: Where<AnyDb, any> }[],
+        where: { table: TableRef; where?: Where<AnyDB, any> }[],
     ) {
         const expressions = where
             .map((w) => new SqlBuilder().expressionFromWhere(w))

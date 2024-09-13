@@ -1,6 +1,6 @@
+import { AnyQuery } from '@synthql/queries';
 import { Path, ResultRow } from '../execution/types';
 import { ColumnRef } from '../refs/ColumnRef';
-import { AnyQuery } from '../types';
 import { printPath } from '../util/path/printPath';
 import { printObj } from '../util/printObj';
 import { getIn } from '../util/tree/getIn';
