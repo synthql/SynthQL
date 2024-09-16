@@ -9,6 +9,8 @@ import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 import { validateNestedQueriesHaveAValidRefOp } from './validators/validateNestedQueriesHaveAValidRefOp';
 import { hashQuery } from './util/hashQuery';
+import { iterateRecursively } from './util/iterateRecursively';
+import { isQueryParameter } from './validators/isQueryParameter';
 
 export class QueryBuilder<
     DB,
@@ -61,7 +63,7 @@ export class QueryBuilder<
         hash: string;
         name?: string;
     } {
-        return {
+        const query = {
             from: this._from,
             where: this._where,
             select: this._select,
@@ -85,6 +87,17 @@ export class QueryBuilder<
             }),
             name: this._name,
         };
+
+        // TODO: possibly wrap this logic in a wrapper function
+        //  with a better descriptive name, and documentation
+        // Assigning identifiers for parameterized queries
+        iterateRecursively(query, (x, path) => {
+            if (isQueryParameter(x)) {
+                x.id = path.join('.');
+            }
+        });
+
+        return query;
     }
 
     /**

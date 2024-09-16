@@ -66,7 +66,7 @@ describe('PgExecutor', () => {
     const q0 = from('actor')
         .columns('actor_id', 'first_name')
         .where({
-            actor_id: param(2, 'id'),
+            actor_id: param(2),
         })
         .one();
 
@@ -84,7 +84,7 @@ describe('PgExecutor', () => {
     const q1 = from('actor')
         .columns('actor_id', 'first_name')
         .where({
-            actor_id: { '>': param(3, 'id') },
+            actor_id: { '>': param(3) },
         })
         .one();
 
