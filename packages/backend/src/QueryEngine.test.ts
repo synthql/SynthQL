@@ -1,55 +1,67 @@
 import { describe, expect, it } from 'vitest';
-import { queryEngine } from './tests/queryEngine';
 import { col, param } from '@synthql/queries';
+import { queryEngine } from './tests/queryEngine';
 import { from } from './tests/generated';
-import { collectLast } from './util/generators/collectLast';
 
 describe('QueryEngine', () => {
-    // TODO: complete and (possibly) move tests
-    it('1 + 1 equals 2', async () => {
+    it('registerQueries + executeRegisteredQuery', async () => {
+        queryEngine.registerQueries([findFilmActor]);
+
         const params = {
-            'where.actor_id': 1,
-            'where.film_id': 1,
-            'include.film.where.language_id': 1,
+            'where.actor_id': 2,
+            'where.film_id': 47,
+            'include.film.where.language_id': 3,
             'include.film.include.language.where.last_update':
                 '2022-02-15 10:02:19+00',
         };
 
-        function findFilmActor() {
-            return from('film_actor')
+        const parameterizedQueryResult =
+            await queryEngine.executeRegisteredQueryAndWait(
+                findFilmActor().hash,
+                params,
+            );
+
+        const regularQuery = findFilmActor({
+            actor_id: params['where.actor_id'],
+            film_id: params['where.film_id'],
+            language_id: params['include.film.where.language_id'],
+            last_update:
+                params['include.film.include.language.where.last_update'],
+        });
+
+        const regularQueryResult =
+            await queryEngine.executeAndWait(regularQuery);
+
+        expect(parameterizedQueryResult).toEqual(regularQueryResult);
+    });
+});
+
+function findFilmActor(data?: {
+    actor_id?: number;
+    film_id?: number;
+    language_id?: number;
+    last_update?: string;
+}) {
+    return from('film_actor')
+        .where({
+            actor_id: data?.actor_id ?? param(),
+            film_id: data?.film_id ?? param(),
+        })
+        .include({
+            film: from('film')
                 .where({
-                    actor_id: param(),
-                    film_id: param(),
+                    film_id: col('film_actor.film_id'),
+                    language_id: data?.language_id ?? param(),
                 })
                 .include({
-                    film: from('film')
+                    language: from('language')
                         .where({
-                            film_id: col('film_actor.film_id'),
-                            language_id: param(),
-                        })
-                        .include({
-                            language: from('language')
-                                .where({
-                                    language_id: col('film.language_id'),
-                                    last_update: param(),
-                                })
-                                .maybe(),
+                            language_id: col('film.language_id'),
+                            last_update: data?.last_update ?? param(),
                         })
                         .maybe(),
                 })
-                .maybe();
-        }
-
-        queryEngine.registerQueries([findFilmActor]);
-
-        const q = findFilmActor();
-
-        const result = await collectLast(
-            queryEngine.executeRegisteredQuery(q.hash, params, {
-                returnLastOnly: true,
-            }),
-        );
-
-        expect(1 + 1).toEqual(2);
-    });
-});
+                .maybe(),
+        })
+        .maybe();
+}

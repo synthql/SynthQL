@@ -185,23 +185,11 @@ export class QueryEngine<DB> {
             schema?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
-        if (!this.dangerouslyAllowUnregisteredQueries) {
-            const queryFn = this.queries.get(query.hash ?? '');
-
-            // TODO: add appropriate error method
-            if (!queryFn) {
-                throw new Error('Query has not been registered!');
-            }
-        }
-
-        return await collectLast(
-            generateLast(
-                execute<DB, TQuery>(query, {
-                    executors: this.executors,
-                    defaultSchema: opts?.schema ?? this.schema,
-                    prependSql: this.prependSql,
-                }),
-            ),
+        return collectLast(
+            this.execute(query, {
+                schema: opts?.schema ?? this.schema,
+                returnLastOnly: true,
+            }),
         );
     }
 
@@ -260,7 +248,31 @@ export class QueryEngine<DB> {
         return gen;
     }
 
-    // TODO: possibly add a `executeRegisteredQueryAndWait()`
+    // TODO: fix generic types for input and return types
+    // Currently returning `AsyncGenerator<never, any, unknown>`
+    executeRegisteredQueryAndWait<
+        TTable extends Table<DB>,
+        TQuery extends Query<DB, TTable>,
+    >(
+        queryId: string,
+        params: Record<string, unknown>,
+        opts?: {
+            /**
+             * The name of the database schema to
+             * execute your SynthQL query against
+             *
+             * e.g `public`
+             */
+            schema?: string;
+        },
+    ): Promise<QueryResult<DB, TQuery>> {
+        return collectLast(
+            this.executeRegisteredQuery(queryId, params, {
+                schema: opts?.schema ?? this.schema,
+                returnLastOnly: true,
+            }),
+        );
+    }
 
     async explain<TTable extends Table<DB>>(
         query: Query<DB, TTable>,
@@ -276,6 +288,7 @@ export class QueryEngine<DB> {
 
         try {
             const result = await this.pool.query(explainQuery, params);
+
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
             throw SynthqlError.createSqlExecutionError({

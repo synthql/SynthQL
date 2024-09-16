@@ -89,7 +89,7 @@ export class QueryBuilder<
         };
 
         // TODO: possibly wrap this logic in a wrapper function
-        //  with a better descriptive name, and documentation
+        // with a better descriptive name, and documentation
         // Assigning identifiers for parameterized queries
         iterateRecursively(query, (x, path) => {
             if (isQueryParameter(x)) {

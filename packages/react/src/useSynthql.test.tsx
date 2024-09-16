@@ -45,6 +45,7 @@ describe('useSynthql', () => {
     beforeAll(async () => {
         const queryEngine = new QueryEngine({
             url: 'postgres://postgres:postgres@localhost:5432/postgres',
+            dangerouslyAllowUnregisteredQueries: true,
         });
 
         pagilaServer = await createPagilaServer({ queryEngine });
