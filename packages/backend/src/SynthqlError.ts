@@ -19,10 +19,6 @@ export class SynthqlError extends Error {
         Error.captureStackTrace(this, SynthqlError);
     }
 
-    // TODO: add appropriate static methods for the new errors in the
-    // QueryEngine: registerQueries, executeParameterizedQuery, and
-    // possibly, executeParameterizedQueryAndWait
-
     static createCardinalityError() {
         const type = 'CardinalityError';
 
@@ -84,10 +80,54 @@ export class SynthqlError extends Error {
         return new SynthqlError(error, type, lines.join('\n'));
     }
 
-    static createMissingHashError() {
+    static createMissingHashError({ query }: { query: AnyQuery }) {
         const type = 'MissingHashError';
 
-        const lines = ['A query passed to be registered, is missing its hash!'];
+        const lines = [
+            'Missing hash error!',
+            '',
+            'The query:',
+            '',
+            JSON.stringify(query, null, 2),
+            '',
+            'is missing its `hash` property, which is',
+            'used as the key when registering it',
+            'via QueryEngine.registerQueries()',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryAlreadyRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryAlreadyRegisteredError';
+
+        const lines = [
+            'Query already registered error!',
+            '',
+            'A query already exists in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryNotRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryNotRegisteredError';
+
+        const lines = [
+            'Query not registered error!',
+            '',
+            'No query found in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+            'Check and make sure the correct queryId',
+            '(i.e query.hash) is being passed',
+            '',
+        ];
 
         return new SynthqlError(new Error(), type, lines.join('\n'));
     }

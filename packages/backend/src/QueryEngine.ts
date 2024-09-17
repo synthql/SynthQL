@@ -149,11 +149,18 @@ export class QueryEngine<DB> {
         },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
         if (!this.dangerouslyAllowUnregisteredQueries) {
-            const queryFn = this.queries.get(query.hash ?? '');
+            if (!query.hash) {
+                throw SynthqlError.createMissingHashError({
+                    query,
+                });
+            }
 
-            // TODO: add appropriate error method
+            const queryFn = this.queries.get(query.hash);
+
             if (!queryFn) {
-                throw new Error('Query has not been registered!');
+                throw SynthqlError.createQueryNotRegisteredError({
+                    queryId: query.hash,
+                });
             }
         }
 
@@ -199,8 +206,10 @@ export class QueryEngine<DB> {
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
     >(
-        queryId: string,
-        params: Record<string, unknown>,
+        {
+            queryId,
+            params,
+        }: { queryId: string; params: Record<string, unknown> },
         opts?: {
             /**
              * The name of the database schema to
@@ -218,15 +227,14 @@ export class QueryEngine<DB> {
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
         const queryFn = this.queries.get(queryId);
 
-        // TODO: add appropriate error method
         if (!queryFn) {
-            throw new Error('Query has not been registered!');
+            throw SynthqlError.createQueryNotRegisteredError({
+                queryId,
+            });
         }
 
         const query = queryFn();
 
-        // TODO: possibly wrap this logic in a wrapper function
-        // with a better descriptive name, and documentation
         iterateRecursively(query, (x, path) => {
             if (isQueryParameter(x)) {
                 // TODO: possibly throw error if params?.[x.id]; is undefined?
@@ -254,8 +262,10 @@ export class QueryEngine<DB> {
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
     >(
-        queryId: string,
-        params: Record<string, unknown>,
+        {
+            queryId,
+            params,
+        }: { queryId: string; params: Record<string, unknown> },
         opts?: {
             /**
              * The name of the database schema to
@@ -267,10 +277,13 @@ export class QueryEngine<DB> {
         },
     ): Promise<QueryResult<DB, TQuery>> {
         return collectLast(
-            this.executeRegisteredQuery(queryId, params, {
-                schema: opts?.schema ?? this.schema,
-                returnLastOnly: true,
-            }),
+            this.executeRegisteredQuery(
+                { queryId, params },
+                {
+                    schema: opts?.schema ?? this.schema,
+                    returnLastOnly: true,
+                },
+            ),
         );
     }
 
@@ -304,9 +317,16 @@ export class QueryEngine<DB> {
         for (const queryFn of queryFns) {
             const query = queryFn();
 
-            // TODO: add appropriate error method
             if (!query.hash) {
-                throw new Error('Query to be registered is missing a hash!');
+                throw SynthqlError.createMissingHashError({
+                    query,
+                });
+            }
+
+            if (this.queries.has(query.hash)) {
+                throw SynthqlError.createQueryAlreadyRegisteredError({
+                    queryId: query.hash,
+                });
             }
 
             this.queries.set(query.hash, queryFn);

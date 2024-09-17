@@ -16,10 +16,10 @@ describe('QueryEngine', () => {
         };
 
         const parameterizedQueryResult =
-            await queryEngine.executeRegisteredQueryAndWait(
-                findFilmActor().hash,
+            await queryEngine.executeRegisteredQueryAndWait({
+                queryId: findFilmActor().hash,
                 params,
-            );
+            });
 
         const regularQuery = findFilmActor({
             actor_id: params['where.actor_id'],

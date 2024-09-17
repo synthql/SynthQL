@@ -5,10 +5,10 @@ export interface RegularQueryRequest {
     query: AnyQuery;
 }
 
-export interface RegisteredQueryRequest<TValue = unknown> {
+export interface RegisteredQueryRequest {
     type: 'RegisteredQuery';
     queryId: string;
-    params: Record<string, TValue>;
+    params: Record<string, unknown>;
 }
 
 export type QueryRequest = RegularQueryRequest | RegisteredQueryRequest;

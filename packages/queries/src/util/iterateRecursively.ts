@@ -18,8 +18,6 @@ type Traversable =
     | { [key: string | number]: Traversable }
     | Array<Traversable>;
 
-// TODO: possibly rename to better, more descriptive, OR
-// create specific named wrappers that use it internally
 export function iterateRecursively<T extends Traversable>(
     traversable: T,
     visitor: (traversable: Traversable, path: string[]) => void,
