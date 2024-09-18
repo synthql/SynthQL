@@ -237,8 +237,16 @@ export class QueryEngine<DB> {
 
         iterateRecursively(query, (x, path) => {
             if (isQueryParameter(x)) {
-                // TODO: possibly throw error if params?.[x.id]; is undefined?
-                x.value = params?.[x.id];
+                const value = params?.[x.id];
+
+                if (value === undefined) {
+                    throw SynthqlError.createMissingValueError({
+                        params,
+                        paramId: x.id,
+                    });
+                }
+
+                x.value = value;
             }
         });
 

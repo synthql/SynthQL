@@ -99,6 +99,34 @@ export class SynthqlError extends Error {
         return new SynthqlError(new Error(), type, lines.join('\n'));
     }
 
+    static createMissingValueError({
+        params,
+        paramId,
+    }: {
+        params: Record<string, unknown>;
+        paramId: string;
+    }) {
+        const type = 'MissingValueError';
+
+        const lines = [
+            'Missing value error!',
+            '',
+            'No value found for the parameter:',
+            '',
+            JSON.stringify(paramId, null, 2),
+            '',
+            'in the `params` object:',
+            '',
+            JSON.stringify(params, null, 2),
+            '',
+            'Check and make sure the correct value',
+            'is included in the `params` object',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
     static createQueryAlreadyRegisteredError({ queryId }: { queryId: string }) {
         const type = 'QueryAlreadyRegisteredError';
 
