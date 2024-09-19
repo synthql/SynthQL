@@ -1,5 +1,9 @@
-import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
 import type { Request, Response, RequestHandler } from 'express';
+import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
+import {
+    isRegisteredQueryRequest,
+    isRegularQueryRequest,
+} from '@synthql/queries';
 
 /**
  * Create an Express request handler that can handle SynthQL requests.
@@ -37,6 +41,7 @@ export function createExpressSynthqlHandler<DB>(
                         error: e.message,
                     }),
                 );
+
                 res.end();
             } else {
                 // Let another layer handle the error
@@ -52,38 +57,52 @@ async function executeSynthqlRequest<DB>(
     res: Response,
 ) {
     // First try to parse the request body as JSON
-    const { query, returnLastOnly } = await tryParseRequest(req);
+    const { body, headers } = await tryParseRequest(req);
 
     // We don't do this yet, but eventually we'll want to validate the request
     // const validatedQuery = await tryValidateSynthqlQuery(query);
 
     // Execute the query, but just to get the initial generator
-    const resultGenerator = await tryExecuteQuery<DB>(
-        queryEngine,
-        query,
-        returnLastOnly,
-    );
+    const resultGenerator = isRegisteredQueryRequest(body)
+        ? await tryExecuteRegisteredQuery<DB>(
+              queryEngine,
+              { queryId: body.queryId, params: body.params },
+              headers.returnLastOnly,
+          )
+        : isRegularQueryRequest(body)
+          ? await tryExecuteQuery<DB>(
+                queryEngine,
+                body.query,
+                headers.returnLastOnly,
+            )
+          : await tryExecuteQuery<DB>(
+                queryEngine,
+                body,
+                headers.returnLastOnly,
+            );
 
     // Now that we have the generator, we want to iterate over the items
     // and depending on `returnLastOnly`, we will write the status code
     // either before, or after iteration
-    await writeBody(res, query, resultGenerator, returnLastOnly);
+    await writeResponseBody(res, body, resultGenerator, headers.returnLastOnly);
 
+    // End response stream
     res.end();
 }
 
 async function tryParseRequest(req: Request) {
-    const body = req.body;
-    const returnLastOnly = req.headers['x-return-last-only'] === 'true';
-
     try {
-        const query = JSON.parse(body);
-
-        return { query, returnLastOnly };
+        return {
+            body: JSON.parse(req.body),
+            headers: {
+                ...req.headers,
+                returnLastOnly: req.headers['x-return-last-only'] === 'true',
+            },
+        };
     } catch (e) {
         throw SynthqlError.createJsonParsingError({
             error: e,
-            json: body,
+            json: req.body,
         });
     }
 }
@@ -96,7 +115,18 @@ async function tryExecuteQuery<DB>(
     return queryEngine.execute(query, { returnLastOnly });
 }
 
-async function writeBody(
+async function tryExecuteRegisteredQuery<DB>(
+    queryEngine: QueryEngine<DB>,
+    { queryId, params }: { queryId: string; params: Record<string, unknown> },
+    returnLastOnly: boolean,
+) {
+    return queryEngine.executeRegisteredQuery(
+        { queryId, params },
+        { returnLastOnly },
+    );
+}
+
+async function writeResponseBody(
     res: Response,
     query: any,
     generator: AsyncGenerator<any>,
@@ -126,7 +156,7 @@ async function writeBody(
             // First, wrap the error in a SynthqlError to capture
             // the fact that it happened during streaming
 
-            // The `e` can be of any type, but in case its an error,
+            // The `e` can be of any type, but in case its an error
             // we want to preserve the stack trace and any other
             // information that might be useful for debugging
 

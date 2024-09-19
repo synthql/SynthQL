@@ -11,7 +11,7 @@ describe('useSynthql test examples', () => {
 
     beforeAll(async () => {
         echoServer = await createEchoServer((req) => {
-            return Object.values(req.where?.id.in).map((id) => {
+            return Object.values(req.query.where?.id.in).map((id) => {
                 return { id, name: 'Bob', age: 1, active: true };
             });
         });

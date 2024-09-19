@@ -1,12 +1,15 @@
 import { AnyQuery } from './AnyQuery';
 
+export const RegularQuery = 'RegularQuery';
+export const RegisteredQuery = 'RegisteredQuery';
+
 export interface RegularQueryRequest {
-    type: 'RegularQuery';
+    type: typeof RegularQuery;
     query: AnyQuery;
 }
 
 export interface RegisteredQueryRequest {
-    type: 'RegisteredQuery';
+    type: typeof RegisteredQuery;
     queryId: string;
     params: Record<string, unknown>;
 }

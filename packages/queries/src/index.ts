@@ -18,6 +18,8 @@ export * from './types/Where';
 export * from './types/WhereClause';
 export * from './validators/isQueryParameter';
 export * from './validators/isRefOp';
+export * from './validators/isRegisteredQuery';
+export * from './validators/isRegularQuery';
 export * from './util/hashQuery';
 export * from './util/iterateRecursively';
 export { col } from './col';

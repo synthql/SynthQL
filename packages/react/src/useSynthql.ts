@@ -1,8 +1,9 @@
+import { QueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { Query, QueryResult, Table } from '@synthql/queries';
 import { useSynthqlContext } from './SynthqlProvider';
 import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 import { synthqlQueryKey } from './synthqlQueryKey';
-import { QueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { createBody } from './createBody';
 import { fetchJsonLines } from './fetchJsonLines';
 
 type SynthqlQueryOptions<
@@ -34,7 +35,7 @@ export function useSynthql<
             ...requestInit?.headers,
             'X-Return-Last-Only': opts.returnLastOnly ? 'true' : 'false',
         },
-        body: JSON.stringify(query),
+        body: JSON.stringify(createBody(query)),
     };
 
     const queryKey = synthqlQueryKey<DB, TTable, TQuery>(query, {
