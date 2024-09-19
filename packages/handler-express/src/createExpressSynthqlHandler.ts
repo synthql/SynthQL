@@ -13,6 +13,7 @@ import {
  * ```typescript
  * import express from 'express';
  * import { createExpressSynthqlHandler } from '@synthql/handler-express';
+ * import { queryEngine } from './queryEngine';
  *
  * const app = express();
  * app.use(createExpressSynthqlHandler(queryEngine));
@@ -93,7 +94,8 @@ async function executeSynthqlRequest<DB>(
 async function tryParseRequest(req: Request) {
     try {
         return {
-            body: JSON.parse(req.body),
+            body:
+                typeof req.body === 'string' ? JSON.parse(req.body) : req.body,
             headers: {
                 ...req.headers,
                 returnLastOnly: req.headers['x-return-last-only'] === 'true',

@@ -15,7 +15,7 @@ export type NextSynthqlHandler = (
 ) => Promise<NextResponse>;
 
 /**
- * Create an Next request handler that can handle SynthQL requests.
+ * Create a Next request handler that can handle SynthQL requests.
  *
  * Usage:
  *
@@ -109,7 +109,7 @@ async function tryParseRequest(req: NextSynthqlHandlerRequest) {
         return {
             body: JSON.parse(body),
             headers: {
-                ...req.headers,
+                ...requestHeaders,
                 returnLastOnly: requestHeaders['x-return-last-only'] === 'true',
             },
         };
