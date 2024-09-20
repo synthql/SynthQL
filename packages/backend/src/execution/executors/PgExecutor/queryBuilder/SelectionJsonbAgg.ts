@@ -1,6 +1,6 @@
 import { AnyQuery } from '@synthql/queries';
 import { applyCardinality } from '../../../../query/applyCardinality';
-import { SqlBuilder, as, coalesce, compileExp, jsonb, jsonbAgg } from './exp';
+import { SqlBuilder, as, coalesce, compileExp, jsonb, jsonbAgg, distinct } from './exp';
 import { TableRef } from '../../../../refs/TableRef';
 import { Selection } from './types';
 
@@ -42,7 +42,7 @@ export class SelectionJsonbAgg implements Selection {
 
     toSql(): SqlBuilder {
         const agg = coalesce(
-            jsonbAgg(this.tableRef.aliasQuoted()),
+            jsonbAgg(distinct(this.tableRef.aliasQuoted())),
             jsonb('[]'),
         );
 

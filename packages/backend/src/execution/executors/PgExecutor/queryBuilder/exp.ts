@@ -32,7 +32,7 @@ function assertPrimitive(x: unknown, msg?: string): asserts x is Primitive {
     if (!isPrimitive(x)) {
         throw new Error(
             msg ??
-                `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
+            `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
         );
     }
 }
@@ -74,6 +74,10 @@ export function as(exp: Exp, alias: string): As {
 
 export function not(exp: Exp): UnaryOp {
     return ['op:unary', 'not', exp];
+}
+
+export function distinct(exp: Exp): Fn {
+    return ['fn', 'distinct', exp];
 }
 
 type OpEqAny = ['op', '= any', Exp, Exp];
