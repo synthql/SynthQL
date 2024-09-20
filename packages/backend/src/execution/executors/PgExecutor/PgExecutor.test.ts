@@ -33,20 +33,23 @@ describe('PgExecutor', () => {
         const { sql } = executor.compile(q1);
 
         expect(sql).toMatchInlineSnapshot(`
-      "select
-        "public::film".film_id as "film_id",
-        "public::film".title as "title",
-        coalesce(jsonb_agg("public::language"), ('[]')::jsonb) as "lang"
-      from
-        "public"."film" "public::film"
-        left join "public"."language" "public::language" on "public::language".language_id = "public::film".language_id
-      where
-        ("public::film".film_id = any ($1))
-      group by
-        "public::film".film_id
-      limit
-        1"
-    `);
+          "select
+            "public::film".film_id as "film_id",
+            "public::film".title as "title",
+            coalesce(
+              jsonb_agg(distinct ("public::language")),
+              ('[]')::jsonb
+            ) as "lang"
+          from
+            "public"."film" "public::film"
+            left join "public"."language" "public::language" on "public::language".language_id = "public::film".language_id
+          where
+            ("public::film".film_id = any ($1))
+          group by
+            "public::film".film_id
+          limit
+            1"
+        `);
     });
 
     it('Film table SynthQL query executes to expected result', async () => {

@@ -76,6 +76,10 @@ export function not(exp: Exp): UnaryOp {
     return ['op:unary', 'not', exp];
 }
 
+export function distinct(exp: Exp): Fn {
+    return ['fn', 'distinct', exp];
+}
+
 type OpEqAny = ['op', '= any', Exp, Exp];
 type OpNotEqAny = ['op', 'not = any', Exp, Exp];
 type As = ['as', Exp, string];
