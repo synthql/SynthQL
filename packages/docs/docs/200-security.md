@@ -18,15 +18,15 @@ const users = from('users').columns('id', 'name', 'email');
 
 const queryEngine = new QueryEngine(opts);
 
-queryEngine.registerQueries(users);
+queryEngine.registerQueries([users]);
 ```
 
 What this means is that the `QueryEngine` will only allow queries on the `users` table and will allow any subset of the `id`, `name` and `email` columns to be selected.
 
-This behaviour can be disabled with the `allowUnknownQueries` option.
+This behaviour can be disabled with the `dangerouslyAllowUnregisteredQueries` option.
 
 ```ts
-const queryEngine = new QueryEngine({..., allowUnknownQueries:true});
+const queryEngine = new QueryEngine({..., dangerouslyAllowUnregisteredQueries: true});
 ```
 
 ## Restricting access to tables and columns
@@ -119,5 +119,5 @@ const queryEngine = new QueryEngine<DB>({
     middlewares: [restrictOrdersByUser],
 });
 
-queryEngine.registerQueries(orders);
+queryEngine.registerQueries([orders]);
 ```

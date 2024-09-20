@@ -155,9 +155,9 @@ export class QueryEngine<DB> {
                 });
             }
 
-            const queryFn = this.queries.get(query.hash);
+            const hasQueryFn = this.queries.has(query.hash);
 
-            if (!queryFn) {
+            if (!hasQueryFn) {
                 throw SynthqlError.createQueryNotRegisteredError({
                     queryId: query.hash,
                 });
