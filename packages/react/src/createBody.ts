@@ -8,7 +8,7 @@ import {
 export function createBody(query: AnyQuery): QueryRequest {
     const params: Record<string, unknown> = {};
 
-    iterateRecursively(query, (x, path) => {
+    iterateRecursively(query, (x, _) => {
         if (isQueryParameter(x)) {
             if (x.value === undefined) {
                 throw new Error(
@@ -27,7 +27,7 @@ export function createBody(query: AnyQuery): QueryRequest {
         }
     });
 
-    if (query.name || Object.keys(params).length > 0) {
+    if (query.name ? query.name.length > 0 : Object.keys(params).length > 0) {
         if (!query.hash) {
             throw new Error(
                 [

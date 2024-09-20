@@ -26,8 +26,6 @@ export function useSynthql<
 ): UseQueryResult<QueryResult<DB, TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${query.hash}`;
-
     const mergedRequestInit: RequestInit = {
         ...requestInit,
         ...opts.requestInit,
@@ -38,6 +36,7 @@ export function useSynthql<
         body: JSON.stringify(createBody(query)),
     };
 
+    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}${query.hash ? '-' + query.hash : ''}`;
     const queryKey = synthqlQueryKey<DB, TTable, TQuery>(query, {
         endpoint: enrichedEndpoint,
         requestInit: mergedRequestInit,

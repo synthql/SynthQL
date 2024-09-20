@@ -235,7 +235,7 @@ export class QueryEngine<DB> {
 
         const query = queryFn();
 
-        iterateRecursively(query, (x, path) => {
+        iterateRecursively(query, (x, _) => {
             if (isQueryParameter(x)) {
                 const value = params?.[x.id];
 
