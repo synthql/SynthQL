@@ -36,7 +36,7 @@ describe('PgExecutor', () => {
       "select
         "public::film".film_id as "film_id",
         "public::film".title as "title",
-        coalesce(jsonb_agg("public::language"), ('[]')::jsonb) as "lang"
+        coalesce(jsonb_agg(distinct("public::language")), ('[]')::jsonb) as "lang"
       from
         "public"."film" "public::film"
         left join "public"."language" "public::language" on "public::language".language_id = "public::film".language_id
