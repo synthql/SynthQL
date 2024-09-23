@@ -13,6 +13,15 @@ describe('cardinalityOne', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'one',
         validWhere: true,
+        parameterize: false,
+    });
+
+    const validAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'one',
+        validWhere: true,
+        parameterize: true,
     });
 
     const invalidWhereArbitraryQuery = arbitraryQuery<DB>({
@@ -20,9 +29,21 @@ describe('cardinalityOne', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'one',
         validWhere: false,
+        parameterize: false,
     });
 
-    it.prop([validWhereArbitraryQuery], { verbose: 2 })(
+    const invalidAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'one',
+        validWhere: false,
+        parameterize: true,
+    });
+
+    it.prop(
+        [validWhereArbitraryQuery, validAndParameterizedWhereArbitraryQuery],
+        { verbose: 2 },
+    )(
         'Valid where query should return a non-null, non-array, TS object result',
         async (query) => {
             const typedQuery = query as Query<DB>;
@@ -49,7 +70,13 @@ describe('cardinalityOne', async () => {
         },
     );
 
-    it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
+    it.skip.prop(
+        [
+            invalidWhereArbitraryQuery,
+            invalidAndParameterizedWhereArbitraryQuery,
+        ],
+        { verbose: 2 },
+    )(
         'Invalid where query should throw expected cardinality error',
         async (query) => {
             try {

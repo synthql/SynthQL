@@ -12,6 +12,15 @@ describe('cardinalityMany', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'many',
         validWhere: true,
+        parameterize: false,
+    });
+
+    const validAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'many',
+        validWhere: true,
+        parameterize: true,
     });
 
     const invalidWhereArbitraryQuery = arbitraryQuery<DB>({
@@ -19,47 +28,59 @@ describe('cardinalityMany', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'many',
         validWhere: false,
+        parameterize: false,
     });
 
-    it.prop([validWhereArbitraryQuery], { verbose: 2 })(
-        'Valid where query should return possibly empty array',
-        async (query) => {
-            const typedQuery = query as Query<DB>;
+    const invalidAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'many',
+        validWhere: false,
+        parameterize: true,
+    });
 
-            const queryResult = await queryEngine.executeAndWait(typedQuery);
+    it.prop(
+        [validWhereArbitraryQuery, validAndParameterizedWhereArbitraryQuery],
+        { verbose: 2 },
+    )('Valid where query should return possibly empty array', async (query) => {
+        const typedQuery = query as Query<DB>;
 
-            const result = queryResult as any;
+        const queryResult = await queryEngine.executeAndWait(typedQuery);
 
-            expect(Array.isArray(result)).toEqual(true);
+        const result = queryResult as any;
 
-            expect(result.length).toBeLessThanOrEqual(Number(query.limit));
+        expect(Array.isArray(result)).toEqual(true);
 
-            const expectedKeys = Object.entries(query.select).flatMap(
-                ([key, selected]) => {
-                    return selected ? [key] : [];
-                },
-            );
+        expect(result.length).toBeLessThanOrEqual(Number(query.limit));
 
-            for (const item of result) {
-                const actualKeys = Object.keys(item);
+        const expectedKeys = Object.entries(query.select).flatMap(
+            ([key, selected]) => {
+                return selected ? [key] : [];
+            },
+        );
 
-                expect(actualKeys).to.containSubset(expectedKeys);
-            }
-        },
-    );
+        for (const item of result) {
+            const actualKeys = Object.keys(item);
 
-    it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
-        'Invalid where query should return empty array',
-        async (query) => {
-            const typedQuery = query as Query<DB>;
+            expect(actualKeys).to.containSubset(expectedKeys);
+        }
+    });
 
-            const queryResult = await queryEngine.executeAndWait(typedQuery);
+    it.skip.prop(
+        [
+            invalidWhereArbitraryQuery,
+            invalidAndParameterizedWhereArbitraryQuery,
+        ],
+        { verbose: 2 },
+    )('Invalid where query should return empty array', async (query) => {
+        const typedQuery = query as Query<DB>;
 
-            const result = queryResult as any;
+        const queryResult = await queryEngine.executeAndWait(typedQuery);
 
-            expect(Array.isArray(result)).toEqual(true);
+        const result = queryResult as any;
 
-            expect(result).toEqual([]);
-        },
-    );
+        expect(Array.isArray(result)).toEqual(true);
+
+        expect(result).toEqual([]);
+    });
 });

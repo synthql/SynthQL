@@ -1,12 +1,5 @@
 import { Pool } from 'pg';
-import {
-    AnyQuery,
-    isQueryParameter,
-    iterateRecursively,
-    Query,
-    QueryResult,
-    Table,
-} from '@synthql/queries';
+import { Query, QueryResult, Table } from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { QueryPlan, collectLast } from '.';
 import { QueryProvider } from './QueryProvider';
@@ -16,6 +9,7 @@ import { QueryProviderExecutor } from './execution/executors/QueryProviderExecut
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
+import { QueryFunction, QueryStore } from './QueryStore';
 
 export interface QueryEngineProps<DB> {
     /**
@@ -89,8 +83,7 @@ export class QueryEngine<DB> {
     private schema: string;
     private dangerouslyAllowUnregisteredQueries: boolean;
     private prependSql?: string;
-    // TODO: fix the callback return type from AnyQuery to TQuery
-    private queries: Map<string, (...params: unknown[]) => AnyQuery>;
+    private queryStore: QueryStore;
     private executors: Array<QueryExecutor> = [];
 
     constructor(config: QueryEngineProps<DB>) {
@@ -104,7 +97,8 @@ export class QueryEngine<DB> {
         this.dangerouslyAllowUnregisteredQueries =
             config.dangerouslyAllowUnregisteredQueries ?? false;
         this.prependSql = config.prependSql;
-        this.queries = new Map();
+
+        this.queryStore = new QueryStore();
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
@@ -155,7 +149,7 @@ export class QueryEngine<DB> {
                 });
             }
 
-            const hasQueryFn = this.queries.has(query.hash);
+            const hasQueryFn = this.queryStore.has(query.hash);
 
             if (!hasQueryFn) {
                 throw SynthqlError.createQueryNotRegisteredError({
@@ -225,43 +219,16 @@ export class QueryEngine<DB> {
             returnLastOnly?: boolean;
         },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        const queryFn = this.queries.get(queryId);
-
-        if (!queryFn) {
-            throw SynthqlError.createQueryNotRegisteredError({
-                queryId,
-            });
-        }
-
-        const query = queryFn();
-
-        iterateRecursively(query, (x, _) => {
-            if (isQueryParameter(x)) {
-                const value = params?.[x.id];
-
-                if (value === undefined) {
-                    throw SynthqlError.createMissingValueError({
-                        params,
-                        paramId: x.id,
-                    });
-                }
-
-                x.value = value;
-            }
+        const query = this.queryStore.get({
+            queryId,
+            params,
         });
 
         // TODO: Remove this 'as any', after fixing types
-        const gen = execute<DB, TQuery>(query as any, {
-            executors: this.executors,
-            defaultSchema: opts?.schema ?? this.schema,
-            prependSql: this.prependSql,
+        return this.execute<TTable, TQuery>(query as any, {
+            schema: opts?.schema ?? this.schema,
+            returnLastOnly: true,
         });
-
-        if (opts?.returnLastOnly) {
-            return generateLast(gen);
-        }
-
-        return gen;
     }
 
     // TODO: fix generic types for input and return types
@@ -304,12 +271,10 @@ export class QueryEngine<DB> {
         });
 
         const { params, sql } = sqlBuilder.build();
-
         const explainQuery: string = `explain (analyze, buffers, verbose, settings, format json) ${sql}`;
 
         try {
             const result = await this.pool.query(explainQuery, params);
-
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
             throw SynthqlError.createSqlExecutionError({
@@ -319,25 +284,11 @@ export class QueryEngine<DB> {
         }
     }
 
-    // TODO: fix the callback return type from AnyQuery to TQuery
-    // Not sure how to do this yet, or if this is even possible
-    registerQueries(queryFns: Array<(...params: any[]) => AnyQuery>) {
+    // TODO: fix the callback return type from AnyQuery
+    // to some version of TQuery (Query<DB>)
+    registerQueries(queryFns: Array<QueryFunction>) {
         for (const queryFn of queryFns) {
-            const query = queryFn();
-
-            if (!query.hash) {
-                throw SynthqlError.createMissingHashError({
-                    query,
-                });
-            }
-
-            if (this.queries.has(query.hash)) {
-                throw SynthqlError.createQueryAlreadyRegisteredError({
-                    queryId: query.hash,
-                });
-            }
-
-            this.queries.set(query.hash, queryFn);
+            this.queryStore.set(queryFn);
         }
     }
 }

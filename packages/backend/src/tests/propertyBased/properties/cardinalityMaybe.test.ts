@@ -12,6 +12,15 @@ describe('cardinalityMaybe', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'maybe',
         validWhere: true,
+        parameterize: false,
+    });
+
+    const validAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'maybe',
+        validWhere: true,
+        parameterize: true,
     });
 
     const invalidWhereArbitraryQuery = arbitraryQuery<DB>({
@@ -19,9 +28,21 @@ describe('cardinalityMaybe', async () => {
         allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
         cardinality: 'maybe',
         validWhere: false,
+        parameterize: false,
     });
 
-    it.prop([validWhereArbitraryQuery], { verbose: 2 })(
+    const invalidAndParameterizedWhereArbitraryQuery = arbitraryQuery<DB>({
+        schema,
+        allTablesRowsMap: await getTableRowsByTableName<DB>(pool, schema),
+        cardinality: 'maybe',
+        validWhere: false,
+        parameterize: true,
+    });
+
+    it.prop(
+        [validWhereArbitraryQuery, validAndParameterizedWhereArbitraryQuery],
+        { verbose: 2 },
+    )(
         'Valid where query should return a possibly null, non-array, TS object result',
         async (query) => {
             const typedQuery = query as Query<DB>;
@@ -46,16 +67,19 @@ describe('cardinalityMaybe', async () => {
         },
     );
 
-    it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
-        'Invalid where query should return null',
-        async (query) => {
-            const typedQuery = query as Query<DB>;
+    it.skip.prop(
+        [
+            invalidWhereArbitraryQuery,
+            invalidAndParameterizedWhereArbitraryQuery,
+        ],
+        { verbose: 2 },
+    )('Invalid where query should return null', async (query) => {
+        const typedQuery = query as Query<DB>;
 
-            const queryResult = await queryEngine.executeAndWait(typedQuery);
+        const queryResult = await queryEngine.executeAndWait(typedQuery);
 
-            const result = queryResult as any;
+        const result = queryResult as any;
 
-            expect(result).toEqual(null);
-        },
-    );
+        expect(result).toEqual(null);
+    });
 });
