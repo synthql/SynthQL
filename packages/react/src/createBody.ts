@@ -27,7 +27,7 @@ export function createBody(query: AnyQuery): QueryRequest {
         }
     });
 
-    if (query.name ? query.name.length > 0 : Object.keys(params).length > 0) {
+    if (query.name || Object.keys(params).length > 0) {
         if (!query.hash) {
             throw new Error(
                 [
