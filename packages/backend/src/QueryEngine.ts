@@ -144,7 +144,7 @@ export class QueryEngine<DB> {
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
         if (!this.dangerouslyAllowUnregisteredQueries) {
             if (!query.hash) {
-                throw SynthqlError.createMissingHashError({
+                throw SynthqlError.createQueryMissingHashError({
                     query,
                 });
             }

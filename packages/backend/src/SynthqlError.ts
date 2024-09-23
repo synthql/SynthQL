@@ -44,10 +44,10 @@ export class SynthqlError extends Error {
         const lines = [
             'Database connection error!',
             '',
-            'Failure to establish a connection to your database.',
+            'Failure to establish a connection to your database',
             '',
             'Check your connection string, and make sure your',
-            'database is up and can accept new connections.',
+            'database is up and can accept new connections',
             '',
             'Here is the underlying error message:',
             '',
@@ -80,86 +80,6 @@ export class SynthqlError extends Error {
         return new SynthqlError(error, type, lines.join('\n'));
     }
 
-    static createMissingHashError({ query }: { query: AnyQuery }) {
-        const type = 'MissingHashError';
-
-        const lines = [
-            'Missing hash error!',
-            '',
-            'The query:',
-            '',
-            JSON.stringify(query, null, 2),
-            '',
-            'is missing its `hash` property, which is',
-            'used as the key when registering it',
-            'via QueryEngine.registerQueries()',
-            '',
-        ];
-
-        return new SynthqlError(new Error(), type, lines.join('\n'));
-    }
-
-    static createMissingValueError({
-        params,
-        paramId,
-    }: {
-        params: Record<string, unknown>;
-        paramId: string;
-    }) {
-        const type = 'MissingValueError';
-
-        const lines = [
-            'Missing value error!',
-            '',
-            'No value found for the parameter:',
-            '',
-            JSON.stringify(paramId, null, 2),
-            '',
-            'in the `params` object:',
-            '',
-            JSON.stringify(params, null, 2),
-            '',
-            'Check and make sure the correct value',
-            'is included in the `params` object',
-            '',
-        ];
-
-        return new SynthqlError(new Error(), type, lines.join('\n'));
-    }
-
-    static createQueryAlreadyRegisteredError({ queryId }: { queryId: string }) {
-        const type = 'QueryAlreadyRegisteredError';
-
-        const lines = [
-            'Query already registered error!',
-            '',
-            'A query already exists in the query store for the queryId:',
-            '',
-            JSON.stringify(queryId, null, 2),
-            '',
-        ];
-
-        return new SynthqlError(new Error(), type, lines.join('\n'));
-    }
-
-    static createQueryNotRegisteredError({ queryId }: { queryId: string }) {
-        const type = 'QueryNotRegisteredError';
-
-        const lines = [
-            'Query not registered error!',
-            '',
-            'No query found in the query store for the queryId:',
-            '',
-            JSON.stringify(queryId, null, 2),
-            '',
-            'Check and make sure the correct queryId',
-            '(i.e query.hash) is being passed',
-            '',
-        ];
-
-        return new SynthqlError(new Error(), type, lines.join('\n'));
-    }
-
     static createPrependSqlExecutionError({
         error,
         prependSql,
@@ -179,6 +99,86 @@ export class SynthqlError extends Error {
         ];
 
         return new SynthqlError(error, type, lines.join('\n'));
+    }
+
+    static createQueryAlreadyRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryAlreadyRegisteredError';
+
+        const lines = [
+            'Query already registered!',
+            '',
+            'A query already exists in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryMissingHashError({ query }: { query: AnyQuery }) {
+        const type = 'QueryMissingHashError';
+
+        const lines = [
+            'Query missing hash!',
+            '',
+            'The query:',
+            '',
+            JSON.stringify(query, null, 2),
+            '',
+            'is missing its `hash` (i.e `query.hash`) property,',
+            ' which is used as the key when registering it',
+            'via QueryEngine.registerQueries()',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryNotRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryNotRegisteredError';
+
+        const lines = [
+            'Query not registered!',
+            '',
+            'No query found in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+            'Check and make sure the correct queryId',
+            '(i.e `query.hash`) is being passed',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryParameterMissingValueError({
+        params,
+        paramIds,
+    }: {
+        params: Record<string, unknown>;
+        paramIds: string[];
+    }) {
+        const type = 'QueryParameterMissingValueError';
+
+        const lines = [
+            'Query parameter missing value!',
+            '',
+            'No value found for the parameter(s):',
+            '',
+            JSON.stringify(paramIds, null, 2),
+            '',
+            'in the `params` object:',
+            '',
+            JSON.stringify(params, null, 2),
+            '',
+            'Check and make sure the correct values for each',
+            'parameter is included in the `params` object',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
     }
 
     static createResponseStreamingError({

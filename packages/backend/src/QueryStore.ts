@@ -31,25 +31,31 @@ export class QueryStore {
         const queryFn = this.queries.get(queryId);
 
         if (!queryFn) {
-            throw SynthqlError.createQueryNotRegisteredError({
-                queryId,
-            });
+            throw SynthqlError.createQueryNotRegisteredError({ queryId });
         }
 
         const query = queryFn();
 
+        // Check if all required parameters are provided
+        const missingParams: string[] = [];
+
+        iterateRecursively(query, (x, _) => {
+            if (isQueryParameter(x) && params[x.id] === undefined) {
+                missingParams.push(x.id);
+            }
+        });
+
+        if (missingParams.length > 0) {
+            throw SynthqlError.createQueryParameterMissingValueError({
+                params,
+                paramIds: missingParams,
+            });
+        }
+
+        // Apply parameters
         iterateRecursively(query, (x, _) => {
             if (isQueryParameter(x)) {
-                const value = params?.[x.id];
-
-                if (value === undefined) {
-                    throw SynthqlError.createMissingValueError({
-                        params,
-                        paramId: x.id,
-                    });
-                }
-
-                x.value = value;
+                x.value = params[x.id];
             }
         });
 
@@ -69,11 +75,11 @@ export class QueryStore {
      * Throws an error if a query with the
      * same identifier already exists.
      */
-    set(queryFn: (...params: unknown[]) => AnyQuery): void {
+    set(queryFn: QueryFunction): void {
         const query = queryFn();
 
         if (!query.hash) {
-            throw SynthqlError.createMissingHashError({
+            throw SynthqlError.createQueryMissingHashError({
                 query,
             });
         }
