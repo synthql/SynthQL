@@ -26,7 +26,7 @@ What this means is that the `QueryEngine` will only allow queries on the `users`
 This behaviour can be disabled with the `dangerouslyAllowUnregisteredQueries` option.
 
 ```ts
-const queryEngine = new QueryEngine({..., dangerouslyAllowUnregisteredQueries: true});
+const queryEngine = new QueryEngine({ ..., dangerouslyAllowUnregisteredQueries: true });
 ```
 
 ## Restricting access to tables and columns

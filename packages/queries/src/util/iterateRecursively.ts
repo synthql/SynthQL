@@ -23,31 +23,17 @@ export function iterateRecursively<T extends Traversable>(
     visitor: (traversable: Traversable, path: string[]) => void,
     path: string[] = [],
 ): void {
-    // Apply the visitor to the current traversable
     visitor(traversable, path);
 
     if (
-        typeof traversable === 'object' &&
-        traversable !== null &&
-        !(traversable instanceof Date)
+        traversable === null ||
+        typeof traversable !== 'object' ||
+        traversable instanceof Date
     ) {
-        if (Array.isArray(traversable)) {
-            // If it's an array, iterate over each element
-            // with its index as the key in the path
-            traversable.forEach((item, index) => {
-                iterateRecursively(item, visitor, [...path, String(index)]);
-            });
-        } else {
-            // If it's an object, iterate over each
-            // property with its key in the path
-            for (const key in traversable) {
-                if (Object.prototype.hasOwnProperty.call(traversable, key)) {
-                    iterateRecursively(traversable[key], visitor, [
-                        ...path,
-                        String(key),
-                    ]);
-                }
-            }
-        }
+        return;
+    }
+
+    for (const [key, value] of Object.entries(traversable)) {
+        iterateRecursively(value, visitor, [...path, key]);
     }
 }

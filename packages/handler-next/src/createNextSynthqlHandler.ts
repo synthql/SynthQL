@@ -3,6 +3,7 @@ import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
 import {
     isRegisteredQueryRequest,
     isRegularQueryRequest,
+    Query,
 } from '@synthql/queries';
 import { ReadableStream } from 'stream/web';
 
@@ -73,23 +74,11 @@ async function executeSynthqlRequest<DB>(
     // const validatedQuery = await tryValidateSynthqlQuery(query);
 
     // Execute the query, but just to get the initial generator
-    const resultGenerator = isRegisteredQueryRequest(body)
-        ? await tryExecuteRegisteredQuery<DB>(
-              queryEngine,
-              { queryId: body.queryId, params: body.params },
-              headers.returnLastOnly,
-          )
-        : isRegularQueryRequest(body)
-          ? await tryExecuteQuery<DB>(
-                queryEngine,
-                body.query,
-                headers.returnLastOnly,
-            )
-          : await tryExecuteQuery<DB>(
-                queryEngine,
-                body,
-                headers.returnLastOnly,
-            );
+    const resultGenerator = await tryExecuteQuery<DB>(
+        queryEngine,
+        body,
+        headers.returnLastOnly,
+    );
 
     // Now that we have the generator, we want to iterate over
     // the items and depending on `returnLastOnly`, we will
@@ -123,21 +112,26 @@ async function tryParseRequest(req: NextSynthqlHandlerRequest) {
 
 async function tryExecuteQuery<DB>(
     queryEngine: QueryEngine<DB>,
-    query: any,
+    queryOrBody: any,
     returnLastOnly: boolean,
 ) {
-    return queryEngine.execute(query, { returnLastOnly });
-}
-
-async function tryExecuteRegisteredQuery<DB>(
-    queryEngine: QueryEngine<DB>,
-    { queryId, params }: { queryId: string; params: Record<string, unknown> },
-    returnLastOnly: boolean,
-) {
-    return queryEngine.executeRegisteredQuery(
-        { queryId, params },
-        { returnLastOnly },
-    );
+    if (isRegisteredQueryRequest(queryOrBody)) {
+        return queryEngine.executeRegisteredQuery(
+            {
+                queryId: queryOrBody.queryId,
+                params: queryOrBody.params,
+            },
+            {
+                returnLastOnly,
+            },
+        );
+    } else if (isRegularQueryRequest(queryOrBody)) {
+        return queryEngine.execute(queryOrBody.query as Query<DB>, {
+            returnLastOnly,
+        });
+    } else {
+        return queryEngine.execute(queryOrBody, { returnLastOnly });
+    }
 }
 
 async function writeResponseBody(

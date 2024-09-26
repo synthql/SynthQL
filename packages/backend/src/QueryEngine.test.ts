@@ -12,7 +12,7 @@ const params = {
 
 describe('QueryEngine', () => {
     it('registerQueries + executeRegisteredQuery', async () => {
-        queryEngine.registerQueries([() => findFilmActor(false).maybe()]);
+        queryEngine.registerQueries([findFilmActor(false).maybe()]);
 
         const parameterizedQueryResult =
             await queryEngine.executeRegisteredQueryAndWait({

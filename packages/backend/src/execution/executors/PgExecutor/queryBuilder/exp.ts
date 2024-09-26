@@ -262,7 +262,7 @@ export class SqlBuilder {
     addAs(as: As) {
         const [_, exp, alias] = as;
 
-        // TODO validate that alias is a valid alias
+        // TODO: validate that alias is a valid alias
         return this.addBuilder(compileExp(exp)).space().add(`as "${alias}" `);
     }
 

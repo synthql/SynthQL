@@ -5,10 +5,8 @@ import {
 } from '@synthql/queries';
 import { SynthqlError } from './SynthqlError';
 
-export type QueryFunction = (...params: unknown[]) => AnyQuery;
-
 export class QueryStore {
-    private queries: Map<string, QueryFunction>;
+    private queries: Map<string, AnyQuery>;
 
     constructor() {
         this.queries = new Map();
@@ -28,13 +26,11 @@ export class QueryStore {
         queryId: string;
         params: Record<string, unknown>;
     }): AnyQuery {
-        const queryFn = this.queries.get(queryId);
+        const query = this.queries.get(queryId);
 
-        if (!queryFn) {
+        if (!query) {
             throw SynthqlError.createQueryNotRegisteredError({ queryId });
         }
-
-        const query = queryFn();
 
         // Check if all required parameters are provided
         const missingParams: string[] = [];
@@ -75,9 +71,7 @@ export class QueryStore {
      * Throws an error if a query with the
      * same identifier already exists.
      */
-    set(queryFn: QueryFunction): void {
-        const query = queryFn();
-
+    set(query: AnyQuery): void {
         if (!query.hash) {
             throw SynthqlError.createQueryMissingHashError({
                 query,
@@ -90,6 +84,6 @@ export class QueryStore {
             });
         }
 
-        this.queries.set(query.hash, queryFn);
+        this.queries.set(query.hash, query);
     }
 }

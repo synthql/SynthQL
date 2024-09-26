@@ -1,5 +1,11 @@
 import { Pool } from 'pg';
-import { Query, QueryResult, Table } from '@synthql/queries';
+import {
+    AnyQuery,
+    Query,
+    QueryResult,
+    RegisteredQueryRequestBody,
+    Table,
+} from '@synthql/queries';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { QueryPlan, collectLast } from '.';
 import { QueryProvider } from './QueryProvider';
@@ -9,7 +15,7 @@ import { QueryProviderExecutor } from './execution/executors/QueryProviderExecut
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
-import { QueryFunction, QueryStore } from './QueryStore';
+import { QueryStore } from './QueryStore';
 
 export interface QueryEngineProps<DB> {
     /**
@@ -194,16 +200,11 @@ export class QueryEngine<DB> {
         );
     }
 
-    // TODO: fix generic types for input and return types
-    // Currently returning `AsyncGenerator<never, any, unknown>`
     executeRegisteredQuery<
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
     >(
-        {
-            queryId,
-            params,
-        }: { queryId: string; params: Record<string, unknown> },
+        { queryId, params }: RegisteredQueryRequestBody,
         opts?: {
             /**
              * The name of the database schema to
@@ -224,23 +225,17 @@ export class QueryEngine<DB> {
             params,
         });
 
-        // TODO: Remove this 'as any', after fixing types
-        return this.execute<TTable, TQuery>(query as any, {
+        return this.execute<TTable, TQuery>(query as TQuery, {
             schema: opts?.schema ?? this.schema,
             returnLastOnly: true,
         });
     }
 
-    // TODO: fix generic types for input and return types
-    // Currently returning `AsyncGenerator<never, any, unknown>`
     executeRegisteredQueryAndWait<
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
     >(
-        {
-            queryId,
-            params,
-        }: { queryId: string; params: Record<string, unknown> },
+        { queryId, params }: RegisteredQueryRequestBody,
         opts?: {
             /**
              * The name of the database schema to
@@ -252,7 +247,7 @@ export class QueryEngine<DB> {
         },
     ): Promise<QueryResult<DB, TQuery>> {
         return collectLast(
-            this.executeRegisteredQuery(
+            this.executeRegisteredQuery<TTable, TQuery>(
                 { queryId, params },
                 {
                     schema: opts?.schema ?? this.schema,
@@ -284,11 +279,9 @@ export class QueryEngine<DB> {
         }
     }
 
-    // TODO: fix the callback return type from AnyQuery
-    // to some version of TQuery (Query<DB>)
-    registerQueries(queryFns: Array<QueryFunction>) {
-        for (const queryFn of queryFns) {
-            this.queryStore.set(queryFn);
+    registerQueries(queries: Array<AnyQuery>) {
+        for (const query of queries) {
+            this.queryStore.set(query);
         }
     }
 }

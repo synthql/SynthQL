@@ -8,10 +8,15 @@ export interface RegularQueryRequest {
     query: AnyQuery;
 }
 
-export interface RegisteredQueryRequest {
-    type: typeof RegisteredQuery;
+export interface RegisteredQueryRequestBody {
     queryId: string;
     params: Record<string, unknown>;
+}
+
+export interface RegisteredQueryRequest {
+    type: typeof RegisteredQuery;
+    queryId: RegisteredQueryRequestBody['queryId'];
+    params: RegisteredQueryRequestBody['params'];
 }
 
 export type QueryRequest = RegularQueryRequest | RegisteredQueryRequest;
