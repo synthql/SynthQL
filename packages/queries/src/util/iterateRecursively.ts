@@ -1,26 +1,6 @@
-// TODO: Unite/move this type with the one of the same
-// name already being used in `backend` and `queries`
-// See:
-// packages/backend/src/execution/executors/PgExecutor/queryBuilder/exp.ts
-// packages/queries/src/expression/Expression.ts
-type Primitive =
-    | string
-    | number
-    | boolean
-    | null
-    | undefined
-    | symbol
-    | bigint
-    | Date;
-
-type Traversable =
-    | Primitive
-    | { [key: string | number]: Traversable }
-    | Array<Traversable>;
-
-export function iterateRecursively<T extends Traversable>(
+export function iterateRecursively<T>(
     traversable: T,
-    visitor: (traversable: Traversable, path: string[]) => void,
+    visitor: (traversable: unknown, path: string[]) => void,
     path: string[] = [],
 ): void {
     visitor(traversable, path);
