@@ -5,7 +5,7 @@ import { execute } from '../../execution/execute';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
-import { DB, from } from '../generated';
+import { from } from '../generated';
 import { sql } from '../postgres';
 import { store } from '../queries.v2';
 import { pool } from '../queryEngine';
@@ -13,17 +13,17 @@ import { sortRecursively } from '../sortRecursively';
 
 describe('e2e', () => {
     const payments = from('payment')
-        .columns('payment_id', 'amount')
         .groupBy('payment_id', 'payment_date')
+        .columns('payment_id', 'amount')
         .where({ customer_id: col('customer.customer_id') })
         .many();
 
     const customers = from('customer')
         .columns('email', 'customer_id')
-        .where({ store_id: col('store.store_id'), customer_id: 367 })
         .include({
             payments,
         })
+        .where({ store_id: col('store.store_id'), customer_id: 367 })
         .many();
 
     const q = store()
@@ -46,7 +46,7 @@ describe('e2e', () => {
 
     // TODO: fix the test by fixing the sorting function and unskip
     test.skip(`${describeQuery(q)}`, async () => {
-        const rows: QueryResult<DB, typeof q>[] = await sql`
+        const rows: QueryResult<typeof q>[] = await sql`
         SELECT
             s.store_id,
             JSON_AGG(

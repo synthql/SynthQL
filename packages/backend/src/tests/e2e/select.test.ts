@@ -7,9 +7,7 @@ import { findActorById, findCityById, from, movie } from '../queries';
 import { queryEngine } from '../queryEngine';
 
 describe('select', () => {
-    function run<TTable extends Table<DB>, T extends Query<DB, TTable>>(
-        query: T,
-    ) {
+    function run<TTable extends Table<DB>, T extends Query>(query: T) {
         return collectLast(queryEngine.execute(query));
     }
 

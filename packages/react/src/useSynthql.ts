@@ -14,7 +14,7 @@ type SynthqlQueryOptions<TQuery extends Query> = {
 export function useSynthql<TQuery extends Query>(
     query: TQuery,
     opts: SynthqlQueryOptions<TQuery> = {},
-): UseQueryResult<QueryResult<any, TQuery>> {
+): UseQueryResult<QueryResult<TQuery>> {
     const { endpoint, requestInit } = useSynthqlContext();
 
     const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${query.hash}`;
@@ -37,7 +37,7 @@ export function useSynthql<TQuery extends Query>(
     return useAyncGeneratorQuery({
         queryKey,
         queryFn: async () => {
-            return fetchJsonLines<QueryResult<any, TQuery>>(
+            return fetchJsonLines<QueryResult<TQuery>>(
                 enrichedEndpoint,
                 mergedRequestInit,
             );

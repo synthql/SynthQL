@@ -96,7 +96,7 @@ export class QueryEngine<DB> {
         ];
     }
 
-    execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
+    execute<TQuery extends Query>(
         query: TQuery,
         opts?: {
             /**
@@ -112,7 +112,7 @@ export class QueryEngine<DB> {
              */
             returnLastOnly?: boolean;
         },
-    ): AsyncGenerator<QueryResult<DB, TQuery>> {
+    ): AsyncGenerator<QueryResult<TQuery>> {
         const gen = execute<TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
@@ -126,10 +126,7 @@ export class QueryEngine<DB> {
         return gen;
     }
 
-    async executeAndWait<
-        TTable extends Table<DB>,
-        TQuery extends Query<DB, TTable>,
-    >(
+    async executeAndWait<TTable extends Table<DB>, TQuery extends Query>(
         query: TQuery,
         opts?: {
             /**
@@ -140,7 +137,7 @@ export class QueryEngine<DB> {
              */
             schema?: string;
         },
-    ): Promise<QueryResult<DB, TQuery>> {
+    ): Promise<QueryResult<TQuery>> {
         return await collectLast(
             generateLast(
                 execute<TQuery>(query, {
@@ -166,9 +163,7 @@ export class QueryEngine<DB> {
         return sqlBuilder.build();
     }
 
-    async explain<TTable extends Table<DB>>(
-        query: Query<DB, TTable>,
-    ): Promise<QueryPlan> {
+    async explain<TTable extends Table<DB>>(query: Query): Promise<QueryPlan> {
         const { sqlBuilder } = composeQuery({
             defaultSchema: this.schema,
             query,

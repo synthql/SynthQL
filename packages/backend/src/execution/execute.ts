@@ -36,10 +36,11 @@ export interface ExecuteProps {
 export async function* execute<TQuery extends Query>(
     query: TQuery,
     props: ExecuteProps,
-): AsyncGenerator<QueryResult<any, TQuery>> {
+): AsyncGenerator<QueryResult<TQuery>> {
     const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan, props)) {
-        yield composeExecutionResults(resultTree) as QueryResult<any, TQuery>;
+        // TODO(fhur) see if we can avoid this cast
+        yield composeExecutionResults(resultTree) as QueryResult<TQuery>;
     }
 }

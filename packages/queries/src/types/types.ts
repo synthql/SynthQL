@@ -19,8 +19,6 @@ export const QuerySchema = t.Recursive((self) =>
         groupBy: t.Optional(t.Array(t.String())),
     }),
 );
-export type Query<
-    DB = any,
-    TTable = any,
-    TQueryResult extends TSchema = any,
-> = Static<typeof QuerySchema> & { schema?: TQueryResult };
+export type Query<TQueryResult extends TSchema = any> = Static<
+    typeof QuerySchema
+> & { schema?: TQueryResult };

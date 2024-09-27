@@ -30,8 +30,8 @@ export class QueryBuilder<
         private schema: TResultSchema,
     ) {}
 
-    private build(): Query<unknown, unknown, TResultSchema> {
-        const built: Query<unknown, unknown, TResultSchema> = assertQuery(
+    private build(): Query<TResultSchema> {
+        const built: Query<TResultSchema> = assertQuery(
             this.query,
             this.schema,
         );
@@ -143,7 +143,7 @@ export class QueryBuilder<
     /**
      * @alias {@link all}
      */
-    many(): Query<DB, TTable, TArray<TResultSchema>> {
+    many(): Query<TArray<TResultSchema>> {
         const query = this.query;
         const schema = t.Array(this.schema);
 
@@ -345,7 +345,7 @@ export function query<DB>(schema: Schema<DB>) {
 function assertQuery<T extends TSchema>(
     partialQuery: Partial<Query>,
     schema: T,
-): Query<unknown, unknown, T> {
+): Query<T> {
     Assert(QuerySchema, partialQuery);
 
     return { ...partialQuery, schema };
@@ -359,11 +359,7 @@ type AppendToSchema<Schema extends TSchema, TInclude> = SchemaOf<
     Append<
         Static<Schema>,
         {
-            [key in keyof TInclude]: TInclude[key] extends Query<
-                any,
-                any,
-                infer T
-            >
+            [key in keyof TInclude]: TInclude[key] extends Query<infer T>
                 ? Static<T>
                 : unknown;
         }

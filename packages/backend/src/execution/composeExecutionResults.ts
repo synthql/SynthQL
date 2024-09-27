@@ -1,5 +1,5 @@
 import { Value } from '@sinclair/typebox/value';
-import { AnyDB, AnyTable, QueryResult } from '@synthql/queries';
+import { Query, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { setIn } from '../util/tree/setIn';
@@ -7,7 +7,7 @@ import { ExecResultNode, ExecResultTree, ResultRow } from './types';
 
 export function composeExecutionResults(
     tree: ExecResultTree,
-): QueryResult<AnyDB, AnyTable> {
+): QueryResult<Query> {
     const queryResult: ResultRow[] = tree.root.result;
 
     for (const node of tree.root.children) {
@@ -17,12 +17,13 @@ export function composeExecutionResults(
     const result = applyCardinality(
         queryResult,
         tree.root.inputQuery.cardinality ?? 'many',
-    ) as QueryResult<AnyDB, AnyTable>;
+    ) as QueryResult<Query>;
 
     const schema = tree.root.inputQuery.schema;
     if (schema) {
         const error = Value.Errors(schema, [], result).First();
         if (error) {
+            // TODO(fhur): Improve error message
             const lines = [
                 `${error.message} at path: ${error.path}`,
                 `Value: ${JSON.stringify(error.value)}`,

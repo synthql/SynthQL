@@ -15,4 +15,7 @@ export type AnyTableDef = {
 };
 export type AnyDB = Record<string, AnyTableDef>;
 export type AnyTable = string;
+/**
+ * @deprecated: just use Query
+ */
 export type AnyQuery = Query;

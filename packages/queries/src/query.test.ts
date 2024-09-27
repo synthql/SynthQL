@@ -1,9 +1,9 @@
 import { describe, test } from 'vitest';
 import { AnyQuery, Query, QueryResult, col } from '.';
-import { DB, from } from './generated';
+import { from } from './generated';
 
 describe('queries', () => {
-    function fakeQueryResult<T>(q: T): QueryResult<DB, T> {
+    function fakeQueryResult<T extends Query>(q: T): QueryResult<T> {
         return {} as any;
     }
 
@@ -118,8 +118,8 @@ describe('queries', () => {
 
     test('Find film with language and actors', () => {
         const language = from('language')
-            .where({ language_id: col('film.language_id') })
             .columns('language_id', 'name')
+            .where({ language_id: col('film.language_id') })
             .maybe();
 
         const filmActor = from('film_actor')
@@ -178,7 +178,12 @@ describe('queries', () => {
                 address,
             })
             .include({
-                address: from('address').columns('address2').one(),
+                address: from('address')
+                    .columns('address2')
+                    .where({
+                        address_id: col('store.address_id'),
+                    })
+                    .many(),
             })
             .include({
                 staff,
@@ -188,9 +193,8 @@ describe('queries', () => {
         const result = fakeQueryResult(store);
         result satisfies Array<{
             address_id: number;
-            address: {
-                address_id: number;
-                city_id: number;
+            staff: {
+                staff_id: number;
             };
         }>;
     });

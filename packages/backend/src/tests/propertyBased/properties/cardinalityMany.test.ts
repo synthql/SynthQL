@@ -1,5 +1,4 @@
 import { it } from '@fast-check/vitest';
-import { Query } from '@synthql/queries';
 import { describe, expect } from 'vitest';
 import { DB, schema } from '../../generated';
 import { pool, queryEngine } from '../../queryEngine';
@@ -24,7 +23,7 @@ describe('cardinalityMany', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return possibly empty array',
         async (query) => {
-            const typedQuery = query as Query<DB>;
+            const typedQuery = query;
 
             const queryResult = await queryEngine.executeAndWait(typedQuery);
 

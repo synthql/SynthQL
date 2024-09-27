@@ -9,7 +9,7 @@ interface SynthqlQueryOptions {
 export type SynthqlQueryKey<
     DB = any,
     TTable extends Table<DB> = any,
-    TQuery extends Query<DB, TTable> = Query<DB, TTable>,
+    TQuery extends Query = Query,
 > =
     | readonly ['synthql', TQuery]
     | readonly ['synthql', TQuery, SynthqlQueryOptions];

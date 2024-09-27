@@ -6,7 +6,6 @@ import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
-import { DB } from '../generated';
 import { sql } from '../postgres';
 import { actor, film, filmActor, inventory, store } from '../queries.v2';
 import { pool } from '../queryEngine';
@@ -49,7 +48,7 @@ describe('e2e', () => {
     };
 
     test(`${describeQuery(q)}`, async () => {
-        const rows: QueryResult<DB, typeof q>[] = await sql`
+        const rows: QueryResult<typeof q>[] = await sql`
         SELECT
             s.store_id,
             jsonb_agg(

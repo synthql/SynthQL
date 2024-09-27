@@ -1,5 +1,4 @@
 import { it } from '@fast-check/vitest';
-import { Query } from '@synthql/queries';
 import { describe, expect } from 'vitest';
 import { DB, schema } from '../../generated';
 import { pool, queryEngine } from '../../queryEngine';
@@ -49,7 +48,7 @@ describe('cardinalityMaybe', async () => {
     it.skip.prop([invalidWhereArbitraryQuery], { verbose: 2 })(
         'Invalid where query should return null',
         async (query) => {
-            const typedQuery = query as Query<DB>;
+            const typedQuery = query;
 
             const queryResult = await queryEngine.executeAndWait(typedQuery);
 

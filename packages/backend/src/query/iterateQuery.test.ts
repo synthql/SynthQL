@@ -194,7 +194,6 @@ describe('iterateQuery', () => {
                 where: {
                     film_id: 1,
                 },
-                schema: {},
             },
             expected: [
                 {
@@ -202,7 +201,6 @@ describe('iterateQuery', () => {
                         from: 'film',
                         select: {},
                         where: { film_id: 1 },
-                        schema: {},
                     },
                     insertionPath: [],
                 },
