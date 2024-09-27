@@ -1310,9 +1310,12 @@ export const schema: Schema<DB> = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: special_features\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
+                                    id: 'pg_catalog.text[]',
+                                    type: 'array',
                                     description: 'A PG text',
+                                    items: {
+                                        type: 'string',
+                                    },
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7233,9 +7236,12 @@ export const schema: Schema<DB> = {
                                 'Column details:\n\n- Schema: public\n- Table: film\n- Column: special_features\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
+                                    id: 'pg_catalog.text[]',
+                                    type: 'array',
                                     description: 'A PG text',
+                                    items: {
+                                        type: 'string',
+                                    },
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -11826,34 +11832,20 @@ export const schema: Schema<DB> = {
             required: ['columns'],
             additionalProperties: false,
         },
-        'pg_catalog.text': {
-            id: 'pg_catalog.text',
-            type: 'string',
-            description: 'A PG text',
-        },
-        'pg_catalog.varchar': {
-            id: 'pg_catalog.varchar',
-            type: 'string',
-            description: 'A PG varchar',
-        },
         'pg_catalog.bool': {
             id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
         },
-        'pg_catalog.time': {
-            id: 'pg_catalog.time',
+        'pg_catalog.bpchar': {
+            id: 'pg_catalog.bpchar',
             type: 'string',
-            format: 'time',
-            description:
-                'A PG time.\nNote that values of the PG time type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+            description: 'A PG bpchar',
         },
-        'pg_catalog.timetz': {
-            id: 'pg_catalog.timetz',
+        'pg_catalog.bytea': {
+            id: 'pg_catalog.bytea',
             type: 'string',
-            format: 'time',
-            description:
-                'A PG timetz.\nNote that values of the PG timetz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(timeString)` or `Date.parse(timeString)`',
+            description: 'A PG bytea',
         },
         'pg_catalog.date': {
             id: 'pg_catalog.date',
@@ -11862,25 +11854,15 @@ export const schema: Schema<DB> = {
             description:
                 'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
         },
-        'pg_catalog.timestamp': {
-            id: 'pg_catalog.timestamp',
-            type: 'string',
-            format: 'date-time',
-            description:
-                'A PG timestamp.\nNote that values of the PG timestamp type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+        'pg_catalog.float4': {
+            id: 'pg_catalog.float4',
+            type: 'number',
+            description: 'A PG float4',
         },
-        'pg_catalog.timestamptz': {
-            id: 'pg_catalog.timestamptz',
-            type: 'string',
-            format: 'date-time',
-            description:
-                'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-        },
-        'pg_catalog.numeric': {
-            id: 'pg_catalog.numeric',
-            type: 'string',
-            description:
-                'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+        'pg_catalog.float8': {
+            id: 'pg_catalog.float8',
+            type: 'number',
+            description: 'A PG float8',
         },
         'pg_catalog.int2': {
             id: 'pg_catalog.int2',
@@ -11903,37 +11885,6 @@ export const schema: Schema<DB> = {
             maximum: 9223372036854776000,
             description: 'A PG int8',
         },
-        'pg_catalog.float4': {
-            id: 'pg_catalog.float4',
-            type: 'number',
-            description: 'A PG float4',
-        },
-        'pg_catalog.float8': {
-            id: 'pg_catalog.float8',
-            type: 'number',
-            description: 'A PG float8',
-        },
-        'pg_catalog.tsvector': {
-            id: 'pg_catalog.tsvector',
-            type: 'string',
-            description: 'A PG tsvector',
-        },
-        'pg_catalog.bpchar': {
-            id: 'pg_catalog.bpchar',
-            type: 'string',
-            description: 'A PG bpchar',
-        },
-        'pg_catalog.bytea': {
-            id: 'pg_catalog.bytea',
-            type: 'string',
-            description: 'A PG bytea',
-        },
-        'pg_catalog.uuid': {
-            id: 'pg_catalog.uuid',
-            type: 'string',
-            format: 'uuid',
-            description: 'A PG uuid',
-        },
         'pg_catalog.json': {
             id: 'pg_catalog.json',
             type: 'object',
@@ -11943,6 +11894,239 @@ export const schema: Schema<DB> = {
             id: 'pg_catalog.jsonb',
             type: 'object',
             description: 'A PG jsonb',
+        },
+        'pg_catalog.numeric': {
+            id: 'pg_catalog.numeric',
+            type: 'string',
+            description:
+                'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+        },
+        'pg_catalog.text': {
+            id: 'pg_catalog.text',
+            type: 'string',
+            description: 'A PG text',
+        },
+        'pg_catalog.time': {
+            id: 'pg_catalog.time',
+            type: 'string',
+            format: 'time',
+            description:
+                'A PG time.\nNote that values of the PG time type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+        },
+        'pg_catalog.timestamp': {
+            id: 'pg_catalog.timestamp',
+            type: 'string',
+            format: 'date-time',
+            description:
+                'A PG timestamp.\nNote that values of the PG timestamp type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+        },
+        'pg_catalog.timestamptz': {
+            id: 'pg_catalog.timestamptz',
+            type: 'string',
+            format: 'date-time',
+            description:
+                'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+        },
+        'pg_catalog.timetz': {
+            id: 'pg_catalog.timetz',
+            type: 'string',
+            format: 'time',
+            description:
+                'A PG timetz.\nNote that values of the PG timetz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(timeString)` or `Date.parse(timeString)`',
+        },
+        'pg_catalog.tsvector': {
+            id: 'pg_catalog.tsvector',
+            type: 'string',
+            description: 'A PG tsvector',
+        },
+        'pg_catalog.uuid': {
+            id: 'pg_catalog.uuid',
+            type: 'string',
+            format: 'uuid',
+            description: 'A PG uuid',
+        },
+        'pg_catalog.varchar': {
+            id: 'pg_catalog.varchar',
+            type: 'string',
+            description: 'A PG varchar',
+        },
+        'pg_catalog.bool[]': {
+            id: 'pg_catalog.bool[]',
+            type: 'array',
+            description: 'A PG bool',
+            items: {
+                type: 'boolean',
+            },
+        },
+        'pg_catalog.bpchar[]': {
+            id: 'pg_catalog.bpchar[]',
+            type: 'array',
+            description: 'A PG bpchar',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.bytea[]': {
+            id: 'pg_catalog.bytea[]',
+            type: 'array',
+            description: 'A PG bytea',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.date[]': {
+            id: 'pg_catalog.date[]',
+            type: 'array',
+            format: 'date',
+            description:
+                'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.float4[]': {
+            id: 'pg_catalog.float4[]',
+            type: 'array',
+            description: 'A PG float4',
+            items: {
+                type: 'number',
+            },
+        },
+        'pg_catalog.float8[]': {
+            id: 'pg_catalog.float8[]',
+            type: 'array',
+            description: 'A PG float8',
+            items: {
+                type: 'number',
+            },
+        },
+        'pg_catalog.int2[]': {
+            id: 'pg_catalog.int2[]',
+            type: 'array',
+            minimum: -32768,
+            maximum: 32767,
+            description: 'A PG int2',
+            items: {
+                type: 'integer',
+            },
+        },
+        'pg_catalog.int4[]': {
+            id: 'pg_catalog.int4[]',
+            type: 'array',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+            items: {
+                type: 'integer',
+            },
+        },
+        'pg_catalog.int8[]': {
+            id: 'pg_catalog.int8[]',
+            type: 'array',
+            minimum: -9223372036854776000,
+            maximum: 9223372036854776000,
+            description: 'A PG int8',
+            items: {
+                type: 'integer',
+            },
+        },
+        'pg_catalog.json[]': {
+            id: 'pg_catalog.json[]',
+            type: 'array',
+            description: 'A PG json',
+            items: {
+                type: 'object',
+            },
+        },
+        'pg_catalog.jsonb[]': {
+            id: 'pg_catalog.jsonb[]',
+            type: 'array',
+            description: 'A PG jsonb',
+            items: {
+                type: 'object',
+            },
+        },
+        'pg_catalog.numeric[]': {
+            id: 'pg_catalog.numeric[]',
+            type: 'array',
+            description:
+                'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.text[]': {
+            id: 'pg_catalog.text[]',
+            type: 'array',
+            description: 'A PG text',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.time[]': {
+            id: 'pg_catalog.time[]',
+            type: 'array',
+            format: 'time',
+            description:
+                'A PG time.\nNote that values of the PG time type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.timestamp[]': {
+            id: 'pg_catalog.timestamp[]',
+            type: 'array',
+            format: 'date-time',
+            description:
+                'A PG timestamp.\nNote that values of the PG timestamp type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.timestamptz[]': {
+            id: 'pg_catalog.timestamptz[]',
+            type: 'array',
+            format: 'date-time',
+            description:
+                'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.timetz[]': {
+            id: 'pg_catalog.timetz[]',
+            type: 'array',
+            format: 'time',
+            description:
+                'A PG timetz.\nNote that values of the PG timetz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(timeString)` or `Date.parse(timeString)`',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.tsvector[]': {
+            id: 'pg_catalog.tsvector[]',
+            type: 'array',
+            description: 'A PG tsvector',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.uuid[]': {
+            id: 'pg_catalog.uuid[]',
+            type: 'array',
+            format: 'uuid',
+            description: 'A PG uuid',
+            items: {
+                type: 'string',
+            },
+        },
+        'pg_catalog.varchar[]': {
+            id: 'pg_catalog.varchar[]',
+            type: 'array',
+            description: 'A PG varchar',
+            items: {
+                type: 'string',
+            },
         },
         'public.mpaa_rating.enum': {
             id: 'public.mpaa_rating.enum',

@@ -15,41 +15,49 @@ import path from 'path';
 
 type TableOrView = TableDetails | ViewDetails;
 
-interface TableDefTransformer {
-    test: (tableDetails: TableOrView) => boolean;
+interface TableOrViewDefTransformer {
+    test: (tableOrViewDetails: TableOrView) => boolean;
     transform: (
-        tableColumn: TableOrView['columns'][number],
+        tableOrViewColumn: TableOrView['columns'][number],
     ) => Partial<ColumnDefProperties>;
 }
 
 interface GenerateProps {
     /**
-     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`
+     * The database connection string.
+     * e.g. `postgresql://user:password@localhost:5432/db`
      */
     connectionString: string;
     /**
-     * The schemas to include in generation e.g. `['public']`
+     * The schemas to include in generation.
+     * e.g. `['public']`
      */
     includeSchemas: string[];
     /**
-     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL
+     * The default schema to use.
+     * e.g. `public`.
+     * This is similar to the `search_path` in PostgreSQL.
      */
     defaultSchema: string;
     /**
-     * The tables to include in generation e.g. `['users']`
+     * The tables and/or views to include in generation.
+     * e.g. `['users', 'users_list']`
      */
-    includeTables?: string[];
+    includeTablesAndViews?: string[];
     /**
-     * Custom transformers that can be used to modify/extend
-     * the default generation data for the applicable table columns
+     * Custom transformers that can be used to
+     * modify/extend the default generation data
+     * for the applicable table/view columns.
      */
-    tableDefTransformers?: Array<TableDefTransformer>;
+    tableOrViewDefTransformers?: Array<TableOrViewDefTransformer>;
     /**
-     * The output directory for the generated files e.g. `src/generated`
+     * The output directory for the generated files.
+     * e.g. `src/generated`
      */
     outDir: string;
     /**
-     * A function to format the generated files, usually Prettier
+     * A function to format the generated files,
+     * usually Prettier.
      */
     formatter?: (str: string) => Promise<string>;
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
@@ -59,8 +67,8 @@ export async function generate({
     connectionString,
     includeSchemas,
     defaultSchema,
-    includeTables = [],
-    tableDefTransformers = [],
+    includeTablesAndViews = [],
+    tableOrViewDefTransformers = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -68,6 +76,7 @@ export async function generate({
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
+
     const { stderr } = process;
 
     // Step 1: Use pg-extract-schema to get the schema.
@@ -80,14 +89,14 @@ export async function generate({
             resolveViews: false,
             onProgressStart: (total) => {
                 stderr.write(
-                    `⏱️  Extracting ${total} types, this may take a while`,
+                    `⏱️  Extracting ${total} types, this may take a while...`,
                 );
                 stderr.write('\n');
             },
             onProgress: () => {
                 stderr.write('.');
             },
-            onProgressEnd: () => console.log('✅ Done extracting types.'),
+            onProgressEnd: () => console.log('✅ Done extracting types!'),
         },
     );
 
@@ -98,8 +107,8 @@ export async function generate({
     // Step 2: Convert the pg-extract-schema schema to a JSON Schema.
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
-        includeTables,
-        tableDefTransformers,
+        includeTablesAndViews,
+        tableOrViewDefTransformers,
     });
 
     /**
@@ -149,12 +158,15 @@ export async function generate({
     };
 }
 
-function createTypeDefId(type: {
-    fullName: string;
-    kind: TableColumnType['kind'];
-}) {
+function createTypeDefId(
+    type: {
+        fullName: string;
+        kind: TableColumnType['kind'];
+    },
+    expandedType?: string,
+) {
     if (type.kind === 'base') {
-        return type.fullName;
+        return expandedType ?? type.fullName;
     }
 
     return `${type.fullName}.${type.kind}`;
@@ -170,7 +182,7 @@ function createTableDefId(type: TableOrView, defaultSchema: string) {
 
 function createTableJsonSchema(
     table: TableOrView,
-    tableDefTransformer?: TableDefTransformer,
+    tableOrViewDefTransformer?: TableOrViewDefTransformer,
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
@@ -180,7 +192,9 @@ function createTableJsonSchema(
         // In the future we should add support for composite types.
         const type = isComposite
             ? {}
-            : { $ref: `#/$defs/${createTypeDefId(column.type)}` };
+            : {
+                  $ref: `#/$defs/${createTypeDefId(column.type, column.expandedType)}`,
+              };
 
         acc[column.name] = {
             type: 'object',
@@ -214,7 +228,7 @@ function createTableJsonSchema(
                 // For each column, we want to identify if any override
                 // properties were passed, and replace them if so
                 // Otherwise, we generate the property as usual
-                ...tableDefTransformer?.transform(column),
+                ...tableOrViewDefTransformer?.transform(column),
             },
             required: [
                 'type',
@@ -257,15 +271,14 @@ function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
         defaultSchema,
-        includeTables,
-        tableDefTransformers,
+        includeTablesAndViews,
+        tableOrViewDefTransformers,
     }: {
         defaultSchema: string;
-        includeTables: string[];
-        tableDefTransformers: Array<TableDefTransformer>;
+        includeTablesAndViews: string[];
+        tableOrViewDefTransformers: Array<TableOrViewDefTransformer>;
     },
 ): JSONSchema {
-    // Check if a list of tables is passed, and if so, use as filter
     const allTables: TableOrView[] = Object.values(schemas).flatMap(
         (schema) => schema.tables,
     );
@@ -273,13 +286,15 @@ function createRootJsonSchema(
         (schema) => schema.views,
     );
 
-    const tablesAndViews: TableOrView[] = allTables.concat(allViews);
+    // Combine table and views
+    const allTablesAndViews: TableOrView[] = allTables.concat(allViews);
 
-    const tables =
-        includeTables.length === 0
-            ? tablesAndViews
-            : tablesAndViews.filter((table) =>
-                  includeTables.includes(table.name),
+    // Check if a list of tables/views is passed, and if so, use as filter
+    const tablesAndViews =
+        includeTablesAndViews.length === 0
+            ? allTablesAndViews
+            : allTablesAndViews.filter((tableOrView) =>
+                  includeTablesAndViews.includes(tableOrView.name),
               );
 
     const enums = Object.values(schemas).flatMap((schema) => {
@@ -294,22 +309,29 @@ function createRootJsonSchema(
         $schema: 'https://json-schema.org/draft/2020-12/schema',
         type: 'object',
         description: "Your database's schema",
-        properties: tables
-            .map((table) => {
+        properties: tablesAndViews
+            .map((tableOrView) => {
                 return {
-                    [fullTableName(table, defaultSchema)]: {
-                        $ref: `#/$defs/${createTableDefId(table, defaultSchema)}`,
+                    [fullTableName(tableOrView, defaultSchema)]: {
+                        $ref: `#/$defs/${createTableDefId(tableOrView, defaultSchema)}`,
                     },
                 };
             })
             .reduce((acc, table) => {
                 return { ...acc, ...table };
             }, {}),
-        required: tables.map((table) => fullTableName(table, defaultSchema)),
+        required: tablesAndViews.map((table) =>
+            fullTableName(table, defaultSchema),
+        ),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(tables, defaultSchema, tableDefTransformers),
+            ...createTableDefs(
+                tablesAndViews,
+                defaultSchema,
+                tableOrViewDefTransformers,
+            ),
             ...createWellKnownDefs(),
+            ...createArrayWellKnownDefs(createWellKnownDefs()),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
         },
@@ -327,18 +349,19 @@ function fullTableName(table: TableOrView, defaultSchema: string) {
 function createTableDefs(
     tables: TableOrView[],
     defaultSchema: string,
-    tableDefTransformers: Array<TableDefTransformer>,
+    tableOrViewDefTransformers: Array<TableOrViewDefTransformer>,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        const tableDefTransformer = tableDefTransformers.find(
-            (tableDefTransformer) => tableDefTransformer.test(table),
+        const tableOrViewDefTransformer = tableOrViewDefTransformers.find(
+            (tableOrViewDefTransformer) =>
+                tableOrViewDefTransformer.test(table),
         );
 
         acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
             table,
-            tableDefTransformer,
+            tableOrViewDefTransformer,
         );
 
         return acc;
@@ -413,46 +436,20 @@ function domainType(
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
-        'pg_catalog.text': {
-            id: 'pg_catalog.text',
-            type: 'string',
-            description: 'A PG text',
-        },
-        'pg_catalog.varchar': {
-            id: 'pg_catalog.varchar',
-            type: 'string',
-            description: 'A PG varchar',
-        },
         'pg_catalog.bool': {
             id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
         },
-        'pg_catalog.time': {
-            id: 'pg_catalog.time',
+        'pg_catalog.bpchar': {
+            id: 'pg_catalog.bpchar',
             type: 'string',
-            format: 'time',
-            description: [
-                'A PG time.',
-                'Note that values of the PG time type,',
-                'are returned as ISO 8601 strings from the database.',
-                'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript',
-            ].join('\n'),
+            description: 'A PG bpchar',
         },
-        'pg_catalog.timetz': {
-            id: 'pg_catalog.timetz',
+        'pg_catalog.bytea': {
+            id: 'pg_catalog.bytea',
             type: 'string',
-            format: 'time',
-            description: [
-                'A PG timetz.',
-                'Note that values of the PG timetz type,',
-                'are returned as ISO 8601 strings from the database.',
-                'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript.',
-                'To convert the string into a `Date` object,',
-                'use `new Date(timeString)` or `Date.parse(timeString)`',
-            ].join('\n'),
+            description: 'A PG bytea',
         },
         'pg_catalog.date': {
             id: 'pg_catalog.date',
@@ -466,6 +463,75 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'accurately processed in JavaScript/TypeScript.',
                 'To convert the string into a `Date` object,',
                 'use `new Date(dateString)` or `Date.parse(dateString)`',
+            ].join('\n'),
+        },
+        'pg_catalog.float4': {
+            id: 'pg_catalog.float4',
+            type: 'number',
+            description: 'A PG float4',
+        },
+        'pg_catalog.float8': {
+            id: 'pg_catalog.float8',
+            type: 'number',
+            description: 'A PG float8',
+        },
+        'pg_catalog.int2': {
+            id: 'pg_catalog.int2',
+            type: 'integer',
+            minimum: -32768,
+            maximum: 32767,
+            description: 'A PG int2',
+        },
+        'pg_catalog.int4': {
+            id: 'pg_catalog.int4',
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+        },
+        'pg_catalog.int8': {
+            id: 'pg_catalog.int8',
+            type: 'integer',
+            minimum: -9223372036854775808,
+            maximum: 9223372036854775807,
+            description: 'A PG int8',
+        },
+        'pg_catalog.json': {
+            id: 'pg_catalog.json',
+            type: 'object',
+            description: 'A PG json',
+        },
+        'pg_catalog.jsonb': {
+            id: 'pg_catalog.jsonb',
+            type: 'object',
+            description: 'A PG jsonb',
+        },
+        'pg_catalog.numeric': {
+            id: 'pg_catalog.numeric',
+            type: 'string',
+            description: [
+                'A PG numeric.',
+                'Note that values of the PG numeric type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
+        },
+        'pg_catalog.text': {
+            id: 'pg_catalog.text',
+            type: 'string',
+            description: 'A PG text',
+        },
+        'pg_catalog.time': {
+            id: 'pg_catalog.time',
+            type: 'string',
+            format: 'time',
+            description: [
+                'A PG time.',
+                'Note that values of the PG time type,',
+                'are returned as ISO 8601 strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
             ].join('\n'),
         },
         'pg_catalog.timestamp': {
@@ -496,62 +562,24 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'use `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
             ].join('\n'),
         },
-        'pg_catalog.numeric': {
-            id: 'pg_catalog.numeric',
+        'pg_catalog.timetz': {
+            id: 'pg_catalog.timetz',
             type: 'string',
+            format: 'time',
             description: [
-                'A PG numeric.',
-                'Note that values of the PG numeric type,',
-                'are returned as strings from the database.',
+                'A PG timetz.',
+                'Note that values of the PG timetz type,',
+                'are returned as ISO 8601 strings from the database.',
                 'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript',
+                'accurately processed in JavaScript/TypeScript.',
+                'To convert the string into a `Date` object,',
+                'use `new Date(timeString)` or `Date.parse(timeString)`',
             ].join('\n'),
-        },
-        'pg_catalog.int2': {
-            id: 'pg_catalog.int2',
-            type: 'integer',
-            minimum: -32768,
-            maximum: 32767,
-            description: 'A PG int2',
-        },
-        'pg_catalog.int4': {
-            id: 'pg_catalog.int4',
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
-        'pg_catalog.int8': {
-            id: 'pg_catalog.int8',
-            type: 'integer',
-            minimum: -9223372036854775808,
-            maximum: 9223372036854775807,
-            description: 'A PG int8',
-        },
-        'pg_catalog.float4': {
-            id: 'pg_catalog.float4',
-            type: 'number',
-            description: 'A PG float4',
-        },
-        'pg_catalog.float8': {
-            id: 'pg_catalog.float8',
-            type: 'number',
-            description: 'A PG float8',
         },
         'pg_catalog.tsvector': {
             id: 'pg_catalog.tsvector',
             type: 'string',
             description: 'A PG tsvector',
-        },
-        'pg_catalog.bpchar': {
-            id: 'pg_catalog.bpchar',
-            type: 'string',
-            description: 'A PG bpchar',
-        },
-        'pg_catalog.bytea': {
-            id: 'pg_catalog.bytea',
-            type: 'string',
-            description: 'A PG bytea',
         },
         'pg_catalog.uuid': {
             id: 'pg_catalog.uuid',
@@ -559,15 +587,27 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             format: 'uuid',
             description: 'A PG uuid',
         },
-        'pg_catalog.json': {
-            id: 'pg_catalog.json',
-            type: 'object',
-            description: 'A PG json',
-        },
-        'pg_catalog.jsonb': {
-            id: 'pg_catalog.jsonb',
-            type: 'object',
-            description: 'A PG jsonb',
+        'pg_catalog.varchar': {
+            id: 'pg_catalog.varchar',
+            type: 'string',
+            description: 'A PG varchar',
         },
     };
+}
+
+function createArrayWellKnownDefs(
+    wellKnownDefs: Record<string, JSONSchema>,
+): Record<string, JSONSchema> {
+    const defs: Record<string, JSONSchema> = {};
+
+    for (const [key, schemaDef] of Object.entries(wellKnownDefs)) {
+        defs[key + '[]'] = {
+            ...schemaDef,
+            id: key + '[]',
+            type: 'array',
+            items: { type: schemaDef.type },
+        };
+    }
+
+    return defs;
 }

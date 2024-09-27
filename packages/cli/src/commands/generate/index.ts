@@ -1,6 +1,6 @@
 import { generate } from '@synthql/introspect';
 import { CliConfig } from '../../types/CliConfig';
-import { createTableDefTransformers } from '../../validators/createTableDefTransformers';
+import { createTableOrViewDefTransformers } from '../../validators/createTableOrViewDefTransformers';
 
 interface GenerateSchemaOptions extends CliConfig {
     connectionString: string;
@@ -18,8 +18,9 @@ export const generateSchema = async ({
         defaultSchema,
         connectionString,
         includeSchemas: schemas,
-        includeTables: tables,
-        tableDefTransformers: createTableDefTransformers(schemaDefOverrides),
+        includeTablesAndViews: tables,
+        tableOrViewDefTransformers:
+            createTableOrViewDefTransformers(schemaDefOverrides),
         outDir: out,
     });
 };

@@ -18,6 +18,9 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
             format?: string;
             additionalProperties?: boolean;
             title?: string;
+            items?: {
+                type: string;
+            };
             tsType?: string;
             minimum?: number;
             maximum?: number;
@@ -65,6 +68,9 @@ interface ColumnDefTypeDef {
     type: string;
     title?: string;
     description?: string;
+    items?: {
+        type: string;
+    };
     tsType?: string;
     minimum?: number;
     maximum?: number;
@@ -78,6 +84,9 @@ interface ColumnDefPropertyDef {
     id?: string;
     description?: string;
     title?: string;
+    items?: {
+        type: string;
+    };
     tsType?: string;
     minimum?: number;
     maximum?: number;

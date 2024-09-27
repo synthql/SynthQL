@@ -58,6 +58,10 @@ export type PgCatalogNumeric = string;
  */
 export type PublicMpaaRatingEnum = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 /**
+ * A PG text
+ */
+export type PgCatalogText1 = string[];
+/**
  * A PG tsvector
  */
 export type PgCatalogTsvector = string;
@@ -698,7 +702,7 @@ export interface TableFilm {
          * - Generated: NEVER
          */
         special_features: {
-            type: PgCatalogText;
+            type: PgCatalogText1;
             selectable: true;
             includable: true;
             whereable: true;
