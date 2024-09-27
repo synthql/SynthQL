@@ -24,12 +24,12 @@ Views turn out to be tremendously useful in SynthQL as they can surmount any lim
 If you have some query that you can't express with SynthQL, you can first express it as as SQL view, add that view to the `synthql.config.json`, and query it as if it were a table.
 There is one problem with views: all the columns are nullable.
 
-# Proposed solution: sampled, runtime validation of QueryResponse objects
-
+# Proposed solution: sampled, runtime validation of `QueryResult` objects
 The idea is to validate a percentage of all response rows based on a JSON Schema derived from the Query instance.
 
 ## How does sampling work?
 When a QueryEngine is constructed, we can pass a number indicating how many rows should be validated.
+
 ```tsx
 // for backend validation
 new QueryEngine({
@@ -54,6 +54,7 @@ for (const row of rows) {
 
 ## What do we validate against?
 We start by creating a function that given a query, and the DB's schema, returns the JSON Schema for the result of that query.
+
 ```tsx
 function getQueryResultSchema(query: AnyQuery, schema:Schema): JSONSchema
 ```
@@ -62,9 +63,7 @@ This function should be quite straightforward to build.
 ## Where should we run validation?
 There's two possibilities: we either run it in the backend, or in the frontend.
 
-I think we should run it in the frontend. The reason being that the backend could in theory have a schema that is correct, but the frontend has a different schema, in which case you would get no validation errors. 
-
-This is not a theoretical case, this can happen if the frontend is on an old version. We often have cases in Luminovo where the frontend is running a version from several weeks ago.
+I think we should run it in the frontend. The reason being that the backend could in theory have a schema that is correct with respect to PG, but incompatible with the frontend's schema, in which case you would get no validation errors. The backend would think that everything is fine, but the frontend would start breaking. This is not a theoretical case, this can happen if the frontend is running an old version. We often have cases in Luminovo where the frontend is running a version from several weeks ago.
 
 # Putting it all together
 
@@ -98,4 +97,26 @@ const validateQueryResult = createValidator({
 const queryEngine = new QueryEngine()
 const queryResult = queryEngine.executeAndWait(query)
 validateQueryResult(queryResult)
+```
+
+# API changes
+
+In `@synthql/react`:
+
+```tsx
+// Add a configurable sample rate
+// Ideally this should be close to 100% in dev and close to 0% in prod
+<SynthQLProvider runtimeValidationSampleRate={0.05} ... />
+```
+
+In `@synthql/queries`:
+
+```tsx
+type QueryValidator = (queryResult:unknown) => true
+
+function createQueryValidator(props:{ 
+    query:AnyQuery, 
+    sampleRate:number, 
+    schema: Schema
+}): QueryValidator
 ```
