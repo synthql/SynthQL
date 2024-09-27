@@ -11,14 +11,14 @@ export const generateSchema = async ({
     out,
     defaultSchema,
     schemas = [],
-    tables = [],
+    tablesAndViews = [],
     schemaDefOverrides,
 }: GenerateSchemaOptions) => {
     return await generate({
         defaultSchema,
         connectionString,
         includeSchemas: schemas,
-        includeTablesAndViews: tables,
+        includeTablesAndViews: tablesAndViews,
         tableOrViewDefTransformers:
             createTableOrViewDefTransformers(schemaDefOverrides),
         outDir: out,

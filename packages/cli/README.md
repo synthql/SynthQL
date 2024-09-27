@@ -14,11 +14,13 @@ synthql generate \
     # The path where types will be generated to
     --out=src \
     # The default schema to use
+    # Option alias: `--schema`
     --defaultSchema=public \
     # The schemas to include. Separate every schema name with a space
     --schemas public pg_catalog \
-    # The tables to include. Separate every table name with a space
-    --tables actor customer \
+    # The tables and/or views to include. Separate every table name with a space
+    # Option alias: `--tables`
+    --tablesOrViews actor customer customer_actor \
     # The path to a JSON config file where you can set the values above
     # You can find a JSON schema you can use to validate your config file at:
     # https://synthql.dev/schemas/synthql.config.json

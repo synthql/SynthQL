@@ -5,7 +5,7 @@ export const config: CliConfig = {
     out: 'src/generated/synthql',
     defaultSchema: 'public',
     schemas: ['public'],
-    tables: ['actor', 'customer'],
+    tablesAndViews: ['actor', 'customer'],
     schemaDefOverrides: {
         'public.actor': {
             first_name: {

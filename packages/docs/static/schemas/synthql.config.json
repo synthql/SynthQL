@@ -25,9 +25,9 @@
             },
             "nullable": true
         },
-        "tables": {
+        "tablesAndViews": {
             "type": "array",
-            "description": "The tables to include in generation\ne.g. `[\"users\", \"accounts\"]`",
+            "description": "The tables/views to include in generation\ne.g. `[\"users\", \"accounts\", \"user_account\"]`",
             "items": {
                 "type": "string"
             },
@@ -35,15 +35,15 @@
         },
         "schemaDefOverrides": {
             "$schema": "http://json-schema.org/draft-07/schema",
-            "description": "The table definitions for any tables you want\nto be overriden during the schema generation.\ne.g.:\n\"schemaDefOverrides\": {\n            \"public.actor\": {\n                \"name\": {\n                    \"includable\": { \"type\": \"boolean\", \"const\": false }\n                },\n            },\n            \"accounts.customer\": {\n                \"quantity\": {\n                    \"type\": {\n                        \"type\": \"object\",\n                        \"id\": \"QuantityUnit\",\n                        \"properties\": {\n                            \"unit\": {\n                                \"type\": \"string\",\n                                \"description\": \"A unit string, property in JSONB object\"\n                            }\n                        },\n                        \"description\": \"A QuantityUnit object, casted from a JSONB column\"\n                    }\n                },\n            },\n        }",
+            "description": "The table definitions for any tables/views you want\nto be overriden during the schema generation.\ne.g.:\n\"schemaDefOverrides\": {\n            \"public.actor\": {\n                \"name\": {\n                    \"includable\": { \"type\": \"boolean\", \"const\": false }\n                },\n            },\n            \"accounts.customer\": {\n                \"quantity\": {\n                    \"type\": {\n                        \"type\": \"object\",\n                        \"id\": \"QuantityUnit\",\n                        \"properties\": {\n                            \"unit\": {\n                                \"type\": \"string\",\n                                \"description\": \"A unit string, property in JSONB object\"\n                            }\n                        },\n                        \"description\": \"A QuantityUnit object, casted from a JSONB column\"\n                    }\n                },\n            },\n        }",
             "type": "object",
             "patternProperties": {
                 "^[^.]+.[^.]+$": {
                     "type": "object",
-                    "description": "The column definitions for each table to be overriden.\nThe key for each table should be the qualified name for the table,\nin the form `${schemaName}.${tableName}` e.g `public.users`",
+                    "description": "The column definitions for each table/view to be overriden.\nThe key for each table should be the qualified name for the table/view,\nin the form `${schemaName}.${tableOrViewName}`.\ne.g `public.users`",
                     "patternProperties": {
                         "^[^.]+$": {
-                            "description": "The attribute definitions for each column to be overriden.\nThe key for each column should be the name of the column,\nin the form `${columnName}` e.g `first_name`",
+                            "description": "The attribute definitions for each column to be overriden.\nThe key for each column should be the name of the column,\nin the form `${columnName}`.\ne.g `first_name`",
                             "type": "object",
                             "properties": {
                                 "type": {

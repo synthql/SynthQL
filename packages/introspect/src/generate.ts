@@ -41,7 +41,7 @@ interface GenerateProps {
     defaultSchema: string;
     /**
      * The tables and/or views to include in generation.
-     * e.g. `['users', 'users_list']`
+     * e.g. `['users', 'accounts', 'user_account']`
      */
     includeTablesAndViews?: string[];
     /**
