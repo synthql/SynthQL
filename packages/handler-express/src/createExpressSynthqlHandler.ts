@@ -1,5 +1,10 @@
-import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
 import type { Request, Response, RequestHandler } from 'express';
+import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
+import {
+    isRegisteredQueryRequest,
+    isRegularQueryRequest,
+    Query,
+} from '@synthql/queries';
 
 /**
  * Create an Express request handler that can handle SynthQL requests.
@@ -9,6 +14,7 @@ import type { Request, Response, RequestHandler } from 'express';
  * ```typescript
  * import express from 'express';
  * import { createExpressSynthqlHandler } from '@synthql/handler-express';
+ * import { queryEngine } from './queryEngine';
  *
  * const app = express();
  * app.use(createExpressSynthqlHandler(queryEngine));
@@ -37,6 +43,7 @@ export function createExpressSynthqlHandler<DB>(
                         error: e.message,
                     }),
                 );
+
                 res.end();
             } else {
                 // Let another layer handle the error
@@ -52,7 +59,7 @@ async function executeSynthqlRequest<DB>(
     res: Response,
 ) {
     // First try to parse the request body as JSON
-    const { query, returnLastOnly } = await tryParseRequest(req);
+    const { body, headers } = await tryParseRequest(req);
 
     // We don't do this yet, but eventually we'll want to validate the request
     // const validatedQuery = await tryValidateSynthqlQuery(query);
@@ -60,43 +67,62 @@ async function executeSynthqlRequest<DB>(
     // Execute the query, but just to get the initial generator
     const resultGenerator = await tryExecuteQuery<DB>(
         queryEngine,
-        query,
-        returnLastOnly,
+        body,
+        headers.returnLastOnly,
     );
 
     // Now that we have the generator, we want to iterate over the items
     // and depending on `returnLastOnly`, we will write the status code
     // either before, or after iteration
-    await writeBody(res, query, resultGenerator, returnLastOnly);
+    await writeResponseBody(res, body, resultGenerator, headers.returnLastOnly);
 
+    // End response stream
     res.end();
 }
 
 async function tryParseRequest(req: Request) {
-    const body = req.body;
-    const returnLastOnly = req.headers['x-return-last-only'] === 'true';
-
     try {
-        const query = JSON.parse(body);
-
-        return { query, returnLastOnly };
+        return {
+            body:
+                typeof req.body === 'string' ? JSON.parse(req.body) : req.body,
+            headers: {
+                ...req.headers,
+                returnLastOnly: req.headers['x-return-last-only'] === 'true',
+            },
+        };
     } catch (e) {
         throw SynthqlError.createJsonParsingError({
             error: e,
-            json: body,
+            json: req.body,
         });
     }
 }
 
 async function tryExecuteQuery<DB>(
     queryEngine: QueryEngine<DB>,
-    query: any,
+    queryOrBody: any,
     returnLastOnly: boolean,
 ) {
-    return queryEngine.execute(query, { returnLastOnly });
+    if (isRegisteredQueryRequest(queryOrBody)) {
+        return queryEngine.executeRegisteredQuery(
+            {
+                queryId: queryOrBody.queryId,
+                params: queryOrBody.params,
+            },
+            {
+                returnLastOnly,
+            },
+        );
+    } else if (isRegularQueryRequest(queryOrBody)) {
+        return queryEngine.execute(queryOrBody.query as Query<DB>, {
+            returnLastOnly,
+        });
+    } else {
+        return queryEngine.execute(queryOrBody, { returnLastOnly });
+    }
 }
 
-async function writeBody(
+async function writeResponseBody(
     res: Response,
     query: any,
     generator: AsyncGenerator<any>,
@@ -126,7 +152,7 @@ async function writeBody(
             // First, wrap the error in a SynthqlError to capture
             // the fact that it happened during streaming
 
-            // The `e` can be of any type, but in case its an error,
+            // The `e` can be of any type, but in case its an error
             // we want to preserve the stack trace and any other
             // information that might be useful for debugging
 

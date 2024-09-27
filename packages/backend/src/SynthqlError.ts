@@ -19,6 +19,21 @@ export class SynthqlError extends Error {
         Error.captureStackTrace(this, SynthqlError);
     }
 
+    static createCardinalityError() {
+        const type = 'CardinalityError';
+
+        // Two ways this error can happen:
+        // 1. The top level query returned no results.
+        // 2. A subquery returned no results.
+
+        const lines = [
+            'A query with a cardinality of `one` returned no results!',
+            'Hint: are you using .one() when you should be using .maybe()?',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'), 404);
+    }
+
     static createDatabaseConnectionError({
         error,
     }: {
@@ -29,10 +44,10 @@ export class SynthqlError extends Error {
         const lines = [
             'Database connection error!',
             '',
-            'Failure to establish a connection to your database.',
+            'Failure to establish a connection to your database',
             '',
-            'Check your connection string, and make sure your database',
-            'is up and can accept new connections.',
+            'Check your connection string, and make sure your',
+            'database is up and can accept new connections',
             '',
             'Here is the underlying error message:',
             '',
@@ -41,18 +56,28 @@ export class SynthqlError extends Error {
 
         return new SynthqlError(error, type, lines.join('\n'));
     }
-    static createSqlExecutionError({
+
+    static createJsonParsingError({
         error,
-        props,
+        json,
     }: {
         error: any;
-        props: SqlExecutionErrorProps;
+        json: string;
     }): SynthqlError {
-        const type = 'SqlExecutionError';
+        const type = 'JsonParsingError';
 
-        const message = composeMessage(error, props);
+        const lines = [
+            'JSON parsing error!',
+            '',
+            'Expected a JSON string but got this instead:',
+            '',
+            json,
+            '',
+            'Check your query and make sure your stringifier',
+            'function/method is behaving as expected',
+        ];
 
-        return new SynthqlError(error, type, message);
+        return new SynthqlError(error, type, lines.join('\n'));
     }
 
     static createPrependSqlExecutionError({
@@ -76,6 +101,86 @@ export class SynthqlError extends Error {
         return new SynthqlError(error, type, lines.join('\n'));
     }
 
+    static createQueryAlreadyRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryAlreadyRegisteredError';
+
+        const lines = [
+            'Query already registered!',
+            '',
+            'A query already exists in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryMissingHashError({ query }: { query: AnyQuery }) {
+        const type = 'QueryMissingHashError';
+
+        const lines = [
+            'Query missing hash!',
+            '',
+            'The query:',
+            '',
+            JSON.stringify(query, null, 2),
+            '',
+            'is missing its `hash` (i.e `query.hash`) property,',
+            ' which is used as the key when registering it',
+            'via QueryEngine.registerQueries()',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryNotRegisteredError({ queryId }: { queryId: string }) {
+        const type = 'QueryNotRegisteredError';
+
+        const lines = [
+            'Query not registered!',
+            '',
+            'No query found in the query store for the queryId:',
+            '',
+            JSON.stringify(queryId, null, 2),
+            '',
+            'Check and make sure the correct queryId',
+            '(i.e `query.hash`) is being passed',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
+    static createQueryParameterMissingValueError({
+        params,
+        paramIds,
+    }: {
+        params: Record<string, unknown>;
+        paramIds: string[];
+    }) {
+        const type = 'QueryParameterMissingValueError';
+
+        const lines = [
+            'Query parameter missing value!',
+            '',
+            'No value found for the parameter(s):',
+            '',
+            JSON.stringify(paramIds, null, 2),
+            '',
+            'in the `params` object:',
+            '',
+            JSON.stringify(params, null, 2),
+            '',
+            'Check and make sure the correct values for each',
+            'parameter is included in the `params` object',
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'));
+    }
+
     static createResponseStreamingError({
         error,
         query,
@@ -92,48 +197,27 @@ export class SynthqlError extends Error {
             '',
             JSON.stringify(query, null, 2),
             '',
-            'Check your query and make sure you have `read` access to all included',
-            'tables and columns, and have registered all queries via the QueryEngine',
+            'Check your query and make sure you',
+            'have `read` access to all included',
+            'tables and columns, and registered',
+            'all queries via the QueryEngine',
         ];
 
         return new SynthqlError(error, type, lines.join('\n'));
     }
 
-    static createJsonParsingError({
+    static createSqlExecutionError({
         error,
-        json,
+        props,
     }: {
         error: any;
-        json: string;
+        props: SqlExecutionErrorProps;
     }): SynthqlError {
-        const type = 'JsonParsingError';
+        const type = 'SqlExecutionError';
 
-        const lines = [
-            'JSON parsing error!',
-            '',
-            'Expected a JSON string but got this instead:',
-            '',
-            json,
-            '',
-            'Check your query and make sure your stringifying function is behaving as expected',
-        ];
+        const message = composeMessage(error, props);
 
-        return new SynthqlError(error, type, lines.join('\n'));
-    }
-
-    static createCardinalityError() {
-        const type = 'CardinalityError';
-
-        // Two ways this error can happen:
-        // 1. The top level query returned no results.
-        // 2. A subquery returned no results.
-
-        const lines = [
-            'A query with a cardinality of `one` returned no results!',
-            'Hint: are you using .one() when you should be using .maybe()?',
-        ];
-
-        return new SynthqlError(new Error(), type, lines.join('\n'), 404);
+        return new SynthqlError(error, type, message);
     }
 }
 
@@ -149,7 +233,7 @@ function printError(err: any): string {
 
 function composeMessage(err: any, props: SqlExecutionErrorProps): string {
     const lines: string[] = [
-        '# Error executing query',
+        '# Error executing query:',
         '',
         printError(err),
         '',

@@ -1,6 +1,11 @@
-import { ReadableStream } from 'stream/web';
 import { NextRequest, NextResponse } from 'next/server';
 import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
+import {
+    isRegisteredQueryRequest,
+    isRegularQueryRequest,
+    Query,
+} from '@synthql/queries';
+import { ReadableStream } from 'stream/web';
 
 export type NextSynthqlHandlerRequest = Pick<
     NextRequest,
@@ -10,6 +15,23 @@ export type NextSynthqlHandler = (
     req: NextSynthqlHandlerRequest,
 ) => Promise<NextResponse>;
 
+/**
+ * Create a Next request handler that can handle SynthQL requests.
+ *
+ * Usage:
+ *
+ * ```typescript
+ * import { createNextSynthqlHandler } from '@synthql/handler-next';
+ * import { queryEngine } from './queryEngine';
+ *
+ * const nextSynthqlRequestHandler = createNextSynthqlHandler(queryEngine);
+ *
+ * export async function POST(request: Request) {
+ *     return await nextSynthqlRequestHandler(request);
+ * }
+ * ```
+ *
+ */
 export function createNextSynthqlHandler<DB>(
     queryEngine: QueryEngine<DB>,
 ): NextSynthqlHandler {
@@ -46,7 +68,7 @@ async function executeSynthqlRequest<DB>(
     req: NextSynthqlHandlerRequest,
 ): Promise<NextResponse> {
     // First try to parse the request body as JSON
-    const { query, returnLastOnly } = await tryParseRequest(req);
+    const { body, headers } = await tryParseRequest(req);
 
     // We don't do this yet, but eventually we'll want to validate the request
     // const validatedQuery = await tryValidateSynthqlQuery(query);
@@ -54,25 +76,32 @@ async function executeSynthqlRequest<DB>(
     // Execute the query, but just to get the initial generator
     const resultGenerator = await tryExecuteQuery<DB>(
         queryEngine,
-        query,
-        returnLastOnly,
+        body,
+        headers.returnLastOnly,
     );
 
     // Now that we have the generator, we want to iterate over
     // the items and depending on `returnLastOnly`, we will
     // write the status code either before, or after iteration
-    return await writeBody(query, resultGenerator, returnLastOnly);
+    return await writeResponseBody(
+        body,
+        resultGenerator,
+        headers.returnLastOnly,
+    );
 }
 
 async function tryParseRequest(req: NextSynthqlHandlerRequest) {
     const body = await req.text();
     const requestHeaders = Object.fromEntries(req.headers);
-    const returnLastOnly = requestHeaders['x-return-last-only'] === 'true';
 
     try {
-        const query = JSON.parse(body);
-
-        return { query, returnLastOnly };
+        return {
+            body: JSON.parse(body),
+            headers: {
+                ...requestHeaders,
+                returnLastOnly: requestHeaders['x-return-last-only'] === 'true',
+            },
+        };
     } catch (e) {
         throw SynthqlError.createJsonParsingError({
             error: e,
@@ -83,13 +112,29 @@ async function tryParseRequest(req: NextSynthqlHandlerRequest) {
 
 async function tryExecuteQuery<DB>(
     queryEngine: QueryEngine<DB>,
-    query: any,
+    queryOrBody: any,
     returnLastOnly: boolean,
 ) {
-    return queryEngine.execute(query, { returnLastOnly });
+    if (isRegisteredQueryRequest(queryOrBody)) {
+        return queryEngine.executeRegisteredQuery(
+            {
+                queryId: queryOrBody.queryId,
+                params: queryOrBody.params,
+            },
+            {
+                returnLastOnly,
+            },
+        );
+    } else if (isRegularQueryRequest(queryOrBody)) {
+        return queryEngine.execute(queryOrBody.query as Query<DB>, {
+            returnLastOnly,
+        });
+    } else {
+        return queryEngine.execute(queryOrBody, { returnLastOnly });
+    }
 }
 
-async function writeBody(
+async function writeResponseBody(
     query: any,
     generator: AsyncGenerator<any>,
     returnLastOnly: boolean,
@@ -131,13 +176,13 @@ async function writeBody(
             // we want to preserve the stack trace and any other
             // information that might be useful for debugging
 
+            // We need to catch errors here and write them to the streaming response
+            // We can't throw them because that would break the stream
+
             const error = SynthqlError.createResponseStreamingError({
                 error: e,
                 query,
             });
-
-            // We need to catch errors here and write them to the streaming response
-            // We can't throw them because that would break the stream
 
             return new NextResponse(
                 JSON.stringify({

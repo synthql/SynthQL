@@ -1,6 +1,6 @@
 import { fc } from '@fast-check/vitest';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
-import { Schema } from '@synthql/queries';
+import { param, Schema } from '@synthql/queries';
 import { getTableDef } from '../getTableDef';
 import { getColumnDef } from '../getColumnDef';
 import { getColumnPgType } from '../getColumnPgType';
@@ -11,12 +11,14 @@ export function arbitraryWhereValue<DB>({
     tableName,
     columnName,
     validWhere,
+    parameterize,
 }: {
     schema: Schema<DB>;
     allTablesRowsMap: AllTablesRowsMap;
     tableName: string;
     columnName: string;
     validWhere: boolean;
+    parameterize: boolean;
 }): fc.Arbitrary<unknown> {
     const tableRows = allTablesRowsMap.get(tableName);
 
@@ -30,7 +32,9 @@ export function arbitraryWhereValue<DB>({
         const columnValuesFromSet = Array.from(new Set(columnValues));
 
         if (validWhere) {
-            return fc.constantFrom(...columnValuesFromSet);
+            return fc
+                .constantFrom(...columnValuesFromSet)
+                .map((value) => parameterizeValue(parameterize, value));
         } else {
             const tableDef = getTableDef(schema, tableName);
 
@@ -52,56 +56,65 @@ export function arbitraryWhereValue<DB>({
                         min: 1,
                         max: 32767,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.int4') {
                 return fc
                     .integer({
                         min: 1,
                         max: 2147483647,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.int8') {
                 return fc
                     .bigInt({
                         min: 2n,
                         max: 52n,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.numeric') {
                 return fc
                     .stringMatching(/^[0-9]{0,131072}\.[0-9]{1,16383}$/, {
                         size: 'xsmall',
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.bool') {
                 return fc
                     .boolean()
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.text') {
                 return fc
                     .string({
                         minLength: 1,
                         maxLength: 10,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.tsvector') {
                 return fc
                     .string({
                         minLength: 1,
                         maxLength: 10,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.bpchar') {
                 return fc
                     .string({
                         minLength: 1,
                         maxLength: 19,
                     })
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else if (columnPgType === 'pg_catalog.bytea') {
                 return fc
                     .constant(Buffer.from('pg_catalog.bytea', 'hex'))
-                    .filter((value) => !columnValuesFromSet.includes(value));
+                    .filter((value) => !columnValuesFromSet.includes(value))
+                    .map((value) => parameterizeValue(parameterize, value));
             } else {
                 return fc.constant(undefined);
             }
@@ -109,4 +122,11 @@ export function arbitraryWhereValue<DB>({
     } else {
         return fc.constant(undefined);
     }
+}
+
+function parameterizeValue<T>(
+    parameterize: boolean,
+    value: T,
+): T | ReturnType<typeof param> {
+    return parameterize ? param(value) : value;
 }

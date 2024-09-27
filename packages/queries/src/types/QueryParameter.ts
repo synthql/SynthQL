@@ -1,5 +1,7 @@
+export const SynthqlParameter = 'synthql::parameter';
+
 export type QueryParameter<TValue = unknown> = {
-    type: 'synthql::parameter';
-    id: string | number;
-    value: TValue;
+    type: typeof SynthqlParameter;
+    value: TValue | undefined;
+    id: string;
 };

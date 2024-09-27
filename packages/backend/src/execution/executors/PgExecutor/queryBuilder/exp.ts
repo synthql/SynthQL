@@ -1,4 +1,4 @@
-import { AnyDB } from '@synthql/queries';
+import { AnyDB, isQueryParameter } from '@synthql/queries';
 import { OPERATORS, UnaryOperator } from 'kysely';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';
@@ -105,16 +105,20 @@ type Exp =
 
 export function compileExp(exp: Exp): SqlBuilder {
     const builder = new SqlBuilder();
+
     if (typeof exp === 'string') {
         return builder.addColumnReference(exp);
     }
+
     switch (exp[0]) {
         case 'op': {
             const [_, op, ...exps] = exp;
+
             if (exp[1] === '= any') {
                 const [_, op, exp1, exp2] = exp;
                 return compileExp(eqAny(exp1, exp2));
             }
+
             if (exp[1] === 'not = any') {
                 const [_, op, exp1, exp2] = exp;
                 return compileExp(not(eqAny(exp1, exp2)));
@@ -180,6 +184,7 @@ export class SqlBuilder {
             // TODO: escape string
             return this.add(`'${value}'`).space();
         }
+
         if (Array.isArray(value)) {
             return this.openParen()
                 .addInterleaved(
@@ -188,6 +193,7 @@ export class SqlBuilder {
                 )
                 .closeParen();
         }
+
         return this.add(String(value)).space();
     }
 
@@ -221,27 +227,33 @@ export class SqlBuilder {
         if (builders.length === 0) {
             return this;
         }
+
         builders
             .flatMap((builder, i) => {
                 if (i === 0) {
                     return [builder];
                 }
+
                 return [separator.space(), builder];
             })
             .forEach((builder) => this.addBuilder(builder));
+
         return this;
     }
 
     addOperator(op: BinaryOperator) {
         const unknownOp = op as unknown;
+
         if (!OPERATORS.includes(op as any)) {
             throw new Error(`Invalid operator: ${op}`);
         }
+
         return this.add(op);
     }
 
     addFn(fn: Fn) {
         const [_, name, ...args] = fn;
+
         return this.add(name)
             .openParen()
             .addInterleaved(
@@ -253,12 +265,14 @@ export class SqlBuilder {
 
     addAs(as: As) {
         const [_, exp, alias] = as;
-        // TODO validate that alias is a valid alias
+
+        // TODO: validate that alias is a valid alias
         return this.addBuilder(compileExp(exp)).space().add(`as "${alias}" `);
     }
 
     addOp(op: Op) {
         const [_, opName, ...exps] = op;
+
         return this.openParen()
             .addInterleaved(
                 exps.map((exp) => compileExp(exp)),
@@ -298,15 +312,19 @@ export class SqlBuilder {
      */
     space() {
         const lastPart = this.parts[this.parts.length - 1];
+
         if (!lastPart) {
             return this.add(' ');
         }
+
         if (typeof lastPart !== 'string') {
             return this;
         }
+
         if (lastPart.endsWith(' ')) {
             return this;
         }
+
         return this.add(' ');
     }
 
@@ -319,6 +337,7 @@ export class SqlBuilder {
         for (const builder of builders) {
             this.addBuilder(builder);
         }
+
         return this;
     }
 
@@ -352,6 +371,7 @@ export class SqlBuilder {
         if (limit === undefined) {
             return this;
         }
+
         return this.add(`limit ${limit} `);
     }
 
@@ -368,6 +388,7 @@ export class SqlBuilder {
                     const own = cond.ownColumn.aliasQuoted();
                     const other = cond.otherColumn.aliasQuoted();
                     const op = cond.op;
+
                     return new SqlBuilder()
                         .add(own)
                         .space()
@@ -386,6 +407,7 @@ export class SqlBuilder {
         for (const join of sorted) {
             this.leftJoin(join);
         }
+
         return this;
     }
 
@@ -393,11 +415,13 @@ export class SqlBuilder {
         if (offset === undefined) {
             return this;
         }
+
         return this.add(`offset ${offset} `);
     }
 
     build() {
         const params: any[] = [];
+
         return {
             sql: this.parts
                 .map((part) => {
@@ -423,19 +447,57 @@ export class SqlBuilder {
         const expressions = Object.entries(where)
             .map(([column, op]): Exp | undefined => {
                 const quotedColumn = table.column(column).aliasQuoted();
+
                 if (op === null) {
                     return ['op', 'is', quotedColumn, ['const', null]];
                 }
+
                 if (isPrimitive(op)) {
                     const exp: Exp = ['op', '=', quotedColumn, ['param', op]];
                     return exp;
                 }
+
                 if (isRefOp(op)) {
                     return undefined;
                 }
+
+                if (isQueryParameter(op)) {
+                    assertPrimitive(
+                        op.value,
+                        `Expected value ${JSON.stringify(op.value)} to be a primitive in ${JSON.stringify(op)}`,
+                    );
+
+                    const exp: Exp = [
+                        'op',
+                        '=',
+                        quotedColumn,
+                        ['param', op.value],
+                    ];
+
+                    return exp;
+                }
+
                 if (typeof op === 'object' && Object.keys(op).length === 1) {
                     const [opName, value] = Object.entries(op)[0];
+
                     assertOp(opName);
+
+                    if (isQueryParameter(value)) {
+                        assertPrimitive(
+                            value.value,
+                            `Expected value ${JSON.stringify(value.value)} to be a primitive in ${JSON.stringify(op)}`,
+                        );
+
+                        const exp: Exp = [
+                            'op',
+                            opName,
+                            quotedColumn,
+                            ['param', value.value],
+                        ];
+
+                        return exp;
+                    }
+
                     assertPrimitive(
                         value,
                         `Expected value ${JSON.stringify(value)} to be a primitive in ${JSON.stringify(op)}`,
@@ -453,6 +515,7 @@ export class SqlBuilder {
         if (expressions.length === 0) {
             return this;
         }
+
         return this.addInterleaved(expressions, SqlBuilder.and()).space();
     }
 
@@ -462,9 +525,11 @@ export class SqlBuilder {
         const expressions = where
             .map((w) => new SqlBuilder().expressionFromWhere(w))
             .filter((b) => !b.isEmpty());
+
         if (expressions.length === 0) {
             return this;
         }
+
         return this.add('where ').addInterleaved(expressions, SqlBuilder.and());
     }
 }

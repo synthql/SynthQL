@@ -9,4 +9,5 @@ export const pool = new Pool({
 export const queryEngine = new QueryEngine<DB>({
     pool,
     schema: 'public',
+    dangerouslyAllowUnregisteredQueries: true,
 });

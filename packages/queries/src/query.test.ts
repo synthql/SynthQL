@@ -1,5 +1,5 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col } from '.';
+import { Query, QueryResult, Table, col, param } from '.';
 import { DB, from } from './generated';
 
 describe('queries', () => {
@@ -8,17 +8,6 @@ describe('queries', () => {
     ): QueryResult<DB, TQuery> {
         return {} as any;
     }
-
-    test('Find one actor with `name()`', () => {
-        const q = from('actor')
-            .columns('actor_id', 'first_name')
-            .name('findActor')
-            .one();
-
-        const result = fakeQueryResult(q);
-
-        result satisfies { actor_id: number; first_name: string };
-    });
 
     test('Find one actor with `columns()`', () => {
         const q = from('actor').columns('actor_id', 'first_name').one();
@@ -52,6 +41,31 @@ describe('queries', () => {
             last_name: string;
             last_update: string;
         };
+    });
+
+    test('Find one actor with `name()`', () => {
+        const q = from('actor')
+            .columns('actor_id', 'first_name')
+            .name('findActor')
+            .one();
+
+        const result = fakeQueryResult(q);
+
+        result satisfies { actor_id: number; first_name: string };
+    });
+
+    test('Find one actor with `param()`', () => {
+        const q = from('actor')
+            .columns('actor_id', 'first_name')
+            .where({
+                actor_id: param(),
+                first_name: param(),
+            })
+            .one();
+
+        const result = fakeQueryResult(q);
+
+        result satisfies { actor_id: number; first_name: string };
     });
 
     test('Find many actors', () => {

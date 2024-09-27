@@ -304,7 +304,7 @@ describe('createNextSynthqlHandler', () => {
         expect(async () => await handler(newReq)).not.toThrow();
     });
 
-    // TODO: FIX:This test does not yet accurately test for the response streaming error
+    // TODO: FIX: This test does not yet accurately test for the response streaming error
     test.skip(`Well-formed but invalid query object returns expected response streaming error`, async () => {
         const q = fromWithVirtualTables('film_rating')
             .columns('film_id', 'rating')

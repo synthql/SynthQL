@@ -13,6 +13,7 @@ interface ArbitraryQuery<DB> {
     allTablesRowsMap: AllTablesRowsMap;
     cardinality: Cardinality;
     validWhere: boolean;
+    parameterize: boolean;
 }
 
 export function arbitraryQuery<DB>({
@@ -20,6 +21,7 @@ export function arbitraryQuery<DB>({
     allTablesRowsMap,
     cardinality,
     validWhere,
+    parameterize,
 }: ArbitraryQuery<DB>): fc.Arbitrary<AnyQuery> {
     return fc
         .constantFrom(
@@ -36,6 +38,7 @@ export function arbitraryQuery<DB>({
                     allTablesRowsMap,
                     tableName,
                     validWhere,
+                    parameterize,
                 }),
                 limit: arbitraryLimit(),
                 cardinality: arbitraryCardinality(cardinality),
