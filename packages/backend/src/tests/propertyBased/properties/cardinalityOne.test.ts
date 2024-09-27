@@ -1,11 +1,10 @@
 import { it } from '@fast-check/vitest';
 import { describe, expect } from 'vitest';
-import { Query } from '@synthql/queries';
+import { SynthqlError } from '../../../SynthqlError';
 import { DB, schema } from '../../generated';
 import { pool, queryEngine } from '../../queryEngine';
 import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
-import { SynthqlError } from '../../../SynthqlError';
 
 describe('cardinalityOne', async () => {
     const validWhereArbitraryQuery = arbitraryQuery<DB>({
@@ -25,7 +24,7 @@ describe('cardinalityOne', async () => {
     it.prop([validWhereArbitraryQuery], { verbose: 2 })(
         'Valid where query should return a non-null, non-array, TS object result',
         async (query) => {
-            const typedQuery = query as Query<DB>;
+            const typedQuery = query;
 
             const queryResult = await queryEngine.executeAndWait(typedQuery);
 
@@ -53,7 +52,7 @@ describe('cardinalityOne', async () => {
         'Invalid where query should throw expected cardinality error',
         async (query) => {
             try {
-                const typedQuery = query as Query<DB>;
+                const typedQuery = query;
                 await queryEngine.executeAndWait(typedQuery);
             } catch (error) {
                 expect(error).toBeInstanceOf(SynthqlError);

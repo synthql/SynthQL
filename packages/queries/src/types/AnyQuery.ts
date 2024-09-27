@@ -1,4 +1,3 @@
-import { Table } from './Table';
 import { Query } from './types';
 
 export type AnyTableDef = {
@@ -15,5 +14,5 @@ export type AnyTableDef = {
     >;
 };
 export type AnyDB = Record<string, AnyTableDef>;
-export type AnyTable = Table<AnyDB>;
-export type AnyQuery = Query<AnyDB, AnyTable>;
+export type AnyTable = string;
+export type AnyQuery = Query;

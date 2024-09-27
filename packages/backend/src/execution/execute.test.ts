@@ -217,7 +217,7 @@ describe('execute', () => {
             .one();
 
         const result = await collectLast(
-            execute<DbWithVirtualTables, typeof q>(q, {
+            execute(q, {
                 executors: [new QueryProviderExecutor([actorProvider])],
                 defaultSchema,
             }),
@@ -247,7 +247,7 @@ describe('execute', () => {
         const q = findFilmWithRating(1);
 
         const result = await collectLast(
-            execute<DbWithVirtualTables, typeof q>(q, {
+            execute(q, {
                 executors: [
                     new QueryProviderExecutor([
                         filmProvider,
@@ -269,7 +269,7 @@ describe('execute', () => {
         const q2 = findFilmWithRating(2);
 
         const result2 = await collectLast(
-            execute<DbWithVirtualTables, typeof q2>(q2, {
+            execute(q2, {
                 executors: [
                     new QueryProviderExecutor([
                         filmProvider,

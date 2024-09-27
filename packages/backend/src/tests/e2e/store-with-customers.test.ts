@@ -13,8 +13,8 @@ import { sortRecursively } from '../sortRecursively';
 
 describe('e2e', () => {
     const payments = from('payment')
-        .groupBy('payment_id', 'payment_date')
         .columns('payment_id', 'amount')
+        .groupBy('payment_id', 'payment_date')
         .where({ customer_id: col('customer.customer_id') })
         .many();
 
@@ -28,10 +28,10 @@ describe('e2e', () => {
 
     const q = store()
         .columns('store_id')
+        .where({ store_id: { in: [1] } })
         .include({
             customers,
         })
-        .where({ store_id: { in: [1] } })
         .one();
 
     const pgExecutor = new PgExecutor({
@@ -71,12 +71,13 @@ describe('e2e', () => {
         GROUP BY s.store_id
         `;
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
 
         assertPresent(result);
 
         const expected = rows[0];
 
+        // @ts-ignore (TODO(fhur))
         expect(result.store_id).toEqual(expected.store_id);
 
         const sliceIndex = 1;

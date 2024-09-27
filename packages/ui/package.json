@@ -6,7 +6,7 @@
         "dev": "PORT=12345 next dev",
         "start": "next start",
         "lint": "next lint",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+        "format": "yarn prettier --config ../../.prettierrc.js --write ./src/"
     },
     "dependencies": {
         "@emotion/react": "^11.11.3",

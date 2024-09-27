@@ -1,3 +1,4 @@
+import { Value } from '@sinclair/typebox/value';
 import { AnyDB, AnyTable, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
@@ -13,10 +14,25 @@ export function composeExecutionResults(
         composeExecutionResultsRecursively(node, queryResult);
     }
 
-    return applyCardinality(
+    const result = applyCardinality(
         queryResult,
         tree.root.inputQuery.cardinality ?? 'many',
     ) as QueryResult<AnyDB, AnyTable>;
+
+    const schema = tree.root.inputQuery.schema;
+    if (schema) {
+        const error = Value.Errors(schema, [], result).First();
+        if (error) {
+            const lines = [
+                `${error.message} at path: ${error.path}`,
+                `Value: ${JSON.stringify(error.value)}`,
+                `Schema: ${JSON.stringify(error.schema, null, 2)}`,
+            ];
+            throw new Error(lines.join('\n'));
+        }
+    }
+
+    return result;
 }
 
 function composeExecutionResultsRecursively(

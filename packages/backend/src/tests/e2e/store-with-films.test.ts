@@ -1,3 +1,4 @@
+import { QueryResult, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -7,9 +8,8 @@ import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
 import { DB } from '../generated';
 import { sql } from '../postgres';
-import { inventory, store, film, filmActor, actor } from '../queries.v2';
+import { actor, film, filmActor, inventory, store } from '../queries.v2';
 import { pool } from '../queryEngine';
-import { QueryResult, col } from '@synthql/queries';
 
 describe('e2e', () => {
     const actors = filmActor()
@@ -73,7 +73,7 @@ describe('e2e', () => {
             s.store_id
         `;
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
         assertPresent(result);
         const expected = rows[0];
         expect(result.store_id).toEqual(expected.store_id);

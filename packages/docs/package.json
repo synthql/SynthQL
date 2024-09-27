@@ -14,7 +14,7 @@
         "write-translations": "docusaurus write-translations",
         "write-heading-ids": "docusaurus write-heading-ids",
         "typecheck": "tsc",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+        "format": "yarn prettier --config ../../.prettierrc.js --write ./src/"
     },
     "dependencies": {
         "@docusaurus/core": "3.1.0",

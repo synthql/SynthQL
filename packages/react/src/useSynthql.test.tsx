@@ -1,18 +1,14 @@
+import { QueryEngine } from '@synthql/backend';
+import { col, Query } from '@synthql/queries';
+import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { PagilaServer, createPagilaServer } from './test/createPagilaServer';
-import { DB, from } from './test/generated';
+import { createPagilaServer, PagilaServer } from './test/createPagilaServer';
+import { from } from './test/generated';
 import { Providers } from './test/Providers';
-import { QueryEngine } from '@synthql/backend';
-import { col, Query, Table } from '@synthql/queries';
 
-function renderSynthqlQuery<
-    DB,
-    TTable extends Table<DB>,
-    TQuery extends Query<DB, TTable>,
->({
+function renderSynthqlQuery<TQuery extends Query>({
     query,
     returnLastOnly,
     server,
@@ -23,7 +19,7 @@ function renderSynthqlQuery<
 }) {
     const result = renderHook(
         () => {
-            const result = useSynthql<DB, TTable, typeof query>(query, {
+            const result = useSynthql(query, {
                 returnLastOnly,
             });
 
@@ -64,7 +60,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -90,7 +86,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -114,7 +110,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -139,7 +135,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -164,7 +160,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -197,7 +193,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -236,7 +232,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'actor', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -332,7 +328,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'customer', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             server: pagilaServer,
         });
@@ -400,7 +396,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'customer', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             returnLastOnly: true,
             server: pagilaServer,
@@ -484,7 +480,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'customer', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             returnLastOnly: true,
             server: pagilaServer,
@@ -582,7 +578,7 @@ describe('useSynthql', () => {
 
         // @@end-example@@
 
-        const result = renderSynthqlQuery<DB, 'customer', typeof q>({
+        const result = renderSynthqlQuery({
             query: q,
             returnLastOnly: true,
             server: pagilaServer,

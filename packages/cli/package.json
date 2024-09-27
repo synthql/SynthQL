@@ -24,7 +24,7 @@
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+        "format": "yarn prettier --config ../../.prettierrc.js --write ./src/"
     },
     "dependencies": {
         "@synthql/introspect": "0.95.4",

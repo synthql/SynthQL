@@ -26,10 +26,13 @@
         "test:ci": "CI=1 vitest run --globals",
         "checks": "yarn vitest --globals run && yarn build && yarn tsc",
         "build": "vite build --mode production",
+        "build:watch": "nodemon -x \"yarn typecheck && yarn build\" -e \"ts\" -w \"packages/**/*\"",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
+        "format": "yarn prettier --config ../../.prettierrc.js --write ./src/"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@sinclair/typebox": "^0.33.12"
+    },
     "devDependencies": {
         "rollup-plugin-node-externals": "^7.1.1",
         "typescript": "^5.4.5",

@@ -1,17 +1,10 @@
-import {
-    Cardinality,
-    Column,
-    Query,
-    Schema,
-    Select,
-    Table,
-    Where,
-} from '@synthql/queries';
+import { Any } from '@sinclair/typebox';
+import { Cardinality, Column, Query, Schema, Table } from '@synthql/queries';
 import fc from 'fast-check';
-import { schema, DB as PagilaDB } from '../../generated';
+import { DB as PagilaDB, schema } from '../../generated';
+import { getTableDef } from '../getTableDef';
 import { getTableNames } from '../getTableNames';
 import { getTableSelectableColumns } from '../getTableSelectableColumns';
-import { getTableDef } from '../getTableDef';
 import { tablesToSkip } from '../tablesToSkip';
 
 export class ArbitraryQueryBuilder<DB> {
@@ -83,7 +76,7 @@ export class ArbitraryQueryBuilder<DB> {
 
     private arbSelect<TTable extends Table<DB>>(
         tableName: TTable,
-    ): fc.Arbitrary<Select<DB, TTable>> {
+    ): fc.Arbitrary<Query['select']> {
         return fc
             .subarray(
                 getTableSelectableColumns(this.schema, tableName) as Column<
@@ -102,13 +95,13 @@ export class ArbitraryQueryBuilder<DB> {
                     select[col] = fc.constant(true);
                 });
 
-                return fc.record<Select<DB, TTable>>(select);
+                return fc.record(select);
             });
     }
 
     private arbWhere<TTable extends Table<DB>>(
         tableName: TTable,
-    ): fc.Arbitrary<Where<DB, TTable>> {
+    ): fc.Arbitrary<Query['where']> {
         if (this.hasResults) {
             // for now we will just return all rows
             return fc.constant({});
@@ -136,14 +129,15 @@ export class ArbitraryQueryBuilder<DB> {
     build() {
         const table = this.arbTable();
 
-        return table.chain<Query<DB>>((tableName) => {
-            return fc.record<Query<DB, Table<DB>>>({
+        return table.chain<Query>((tableName) => {
+            return fc.record<Query>({
                 from: fc.constant(tableName),
                 select: this.arbSelect(tableName),
                 cardinality: this.arbCardinality(),
                 where: this.arbWhere(tableName),
                 groupBy: this.arbGroupBy(tableName),
                 limit: this.arbLimit(),
+                schema: fc.constant(Any()),
             });
         });
     }

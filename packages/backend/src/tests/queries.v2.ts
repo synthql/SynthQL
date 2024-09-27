@@ -10,7 +10,7 @@ export function actor() {
 }
 
 export function filmActor() {
-    return from('film_actor').groupBy('actor_id', 'film_id').columns();
+    return from('film_actor').columns().groupBy('actor_id', 'film_id');
 }
 
 export function film() {

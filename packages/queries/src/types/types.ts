@@ -1,19 +1,26 @@
-import { Table } from './Table';
-import { Select } from './Select';
-import { Where } from './Where';
-import { Include } from './Include';
-import { Cardinality } from './Cardinality';
+import { Static, Type as t, TSchema } from '@sinclair/typebox';
+import { CardinalitySchema } from './Cardinality';
+import { SelectSchema } from './Select';
+import { WhereSchema } from './Where';
 
-export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
-    from: TTable;
-    select: Select<DB, TTable>;
-    where: Where<DB, TTable>;
-    include?: Include<DB>;
-    limit?: number;
-    offset?: number;
-    cardinality?: Cardinality;
-    lazy?: true;
-    groupBy?: string[];
-    hash?: string;
-    name?: string;
-};
+export const QuerySchema = t.Recursive((self) =>
+    t.Object({
+        from: t.String(),
+        lazy: t.Optional(t.Boolean()),
+        select: SelectSchema,
+        include: t.Optional(t.Record(t.String(), self)),
+        where: WhereSchema,
+        cardinality: t.Optional(CardinalitySchema),
+        schema: t.Optional(t.Unknown()),
+        limit: t.Optional(t.Number()),
+        offset: t.Optional(t.Number()),
+        hash: t.Optional(t.String()),
+        name: t.Optional(t.String()),
+        groupBy: t.Optional(t.Array(t.String())),
+    }),
+);
+export type Query<
+    DB = any,
+    TTable = any,
+    TQueryResult extends TSchema = any,
+> = Static<typeof QuerySchema> & { schema?: TQueryResult };

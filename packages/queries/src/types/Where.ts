@@ -1,6 +1,9 @@
-import { Table } from './Table';
+import { Type as t } from '@sinclair/typebox';
 import { Column } from './Column';
-import { WhereClause } from './WhereClause';
+import { Table } from './Table';
+import { WhereClause, WhereClauseSchema } from './WhereClause';
+
+export const WhereSchema = t.Record(t.String(), WhereClauseSchema);
 
 /**
  * A where clause in a query.

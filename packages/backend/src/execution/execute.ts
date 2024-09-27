@@ -1,7 +1,7 @@
 import { Query, QueryResult } from '@synthql/queries';
 import { composeExecutionResults } from './composeExecutionResults';
-import { createExecutionPlan } from './planning/createExecutionPlan';
 import { executePlan } from './execution/executePlan';
+import { createExecutionPlan } from './planning/createExecutionPlan';
 import { QueryExecutor } from './types';
 
 export interface ExecuteProps {
@@ -33,13 +33,13 @@ export interface ExecuteProps {
  * We need to compose them into a single result.
  *
  */
-export async function* execute<DB, TQuery extends Query<DB>>(
+export async function* execute<TQuery extends Query>(
     query: TQuery,
     props: ExecuteProps,
-): AsyncGenerator<QueryResult<DB, TQuery>> {
+): AsyncGenerator<QueryResult<any, TQuery>> {
     const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan, props)) {
-        yield composeExecutionResults(resultTree);
+        yield composeExecutionResults(resultTree) as QueryResult<any, TQuery>;
     }
 }

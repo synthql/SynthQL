@@ -28,7 +28,7 @@ describe('n x 1', () => {
 
         const q = findFilm({ film_id: 1 });
         const queryResult = await collectLast(
-            execute<DB, typeof q>(q, {
+            execute(q, {
                 defaultSchema: 'public',
                 executors: [
                     new QueryProviderExecutor([

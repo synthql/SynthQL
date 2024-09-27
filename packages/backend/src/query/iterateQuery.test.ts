@@ -1,8 +1,8 @@
-import { describe, expect, test } from 'vitest';
 import { AnyQuery, col } from '@synthql/queries';
+import { describe, expect, test } from 'vitest';
+import { Path } from '../execution/types';
 import { from } from '../tests/generated';
 import { iterateQuery } from './iterateQuery';
-import { Path } from '../execution/types';
 
 describe('iterateQuery', () => {
     const cases: Array<{
@@ -194,6 +194,7 @@ describe('iterateQuery', () => {
                 where: {
                     film_id: 1,
                 },
+                schema: {},
             },
             expected: [
                 {
@@ -201,6 +202,7 @@ describe('iterateQuery', () => {
                         from: 'film',
                         select: {},
                         where: { film_id: 1 },
+                        schema: {},
                     },
                     insertionPath: [],
                 },

@@ -1,11 +1,11 @@
+import * as prettier from 'prettier';
 import { describe, expect, test } from 'vitest';
 import { generate } from './generate';
-import * as prettier from 'prettier';
 
 describe('e2e', () => {
     test('Generate from Pagila', async () => {
         const prettierOptions = await prettier.resolveConfig(
-            '../../.prettier.config.js',
+            '../../..prettierrc.js',
         );
 
         expect(prettierOptions).not.toBe(null);

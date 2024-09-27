@@ -10,6 +10,5 @@ export const compareStores = (
     a: SelectedStoreColumnDataTypes,
     b: SelectedStoreColumnDataTypes,
 ) => {
-    // Q: does this compare ascending or descending?
     return a.store_id - b.store_id;
 };

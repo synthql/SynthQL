@@ -1,9 +1,9 @@
+import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { EchoServer, createEchoServer } from './test/createEchoServer';
-import { renderHook } from '@testing-library/react-hooks';
 import { useSynthql } from '.';
-import { DB, from } from './test/echoDb';
+import { EchoServer, createEchoServer } from './test/createEchoServer';
+import { from } from './test/echoDb';
 import { Providers } from './test/Providers';
 
 describe('useSynthql test examples', () => {
@@ -28,11 +28,10 @@ describe('useSynthql test examples', () => {
                 // @@desc@@ Finds 0 or 1 record(s) in the `user` table where the `id` is in the list of ids
 
                 const q = from('users')
-                    .select({ id: true, name: true })
                     .where({ id: { in: ['1'] } })
                     .maybe();
 
-                const result = useSynthql<DB, 'users', typeof q>(q);
+                const result = useSynthql(q);
 
                 // @@end-example@@
 

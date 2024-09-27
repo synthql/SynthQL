@@ -1,5 +1,5 @@
-import { RefOp } from './types/RefOp';
 import { ColumnReference } from './types/ColumnReference';
+import { RefOp } from './types/RefOp';
 
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
     const parts = ref.split('.');
@@ -8,7 +8,6 @@ export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
             $ref: {
                 table: parts[0] as any,
                 column: parts[1] as any,
-                op: '=',
             },
         };
     }
@@ -17,7 +16,6 @@ export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
             $ref: {
                 table: `${parts[0]}.${parts[1]}` as any,
                 column: parts[2] as any,
-                op: '=',
             },
         };
     }
