@@ -9,8 +9,6 @@ import { hydrate } from './hydrate';
 import { SynthqlError } from '../../../SynthqlError';
 
 // Use the OIDs imported from pg.types to set custom type parsers
-types.setTypeParser(types.builtins.TIME, (value) => value);
-types.setTypeParser(types.builtins.TIMETZ, (value) => value);
 types.setTypeParser(types.builtins.DATE, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMPTZ, (value) => value);

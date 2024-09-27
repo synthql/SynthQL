@@ -436,10 +436,20 @@ function domainType(
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
+        'pg_catalog.bit': {
+            id: 'pg_catalog.bit',
+            type: 'string',
+            description: 'A PG bit',
+        },
         'pg_catalog.bool': {
             id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
+        },
+        'pg_catalog.box': {
+            id: 'pg_catalog.box',
+            type: 'string',
+            description: 'A PG box',
         },
         'pg_catalog.bpchar': {
             id: 'pg_catalog.bpchar',
@@ -448,8 +458,35 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         },
         'pg_catalog.bytea': {
             id: 'pg_catalog.bytea',
-            type: 'string',
+            type: 'object',
             description: 'A PG bytea',
+        },
+        'pg_catalog.char': {
+            id: 'pg_catalog.char',
+            type: 'string',
+            description: 'A PG char',
+        },
+        'pg_catalog.cidr': {
+            id: 'pg_catalog.cidr',
+            type: 'string',
+            description: 'A PG cidr',
+        },
+        'pg_catalog.circle': {
+            id: 'pg_catalog.circle',
+            type: 'object',
+            description: 'A PG circle',
+            properties: {
+                radius: {
+                    type: 'number',
+                },
+                x: {
+                    type: 'number',
+                },
+                y: {
+                    type: 'number',
+                },
+            },
+            required: ['radius', 'x', 'y'],
         },
         'pg_catalog.date': {
             id: 'pg_catalog.date',
@@ -475,6 +512,11 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             type: 'number',
             description: 'A PG float8',
         },
+        'pg_catalog.inet': {
+            id: 'pg_catalog.inet',
+            type: 'string',
+            description: 'A PG inet',
+        },
         'pg_catalog.int2': {
             id: 'pg_catalog.int2',
             type: 'integer',
@@ -491,10 +533,13 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         },
         'pg_catalog.int8': {
             id: 'pg_catalog.int8',
-            type: 'integer',
-            minimum: -9223372036854775808,
-            maximum: 9223372036854775807,
+            type: 'string',
             description: 'A PG int8',
+        },
+        'pg_catalog.interval': {
+            id: 'pg_catalog.interval',
+            type: 'object',
+            description: 'A PG interval',
         },
         'pg_catalog.json': {
             id: 'pg_catalog.json',
@@ -506,6 +551,37 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             type: 'object',
             description: 'A PG jsonb',
         },
+        'pg_catalog.line': {
+            id: 'pg_catalog.line',
+            type: 'string',
+            description: 'A PG line',
+        },
+        'pg_catalog.lseg': {
+            id: 'pg_catalog.lseg',
+            type: 'string',
+            description: 'A PG lseg',
+        },
+        'pg_catalog.macaddr': {
+            id: 'pg_catalog.macaddr',
+            type: 'string',
+            description: 'A PG macaddr',
+        },
+        'pg_catalog.macaddr8': {
+            id: 'pg_catalog.macaddr8',
+            type: 'string',
+            description: 'A PG macaddr8',
+        },
+        'pg_catalog.money': {
+            id: 'pg_catalog.money',
+            type: 'string',
+            description: [
+                'A PG money.',
+                'Note that values of the PG money type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
+        },
         'pg_catalog.numeric': {
             id: 'pg_catalog.numeric',
             type: 'string',
@@ -516,6 +592,59 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'This is because that is how they can be best',
                 'accurately processed in JavaScript/TypeScript',
             ].join('\n'),
+        },
+        'pg_catalog.path': {
+            id: 'pg_catalog.path',
+            type: 'string',
+            description: 'A PG path',
+        },
+        'pg_catalog.pg_lsn': {
+            id: 'pg_catalog.pg_lsn',
+            type: 'string',
+            description: 'A PG pg_lsn',
+        },
+        'pg_catalog.pg_snapshot': {
+            id: 'pg_catalog.pg_snapshot',
+            type: 'string',
+            description: 'A PG pg_snapshot',
+        },
+        'pg_catalog.point': {
+            id: 'pg_catalog.point',
+            type: 'object',
+            description: 'A PG point',
+            properties: {
+                x: {
+                    type: 'number',
+                },
+                y: {
+                    type: 'number',
+                },
+            },
+            required: ['x', 'y'],
+        },
+        'pg_catalog.polygon': {
+            id: 'pg_catalog.polygon',
+            type: 'string',
+            description: 'A PG polygon',
+        },
+        'pg_catalog.serial2': {
+            id: 'pg_catalog.serial2',
+            type: 'integer',
+            minimum: 1,
+            maximum: 32767,
+            description: 'A PG serial2',
+        },
+        'pg_catalog.serial4': {
+            id: 'pg_catalog.serial4',
+            type: 'integer',
+            minimum: 1,
+            maximum: 2147483647,
+            description: 'A PG serial4',
+        },
+        'pg_catalog.serial8': {
+            id: 'pg_catalog.serial8',
+            type: 'string',
+            description: 'A PG serial8',
         },
         'pg_catalog.text': {
             id: 'pg_catalog.text',
@@ -576,10 +705,20 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'use `new Date(timeString)` or `Date.parse(timeString)`',
             ].join('\n'),
         },
+        'pg_catalog.tsquery': {
+            id: 'pg_catalog.tsquery',
+            type: 'string',
+            description: 'A PG tsquery',
+        },
         'pg_catalog.tsvector': {
             id: 'pg_catalog.tsvector',
             type: 'string',
             description: 'A PG tsvector',
+        },
+        'pg_catalog.txid_snapshot': {
+            id: 'pg_catalog.txid_snapshot',
+            type: 'string',
+            description: 'A PG txid_snapshot',
         },
         'pg_catalog.uuid': {
             id: 'pg_catalog.uuid',
@@ -587,10 +726,20 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             format: 'uuid',
             description: 'A PG uuid',
         },
+        'pg_catalog.varbit': {
+            id: 'pg_catalog.varbit',
+            type: 'string',
+            description: 'A PG varbit',
+        },
         'pg_catalog.varchar': {
             id: 'pg_catalog.varchar',
             type: 'string',
             description: 'A PG varchar',
+        },
+        'pg_catalog.xml': {
+            id: 'pg_catalog.xml',
+            type: 'string',
+            description: 'A PG xml',
         },
     };
 }
@@ -600,12 +749,24 @@ function createArrayWellKnownDefs(
 ): Record<string, JSONSchema> {
     const defs: Record<string, JSONSchema> = {};
 
-    for (const [key, schemaDef] of Object.entries(wellKnownDefs)) {
+    for (const [key, typeDef] of Object.entries(wellKnownDefs)) {
         defs[key + '[]'] = {
-            ...schemaDef,
+            ...typeDef,
             id: key + '[]',
             type: 'array',
-            items: { type: schemaDef.type },
+            items:
+                typeDef.type !== 'object'
+                    ? {
+                          type: typeDef.type,
+                      }
+                    : {
+                          type: typeDef.type,
+                          properties: typeDef.properties,
+                          required: typeDef.required,
+                      },
+            properties:
+                typeDef.type !== 'object' ? typeDef.properties : undefined,
+            required: typeDef.type !== 'object' ? typeDef.required : undefined,
         };
     }
 

@@ -60,7 +60,10 @@ export type PublicMpaaRatingEnum = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 /**
  * A PG text
  */
-export type PgCatalogText1 = string[];
+export type PgCatalogText1 = {
+    [k: string]: unknown;
+} & PgCatalogText2;
+export type PgCatalogText2 = string[];
 /**
  * A PG tsvector
  */
@@ -69,10 +72,6 @@ export type PgCatalogTsvector = string;
  * A PG bpchar
  */
 export type PgCatalogBpchar = string;
-/**
- * A PG bytea
- */
-export type PgCatalogBytea = string;
 
 /**
  * Your database's schema
@@ -1818,6 +1817,10 @@ export interface TableStaff {
         };
     };
 }
+/**
+ * A PG bytea
+ */
+export interface PgCatalogBytea {}
 /**
  * Table details:
  *
