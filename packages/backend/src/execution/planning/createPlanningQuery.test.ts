@@ -1,10 +1,10 @@
-import { describe, expect, test } from 'vitest';
 import { col } from '@synthql/queries';
-import { store } from '../../tests/queries.v2';
-import { createPlanningQuery } from './createPlanningQuery';
-import { PlanningQuery } from '../types';
-import { printPath } from '../../util/path/printPath';
+import { describe, expect, test } from 'vitest';
 import { from } from '../../tests/generated';
+import { store } from '../../tests/queries.v2';
+import { printPath } from '../../util/path/printPath';
+import { PlanningQuery } from '../types';
+import { createPlanningQuery } from './createPlanningQuery';
 
 describe('createPlanningQuery', () => {
     function simplifyQuery(q: PlanningQuery): {
@@ -144,7 +144,7 @@ describe('createPlanningQuery', () => {
             .one();
 
         const query = from('store')
-            .select({ store_id: true })
+            .columns('store_id')
             .include({
                 address,
             })
