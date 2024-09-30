@@ -1,11 +1,10 @@
-import { col } from '@synthql/queries';
-import { describe, test } from 'vitest';
-import { collectLast } from '../..';
-import { from } from '../generated';
-import { queryEngine } from '../queryEngine';
 import Benchmark from 'benchmark';
 import fs from 'fs';
 import path from 'path';
+import { describe, test } from 'vitest';
+import { collectLast } from '../..';
+import { col, from } from '../generated';
+import { queryEngine } from '../queryEngine';
 
 describe('Benchmark tests', () => {
     test(`Find matching rows`, async () => {

@@ -9,19 +9,15 @@ interface SynthqlQueryOptions {
 export type SynthqlQueryKey<
     DB = any,
     TTable extends Table<DB> = any,
-    TQuery extends Query<DB, TTable> = Query<DB, TTable>,
+    TQuery extends Query = Query,
 > =
     | readonly ['synthql', TQuery]
     | readonly ['synthql', TQuery, SynthqlQueryOptions];
 
-export function synthqlQueryKey<
-    DB,
-    TTable extends Table<DB>,
-    TQuery extends Query<DB, TTable>,
->(
+export function synthqlQueryKey<TQuery extends Query>(
     query: TQuery,
     opts?: SynthqlQueryOptions,
-): SynthqlQueryKey<DB, TTable, TQuery> {
+): SynthqlQueryKey<TQuery> {
     if (opts) {
         return ['synthql', query, opts];
     }
@@ -29,7 +25,9 @@ export function synthqlQueryKey<
     return ['synthql', query];
 }
 
-export function isSynthqlQueryKey(key: QueryKey | SynthqlQueryKey): boolean {
+export function isSynthqlQueryKey(
+    key: QueryKey | SynthqlQueryKey,
+): key is SynthqlQueryKey {
     if (key.length < 1) {
         return false;
     }

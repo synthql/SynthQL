@@ -1,13 +1,16 @@
 import { Query, QueryResult } from '@synthql/queries';
 import { composeExecutionResults } from './composeExecutionResults';
-import { createExecutionPlan } from './planning/createExecutionPlan';
 import { executePlan } from './execution/executePlan';
+import { runSampledValidation } from './execution/runSampledValidation';
+import { shouldYield } from './execution/shouldYield';
+import { createExecutionPlan } from './planning/createExecutionPlan';
 import { QueryExecutor } from './types';
 
 export interface ExecuteProps {
     executors: Array<QueryExecutor>;
     defaultSchema: string;
     prependSql?: string;
+    runtimeValidationSampleRate?: number;
 }
 
 /**
@@ -33,13 +36,25 @@ export interface ExecuteProps {
  * We need to compose them into a single result.
  *
  */
-export async function* execute<DB, TQuery extends Query<DB>>(
+export async function* execute<TQuery extends Query>(
     query: TQuery,
     props: ExecuteProps,
-): AsyncGenerator<QueryResult<DB, TQuery>> {
+): AsyncGenerator<QueryResult<TQuery>> {
     const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan, props)) {
-        yield composeExecutionResults(resultTree);
+        if (shouldYield(resultTree)) {
+            // TODO(fhur) see if we can avoid this cast
+            const results = composeExecutionResults(
+                resultTree,
+            ) as QueryResult<TQuery>;
+
+            runSampledValidation({
+                rows: results,
+                schema: query.schema,
+                sampleRate: props.runtimeValidationSampleRate,
+            });
+            yield results;
+        }
     }
 }

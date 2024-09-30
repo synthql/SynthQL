@@ -6,12 +6,9 @@
  * Example: `users.id`
  */
 
-export type ColumnReference<DB> = {
-    [TTable in keyof DB]: DB[TTable] extends object
-        ? `${TTable & string}.${DB[TTable] extends {
-              columns: infer C;
-          }
-              ? keyof C
-              : string}`
-        : never;
-}[keyof DB];
+import { Column } from './Column';
+import { Table } from './Table';
+
+type AllRefs<DB> = { [table in Table<DB>]: `${table}.${Column<DB, table>}` };
+
+export type ColumnReference<DB> = AllRefs<DB>[keyof AllRefs<DB>];

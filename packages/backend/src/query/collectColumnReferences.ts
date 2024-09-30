@@ -1,8 +1,8 @@
 import { AnyQuery, isRefOp } from '@synthql/queries';
-import { TableRef } from '../refs/TableRef';
-import { ColumnRef } from '../refs/ColumnRef';
-import { collectFromQuery } from './collectFromQuery';
 import { Path } from '../execution/types';
+import { ColumnRef } from '../refs/ColumnRef';
+import { TableRef } from '../refs/TableRef';
+import { collectFromQuery } from './collectFromQuery';
 
 type ColumnWithPath = {
     column: ColumnRef;
@@ -10,7 +10,9 @@ type ColumnWithPath = {
 };
 
 /**
- * Recursively collects all unique columns referenced in the query.
+ * Recursively collects all unique [column references](../refs/ColumnRef.ts) in the query.
+ *
+ * Column references are created by `col('table.column')`
  */
 export function collectColumnReferences(
     query: AnyQuery,

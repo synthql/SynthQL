@@ -1,12 +1,18 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col } from '.';
-import { DB, from } from './generated';
+import { AnyQuery, Query, QueryResult, RefOp, Table } from '.';
+import { from } from './generated';
 
 describe('queries', () => {
-    function fakeQueryResult<TQuery extends Query<DB, Table<DB>>>(
-        q: TQuery,
-    ): QueryResult<DB, TQuery> {
+    function fakeQueryResult<T extends Query>(q: T): QueryResult<T> {
         return {} as any;
+    }
+
+    function testAssignableToAnyQuery(q: AnyQuery) {
+        // Do nothing
+    }
+
+    function testAssignableToQuery(q: Query): Query {
+        return q;
     }
 
     test('Find one actor with `name()`', () => {
@@ -15,6 +21,8 @@ describe('queries', () => {
             .name('findActor')
             .one();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
 
         result satisfies { actor_id: number; first_name: string };
@@ -23,19 +31,18 @@ describe('queries', () => {
     test('Find one actor with `columns()`', () => {
         const q = from('actor').columns('actor_id', 'first_name').one();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
 
         result satisfies { actor_id: number; first_name: string };
     });
 
     test('Find one actor with `select()`', () => {
-        const q = from('actor')
-            .select({
-                actor_id: true,
-                first_name: true,
-            })
-            .one();
+        const q = from('actor').columns('actor_id', 'first_name').one();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
 
         result satisfies { actor_id: number; first_name: string };
@@ -44,6 +51,8 @@ describe('queries', () => {
     test('Find one actor with automatic select of all selectable columns', () => {
         const q = from('actor').one();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
 
         result satisfies {
@@ -57,6 +66,8 @@ describe('queries', () => {
     test('Find many actors', () => {
         const q = from('actor').columns('actor_id', 'first_name').many();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
         result satisfies Array<{ actor_id: number; first_name: string }>;
     });
@@ -67,6 +78,8 @@ describe('queries', () => {
             .offset(2)
             .many();
 
+        testAssignableToAnyQuery(q);
+        testAssignableToQuery(q);
         const result = fakeQueryResult(q);
         result satisfies Array<{ actor_id: number; first_name: string }>;
     });
@@ -103,6 +116,15 @@ describe('queries', () => {
         };
     });
 
+    function col<DB>(ref: Table<DB>): RefOp<DB> {
+        return {
+            $ref: {
+                column: '',
+                table: '',
+            },
+        };
+    }
+
     test('Find film with language and actors', () => {
         const language = from('language')
             .columns('language_id', 'name')
@@ -110,13 +132,14 @@ describe('queries', () => {
             .maybe();
 
         const filmActor = from('film_actor')
-            .select({})
             .where({ film_id: col('film.film_id') })
+            .columns()
             .many();
 
         const actors = from('actor')
-            .columns('actor_id', 'first_name', 'last_name')
+            .offset(10)
             .where({ actor_id: col('film_actor.actor_id') })
+            .columns('actor_id', 'first_name', 'last_name')
             .many();
 
         const q = from('film')
@@ -127,6 +150,9 @@ describe('queries', () => {
                 actors,
             })
             .one();
+
+        testAssignableToQuery(q).schema;
+        testAssignableToAnyQuery(q);
 
         const result = fakeQueryResult(q);
 
@@ -143,5 +169,46 @@ describe('queries', () => {
                 last_name: string;
             }>;
         };
+    });
+
+    test('', () => {
+        from('actor').groupBy('actor_id');
+    });
+
+    test('', () => {
+        const address = from('address').columns('address_id', 'city_id').one();
+        const staff = from('staff')
+            .columns('staff_id')
+            .where({
+                address_id: col('address.address_id'),
+            })
+            .one();
+
+        const store = from('store')
+            .columns('store_id', 'address_id')
+            .columns('address_id')
+            .include({
+                address,
+            })
+            .include({
+                address: from('address')
+                    .columns('address2')
+                    .where({
+                        address_id: col('store.address_id'),
+                    })
+                    .many(),
+            })
+            .include({
+                staff,
+            })
+            .all();
+
+        const result = fakeQueryResult(store);
+        result satisfies Array<{
+            address_id: number;
+            staff: {
+                staff_id: number;
+            };
+        }>;
     });
 });

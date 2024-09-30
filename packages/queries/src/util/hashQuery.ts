@@ -1,4 +1,4 @@
-import { AnyQuery } from '../types/AnyQuery';
+import { Query } from '../types/types';
 import { isQueryParameter } from '../validators/isQueryParam';
 
 // Copied from: https://github.com/TanStack/query/blob/353e4ad7291645f27de6585e9897b45e46c666fb/packages/query-core/src/utils.ts#L205
@@ -6,7 +6,7 @@ import { isQueryParameter } from '../validators/isQueryParam';
  * Default query & mutation keys hash function.
  * Hashes the value into a stable hash.
  */
-export function hashQuery(query: AnyQuery): string {
+export function hashQuery(query: Omit<Query, 'hash' | 'schema'>): string {
     return djb2Hash(
         JSON.stringify(query, (_, val) => {
             if (isQueryParameter(val)) {

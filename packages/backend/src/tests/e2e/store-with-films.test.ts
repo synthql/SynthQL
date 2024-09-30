@@ -1,3 +1,4 @@
+import { QueryResult } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -5,11 +6,11 @@ import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
-import { DB } from '../generated';
+import { col } from '../generated';
 import { sql } from '../postgres';
-import { inventory, store, film, filmActor, actor } from '../queries.v2';
+import { from } from '../queries';
+import { actor, filmActor } from '../queries.v2';
 import { pool } from '../queryEngine';
-import { QueryResult, col } from '@synthql/queries';
 
 describe('e2e', () => {
     const actors = filmActor()
@@ -21,9 +22,11 @@ describe('e2e', () => {
         .where({ film_id: col('film.film_id') })
         .many();
 
-    const inventories = inventory()
+    const inventories = from('inventory')
+        .columns('inventory_id', 'film_id')
         .include({
-            film: film()
+            film: from('film')
+                .columns('film_id', 'title')
                 .include({ actors })
                 .where({ film_id: col('inventory.film_id') })
                 .one(),
@@ -31,7 +34,8 @@ describe('e2e', () => {
         .where({ store_id: col('store.store_id') })
         .many();
 
-    const q = store()
+    const q = from('store')
+        .columns('store_id', 'address_id')
         .include({
             inventories,
         })
@@ -40,7 +44,7 @@ describe('e2e', () => {
 
     const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
-        logging: true,
+        logging: false,
         pool,
     });
     const execProps = {
@@ -49,7 +53,7 @@ describe('e2e', () => {
     };
 
     test(`${describeQuery(q)}`, async () => {
-        const rows: QueryResult<DB, typeof q>[] = await sql`
+        const rows: QueryResult<typeof q>[] = await sql`
         SELECT
             s.store_id,
             jsonb_agg(
@@ -73,7 +77,7 @@ describe('e2e', () => {
             s.store_id
         `;
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
         assertPresent(result);
         const expected = rows[0];
         expect(result.store_id).toEqual(expected.store_id);

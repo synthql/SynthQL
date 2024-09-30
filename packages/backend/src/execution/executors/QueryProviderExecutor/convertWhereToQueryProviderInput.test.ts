@@ -1,7 +1,7 @@
+import {} from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
+import { col } from '../../../tests/generated';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
-import { DB } from '../../../tests/generated';
-import { Table, col } from '@synthql/queries';
 
 describe('convertWhereToQueryProviderInput', () => {
     const date = new Date();
@@ -35,10 +35,7 @@ describe('convertWhereToQueryProviderInput', () => {
         test.each(supportedCases)(
             'convertWhereToQueryProviderInput(%o) should return %o',
             (where, expected) => {
-                const result = convertWhereToQueryProviderInput<DB, Table<DB>>(
-                    'actor',
-                    where,
-                );
+                const result = convertWhereToQueryProviderInput('actor', where);
 
                 expect(result).toEqual(expected);
             },
@@ -56,8 +53,8 @@ describe('convertWhereToQueryProviderInput', () => {
         { a: { match: 'a%' } },
         { a: { ilike: 'a%' } },
         { a: 1, b: { not: 2 } },
-        { a: col<any>('b.a') },
-        { a: col<any>('b.a'), b: 2 },
+        { a: col('b.a' as never) },
+        { a: col('b.a' as never), b: 2 },
     ];
 
     describe('unsupported where clauses', () => {
@@ -65,10 +62,7 @@ describe('convertWhereToQueryProviderInput', () => {
             'convertWhereToQueryProviderInput(%o) should throw an error',
             (where) => {
                 expect(() =>
-                    convertWhereToQueryProviderInput<DB, Table<DB>>(
-                        'actor',
-                        where,
-                    ),
+                    convertWhereToQueryProviderInput('actor', where),
                 ).toThrow();
             },
         );

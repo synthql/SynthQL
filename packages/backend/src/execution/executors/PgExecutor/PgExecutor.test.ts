@@ -1,7 +1,6 @@
-import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { from } from '../../../tests/generated';
+import { col, from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 
@@ -66,11 +65,11 @@ describe('PgExecutor', () => {
         ]);
     });
 
-    const q2 = from('actor')
-        .columns('actor_id', 'first_name', 'last_name')
-        .take(2);
-
     it('Actor table SynthQL query executes to expected result', async () => {
+        const q2 = from('actor')
+            .columns('actor_id', 'first_name', 'last_name')
+            .take(2);
+
         const result = await executor.execute(q2, executeProps);
 
         expect(result).toEqual([

@@ -1,4 +1,4 @@
-import { AnyDB, AnyTable, QueryResult } from '@synthql/queries';
+import { Query, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { setIn } from '../util/tree/setIn';
@@ -6,17 +6,19 @@ import { ExecResultNode, ExecResultTree, ResultRow } from './types';
 
 export function composeExecutionResults(
     tree: ExecResultTree,
-): QueryResult<AnyDB, AnyTable> {
+): QueryResult<Query> {
     const queryResult: ResultRow[] = tree.root.result;
 
     for (const node of tree.root.children) {
         composeExecutionResultsRecursively(node, queryResult);
     }
 
-    return applyCardinality(
+    const result = applyCardinality(
         queryResult,
         tree.root.inputQuery.cardinality ?? 'many',
-    ) as QueryResult<AnyDB, AnyTable>;
+    ) as QueryResult<Query>;
+
+    return result;
 }
 
 function composeExecutionResultsRecursively(

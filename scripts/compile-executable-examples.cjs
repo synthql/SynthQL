@@ -102,7 +102,7 @@ function generateMarkdown(examples) {
 async function main() {
     const examples = parseTestFile(testFilePath);
     const prettierConfig = await prettier.resolveConfig(
-        path.join(__dirname, '../.prettier.config.js'),
+        path.join(__dirname, '../.prettierrc.js'),
     );
 
     if (!prettierConfig) {

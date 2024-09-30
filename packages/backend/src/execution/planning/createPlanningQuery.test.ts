@@ -1,10 +1,9 @@
 import { describe, expect, test } from 'vitest';
-import { col } from '@synthql/queries';
+import { col, from } from '../../tests/generated';
 import { store } from '../../tests/queries.v2';
-import { createPlanningQuery } from './createPlanningQuery';
-import { PlanningQuery } from '../types';
 import { printPath } from '../../util/path/printPath';
-import { from } from '../../tests/generated';
+import { PlanningQuery } from '../types';
+import { createPlanningQuery } from './createPlanningQuery';
 
 describe('createPlanningQuery', () => {
     function simplifyQuery(q: PlanningQuery): {

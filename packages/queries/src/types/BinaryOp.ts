@@ -1,7 +1,8 @@
-import { Table } from './Table';
+import { Type as t } from '@sinclair/typebox';
 import { Column } from './Column';
-import { ColumnValue } from './ColumnValue';
-import { RefOp } from './RefOp';
+import { ColumnValue, ColumnValueSchema } from './ColumnValue';
+import { RefOp, RefOpSchema } from './RefOp';
+import { Table } from './Table';
 
 export const BINARY_OPERATORS = [
     '=',
@@ -57,6 +58,11 @@ export const BINARY_OPERATORS = [
  * An SQL binary operator.
  */
 export type BinaryOperator = (typeof BINARY_OPERATORS)[number];
+
+export const BinaryOpSchema = t.Union([
+    t.Record(t.Literal('='), RefOpSchema),
+    t.Record(t.String(), ColumnValueSchema),
+]);
 
 /**
  * A typed binary operator, which can be used in a `Where` clause.

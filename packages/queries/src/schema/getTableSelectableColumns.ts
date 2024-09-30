@@ -3,8 +3,6 @@ import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
 import { getTableDef } from './getTableDef';
 import { isSelectableColumn } from './isSelectableColumn';
 
-type SelectableColumnsRecordType = Record<string, true>;
-
 /**
  * Get the selectable columns of a table, as defined in the database schema.
  *
@@ -28,8 +26,8 @@ type SelectableColumnsRecordType = Record<string, true>;
 export function getTableSelectableColumns<DB>(
     schema: Schema<DB>,
     table: string,
-): SelectableColumnsRecordType {
-    const select: SelectableColumnsRecordType = {};
+): Record<string, true> {
+    const select: Record<string, true> = {};
 
     const tableDef = getTableDef<DB>(schema, table);
 

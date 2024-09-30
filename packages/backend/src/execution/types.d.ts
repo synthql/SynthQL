@@ -1,7 +1,5 @@
-import { AnyDB, AnyQuery, RefOp } from '@synthql/queries';
+import { AnyQuery } from '@synthql/queries';
 import { RefContext } from '../refs/RefContext';
-import { ColumnRef } from '../refs/ColumnRef';
-import { QueryNode } from '../query/createQueryTree';
 
 /**
  * # Execution Plan
@@ -158,6 +156,7 @@ export interface ExecResultNode {
      * The original query that was executed.
      */
     inputQuery: AnyQuery;
+    planNode: ExecutionPlanNode;
     children: ExecResultNode[];
 }
 

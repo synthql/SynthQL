@@ -1,5 +1,21 @@
-import { Table } from './Table';
+import { Type as t } from '@sinclair/typebox';
 import { Column } from './Column';
+import { Table } from './Table';
+
+const PrimitiveSchema = t.Union([
+    t.String(),
+    t.Number(),
+    t.Boolean(),
+    t.Null(),
+    t.Undefined(),
+    t.BigInt(),
+    t.Date(),
+]);
+
+export const ColumnValueSchema = t.Union([
+    PrimitiveSchema,
+    t.Array(PrimitiveSchema),
+]);
 
 /**
  * Get the data type of a column in the database.

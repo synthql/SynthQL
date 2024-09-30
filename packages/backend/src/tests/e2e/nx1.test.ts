@@ -1,9 +1,9 @@
-import { Where, col } from '@synthql/queries';
+import { Where } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { QueryProviderExecutor } from '../../execution/executors/QueryProviderExecutor';
-import { DB, from } from '../generated';
+import { col, DB, from } from '../generated';
 import { provideFilm } from '../provideFilm';
 import { provideLanguage } from '../provideLanguage';
 
@@ -28,7 +28,7 @@ describe('n x 1', () => {
 
         const q = findFilm({ film_id: 1 });
         const queryResult = await collectLast(
-            execute<DB, typeof q>(q, {
+            execute(q, {
                 defaultSchema: 'public',
                 executors: [
                     new QueryProviderExecutor([

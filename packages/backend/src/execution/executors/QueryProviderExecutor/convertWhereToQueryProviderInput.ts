@@ -1,13 +1,13 @@
-import { AnyQuery, Table, Where } from '@synthql/queries';
+import { AnyDB, AnyQuery, AnyTable, Query } from '@synthql/queries';
 import { QueryProviderInput } from '../../../types/QueryProviderInput';
 
 /**
  * Takes a `Where` object and converts it into a `QueryProviderInput` object.
  */
-export function convertWhereToQueryProviderInput<DB, TTable extends Table<DB>>(
-    table: TTable,
-    where: Where<DB, TTable>,
-): QueryProviderInput<DB, TTable> {
+export function convertWhereToQueryProviderInput(
+    table: string,
+    where: Query['where'],
+): QueryProviderInput<AnyDB, AnyTable> {
     const qpi: Record<string, any> = {};
 
     for (const { op, column, value } of iterateQueryOperators({
@@ -58,7 +58,9 @@ function createUnsupportedQueryError(table: string, where: AnyQuery['where']) {
  *
  * This lets us iterate over the query operators in a query.
  */
-function* iterateQueryOperators(query: AnyQuery['where']): Generator<
+function* iterateQueryOperators(
+    query: Pick<AnyQuery, 'where' | 'from'>,
+): Generator<
     | {
           op: '=';
           column: string;

@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import { DB, from } from '../generated';
-import { describeQuery } from '../../query/describeQuery';
-import { PgExecutor } from '../../execution/executors/PgExecutor';
-import { pool } from '../queryEngine';
-import { execute } from '../../execution/execute';
 import { collectLast } from '../..';
+import { execute } from '../../execution/execute';
+import { PgExecutor } from '../../execution/executors/PgExecutor';
+import { describeQuery } from '../../query/describeQuery';
+import { from } from '../generated';
 import { sql } from '../postgres';
+import { pool } from '../queryEngine';
 
 describe('e2e', () => {
     const q = from('payment')
@@ -26,7 +26,7 @@ describe('e2e', () => {
             executors: [pgExecutor],
         };
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
 
         const expected = await sql`
             SELECT

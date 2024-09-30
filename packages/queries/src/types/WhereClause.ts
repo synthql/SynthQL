@@ -1,8 +1,15 @@
-import { Table } from './Table';
+import { Type as t } from '@sinclair/typebox';
+import { BinaryOp, BinaryOpSchema } from './BinaryOp';
 import { Column } from './Column';
-import { ColumnValue } from './ColumnValue';
-import { RefOp } from './RefOp';
-import { BinaryOp } from './BinaryOp';
+import { ColumnValue, ColumnValueSchema } from './ColumnValue';
+import { RefOp, RefOpSchema } from './RefOp';
+import { Table } from './Table';
+
+export const WhereClauseSchema = t.Union([
+    ColumnValueSchema,
+    BinaryOpSchema,
+    RefOpSchema,
+]);
 
 export type WhereClause<
     DB,

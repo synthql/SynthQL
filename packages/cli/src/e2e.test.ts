@@ -1,8 +1,8 @@
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import * as prettier from 'prettier';
+import { randomUUID } from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { randomUUID } from 'crypto';
+import * as prettier from 'prettier';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { cli } from './cli';
 import { configFileSchema } from './validators/schemas';
 import { validateSchemaDefOverrides } from './validators/validators';
@@ -20,7 +20,7 @@ describe('e2e', () => {
 
     test('Write configuration file validation schema to files', async () => {
         const prettierOptions = await prettier.resolveConfig(
-            '../../.prettier.config.js',
+            '../../.prettierrc.js',
         );
 
         expect(prettierOptions).not.toBe(null);

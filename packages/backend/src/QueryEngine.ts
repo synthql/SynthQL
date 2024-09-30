@@ -1,14 +1,14 @@
-import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
-import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
+import { Pool } from 'pg';
 import { QueryPlan, collectLast } from '.';
 import { QueryProvider } from './QueryProvider';
-import { execute } from './execution/execute';
-import { QueryExecutor } from './execution/types';
-import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
-import { PgExecutor } from './execution/executors/PgExecutor';
-import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
+import { execute } from './execution/execute';
+import { PgExecutor } from './execution/executors/PgExecutor';
+import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
+import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { QueryExecutor } from './execution/types';
+import { generateLast } from './util/generators/generateLast';
 
 export interface QueryEngineProps<DB> {
     /**
@@ -65,6 +65,13 @@ export interface QueryEngineProps<DB> {
      * Whether to log SQL statements or not.
      */
     logging?: boolean;
+
+    /**
+     * The rate at which rows are sampled for runtime type validation.
+     *
+     * Defaults to 0, meaning no validation will be performed.
+     */
+    runtimeValidationSampleRate?: number;
 }
 
 export class QueryEngine<DB> {
@@ -72,6 +79,7 @@ export class QueryEngine<DB> {
     private schema: string;
     private prependSql?: string;
     private executors: Array<QueryExecutor> = [];
+    private runtimeValidationSampleRate: number;
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
@@ -94,9 +102,11 @@ export class QueryEngine<DB> {
                 logging: config.logging,
             }),
         ];
+        this.runtimeValidationSampleRate =
+            config.runtimeValidationSampleRate ?? 0;
     }
 
-    execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
+    execute<TQuery extends Query>(
         query: TQuery,
         opts?: {
             /**
@@ -112,11 +122,12 @@ export class QueryEngine<DB> {
              */
             returnLastOnly?: boolean;
         },
-    ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        const gen = execute<DB, TQuery>(query, {
+    ): AsyncGenerator<QueryResult<TQuery>> {
+        const gen = execute<TQuery>(query, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
             prependSql: this.prependSql,
+            runtimeValidationSampleRate: this.runtimeValidationSampleRate,
         });
 
         if (opts?.returnLastOnly) {
@@ -126,10 +137,7 @@ export class QueryEngine<DB> {
         return gen;
     }
 
-    async executeAndWait<
-        TTable extends Table<DB>,
-        TQuery extends Query<DB, TTable>,
-    >(
+    async executeAndWait<TTable extends Table<DB>, TQuery extends Query>(
         query: TQuery,
         opts?: {
             /**
@@ -140,10 +148,10 @@ export class QueryEngine<DB> {
              */
             schema?: string;
         },
-    ): Promise<QueryResult<DB, TQuery>> {
+    ): Promise<QueryResult<TQuery>> {
         return await collectLast(
             generateLast(
-                execute<DB, TQuery>(query, {
+                execute<TQuery>(query, {
                     executors: this.executors,
                     defaultSchema: opts?.schema ?? this.schema,
                     prependSql: this.prependSql,
@@ -152,7 +160,9 @@ export class QueryEngine<DB> {
         );
     }
 
-    compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {
+    compile<T extends Query>(
+        query: T,
+    ): {
         sql: string;
         params: any[];
     } {
@@ -164,9 +174,7 @@ export class QueryEngine<DB> {
         return sqlBuilder.build();
     }
 
-    async explain<TTable extends Table<DB>>(
-        query: Query<DB, TTable>,
-    ): Promise<QueryPlan> {
+    async explain<TTable extends Table<DB>>(query: Query): Promise<QueryPlan> {
         const { sqlBuilder } = composeQuery({
             defaultSchema: this.schema,
             query,

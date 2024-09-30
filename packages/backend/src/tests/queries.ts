@@ -1,5 +1,5 @@
-import { Table, WhereClause, col, query } from '@synthql/queries';
-import { DB, schema } from './generated';
+import { Table, WhereClause, query } from '@synthql/queries';
+import { DB, col, schema } from './generated';
 
 export function from<TTable extends Table<DB>>(table: TTable) {
     return query<DB>(schema).from(table);

@@ -1,5 +1,5 @@
-import { Pool } from 'pg';
 import { QueryEngine } from '@synthql/backend';
+import { Pool } from 'pg';
 import { DB } from './generated';
 
 export const pool = new Pool({

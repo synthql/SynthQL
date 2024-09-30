@@ -1,6 +1,6 @@
+import { AnyQuery, QueryResult } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { AnyQuery, QueryResult, col } from '@synthql/queries';
-import { DB, from } from '../tests/generated';
+import { col, from } from '../tests/generated';
 import { city } from '../tests/queries.v2';
 import { collectColumnReferences } from './collectColumnReferences';
 
@@ -80,7 +80,7 @@ describe('collectColumnReferences', () => {
             .where({ city_id: col('address.city_id') })
             .many();
 
-        const queryResult: QueryResult<DB, typeof q> = [
+        const queryResult: QueryResult<typeof q> = [
             { city: 'Bogota', city_id: 1 },
             { city: 'Cali', city_id: 2 },
             { city: 'Medellin', city_id: 3 },

@@ -1,9 +1,9 @@
 import { AnyDB, AnyQuery, Where, isRefOp } from '@synthql/queries';
 import { collectFromQuery } from '../../../../query/collectFromQuery';
+import { ColumnRef } from '../../../../refs/ColumnRef';
+import { TableRef } from '../../../../refs/TableRef';
 import { SelectionColumn } from './SelectionColumn';
 import { SelectionJsonbAgg } from './SelectionJsonbAgg';
-import { TableRef } from '../../../../refs/TableRef';
-import { ColumnRef } from '../../../../refs/ColumnRef';
 import { Join, Selection } from './types';
 
 export interface AugmentedQuery {
@@ -57,7 +57,7 @@ function collectJoins(query: AnyQuery, defaultSchema: string): Array<Join> {
                             query,
                         ).column(column),
                         otherColumn: ColumnRef.fromRefOp(refOp, defaultSchema),
-                        op: refOp.$ref.op ?? '=',
+                        op: '=' as const,
                     },
                 ];
             },

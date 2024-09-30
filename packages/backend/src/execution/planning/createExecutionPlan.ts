@@ -1,4 +1,4 @@
-import { AnyQuery } from '@synthql/queries';
+import { Query } from '@synthql/queries';
 import { collectColumnReferences } from '../../query/collectColumnReferences';
 import { createRefContext } from '../../refs/RefContext';
 import { ExecuteProps } from '../execute';
@@ -7,7 +7,7 @@ import { assignExecutors } from './assignExecutors';
 import { createPlanningQuery } from './createPlanningQuery';
 
 export function createExecutionPlan(
-    query: AnyQuery,
+    query: Query,
     props: ExecuteProps,
 ): ExecPlanTree {
     const { defaultSchema } = props;

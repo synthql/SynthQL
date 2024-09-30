@@ -1,4 +1,4 @@
-import { query, col } from '@synthql/queries';
+import { query } from '@synthql/queries';
 
 interface DB {
     'information_schema.tables': {
@@ -49,7 +49,7 @@ interface DB {
     };
 }
 
-const from = query<DB>().from;
+const { from, col } = query<DB>();
 
 const keys = from('information_schema.key_column_usage')
     .columns('column_name', 'table_name')

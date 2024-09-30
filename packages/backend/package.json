@@ -24,7 +24,7 @@
         "typecheck": "tsc",
         "checks": "yarn vitest run && yarn tsc",
         "publish:minor": "yarn publish --access public --no-git-tag-version",
-        "format": "yarn prettier --config ../../prettier.config.js --write ./src/",
+        "format": "yarn prettier --config ../../.prettierrc.js --write ./src/",
         "benchmarks": "yarn vitest run src/tests/benchmarks/bench.test.ts"
     },
     "dependencies": {

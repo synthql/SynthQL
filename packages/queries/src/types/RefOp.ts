@@ -1,10 +1,10 @@
-import { Table } from './Table';
-import { JoinOp } from './JoinOp';
+import { Static, Type as t } from '@sinclair/typebox';
 
-export type RefOp<DB> = {
-    $ref: {
-        table: Table<DB>;
-        column: string;
-        op?: JoinOp;
-    };
-};
+export const RefOpSchema = t.Object({
+    $ref: t.Object({
+        table: t.String(),
+        column: t.String(),
+    }),
+});
+
+export type RefOp<DB> = Static<typeof RefOpSchema>;

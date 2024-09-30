@@ -1,12 +1,13 @@
 import { fc } from '@fast-check/vitest';
+import { Any } from '@sinclair/typebox';
 import { AnyQuery, Cardinality, Schema } from '@synthql/queries';
-import { arbitraryLimit } from './arbitraryLimit';
-import { arbitraryCardinality } from './arbitraryCardinality';
-import { arbitraryWhere } from './arbitraryWhere';
-import { arbitrarySelect } from './arbitrarySelect';
-import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { getTableNames } from '../getTableNames';
+import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { tablesToSkip } from '../tablesToSkip';
+import { arbitraryCardinality } from './arbitraryCardinality';
+import { arbitraryLimit } from './arbitraryLimit';
+import { arbitrarySelect } from './arbitrarySelect';
+import { arbitraryWhere } from './arbitraryWhere';
 
 interface ArbitraryQuery<DB> {
     schema: Schema<DB>;
@@ -27,18 +28,20 @@ export function arbitraryQuery<DB>({
                 (table) => !tablesToSkip.includes(table),
             ),
         )
-        .chain((tableName) =>
-            fc.record({
-                from: fc.constant(tableName),
-                select: arbitrarySelect({ schema, tableName }),
-                where: arbitraryWhere({
-                    schema,
-                    allTablesRowsMap,
-                    tableName,
-                    validWhere,
+        .chain(
+            (tableName): fc.Arbitrary<AnyQuery> =>
+                fc.record({
+                    from: fc.constant(tableName),
+                    select: arbitrarySelect({ schema, tableName }),
+                    where: arbitraryWhere({
+                        schema,
+                        allTablesRowsMap,
+                        tableName,
+                        validWhere,
+                    }),
+                    limit: arbitraryLimit(),
+                    cardinality: arbitraryCardinality(cardinality),
+                    schema: fc.constant(Any()),
                 }),
-                limit: arbitraryLimit(),
-                cardinality: arbitraryCardinality(cardinality),
-            }),
         );
 }

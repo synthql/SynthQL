@@ -1,13 +1,13 @@
+import { describe, expect, test } from 'vitest';
+import { PgExecutor } from '.';
+import { col } from '../../../tests/generated';
 import {
-    filmActor,
     actor,
-    inventory,
     film,
+    filmActor,
+    inventory,
     store,
 } from '../../../tests/queries.v2';
-import { describe, expect, test } from 'vitest';
-import { col } from '@synthql/queries';
-import { PgExecutor } from '.';
 import { pool } from '../../../tests/queryEngine';
 
 describe('PgExecutor', () => {
@@ -43,12 +43,12 @@ describe('PgExecutor', () => {
             .where({ store_id: { in: [1] } })
             .one();
 
-        expect(executor.canExecute(q)).toEqual({
+        expect(executor.canExecute(q)).toMatchObject({
             query: {
                 ...q,
                 include: { inventories: { ...inventories, include: {} } },
             },
-            remaining: [inventories.include.film],
+            remaining: [inventories.include?.film],
         });
     });
 });

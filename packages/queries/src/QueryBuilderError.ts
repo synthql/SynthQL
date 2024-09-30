@@ -2,11 +2,11 @@ import { AnyQuery } from './types/AnyQuery';
 
 export class QueryBuilderError extends Error {
     constructor(
-        public query: AnyQuery,
         public type: string,
         public message: string,
     ) {
         super(message);
+        this.type = type;
         Error.captureStackTrace(this, QueryBuilderError);
     }
 
@@ -14,8 +14,8 @@ export class QueryBuilderError extends Error {
         query,
         nestedQuery,
     }: {
-        query: AnyQuery;
-        nestedQuery: AnyQuery;
+        query: { from: string };
+        nestedQuery: { from: string };
     }): QueryBuilderError {
         const type = 'NestedQueryMissingRefOpWhereClauseError';
 
@@ -28,6 +28,6 @@ export class QueryBuilderError extends Error {
             ``,
         ];
 
-        return new QueryBuilderError(query, type, lines.join('\n'));
+        return new QueryBuilderError(type, lines.join('\n'));
     }
 }

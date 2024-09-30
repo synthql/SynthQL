@@ -1,31 +1,28 @@
-import { Query, QueryResult, Table } from '@synthql/queries';
-import { useSynthqlContext } from './SynthqlProvider';
-import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
-import { synthqlQueryKey } from './synthqlQueryKey';
+import { Query, QueryResult } from '@synthql/queries';
 import { QueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { fetchJsonLines } from './fetchJsonLines';
+import { useSynthqlContext } from './SynthqlProvider';
+import { synthqlQueryKey } from './synthqlQueryKey';
+import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 
-type SynthqlQueryOptions<
-    DB,
-    TTable extends Table<DB>,
-    TQuery extends Query<DB, TTable>,
-> = {
+type SynthqlQueryOptions<TQuery extends Query> = {
     requestInit?: RequestInit;
     returnLastOnly?: boolean;
-    reactQuery?: Pick<QueryOptions<QueryResult<DB, TQuery>>, 'retry'>;
+    /**
+     * `@tanstack/react-query` options for the query.
+     */
+    reactQuery?: QueryOptions<AsyncGenerator<QueryResult<TQuery>>>;
 };
 
-export function useSynthql<
-    DB,
-    TTable extends Table<DB>,
-    TQuery extends Query<DB, TTable>,
->(
+export function useSynthql<TQuery extends Query>(
     query: TQuery,
-    opts: SynthqlQueryOptions<DB, TTable, TQuery> = {},
-): UseQueryResult<QueryResult<DB, TQuery>> {
+    opts: SynthqlQueryOptions<TQuery> = {},
+): UseQueryResult<QueryResult<TQuery>> {
+    type ResultType = QueryResult<TQuery>;
+
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${query.hash}`;
+    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}`;
 
     const mergedRequestInit: RequestInit = {
         ...requestInit,
@@ -37,15 +34,15 @@ export function useSynthql<
         body: JSON.stringify(query),
     };
 
-    const queryKey = synthqlQueryKey<DB, TTable, TQuery>(query, {
+    const queryKey = synthqlQueryKey<TQuery>(query, {
         endpoint: enrichedEndpoint,
         requestInit: mergedRequestInit,
     });
 
-    return useAyncGeneratorQuery({
+    return useAyncGeneratorQuery<ResultType>({
         queryKey,
-        queryFn: async () => {
-            return fetchJsonLines<QueryResult<DB, TQuery>>(
+        queryFn: (): AsyncGenerator<ResultType> => {
+            return fetchJsonLines<ResultType>(
                 enrichedEndpoint,
                 mergedRequestInit,
             );

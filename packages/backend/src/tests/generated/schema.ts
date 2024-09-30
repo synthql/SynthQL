@@ -359,7 +359,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -596,7 +595,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -744,7 +742,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -1269,7 +1266,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -1511,7 +1507,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -1656,7 +1651,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2005,7 +1999,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2199,7 +2192,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2341,7 +2333,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2529,7 +2520,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2677,7 +2667,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -2949,7 +2938,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -3057,7 +3045,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -3186,7 +3173,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -3272,7 +3258,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -3713,7 +3698,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -3953,7 +3937,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -6282,7 +6265,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -6519,7 +6501,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -6667,7 +6648,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -7192,7 +7172,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -7434,7 +7413,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -7579,7 +7557,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -7928,7 +7905,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8122,7 +8098,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8264,7 +8239,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8452,7 +8426,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8600,7 +8573,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8872,7 +8844,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -8980,7 +8951,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -9109,7 +9079,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -9195,7 +9164,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -9636,7 +9604,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -9876,7 +9843,6 @@ export const schema: Schema<DB> = {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
                                         'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
@@ -11865,14 +11831,12 @@ export const schema: Schema<DB> = {
         'pg_catalog.timestamp': {
             id: 'pg_catalog.timestamp',
             type: 'string',
-            format: 'date-time',
             description:
                 'A PG timestamp.\nNote that values of the PG timestamp type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
         },
         'pg_catalog.timestamptz': {
             id: 'pg_catalog.timestamptz',
             type: 'string',
-            format: 'date-time',
             description:
                 'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
         },

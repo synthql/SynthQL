@@ -1,4 +1,4 @@
-import { col } from '@synthql/queries';
+import {} from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -7,7 +7,7 @@ import { createExecutionPlan } from '../../execution/planning/createExecutionPla
 import { simplifyPlan } from '../../execution/planning/simplifyPlan';
 import { describeQuery } from '../../query/describeQuery';
 import { compareInventory } from '../compareInventory';
-import { DB, from } from '../generated';
+import { col, from } from '../generated';
 
 import { sql } from '../postgres';
 import { pool } from '../queryEngine';
@@ -41,7 +41,6 @@ describe('n x m', () => {
         executors: [
             new PgExecutor({
                 defaultSchema: 'public',
-                logging: true,
                 pool,
             }),
         ],
@@ -92,7 +91,7 @@ describe('n x m', () => {
         LIMIT 1
         `;
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
         const expected = rows[0];
         expect(result.store_id).toEqual(expected.store_id);
 

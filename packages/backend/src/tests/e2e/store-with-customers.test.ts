@@ -1,11 +1,11 @@
-import { QueryResult, col } from '@synthql/queries';
+import { QueryResult } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
-import { DB, from } from '../generated';
+import { col, from } from '../generated';
 import { sql } from '../postgres';
 import { store } from '../queries.v2';
 import { pool } from '../queryEngine';
@@ -20,18 +20,18 @@ describe('e2e', () => {
 
     const customers = from('customer')
         .columns('email', 'customer_id')
-        .where({ store_id: col('store.store_id'), customer_id: 367 })
         .include({
             payments,
         })
+        .where({ store_id: col('store.store_id'), customer_id: 367 })
         .many();
 
     const q = store()
         .columns('store_id')
+        .where({ store_id: { in: [1] } })
         .include({
             customers,
         })
-        .where({ store_id: { in: [1] } })
         .one();
 
     const pgExecutor = new PgExecutor({
@@ -46,7 +46,7 @@ describe('e2e', () => {
 
     // TODO: fix the test by fixing the sorting function and unskip
     test.skip(`${describeQuery(q)}`, async () => {
-        const rows: QueryResult<DB, typeof q>[] = await sql`
+        const rows: QueryResult<typeof q>[] = await sql`
         SELECT
             s.store_id,
             JSON_AGG(
@@ -71,12 +71,13 @@ describe('e2e', () => {
         GROUP BY s.store_id
         `;
 
-        const result = await collectLast(execute<DB, typeof q>(q, execProps));
+        const result = await collectLast(execute(q, execProps));
 
         assertPresent(result);
 
         const expected = rows[0];
 
+        // @ts-ignore (TODO(fhur))
         expect(result.store_id).toEqual(expected.store_id);
 
         const sliceIndex = 1;

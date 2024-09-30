@@ -1,5 +1,5 @@
 import { collectLast, QueryEngine, SynthqlError } from '@synthql/backend';
-import type { Request, Response, RequestHandler } from 'express';
+import type { Request, RequestHandler, Response } from 'express';
 
 /**
  * Create an Express request handler that can handle SynthQL requests.

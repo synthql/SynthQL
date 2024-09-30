@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { col } from '../col';
-import { from } from '../generated';
+import { from, ref } from '../generated';
 
 describe('validateNestedQueriesHaveAValidRefOp', () => {
     test('Check that included query without RefOp where clause throws', () => {
@@ -19,7 +18,7 @@ describe('validateNestedQueriesHaveAValidRefOp', () => {
                 .include({
                     lang: from('language')
                         .where({
-                            language_id: col('film.language_id'),
+                            language_id: ref('film.language_id'),
                         })
                         .many(),
                 })
