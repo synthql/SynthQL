@@ -18,10 +18,7 @@ export function runSampledValidation({
     if (!shouldSample) {
         return;
     }
-    const msg = `Validating ${Array.isArray(rows) ? rows.length : '1'} rows`;
-    console.time(msg);
     const error = Value.Errors(schema, rows).First();
-    console.timeEnd(msg);
     if (error) {
         throw new Error(formatError(error));
     }
