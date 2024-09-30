@@ -5,7 +5,7 @@ import { generate } from './generate';
 describe('e2e', () => {
     test('Generate from Pagila', async () => {
         const prettierOptions = await prettier.resolveConfig(
-            '../../..prettierrc.js',
+            '../../.prettierrc.js',
         );
 
         expect(prettierOptions).not.toBe(null);

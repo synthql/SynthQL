@@ -39,7 +39,7 @@ function convertToTypeBoxSchema(jsonSchema: any): TSchema {
             return Type.Integer(jsonSchema);
         case 'boolean':
             return Type.Boolean(jsonSchema);
-        case 'object':
+        case 'object': {
             const properties = {};
             for (const key in jsonSchema.properties) {
                 // @ts-ignore
@@ -48,6 +48,7 @@ function convertToTypeBoxSchema(jsonSchema: any): TSchema {
                 );
             }
             return Type.Object(properties);
+        }
         case 'array':
             return Type.Array(convertToTypeBoxSchema(jsonSchema.items));
         default:

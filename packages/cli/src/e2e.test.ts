@@ -20,7 +20,7 @@ describe('e2e', () => {
 
     test('Write configuration file validation schema to files', async () => {
         const prettierOptions = await prettier.resolveConfig(
-            '../../..prettierrc.js',
+            '../../.prettierrc.js',
         );
 
         expect(prettierOptions).not.toBe(null);

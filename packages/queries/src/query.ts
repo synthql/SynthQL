@@ -203,7 +203,8 @@ export class QueryBuilder<
         type SelectFromKeys = { [k in TKeys[number]]: true };
 
         const select = keys.reduce((acc, key) => {
-            return { ...acc, [key]: true };
+            acc[key] = true;
+            return acc;
         }, {} as SelectFromKeys);
 
         return new QueryBuilder(

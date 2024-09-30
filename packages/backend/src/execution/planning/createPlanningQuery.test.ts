@@ -144,7 +144,7 @@ describe('createPlanningQuery', () => {
             .one();
 
         const query = from('store')
-            .columns('store_id')
+            .select({ store_id: true })
             .include({
                 address,
             })
