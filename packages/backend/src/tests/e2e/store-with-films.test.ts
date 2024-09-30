@@ -7,7 +7,8 @@ import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
 import { compareInventory } from '../compareInventory';
 import { sql } from '../postgres';
-import { actor, film, filmActor, inventory, store } from '../queries.v2';
+import { from } from '../queries';
+import { actor, filmActor } from '../queries.v2';
 import { pool } from '../queryEngine';
 
 describe('e2e', () => {
@@ -20,9 +21,11 @@ describe('e2e', () => {
         .where({ film_id: col('film.film_id') })
         .many();
 
-    const inventories = inventory()
+    const inventories = from('inventory')
+        .columns('inventory_id', 'film_id')
         .include({
-            film: film()
+            film: from('film')
+                .columns('film_id', 'title')
                 .include({ actors })
                 .where({ film_id: col('inventory.film_id') })
                 .one(),
@@ -30,7 +33,8 @@ describe('e2e', () => {
         .where({ store_id: col('store.store_id') })
         .many();
 
-    const q = store()
+    const q = from('store')
+        .columns('store_id', 'address_id')
         .include({
             inventories,
         })
@@ -39,7 +43,7 @@ describe('e2e', () => {
 
     const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
-        logging: true,
+        logging: false,
         pool,
     });
     const execProps = {

@@ -1,4 +1,3 @@
-import { Value } from '@sinclair/typebox/value';
 import { Query, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
@@ -18,20 +17,6 @@ export function composeExecutionResults(
         queryResult,
         tree.root.inputQuery.cardinality ?? 'many',
     ) as QueryResult<Query>;
-
-    const schema = tree.root.inputQuery.schema;
-    if (schema) {
-        const error = Value.Errors(schema, [], result).First();
-        if (error) {
-            // TODO(fhur): Improve error message
-            const lines = [
-                `${error.message} at path: ${error.path}`,
-                `Value: ${JSON.stringify(error.value)}`,
-                `Schema: ${JSON.stringify(error.schema, null, 2)}`,
-            ];
-            throw new Error(lines.join('\n'));
-        }
-    }
 
     return result;
 }

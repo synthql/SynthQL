@@ -1,6 +1,8 @@
 import { Query, QueryResult } from '@synthql/queries';
 import { composeExecutionResults } from './composeExecutionResults';
 import { executePlan } from './execution/executePlan';
+import { runSampledValidation } from './execution/runSampledValidation';
+import { shouldYield } from './execution/shouldYield';
 import { createExecutionPlan } from './planning/createExecutionPlan';
 import { QueryExecutor } from './types';
 
@@ -8,6 +10,7 @@ export interface ExecuteProps {
     executors: Array<QueryExecutor>;
     defaultSchema: string;
     prependSql?: string;
+    runtimeValidationSampleRate?: number;
 }
 
 /**
@@ -40,7 +43,18 @@ export async function* execute<TQuery extends Query>(
     const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan, props)) {
-        // TODO(fhur) see if we can avoid this cast
-        yield composeExecutionResults(resultTree) as QueryResult<TQuery>;
+        if (shouldYield(resultTree)) {
+            // TODO(fhur) see if we can avoid this cast
+            const results = composeExecutionResults(
+                resultTree,
+            ) as QueryResult<TQuery>;
+
+            runSampledValidation({
+                rows: results,
+                schema: query.schema,
+                sampleRate: props.runtimeValidationSampleRate,
+            });
+            yield results;
+        }
     }
 }

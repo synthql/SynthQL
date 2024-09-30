@@ -1,5 +1,5 @@
-import { ColumnDefProperties } from '@synthql/queries';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
+import { ColumnDefProperties } from '@synthql/queries';
 import {
     DomainDetails,
     EnumDetails,
@@ -9,8 +9,8 @@ import {
     TableDetails,
     ViewDetails,
 } from 'extract-pg-schema';
-import { compile, JSONSchema } from 'json-schema-to-typescript';
 import fs from 'fs';
+import { compile, JSONSchema } from 'json-schema-to-typescript';
 import path from 'path';
 
 type TableOrView = TableDetails | ViewDetails;
@@ -471,7 +471,6 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         'pg_catalog.timestamp': {
             id: 'pg_catalog.timestamp',
             type: 'string',
-            format: 'date-time',
             description: [
                 'A PG timestamp.',
                 'Note that values of the PG timestamp type,',
@@ -485,7 +484,6 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
         'pg_catalog.timestamptz': {
             id: 'pg_catalog.timestamptz',
             type: 'string',
-            format: 'date-time',
             description: [
                 'A PG timestamptz.',
                 'Note that values of the PG timestamptz type,',

@@ -2,9 +2,11 @@ import {
     Static,
     Type as t,
     TArray,
+    TNull,
     TObject,
     TPick,
     TSchema,
+    TUnion,
 } from '@sinclair/typebox';
 import { Assert } from '@sinclair/typebox/value';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
@@ -49,7 +51,7 @@ export class QueryBuilder<
     /**
      * Sets the limit of the query.
      */
-    limit(limit: number) {
+    limit(limit: number): QueryBuilder<DB, TTable, TResultSchema> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -67,7 +69,7 @@ export class QueryBuilder<
      *
      * Note: {@link many} is an alias for {@link all}.
      */
-    all() {
+    all(): Query<TArray<TResultSchema>> {
         return this.many();
     }
 
@@ -79,7 +81,7 @@ export class QueryBuilder<
      *
      * Note: {@link maybe} is an alias for {@link first}.
      */
-    first() {
+    first(): Query<TUnion<[TResultSchema, TNull]>> {
         return this.maybe();
     }
 
@@ -91,7 +93,7 @@ export class QueryBuilder<
      *
      * Note: {@link one} is an alias for {@link firstOrThrow}.
      */
-    firstOrThrow() {
+    firstOrThrow(): Query<TResultSchema> {
         return this.one();
     }
 
@@ -100,7 +102,7 @@ export class QueryBuilder<
      * for the query, and then builds the query.
      * Shorthand for `.limit(n).all()`.
      */
-    take(take: number) {
+    take(take: number): Query<TArray<TResultSchema>> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -128,7 +130,7 @@ export class QueryBuilder<
     /**
      * @alias {@link firstOrThrow}
      */
-    one() {
+    one(): Query<TResultSchema> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -159,7 +161,7 @@ export class QueryBuilder<
     /**
      * @alias {@link first}
      */
-    maybe() {
+    maybe(): Query<TUnion<[TResultSchema, TNull]>> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -167,7 +169,7 @@ export class QueryBuilder<
                 limit: 1,
                 cardinality: 'maybe',
             },
-            this.schema,
+            t.Union([this.schema, t.Null()]),
         ).build();
     }
 
@@ -257,7 +259,7 @@ export class QueryBuilder<
     /**
      * @deprecated use {@link defer} instead.
      */
-    lazy() {
+    lazy(): QueryBuilder<DB, TTable, TResultSchema> {
         return this.defer();
     }
 
@@ -267,7 +269,7 @@ export class QueryBuilder<
      *
      * Merging of the queries will happen inside the `QueryEngine`.
      */
-    defer() {
+    defer(): QueryBuilder<DB, TTable, TResultSchema> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -278,7 +280,9 @@ export class QueryBuilder<
         );
     }
 
-    groupBy<TGroupBy extends Column<DB, TTable>[]>(...groupBy: TGroupBy) {
+    groupBy<TGroupBy extends Column<DB, TTable>[]>(
+        ...groupBy: TGroupBy
+    ): QueryBuilder<DB, TTable, TResultSchema> {
         const query = this.query;
         return new QueryBuilder(
             {
@@ -301,7 +305,7 @@ export class QueryBuilder<
      *   .many();
      * ```
      */
-    name(name: string) {
+    name(name: string): QueryBuilder<DB, TTable, TResultSchema> {
         const query = this.query;
         return new QueryBuilder(
             {

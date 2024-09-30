@@ -8,16 +8,21 @@ import { useAyncGeneratorQuery } from './useAsyncGeneratorQuery';
 type SynthqlQueryOptions<TQuery extends Query> = {
     requestInit?: RequestInit;
     returnLastOnly?: boolean;
-    reactQuery?: QueryOptions<TQuery>;
+    /**
+     * `@tanstack/react-query` options for the query.
+     */
+    reactQuery?: QueryOptions<AsyncGenerator<QueryResult<TQuery>>>;
 };
 
 export function useSynthql<TQuery extends Query>(
     query: TQuery,
     opts: SynthqlQueryOptions<TQuery> = {},
 ): UseQueryResult<QueryResult<TQuery>> {
+    type ResultType = QueryResult<TQuery>;
+
     const { endpoint, requestInit } = useSynthqlContext();
 
-    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}-${query.hash}`;
+    const enrichedEndpoint = `${endpoint}/${query.name ?? query.from}`;
 
     const mergedRequestInit: RequestInit = {
         ...requestInit,
@@ -34,10 +39,10 @@ export function useSynthql<TQuery extends Query>(
         requestInit: mergedRequestInit,
     });
 
-    return useAyncGeneratorQuery({
+    return useAyncGeneratorQuery<ResultType>({
         queryKey,
-        queryFn: async () => {
-            return fetchJsonLines<QueryResult<TQuery>>(
+        queryFn: (): AsyncGenerator<ResultType> => {
+            return fetchJsonLines<ResultType>(
                 enrichedEndpoint,
                 mergedRequestInit,
             );

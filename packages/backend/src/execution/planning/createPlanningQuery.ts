@@ -1,8 +1,8 @@
-import { AnyQuery } from '@synthql/queries';
+import { Query } from '@synthql/queries';
 import { mapQuery } from '../../query/mapQuery';
 import { PlanningQuery } from '../types';
 
-export function createPlanningQuery(query: AnyQuery): PlanningQuery {
+export function createPlanningQuery(query: Query): PlanningQuery {
     return mapQuery<PlanningQuery>(query, (q, context): PlanningQuery => {
         return {
             ...q,

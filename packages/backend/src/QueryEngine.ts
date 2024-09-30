@@ -65,6 +65,13 @@ export interface QueryEngineProps<DB> {
      * Whether to log SQL statements or not.
      */
     logging?: boolean;
+
+    /**
+     * The rate at which rows are sampled for runtime type validation.
+     *
+     * Defaults to 0, meaning no validation will be performed.
+     */
+    runtimeValidationSampleRate?: number;
 }
 
 export class QueryEngine<DB> {
@@ -72,6 +79,7 @@ export class QueryEngine<DB> {
     private schema: string;
     private prependSql?: string;
     private executors: Array<QueryExecutor> = [];
+    private runtimeValidationSampleRate: number;
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
@@ -94,6 +102,8 @@ export class QueryEngine<DB> {
                 logging: config.logging,
             }),
         ];
+        this.runtimeValidationSampleRate =
+            config.runtimeValidationSampleRate ?? 0;
     }
 
     execute<TQuery extends Query>(
@@ -117,6 +127,7 @@ export class QueryEngine<DB> {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
             prependSql: this.prependSql,
+            runtimeValidationSampleRate: this.runtimeValidationSampleRate,
         });
 
         if (opts?.returnLastOnly) {

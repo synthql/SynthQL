@@ -41,7 +41,6 @@ describe('n x m', () => {
         executors: [
             new PgExecutor({
                 defaultSchema: 'public',
-                logging: true,
                 pool,
             }),
         ],

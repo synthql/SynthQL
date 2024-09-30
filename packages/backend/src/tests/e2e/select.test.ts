@@ -1,13 +1,12 @@
-import { Query, Table, col } from '@synthql/queries';
+import { Query, col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
-import { DB } from '../generated';
 import { sql } from '../postgres';
 import { findActorById, findCityById, from, movie } from '../queries';
 import { queryEngine } from '../queryEngine';
 
 describe('select', () => {
-    function run<TTable extends Table<DB>, T extends Query>(query: T) {
+    function run<T extends Query>(query: T) {
         return collectLast(queryEngine.execute(query));
     }
 
@@ -22,7 +21,7 @@ describe('select', () => {
             const result = await run(findActorById(actorId));
 
             const expected = await sql`
-                SELECT 
+                SELECT
                     actor.actor_id,
                     actor.first_name,
                     actor.last_name,

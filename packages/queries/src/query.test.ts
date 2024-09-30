@@ -163,6 +163,10 @@ describe('queries', () => {
     });
 
     test('', () => {
+        from('actor').groupBy('actor_id');
+    });
+
+    test('', () => {
         const address = from('address').columns('address_id', 'city_id').one();
         const staff = from('staff')
             .columns('staff_id')
