@@ -1,4 +1,4 @@
-import { Table, ColumnValue } from '@synthql/queries';
+import { ColumnValue, Table } from '@synthql/queries';
 
 /**
  * Get all the `whereable` columns in a table and return

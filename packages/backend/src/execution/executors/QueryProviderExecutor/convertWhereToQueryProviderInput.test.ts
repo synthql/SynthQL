@@ -1,5 +1,6 @@
-import { col } from '@synthql/queries';
+import {} from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
+import { col } from '../../../tests/generated';
 import { convertWhereToQueryProviderInput } from './convertWhereToQueryProviderInput';
 
 describe('convertWhereToQueryProviderInput', () => {
@@ -52,8 +53,8 @@ describe('convertWhereToQueryProviderInput', () => {
         { a: { match: 'a%' } },
         { a: { ilike: 'a%' } },
         { a: 1, b: { not: 2 } },
-        { a: col<any>('b.a') },
-        { a: col<any>('b.a'), b: 2 },
+        { a: col('b.a' as never) },
+        { a: col('b.a' as never), b: 2 },
     ];
 
     describe('unsupported where clauses', () => {

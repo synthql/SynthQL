@@ -1,5 +1,5 @@
 import { describe, test } from 'vitest';
-import { AnyQuery, Query, QueryResult, col } from '.';
+import { AnyQuery, Query, QueryResult, RefOp, Table } from '.';
 import { from } from './generated';
 
 describe('queries', () => {
@@ -115,6 +115,15 @@ describe('queries', () => {
             last_update: string;
         };
     });
+
+    function col<DB>(ref: Table<DB>): RefOp<DB> {
+        return {
+            $ref: {
+                column: '',
+                table: '',
+            },
+        };
+    }
 
     test('Find film with language and actors', () => {
         const language = from('language')

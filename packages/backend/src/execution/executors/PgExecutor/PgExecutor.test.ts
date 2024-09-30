@@ -1,7 +1,6 @@
-import { col } from '@synthql/queries';
 import { describe, expect, it } from 'vitest';
 import { PgExecutor } from '.';
-import { from } from '../../../tests/generated';
+import { col, from } from '../../../tests/generated';
 import { pool } from '../../../tests/queryEngine';
 import { QueryProviderExecutor } from '../QueryProviderExecutor';
 

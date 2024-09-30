@@ -1,6 +1,6 @@
-import { col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { PgExecutor } from '.';
+import { col } from '../../../tests/generated';
 import {
     actor,
     film,

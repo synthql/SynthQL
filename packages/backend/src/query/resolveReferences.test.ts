@@ -1,9 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import { col } from '@synthql/queries';
-import { createRefContext } from '../refs/RefContext';
 import { ColumnRef } from '../refs/ColumnRef';
+import { createRefContext } from '../refs/RefContext';
+import { col, from } from '../tests/generated';
 import { resolveReferences } from './resolveReferences';
-import { from } from '../tests/generated';
 
 describe('resolveReferences', () => {
     test('should resolve references', async () => {

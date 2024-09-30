@@ -1,8 +1,8 @@
-import { col, query } from '@synthql/queries';
+import { query } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '..';
 import { QueryProvider } from '../QueryProvider';
-import { DB, schema } from '../tests/generated';
+import { DB, ref, schema } from '../tests/generated';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 import { execute } from './execute';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
@@ -238,7 +238,7 @@ describe('execute', () => {
                 .include({
                     rating: from('film_rating')
                         .columns('rating')
-                        .where({ film_id: col('film.film_id') })
+                        .where({ film_id: ref('film.film_id') })
                         .one(),
                 })
                 .one();

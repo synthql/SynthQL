@@ -1,11 +1,11 @@
 import { QueryEngine } from '@synthql/backend';
-import { col, Query } from '@synthql/queries';
+import { Query } from '@synthql/queries';
 import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { useSynthql } from '.';
 import { createPagilaServer, PagilaServer } from './test/createPagilaServer';
-import { from } from './test/generated';
+import { col, from } from './test/generated';
 import { Providers } from './test/Providers';
 
 function renderSynthqlQuery<TQuery extends Query>({

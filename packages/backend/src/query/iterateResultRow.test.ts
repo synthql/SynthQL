@@ -1,5 +1,6 @@
-import { QueryResult, col } from '@synthql/queries';
+import { QueryResult } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
+import { col } from '../tests/generated';
 import { city } from '../tests/queries.v2';
 import { iterateResultRows } from './iterateResultRow';
 

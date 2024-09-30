@@ -1,11 +1,11 @@
-import { QueryResult, col } from '@synthql/queries';
+import { QueryResult } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
 import { PgExecutor } from '../../execution/executors/PgExecutor';
 import { describeQuery } from '../../query/describeQuery';
 import { assertPresent } from '../../util/asserts/assertPresent';
-import { from } from '../generated';
+import { col, from } from '../generated';
 import { sql } from '../postgres';
 import { store } from '../queries.v2';
 import { pool } from '../queryEngine';

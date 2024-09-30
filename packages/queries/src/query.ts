@@ -9,11 +9,14 @@ import {
     TUnion,
 } from '@sinclair/typebox';
 import { Assert } from '@sinclair/typebox/value';
+import { col } from './col';
 import { getTablePrimaryKeyColumns } from './schema/getTablePrimaryKeyColumns';
 import { getTableSchema } from './schema/getTableSchema';
 import { getTableSelectableColumns } from './schema/getTableSelectableColumns';
 import { Column } from './types/Column';
+import { ColumnReference } from './types/ColumnReference';
 import { ColumnValue } from './types/ColumnValue';
+import { RefOp } from './types/RefOp';
 import { Schema } from './types/Schema';
 import { Select } from './types/Select';
 import { Table } from './types/Table';
@@ -320,6 +323,15 @@ export class QueryBuilder<
 
 export function query<DB>(schema: Schema<DB>) {
     return {
+        ref(ref: ColumnReference<DB>): RefOp<DB> {
+            return col(ref);
+        },
+        /**
+         * @deprecated Use {@link ref} instead.
+         */
+        col(ref: ColumnReference<DB>): RefOp<DB> {
+            return col(ref);
+        },
         from<TTable extends Table<DB>>(table: TTable) {
             const select = getTableSelectableColumns<DB>(schema, table);
 

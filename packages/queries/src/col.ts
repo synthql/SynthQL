@@ -1,8 +1,11 @@
 import { ColumnReference } from './types/ColumnReference';
 import { RefOp } from './types/RefOp';
 
+/**
+ * @deprecated Use `ref` instead.
+ */
 export function col<DB>(ref: ColumnReference<DB>): RefOp<DB> {
-    const parts = ref.split('.');
+    const parts = String(ref).split('.');
     if (parts.length === 2) {
         return {
             $ref: {

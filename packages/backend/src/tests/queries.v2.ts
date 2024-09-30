@@ -1,5 +1,4 @@
-import { col } from '@synthql/queries';
-import { from } from './generated';
+import { col, from } from './generated';
 
 export function language() {
     return from('language').columns('name', 'language_id');

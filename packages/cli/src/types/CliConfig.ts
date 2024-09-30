@@ -1,4 +1,5 @@
 import { ColumnDefProperties } from '@synthql/queries';
+
 export interface CliConfig {
     /**
      * Internal. DO NOT USE/SET this option.

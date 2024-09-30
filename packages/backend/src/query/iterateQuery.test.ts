@@ -1,7 +1,7 @@
-import { AnyQuery, col } from '@synthql/queries';
+import { AnyQuery } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { Path } from '../execution/types';
-import { from } from '../tests/generated';
+import { col, from } from '../tests/generated';
 import { iterateQuery } from './iterateQuery';
 
 describe('iterateQuery', () => {

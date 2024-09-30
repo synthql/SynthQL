@@ -1,6 +1,5 @@
-import { col } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
-import { from } from '../../tests/generated';
+import { col, from } from '../../tests/generated';
 import { store } from '../../tests/queries.v2';
 import { printPath } from '../../util/path/printPath';
 import { PlanningQuery } from '../types';

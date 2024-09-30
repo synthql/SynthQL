@@ -1,4 +1,4 @@
-import { col } from '@synthql/queries';
+import {} from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '../..';
 import { execute } from '../../execution/execute';
@@ -7,7 +7,7 @@ import { createExecutionPlan } from '../../execution/planning/createExecutionPla
 import { simplifyPlan } from '../../execution/planning/simplifyPlan';
 import { describeQuery } from '../../query/describeQuery';
 import { compareInventory } from '../compareInventory';
-import { from } from '../generated';
+import { col, from } from '../generated';
 
 import { sql } from '../postgres';
 import { pool } from '../queryEngine';
