@@ -1,4 +1,10 @@
-import { AnyDB, AnyQuery, AnyTable, DeferredResult, QueryResult } from '@synthql/queries';
+import {
+    AnyDB,
+    AnyQuery,
+    AnyTable,
+    DeferredResult,
+    QueryResult,
+} from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { setIn } from '../util/tree/setIn';
@@ -13,7 +19,10 @@ export function composeExecutionResults(
         composeExecutionResultsRecursively(node, queryResult);
     }
 
-    return applyCardinalityAndDeferredResult(queryResult, tree.root.inputQuery) as QueryResult<AnyDB, AnyTable>;
+    return applyCardinalityAndDeferredResult(
+        queryResult,
+        tree.root.inputQuery,
+    ) as QueryResult<AnyDB, AnyTable>;
 }
 
 function composeExecutionResultsRecursively(
@@ -56,10 +65,7 @@ function applyDeferredQueryResult<T>(
     return { status: 'done', data: result };
 }
 
-function applyCardinalityAndDeferredResult<T>(
-    rows: T[],
-    inputQuery: AnyQuery,
-) {
+function applyCardinalityAndDeferredResult<T>(rows: T[], inputQuery: AnyQuery) {
     const withCardinality = applyCardinality(rows, inputQuery.cardinality, {
         query: inputQuery,
         row: rows,

@@ -131,7 +131,10 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
 
         try {
             if (this.props.logging) {
-                console.log(format(sql, { language: 'postgresql' }));
+                console.log(
+                    query.name,
+                    format(sql, { language: 'postgresql' }),
+                );
             }
 
             const queryResult = await client.query(sql, params);

@@ -193,7 +193,14 @@ describe('select', () => {
         const result = await run(query);
         const resultNonDeferred = await run(queryNonDeferred);
 
-        expect(result.map(r => r.language.status === "done" && { ...r, language: r.language.data }))
-            .toEqual(resultNonDeferred)
+        expect(
+            result.map(
+                (r) =>
+                    r.language.status === 'done' && {
+                        ...r,
+                        language: r.language.data,
+                    },
+            ),
+        ).toEqual(resultNonDeferred);
     });
 });
