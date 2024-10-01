@@ -3,6 +3,7 @@ import { composeExecutionResults } from './composeExecutionResults';
 import { createExecutionPlan } from './planning/createExecutionPlan';
 import { executePlan } from './execution/executePlan';
 import { QueryExecutor } from './types';
+import { shouldYield } from './execution/shouldYield';
 
 export interface ExecuteProps {
     executors: Array<QueryExecutor>;
@@ -40,6 +41,8 @@ export async function* execute<DB, TQuery extends Query<DB>>(
     const plan = createExecutionPlan(query, props);
 
     for await (const resultTree of executePlan(plan, props)) {
-        yield composeExecutionResults(resultTree);
+        if (shouldYield(resultTree)) {
+            yield composeExecutionResults(resultTree);
+        }
     }
 }

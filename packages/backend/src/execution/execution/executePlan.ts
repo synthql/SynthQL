@@ -52,6 +52,7 @@ export function executePlan(
                 filters: createFilters(planNode),
                 inputQuery: planNode.inputQuery,
                 result: rows,
+                planNode,
                 children: [],
             };
         },

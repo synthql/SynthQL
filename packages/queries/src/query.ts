@@ -460,6 +460,19 @@ export class QueryBuilder<
         );
     }
 
+    /**
+     * Marks the execution of the query to be deferred.
+     *
+     * This means that the parent query will be executed first and results will be sent
+     * to the client while the deferred query is executed in the background.
+     */
+    defer() {
+        return this.lazy();
+    }
+
+    /**
+     * @alias {@link defer}
+     */
     lazy() {
         return new QueryBuilder<
             DB,

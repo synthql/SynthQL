@@ -36,7 +36,6 @@ describe('e2e', () => {
 
     const pgExecutor = new PgExecutor({
         defaultSchema: 'public',
-        logging: true,
         pool,
     });
     const execProps = {

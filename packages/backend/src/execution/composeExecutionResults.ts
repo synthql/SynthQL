@@ -1,4 +1,4 @@
-import { AnyDB, AnyTable, QueryResult } from '@synthql/queries';
+import { AnyDB, AnyTable, DeferredResult, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { setIn } from '../util/tree/setIn';
@@ -40,13 +40,26 @@ function composeExecutionResultsRecursively(
             return true;
         };
         const rows = result.filter((row) => predicate(row));
-        return applyCardinality(rows, inputQuery.cardinality ?? 'many', {
+
+        const withCardinality = applyCardinality(rows, inputQuery.cardinality, {
             query: inputQuery,
             row: rows,
         });
+
+        return applyDeferredQueryResult(withCardinality, inputQuery.lazy);
     });
 
     for (const child of node.children) {
         composeExecutionResultsRecursively(child, queryResult);
     }
+}
+
+function applyDeferredQueryResult<T>(
+    result: T,
+    defer: boolean = false,
+): DeferredResult<T> | T {
+    if (!defer) {
+        return result;
+    }
+    return { status: 'done', data: result };
 }

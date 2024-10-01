@@ -164,4 +164,36 @@ describe('select', () => {
             Array.from(expected).sort(comparator),
         );
     });
+
+    test('defer', async () => {
+        const limit = 20;
+        const language = from('language')
+            .columns('name')
+            .where({ language_id: col('film.language_id') })
+            .defer()
+            .first();
+
+        const query = from('film')
+            .columns('title')
+            .include({ language })
+            .limit(limit)
+            .all();
+
+        const languageNonDeferred = from('language')
+            .columns('name')
+            .where({ language_id: col('film.language_id') })
+            .first();
+
+        const queryNonDeferred = from('film')
+            .columns('title')
+            .include({ language: languageNonDeferred })
+            .limit(limit)
+            .all();
+
+        const result = await run(query);
+        const resultNonDeferred = await run(queryNonDeferred);
+
+        expect(result.map(r => r.language.status === "done" && { ...r, language: r.language.data }))
+            .toEqual(resultNonDeferred)
+    });
 });
