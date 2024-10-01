@@ -1,4 +1,4 @@
-import { AnyDB, AnyTable, DeferredResult, QueryResult } from '@synthql/queries';
+import { AnyDB, AnyQuery, AnyTable, DeferredResult, QueryResult } from '@synthql/queries';
 import { applyCardinality } from '../query/applyCardinality';
 import { assertHasKey } from '../util/asserts/assertHasKey';
 import { setIn } from '../util/tree/setIn';
@@ -13,10 +13,7 @@ export function composeExecutionResults(
         composeExecutionResultsRecursively(node, queryResult);
     }
 
-    return applyCardinality(
-        queryResult,
-        tree.root.inputQuery.cardinality ?? 'many',
-    ) as QueryResult<AnyDB, AnyTable>;
+    return applyCardinalityAndDeferredResult(queryResult, tree.root.inputQuery) as QueryResult<AnyDB, AnyTable>;
 }
 
 function composeExecutionResultsRecursively(
@@ -41,12 +38,7 @@ function composeExecutionResultsRecursively(
         };
         const rows = result.filter((row) => predicate(row));
 
-        const withCardinality = applyCardinality(rows, inputQuery.cardinality, {
-            query: inputQuery,
-            row: rows,
-        });
-
-        return applyDeferredQueryResult(withCardinality, inputQuery.lazy);
+        return applyCardinalityAndDeferredResult(rows, inputQuery);
     });
 
     for (const child of node.children) {
@@ -62,4 +54,16 @@ function applyDeferredQueryResult<T>(
         return result;
     }
     return { status: 'done', data: result };
+}
+
+function applyCardinalityAndDeferredResult<T>(
+    rows: T[],
+    inputQuery: AnyQuery,
+) {
+    const withCardinality = applyCardinality(rows, inputQuery.cardinality, {
+        query: inputQuery,
+        row: rows,
+    });
+
+    return applyDeferredQueryResult(withCardinality, inputQuery.lazy);
 }
