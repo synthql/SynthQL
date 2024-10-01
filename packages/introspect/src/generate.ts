@@ -192,9 +192,11 @@ function createTableJsonSchema(
         // In the future we should add support for composite types.
         const type = isComposite
             ? {}
-            : {
-                  $ref: `#/$defs/${createTypeDefId(column.type, column.expandedType)}`,
-              };
+            : isExpandedTypeAnArray(column.expandedType)
+              ? createArrayDef(column.expandedType, column.type.fullName)
+              : {
+                    $ref: `#/$defs/${createTypeDefId(column.type, column.expandedType)}`,
+                };
 
         acc[column.name] = {
             type: 'object',
@@ -267,6 +269,35 @@ function createTableJsonSchema(
     };
 }
 
+function isExpandedTypeAnArray(expandedType: string): boolean {
+    return expandedType.split('[]').length > 1;
+}
+
+function createArrayDef(expandedType: string, fullName: string): JSONSchema {
+    const items = expandedType.split('[]');
+
+    // 1. Starting at the rightmost,
+    // create an array schema def,
+    // and move leftwards
+
+    // 2. once the string left is
+    // an object pg type, embed
+    // the object properties
+
+    if (items[items.length - 1] === fullName) {
+        return createWellKnownDefs()[fullName];
+    } else if (items[items.length - 1] === '') {
+        return {
+            id: expandedType,
+            type: 'array',
+            items: createArrayDef(items.slice(0, -1).join('[]'), fullName),
+        };
+    }
+
+    // return `unknown` otherwise
+    return {};
+}
+
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
@@ -331,7 +362,6 @@ function createRootJsonSchema(
                 tableOrViewDefTransformers,
             ),
             ...createWellKnownDefs(),
-            ...createArrayWellKnownDefs(createWellKnownDefs()),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
         },
@@ -742,33 +772,4 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             description: 'A PG xml',
         },
     };
-}
-
-function createArrayWellKnownDefs(
-    wellKnownDefs: Record<string, JSONSchema>,
-): Record<string, JSONSchema> {
-    const defs: Record<string, JSONSchema> = {};
-
-    for (const [key, typeDef] of Object.entries(wellKnownDefs)) {
-        defs[key + '[]'] = {
-            ...typeDef,
-            id: key + '[]',
-            type: 'array',
-            items:
-                typeDef.type !== 'object'
-                    ? {
-                          type: typeDef.type,
-                      }
-                    : {
-                          type: typeDef.type,
-                          properties: typeDef.properties,
-                          required: typeDef.required,
-                      },
-            properties:
-                typeDef.type !== 'object' ? typeDef.properties : undefined,
-            required: typeDef.type !== 'object' ? typeDef.required : undefined,
-        };
-    }
-
-    return defs;
 }

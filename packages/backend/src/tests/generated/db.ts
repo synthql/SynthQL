@@ -60,10 +60,8 @@ export type PublicMpaaRatingEnum = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 /**
  * A PG text
  */
-export type PgCatalogText1 = {
-    [k: string]: unknown;
-} & PgCatalogText2;
-export type PgCatalogText2 = string[];
+export type PgCatalogText2 = string;
+export type PgCatalogText1 = PgCatalogText2[];
 /**
  * A PG tsvector
  */
