@@ -61,7 +61,7 @@ export class QueryBuilder<
         hash: string;
         name: string;
     } {
-        const defaultName = `${this._from}-by-${Object.keys(this.where).join('-and-')}`;
+        const defaultName = `${this._from}-by-${Object.keys(this._where).join('-and-')}`;
 
         const query = {
             from: this._from,
@@ -502,8 +502,6 @@ export class QueryBuilder<
 export function query<DB>(schema: Schema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
-            type TKeys = Array<Column<DB, TTable>>;
-
             const select = getTableSelectableColumns<DB>(schema, table);
 
             const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, table);
@@ -512,7 +510,7 @@ export function query<DB>(schema: Schema<DB>) {
                 DB,
                 TTable,
                 {},
-                { [k in TKeys[number]]: true },
+                typeof select,
                 {},
                 number | undefined,
                 number | undefined,
