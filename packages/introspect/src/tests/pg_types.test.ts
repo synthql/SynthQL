@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { Pool, types } from 'pg';
+import Ajv2020 from 'ajv/dist/2020';
+import { generate } from '../generate';
 
 interface Column {
     type: string;
@@ -17,27 +19,42 @@ types.setTypeParser(types.builtins.DATE, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMPTZ, (value) => value);
 
+const ajv = new Ajv2020({ allErrors: true, strict: false });
+
 describe('pg_types', () => {
     test('Add to Pagila', async () => {
         await client.connect();
+
+        const tableName = 'all_data_types';
 
         try {
             await createTable();
 
             await insertData();
 
+            // Generate schema in `introspect` package
+            const { schema } = await generate({
+                connectionString:
+                    'postgresql://postgres:postgres@localhost:5432/postgres',
+                includeSchemas: ['public'],
+                defaultSchema: 'public',
+                includeTablesAndViews: [tableName],
+                outDir: '../introspect/src/tests/generated',
+            });
+
             for (const [name, value] of Object.entries(await selectData())) {
-                console.log({
-                    'Name:': name,
-                    'Value:': value,
-                    'JS primitive type': typeof value,
-                });
+                const columnType = (schema.properties?.[tableName] as any)
+                    ?.properties?.columns?.properties?.[name]?.properties?.type;
+
+                delete columnType?.id;
+
+                const validateColumnTypeSchema = ajv.compile(columnType);
+
+                expect(validateColumnTypeSchema(value)).toEqual(true);
             }
         } finally {
             await dropTable();
         }
-
-        expect(1).toBe(2);
     }, 100_000);
 });
 

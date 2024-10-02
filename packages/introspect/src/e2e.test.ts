@@ -16,6 +16,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
+            excludeTablesAndViews: ['all_data_types'],
             outDir: '../backend/src/tests/generated',
             formatter: (str) =>
                 prettier.format(str, {
@@ -30,6 +31,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
+            excludeTablesAndViews: ['all_data_types'],
             outDir: '../handler-express/src/tests/generated',
             formatter: (str) =>
                 prettier.format(str, {
@@ -44,6 +46,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
+            excludeTablesAndViews: ['all_data_types'],
             outDir: '../handler-next/src/tests/generated',
             formatter: (str) =>
                 prettier.format(str, {
@@ -58,6 +61,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
+            excludeTablesAndViews: ['all_data_types'],
             outDir: '../queries/src/generated',
             formatter: (str) =>
                 prettier.format(str, {
@@ -73,6 +77,7 @@ describe('e2e', () => {
                 'postgresql://postgres:postgres@localhost:5432/postgres',
             includeSchemas: ['public'],
             defaultSchema: 'public',
+            excludeTablesAndViews: ['all_data_types'],
             outDir: '../react/src/test/generated',
             formatter: (str) =>
                 prettier.format(str, {

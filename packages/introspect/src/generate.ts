@@ -35,7 +35,7 @@ interface GenerateProps {
     includeSchemas: string[];
     /**
      * The default schema to use.
-     * e.g. `public`.
+     * e.g. `public`
      * This is similar to the `search_path` in PostgreSQL.
      */
     defaultSchema: string;
@@ -44,6 +44,11 @@ interface GenerateProps {
      * e.g. `['users', 'accounts', 'user_account']`
      */
     includeTablesAndViews?: string[];
+    /**
+     * The tables and/or views to exclude from generation.
+     * e.g. `['agents', 'suppliers', 'agent_supplier']`
+     */
+    excludeTablesAndViews?: string[];
     /**
      * Custom transformers that can be used to
      * modify/extend the default generation data
@@ -68,6 +73,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTablesAndViews = [],
+    excludeTablesAndViews = [],
     tableOrViewDefTransformers = [],
     outDir,
     formatter = async (str) => str,
@@ -108,6 +114,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTablesAndViews,
+        excludeTablesAndViews,
         tableOrViewDefTransformers,
     });
 
@@ -294,6 +301,10 @@ function createArrayDef(expandedType: string, fullName: string): JSONSchema {
         };
     }
 
+    console.warn(
+        `No type definition found for the pg_type: ${items[items.length - 1]}`,
+    );
+
     // return `unknown` otherwise
     return {};
 }
@@ -303,10 +314,12 @@ function createRootJsonSchema(
     {
         defaultSchema,
         includeTablesAndViews,
+        excludeTablesAndViews,
         tableOrViewDefTransformers,
     }: {
         defaultSchema: string;
         includeTablesAndViews: string[];
+        excludeTablesAndViews: string[];
         tableOrViewDefTransformers: Array<TableOrViewDefTransformer>;
     },
 ): JSONSchema {
@@ -317,15 +330,24 @@ function createRootJsonSchema(
         (schema) => schema.views,
     );
 
-    // Combine table and views
     const allTablesAndViews: TableOrView[] = allTables.concat(allViews);
 
     // Check if a list of tables/views is passed, and if so, use as filter
+    // The logic here is currently that `exclusion` takes precedence,
+    // so if a table is both included & excluded, the exclude takes precedence,
+    // so the table will NOT be included in the schema
     const tablesAndViews =
         includeTablesAndViews.length === 0
-            ? allTablesAndViews
-            : allTablesAndViews.filter((tableOrView) =>
-                  includeTablesAndViews.includes(tableOrView.name),
+            ? excludeTablesAndViews.length === 0
+                ? allTablesAndViews
+                : allTablesAndViews.filter(
+                      (tableOrView) =>
+                          !excludeTablesAndViews.includes(tableOrView.name),
+                  )
+            : allTablesAndViews.filter(
+                  (tableOrView) =>
+                      includeTablesAndViews.includes(tableOrView.name) &&
+                      !excludeTablesAndViews.includes(tableOrView.name),
               );
 
     const enums = Object.values(schemas).flatMap((schema) => {
