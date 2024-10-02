@@ -102,7 +102,7 @@ describe('queries', () => {
             last_update: string;
         };
 
-        expect(q.name).toMatchInlineSnapshot(`"actor-by-actor_id"`)
+        expect(q.name).toMatchInlineSnapshot(`"actor-by-actor_id"`);
     });
 
     test('Find film with language and actors', () => {
@@ -111,7 +111,9 @@ describe('queries', () => {
             .where({ language_id: col('film.language_id') })
             .maybe();
 
-        expect(language.name).toMatchInlineSnapshot(`"language-by-language_id"`);
+        expect(language.name).toMatchInlineSnapshot(
+            `"language-by-language_id"`,
+        );
 
         const filmActor = from('film_actor')
             .select({})
@@ -167,10 +169,7 @@ describe('queries', () => {
             })
             .first();
 
-        const q = from('film')
-            .include({ language })
-            .columns('title')
-            .all();
+        const q = from('film').include({ language }).columns('title').all();
 
         const result = fakeQueryResult(q);
         result satisfies Array<{
@@ -178,6 +177,6 @@ describe('queries', () => {
             language: DeferredResult<{ name: string } | null>;
         }>;
 
-        expect(q.name).toMatchInlineSnapshot(`"film-all"`)
+        expect(q.name).toMatchInlineSnapshot(`"film-all"`);
     });
 });

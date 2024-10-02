@@ -1,7 +1,7 @@
 import { SqlBuilder } from './exp';
 import { TableRef } from '../../../../refs/TableRef';
 import { ColumnRef } from '../../../../refs/ColumnRef';
-import { JoinOp } from '@synthql/queries';
+import { AnyQuery, JoinOp, Where } from '@synthql/queries';
 
 export interface Selection {
     extractFromRow(row: any, target: any): void;
@@ -15,4 +15,5 @@ export type Join = {
         otherColumn: ColumnRef;
         op: JoinOp;
     }>;
+    where: AnyQuery['where'];
 };
