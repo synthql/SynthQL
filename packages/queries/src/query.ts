@@ -48,6 +48,14 @@ export class QueryBuilder<
         });
     }
 
+    private defaultName() {
+        const whereName = Object.keys(this._where).join('-and-');
+        if (whereName === '') {
+            return `${this._from}-all`;
+        }
+        return `${this._from}-by-${whereName}`;
+    }
+
     private build(): {
         from: TTable;
         where: TWhere;
@@ -61,7 +69,7 @@ export class QueryBuilder<
         hash: string;
         name: string;
     } {
-        const defaultName = `${this._from}-by-${Object.keys(this._where).join('-and-')}`;
+        const defaultName = this.defaultName();
 
         const query = {
             from: this._from,

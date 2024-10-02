@@ -1,4 +1,4 @@
-import { describe, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { DeferredResult, Query, QueryResult, Table, col } from '.';
 import { DB, from } from './generated';
 
@@ -101,6 +101,8 @@ describe('queries', () => {
             last_name: string;
             last_update: string;
         };
+
+        expect(q.name).toMatchInlineSnapshot(`"actor-by-actor_id"`)
     });
 
     test('Find film with language and actors', () => {
@@ -108,6 +110,8 @@ describe('queries', () => {
             .columns('language_id', 'name')
             .where({ language_id: col('film.language_id') })
             .maybe();
+
+        expect(language.name).toMatchInlineSnapshot(`"language-by-language_id"`);
 
         const filmActor = from('film_actor')
             .select({})
@@ -163,12 +167,17 @@ describe('queries', () => {
             })
             .first();
 
-        const q = from('film').include({ language }).columns('title').all();
+        const q = from('film')
+            .include({ language })
+            .columns('title')
+            .all();
 
         const result = fakeQueryResult(q);
         result satisfies Array<{
             title: string;
             language: DeferredResult<{ name: string } | null>;
         }>;
+
+        expect(q.name).toMatchInlineSnapshot(`"film-all"`)
     });
 });
