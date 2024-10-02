@@ -66,7 +66,7 @@ function applyDeferredQueryResult<T>(
 }
 
 function applyCardinalityAndDeferredResult<T>(rows: T[], inputQuery: AnyQuery) {
-    const withCardinality = applyCardinality(rows, inputQuery.cardinality, {
+    const withCardinality = applyCardinality(rows, inputQuery.cardinality ?? 'many', {
         query: inputQuery,
         row: rows,
     });
