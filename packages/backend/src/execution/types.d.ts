@@ -158,6 +158,7 @@ export interface ExecResultNode {
      * The original query that was executed.
      */
     inputQuery: AnyQuery;
+    planNode: ExecutionPlanNode;
     children: ExecResultNode[];
 }
 

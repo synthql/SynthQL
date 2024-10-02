@@ -1,5 +1,5 @@
 import { describe, test } from 'vitest';
-import { Query, QueryResult, Table, col } from '.';
+import { DeferredResult, Query, QueryResult, Table, col } from '.';
 import { DB, from } from './generated';
 
 describe('queries', () => {
@@ -143,5 +143,32 @@ describe('queries', () => {
                 last_name: string;
             }>;
         };
+    });
+
+    test('defer()', () => {
+        const q = from('customer').columns('email', 'first_name').defer().all();
+
+        const result = fakeQueryResult(q);
+        result satisfies DeferredResult<
+            Array<{ email: string | null; first_name: string }>
+        >;
+    });
+
+    test('defer() ', () => {
+        const language = from('language')
+            .columns('name')
+            .defer()
+            .where({
+                language_id: col('film.language_id'),
+            })
+            .first();
+
+        const q = from('film').include({ language }).columns('title').all();
+
+        const result = fakeQueryResult(q);
+        result satisfies Array<{
+            title: string;
+            language: DeferredResult<{ name: string } | null>;
+        }>;
     });
 });

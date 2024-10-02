@@ -59,9 +59,11 @@ export class QueryBuilder<
         lazy: TLazy;
         groupBy: TGroupBy;
         hash: string;
-        name?: string;
+        name: string;
     } {
-        return {
+        const defaultName = `${this._from}-by-${Object.keys(this._where).join('-and-')}`;
+
+        const query = {
             from: this._from,
             where: this._where,
             select: this._select,
@@ -71,33 +73,26 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
-            hash: hashQuery({
-                from: this._from,
-                where: this._where,
-                select: this._select,
-                include: this._include,
-                limit: this._limit,
-                offset: this._offset,
-                cardinality: this._cardinality ?? 'many',
-                lazy: this._lazy,
-                groupBy: this._groupBy,
-                name: this._name,
-            }),
-            name: this._name,
+            hash: '',
+            name: this._name ?? defaultName,
         };
+
+        query.hash = hashQuery(query);
+
+        return query;
     }
 
     /**
      * Sets the limit of the query.
      */
-    limit(limit: TLimit) {
+    limit(limit: number) {
         return new QueryBuilder<
             DB,
             TTable,
             TWhere,
             TSelect,
             TInclude,
-            TLimit,
+            number,
             TOffset,
             TCardinality,
             TLazy,
@@ -156,30 +151,8 @@ export class QueryBuilder<
      * for the query, and then builds the query.
      * Shorthand for `.limit(n).all()`.
      */
-    take(take: TLimit) {
-        return new QueryBuilder<
-            DB,
-            TTable,
-            TWhere,
-            TSelect,
-            TInclude,
-            TLimit,
-            TOffset,
-            'many',
-            TLazy,
-            TGroupBy
-        >(
-            this._from,
-            this._where,
-            this._select,
-            this._include,
-            take,
-            this._offset,
-            'many',
-            this._lazy,
-            this._groupBy,
-            this._name,
-        ).build();
+    take(take: number) {
+        return this.limit(take).cardinality('many').build();
     }
 
     /**
@@ -215,87 +188,21 @@ export class QueryBuilder<
      * @alias {@link firstOrThrow}
      */
     one() {
-        return new QueryBuilder<
-            DB,
-            TTable,
-            TWhere,
-            TSelect,
-            TInclude,
-            1,
-            TOffset,
-            'one',
-            TLazy,
-            TGroupBy
-        >(
-            this._from,
-            this._where,
-            this._select,
-            this._include,
-            1,
-            this._offset,
-            'one',
-            this._lazy,
-            this._groupBy,
-            this._name,
-        ).build();
+        return this.cardinality('one').limit(1).build();
     }
 
     /**
      * @alias {@link all}
      */
     many() {
-        return new QueryBuilder<
-            DB,
-            TTable,
-            TWhere,
-            TSelect,
-            TInclude,
-            TLimit,
-            TOffset,
-            'many',
-            TLazy,
-            TGroupBy
-        >(
-            this._from,
-            this._where,
-            this._select,
-            this._include,
-            this._limit,
-            this._offset,
-            'many',
-            this._lazy,
-            this._groupBy,
-            this._name,
-        ).build();
+        return this.cardinality('many').build();
     }
 
     /**
      * @alias {@link first}
      */
     maybe() {
-        return new QueryBuilder<
-            DB,
-            TTable,
-            TWhere,
-            TSelect,
-            TInclude,
-            1,
-            TOffset,
-            'maybe',
-            TLazy,
-            TGroupBy
-        >(
-            this._from,
-            this._where,
-            this._select,
-            this._include,
-            1,
-            this._offset,
-            'maybe',
-            this._lazy,
-            this._groupBy,
-            this._name,
-        ).build();
+        return this.cardinality('maybe').limit(1).build();
     }
 
     select<TSelect extends Select<DB, TTable>>(select: TSelect) {
@@ -460,6 +367,19 @@ export class QueryBuilder<
         );
     }
 
+    /**
+     * Marks the execution of the query to be deferred.
+     *
+     * This means that the parent query will be executed first and results will be sent
+     * to the client while the deferred query is executed in the background.
+     */
+    defer() {
+        return this.lazy();
+    }
+
+    /**
+     * @alias {@link defer}
+     */
     lazy() {
         return new QueryBuilder<
             DB,
@@ -512,6 +432,34 @@ export class QueryBuilder<
         );
     }
 
+    cardinality<TNewCardinality extends Cardinality>(
+        cardinality: TNewCardinality,
+    ) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TSelect,
+            TInclude,
+            TLimit,
+            TOffset,
+            TNewCardinality,
+            TLazy,
+            TGroupBy
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            this._offset,
+            cardinality,
+            this._lazy,
+            this._groupBy,
+            this._name,
+        );
+    }
+
     /**
      * Sets the name of the query.
      *
@@ -554,8 +502,6 @@ export class QueryBuilder<
 export function query<DB>(schema: Schema<DB>) {
     return {
         from<TTable extends Table<DB>>(table: TTable) {
-            type TKeys = Array<Column<DB, TTable>>;
-
             const select = getTableSelectableColumns<DB>(schema, table);
 
             const primaryKeys = getTablePrimaryKeyColumns<DB>(schema, table);
@@ -564,7 +510,7 @@ export function query<DB>(schema: Schema<DB>) {
                 DB,
                 TTable,
                 {},
-                { [k in TKeys[number]]: true },
+                typeof select,
                 {},
                 number | undefined,
                 number | undefined,

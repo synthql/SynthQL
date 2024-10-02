@@ -5,7 +5,7 @@ import { Table } from './Table';
 
 export type QueryResult<DB, TQuery> = Simplify<
     TQuery extends Query<DB, infer TTable>
-        ? ApplyCardinality<DB, TTable, TQuery>
+        ? ApplyDeferredQueryResult<DB, TTable, TQuery>
         : never
 >;
 
@@ -64,14 +64,18 @@ type QueryResultFromInclude<
     >;
 };
 
-type LazyQueryResult<
+export type DeferredResult<T> =
+    | { status: 'pending' }
+    | { status: 'done'; data: T }
+    | { status: 'error'; error: unknown };
+
+type ApplyDeferredQueryResult<
     DB,
     TTable extends Table<DB>,
     TQuery extends Query<DB, TTable>,
-> =
-    | { status: 'pending' }
-    | { status: 'done'; data: QueryResult<DB, TQuery> }
-    | { status: 'error'; error: any };
+> = TQuery extends { lazy: true }
+    ? DeferredResult<ApplyCardinality<DB, TTable, TQuery>>
+    : ApplyCardinality<DB, TTable, TQuery>;
 
 type MaybeQueryResult<
     DB,
@@ -90,17 +94,22 @@ type ApplyCardinality<
     TTable extends Table<DB>,
     TQuery extends Query<DB, TTable>,
 > =
-    // Case 1: lazy query
-    TQuery extends { lazy: true }
-        ? LazyQueryResult<DB, TTable, TQuery>
-        : // Case 2: many
-          TQuery extends { cardinality: 'many' }
-          ? ManyQueryResult<DB, TTable, TQuery>
-          : // Case 2: one
-            TQuery extends { cardinality: 'one' }
-            ? QueryResultInner<DB, TTable, TQuery>
-            : // Case 2: maybe
-              TQuery extends { cardinality: 'maybe' }
-              ? MaybeQueryResult<DB, TTable, TQuery>
-              : // Else
-                never;
+    // prettier-ignore
+    // Case 1: many
+    TQuery extends { cardinality: 'many' }
+    ? ManyQueryResult<DB, TTable, TQuery>
+
+    : // Case 2: undefined cardinality
+    TQuery['cardinality'] extends undefined
+    ? ManyQueryResult<DB, TTable, TQuery>
+
+    : // Case 3: one
+    TQuery extends { cardinality: 'one' }
+    ? QueryResultInner<DB, TTable, TQuery>
+
+    : // Case 4: maybe
+    TQuery extends { cardinality: 'maybe' }
+    ? MaybeQueryResult<DB, TTable, TQuery>
+
+    : // Else
+    never;
