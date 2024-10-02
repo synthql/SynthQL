@@ -63,6 +63,10 @@ function collectJoins(query: AnyQuery, defaultSchema: string): Array<Join> {
             },
         );
 
+        const whereExceptRefOps: Where<AnyDB, string> = Object.fromEntries(
+            Object.entries(query.where).filter(([_, refOp]) => !isRefOp(refOp)),
+        );
+
         if (conditions.length === 0) {
             return [];
         }
@@ -71,6 +75,7 @@ function collectJoins(query: AnyQuery, defaultSchema: string): Array<Join> {
             {
                 table: TableRef.fromQuery(defaultSchema, query),
                 conditions,
+                where: whereExceptRefOps,
             },
         ];
     });
@@ -80,12 +85,7 @@ function collectWhere(
     query: AnyQuery,
     defaultSchema: string,
 ): Array<{ table: TableRef; where: Where<AnyDB, string> }> {
-    return collectFromQuery(query, (query) => {
-        return [
-            {
-                table: TableRef.fromQuery(defaultSchema, query),
-                where: query.where,
-            },
-        ];
-    });
+    return [
+        { table: TableRef.fromQuery(defaultSchema, query), where: query.where },
+    ];
 }

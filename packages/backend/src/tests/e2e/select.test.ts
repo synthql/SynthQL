@@ -203,4 +203,20 @@ describe('select', () => {
             ),
         ).toEqual(resultNonDeferred);
     });
+
+    test('join with where', async () => {
+        const language = from('language')
+            .columns('name')
+            .where({
+                language_id: col('film.language_id'),
+                name: 'Fake language',
+            })
+            .all();
+
+        const query = from('film').columns('title').include({ language }).all();
+
+        const result = await run(query);
+
+        expect(result.flatMap((r) => r.language)).toEqual([]);
+    });
 });
