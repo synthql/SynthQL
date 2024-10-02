@@ -132,7 +132,7 @@ export class PgExecutor implements QueryExecutor<PgQueryResult> {
         try {
             if (this.props.logging) {
                 console.log(
-                    query.name,
+                    `[${query.name}]:`,
                     format(sql, { language: 'postgresql' }),
                 );
             }
