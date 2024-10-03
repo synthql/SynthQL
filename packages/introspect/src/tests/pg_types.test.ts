@@ -2,10 +2,11 @@ import { describe, expect, test } from 'vitest';
 import { Pool, types } from 'pg';
 import Ajv2020 from 'ajv/dist/2020';
 import { generate } from '../generate';
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 
 interface Column {
     type: string;
-    examples: [string, string];
+    examples: string[];
 }
 
 // Database connection configuration
@@ -15,6 +16,8 @@ const client = new Pool({
 });
 
 // Use the OIDs imported from pg.types to set custom type parsers
+// We're replicating the bheaviour here so it matches the
+// adjustments we made in wellKnownDefs for values of these types
 types.setTypeParser(types.builtins.DATE, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMPTZ, (value) => value);
@@ -23,13 +26,12 @@ const ajv = new Ajv2020({ allErrors: true, strict: false });
 
 describe('pg_types', () => {
     test('Add to Pagila', async () => {
-        await client.connect();
-
         const tableName = 'all_data_types';
+
+        await client.connect();
 
         try {
             await createTable();
-
             await insertData();
 
             // Generate schema in `introspect` package
@@ -42,20 +44,31 @@ describe('pg_types', () => {
                 outDir: '../introspect/src/tests/generated',
             });
 
-            for (const [name, value] of Object.entries(await selectData())) {
-                const columnType = (schema.properties?.[tableName] as any)
-                    ?.properties?.columns?.properties?.[name]?.properties?.type;
-
-                const { id, ...columnTypeWithoutId } = columnType || {};
-                const validateColumnTypeSchema = ajv.compile(columnTypeWithoutId);
-
-                expect(validateColumnTypeSchema(value)).toEqual(true);
+            for (const row of await selectData()) {
+                checkRowSchema(schema, tableName, row);
             }
         } finally {
             await dropTable();
         }
     }, 100_000);
 });
+
+function checkRowSchema(
+    schema: JSONSchema,
+    tableName: string,
+    row: unknown,
+): void {
+    for (const [name, value] of Object.entries(row ?? {})) {
+        const columnType = (schema.properties?.[tableName] as any)?.properties
+            ?.columns?.properties?.[name]?.properties?.type;
+
+        const { id, ...columnTypeWithoutId } = columnType || {};
+
+        const validateColumnTypeSchema = ajv.compile(columnTypeWithoutId);
+
+        expect(validateColumnTypeSchema(value)).toEqual(true);
+    }
+}
 
 const createTable = async () => {
     const createTableQuery = `
@@ -68,10 +81,9 @@ const createTable = async () => {
 
     try {
         const results = await client.query(createTableQuery);
-
         console.log('Table created successfully!');
 
-        return results.rows[0];
+        return results.rows;
     } catch (err) {
         console.error('Error creating table', err);
         throw err;
@@ -93,10 +105,9 @@ const insertData = async () => {
 
     try {
         const results = await client.query(insertDataQuery);
-
         console.log(`Record inserted successfully!`);
 
-        return results.rows[0];
+        return results.rows;
     } catch (err) {
         console.error('Error inserting record', err);
         throw err;
@@ -110,17 +121,14 @@ const selectData = async () => {
                 .map((column) => `${getColumnName(column.type)}`)
                 .join(',')}
         FROM
-            all_data_types
-        LIMIT
-            1;
+            all_data_types;
     `;
 
     try {
         const results = await client.query(selectDataQuery);
-
         console.log(`Record found successfully!`);
 
-        return results.rows[0];
+        return results.rows;
     } catch (err) {
         console.error('Error finding record', err);
         throw err;
@@ -134,10 +142,9 @@ const dropTable = async () => {
 
     try {
         const results = await client.query(dropTableQuery);
-
         console.log(`Table dropped successfully!`);
 
-        return results.rows[0];
+        return results.rows;
     } catch (err) {
         console.error('Error dropping table', err);
         throw err;

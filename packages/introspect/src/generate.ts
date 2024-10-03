@@ -5,8 +5,10 @@ import {
     EnumDetails,
     extractSchemas,
     Schema,
+    TableColumn,
     TableColumnType,
     TableDetails,
+    ViewColumn,
     ViewDetails,
 } from 'extract-pg-schema';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
@@ -14,12 +16,11 @@ import fs from 'fs';
 import path from 'path';
 
 type TableOrView = TableDetails | ViewDetails;
+type TableOrViewColumn = TableColumn | ViewColumn;
 
 interface TableDefTransformer {
     test: (tableDetails: TableOrView) => boolean;
-    transform: (
-        tableColumn: TableOrView['columns'][number],
-    ) => Partial<ColumnDefProperties>;
+    transform: (tableColumn: TableOrViewColumn) => Partial<ColumnDefProperties>;
 }
 
 interface GenerateProps {
@@ -183,16 +184,7 @@ function createTableJsonSchema(
     const empty: Record<string, any> = {};
 
     const columns = table.columns.reduce((acc, column) => {
-        const isComposite = column.type.kind === 'composite';
-        // TODO(fhur): for now, when a type is composite use the "unknown" type.
-        // In the future we should add support for composite types.
-        const type = isComposite
-            ? {}
-            : isExpandedTypeAnArray(column.expandedType)
-              ? createArrayDef(column.expandedType, column.type.fullName)
-              : {
-                    $ref: `#/$defs/${createTypeDefId(column.type)}`,
-                };
+        const type = createColumnTypeDefOrRef(column);
 
         acc[column.name] = {
             type: 'object',
@@ -266,7 +258,7 @@ function createTableJsonSchema(
 }
 
 function isExpandedTypeAnArray(expandedType: string): boolean {
-    return expandedType.split('[]').length > 1;
+    return expandedType.endsWith('[]');
 }
 
 function createArrayDef(expandedType: string, fullName: string): JSONSchema {
@@ -298,6 +290,20 @@ function createArrayDef(expandedType: string, fullName: string): JSONSchema {
     return {};
 }
 
+function createColumnTypeDefOrRef(column: TableOrViewColumn) {
+    // TODO(fhur): for now, when a type is composite use the "unknown" type.
+    // In the future we should add support for composite types.
+    if (column.type.kind === 'composite') {
+        return {};
+    } else if (isExpandedTypeAnArray(column.expandedType)) {
+        return createArrayDef(column.expandedType, column.type.fullName);
+    }
+
+    return {
+        $ref: `#/$defs/${createTypeDefId(column.type)}`,
+    };
+}
+
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
@@ -325,19 +331,19 @@ function createRootJsonSchema(
     // The logic here is currently that `exclusion` takes precedence,
     // so if a table is both included & excluded, the exclude takes precedence,
     // so the table will NOT be included in the schema
-    const tables =
-        includeTables.length === 0
-            ? excludeTablesAndViews.length === 0
-                ? allTablesAndViews
-                : allTablesAndViews.filter(
-                      (tableOrView) =>
-                          !excludeTablesAndViews.includes(tableOrView.name),
-                  )
-            : allTablesAndViews.filter(
-                  (tableOrView) =>
-                      includeTables.includes(tableOrView.name) &&
-                      !excludeTablesAndViews.includes(tableOrView.name),
-              );
+    let tables: TableOrView[] = allTablesAndViews;
+
+    if (includeTables.length > 0) {
+        tables = tables.filter((tableOrView) =>
+            includeTables.includes(tableOrView.name),
+        );
+    }
+
+    if (excludeTablesAndViews.length > 0) {
+        tables = tables.filter(
+            (tableOrView) => !excludeTablesAndViews.includes(tableOrView.name),
+        );
+    }
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
