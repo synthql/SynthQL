@@ -99,6 +99,7 @@ const insertData = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error inserting record', err);
+        throw err;
     }
 };
 
