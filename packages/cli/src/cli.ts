@@ -39,7 +39,6 @@ export function cli({
                         type: 'string',
                         description:
                             'Default schema to be included in the generation',
-                        alias: 'schema',
                         default: 'public',
                     })
                     .option('schemas', {
@@ -49,13 +48,12 @@ export function cli({
                         default: 'public',
                     })
                     .array('schemas')
-                    .option('tablesAndViews', {
+                    .option('tables', {
                         type: 'string',
                         description:
-                            'List of tables and/or views to be included in the generation',
-                        alias: 'tables',
+                            'List of tables to be included in the generation',
                     })
-                    .array('tablesAndViews')
+                    .array('tables')
                     .config('configFile', function (configPath) {
                         const data = JSON.parse(
                             fs.readFileSync(configPath, 'utf-8'),
@@ -102,7 +100,7 @@ export function cli({
                     out: argv.out,
                     defaultSchema: argv.defaultSchema,
                     schemas: argv.schemas,
-                    tablesAndViews: argv.tablesAndViews,
+                    tables: argv.tables,
                     schemaDefOverrides: argv.schemaDefOverrides,
                 });
 
@@ -124,12 +122,12 @@ export function cli({
                 if (unusedSchemaOverrides.length > 0) {
                     const lines = [
                         '',
-                        `Could not apply schema overrides for the following table(s)/view(s):`,
+                        `Could not apply schema overrides for the following table(s):`,
                         ...unusedSchemaOverrides.map(
                             (qualifiedTableName) => `- ${qualifiedTableName}`,
                         ),
                         '',
-                        'If you are using the `--schemas` and/or `--tablesAndViews` option',
+                        'If you are using the `--schemas` and/or `--tables` option',
                         'via the CLI, ensure that you are passing the correct names',
                         `of the schemas and tables these overrides are for`,
                         '',

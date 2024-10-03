@@ -38,7 +38,7 @@ describe('pg_types', () => {
                     'postgresql://postgres:postgres@localhost:5432/postgres',
                 includeSchemas: ['public'],
                 defaultSchema: 'public',
-                includeTablesAndViews: [tableName],
+                includeTables: [tableName],
                 outDir: '../introspect/src/tests/generated',
             });
 

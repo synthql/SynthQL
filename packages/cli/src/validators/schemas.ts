@@ -6,7 +6,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
 > = {
     $schema: 'http://json-schema.org/draft-07/schema',
     description: [
-        'The table definitions for any tables/views you want',
+        'The table definitions for any tables you want',
         'to be overriden during the schema generation.',
         `e.g.:`,
         `"schemaDefOverrides": {
@@ -37,18 +37,16 @@ export const schemaDefOverridesSchema: JSONSchemaType<
         '^[^.]+.[^.]+$': {
             type: 'object',
             description: [
-                'The column definitions for each table/view to be overriden.',
-                'The key for each table should be the qualified name for the table/view,',
-                'in the form `${schemaName}.${tableOrViewName}`.',
-                'e.g `public.users`',
+                'The column definitions for each table to be overriden.',
+                'The key for each table should be the qualified name for the table,',
+                'in the form `${schemaName}.${tableName}` e.g `public.users`',
             ].join('\n'),
             patternProperties: {
                 '^[^.]+$': {
                     description: [
                         'The attribute definitions for each column to be overriden.',
                         'The key for each column should be the name of the column,',
-                        'in the form `${columnName}`.',
-                        'e.g `first_name`',
+                        'in the form `${columnName}` e.g `first_name`',
                     ].join('\n'),
                     type: 'object',
                     properties: {
@@ -80,6 +78,7 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                     required: ['type'],
                                     additionalProperties: true,
                                 },
+
                                 tsType: {
                                     type: 'string',
                                     nullable: true,
@@ -299,11 +298,11 @@ export const configFileSchema: JSONSchemaType<Partial<CliConfig>> = {
             },
             nullable: true,
         },
-        tablesAndViews: {
+        tables: {
             type: 'array',
             description: [
-                'The tables/views to include in generation',
-                'e.g. `["users", "accounts", "user_account"]`',
+                'The tables to include in generation',
+                'e.g. `["users", "accounts"]`',
             ].join('\n'),
             items: {
                 type: 'string',

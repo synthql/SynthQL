@@ -20,7 +20,7 @@ describe('CLI tests', () => {
         const out = 'generated/synthql/tests';
         const defaultSchema = 'public';
         const schemas = ['public'];
-        const tablesAndViews = ['actor', 'customer'];
+        const tables = ['actor', 'customer'];
         const configFile = 'src/tests/synthql.config.json';
 
         beforeAll(() => {
@@ -60,38 +60,6 @@ describe('CLI tests', () => {
 
                 // Verify that the command passed is correct
                 expect(output._).toEqual(['generate']);
-            },
-            {
-                timeout: 10000,
-            },
-        );
-
-        it(
-            `Generate schema types with a supplied output directory option, --out`,
-            async () => {
-                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
-
-                const argv = [
-                    'node',
-                    'generate-with-output-directory.js',
-                    'generate',
-                    `--out=${outDir}`,
-                ];
-
-                // Compose file path
-                const outFilePath = path.join(outDir, `db.ts`);
-
-                // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).toEqual(true);
-
-                // Generate schema file
-                const output = await cli({ argv, exit: () => {} });
-
-                // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).toEqual(true);
-
-                // Verify that the option data is correct
-                expect(output.out).toEqual(outDir);
             },
             {
                 timeout: 10000,
@@ -165,15 +133,14 @@ describe('CLI tests', () => {
         );
 
         it(
-            `Generate schema types with a supplied default schema option, --defaultSchema`,
+            `Generate schema types with a supplied output directory option, --out`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
                 const argv = [
                     'node',
-                    'generate-with-default-schema.js',
+                    'generate-with-output-directory.js',
                     'generate',
-                    `--defaultSchema=${defaultSchema}`,
                     `--out=${outDir}`,
                 ];
 
@@ -190,7 +157,7 @@ describe('CLI tests', () => {
                 expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
-                expect(output.defaultSchema).toEqual(defaultSchema);
+                expect(output.out).toEqual(outDir);
             },
             {
                 timeout: 10000,
@@ -198,7 +165,7 @@ describe('CLI tests', () => {
         );
 
         it(
-            `Generate schema types with a supplied default schema option, using the option's alias, --schema`,
+            `Generate schema types with a supplied default schema option, --defaultSchema`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
@@ -206,7 +173,7 @@ describe('CLI tests', () => {
                     'node',
                     'generate-with-default-schema.js',
                     'generate',
-                    `--schema=${defaultSchema}`,
+                    `--defaultSchema=${defaultSchema}`,
                     `--out=${outDir}`,
                 ];
 
@@ -265,41 +232,7 @@ describe('CLI tests', () => {
         );
 
         it(
-            `Generate schema types with a supplied tables array, --tablesAndViews`,
-            async () => {
-                const outDir = `${out}/${Date.now()}-${randomUUID()}`;
-
-                const argv = [
-                    'node',
-                    'generate-with-schemas.js',
-                    'generate',
-                    `--out=${outDir}`,
-                    '--tablesAndViews',
-                    ...tablesAndViews,
-                ];
-
-                // Compose file path
-                const outFilePath = path.join(outDir, `db.ts`);
-
-                // Check that file with the name doesn't exist yet
-                expect(!fs.existsSync(outFilePath)).toEqual(true);
-
-                // Generate schema file
-                const output = await cli({ argv, exit: () => {} });
-
-                // Check that the file now exists
-                expect(fs.existsSync(outFilePath)).toEqual(true);
-
-                // Verify that the option data is correct
-                expect(output.tablesAndViews).toEqual(tablesAndViews);
-            },
-            {
-                timeout: 10000,
-            },
-        );
-
-        it(
-            `Generate schema types with a supplied tables array, using the option's alias, --tables`,
+            `Generate schema types with a supplied tables array, --tables`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
@@ -309,7 +242,7 @@ describe('CLI tests', () => {
                     'generate',
                     `--out=${outDir}`,
                     '--tables',
-                    ...tablesAndViews,
+                    ...tables,
                 ];
 
                 // Compose file path
@@ -325,7 +258,7 @@ describe('CLI tests', () => {
                 expect(fs.existsSync(outFilePath)).toEqual(true);
 
                 // Verify that the option data is correct
-                expect(output.tablesAndViews).toEqual(tablesAndViews);
+                expect(output.tables).toEqual(tables);
             },
             {
                 timeout: 10000,
@@ -333,7 +266,7 @@ describe('CLI tests', () => {
         );
 
         it(
-            `Generate schema types with a supplied schemas and tables arrays, --schemas --tablesAndViews`,
+            `Generate schema types with a supplied schemas and tables arrays, --schemas --tables`,
             async () => {
                 const outDir = `${out}/${Date.now()}-${randomUUID()}`;
 
@@ -344,8 +277,8 @@ describe('CLI tests', () => {
                     `--out=${outDir}`,
                     '--schemas',
                     ...schemas,
-                    '--tablesAndViews',
-                    ...tablesAndViews,
+                    '--tables',
+                    ...tables,
                 ];
 
                 // Compose file path
@@ -364,7 +297,7 @@ describe('CLI tests', () => {
                 expect(output.schemas).toEqual(schemas);
 
                 // Verify that the --tables option data is correct
-                expect(output.tablesAndViews).toEqual(tablesAndViews);
+                expect(output.tables).toEqual(tables);
             },
             {
                 timeout: 10000,
@@ -418,8 +351,8 @@ describe('CLI tests', () => {
                     `--defaultSchema=${defaultSchema}`,
                     '--schemas',
                     ...schemas,
-                    '--tablesAndViews',
-                    ...tablesAndViews,
+                    '--tables',
+                    ...tables,
                 ];
 
                 // Compose file path
@@ -439,7 +372,7 @@ describe('CLI tests', () => {
                 expect(output.out).toEqual(outDir);
                 expect(output.defaultSchema).toEqual(defaultSchema);
                 expect(output.schemas).toEqual(schemas);
-                expect(output.tablesAndViews).toEqual(tablesAndViews);
+                expect(output.tables).toEqual(tables);
             },
             {
                 timeout: 10000,

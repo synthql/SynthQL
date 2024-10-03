@@ -15,54 +15,46 @@ import path from 'path';
 
 type TableOrView = TableDetails | ViewDetails;
 
-interface TableOrViewDefTransformer {
-    test: (tableOrViewDetails: TableOrView) => boolean;
+interface TableDefTransformer {
+    test: (tableDetails: TableOrView) => boolean;
     transform: (
-        tableOrViewColumn: TableOrView['columns'][number],
+        tableColumn: TableOrView['columns'][number],
     ) => Partial<ColumnDefProperties>;
 }
 
 interface GenerateProps {
     /**
-     * The database connection string.
-     * e.g. `postgresql://user:password@localhost:5432/db`
+     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`
      */
     connectionString: string;
     /**
-     * The schemas to include in generation.
-     * e.g. `['public']`
+     * The schemas to include in generation e.g. `['public']`
      */
     includeSchemas: string[];
     /**
-     * The default schema to use.
-     * e.g. `public`
-     * This is similar to the `search_path` in PostgreSQL.
+     * The default schema to use e.g. `public`. This is similar to the `search_path` in PostgreSQL
      */
     defaultSchema: string;
     /**
-     * The tables and/or views to include in generation.
-     * e.g. `['users', 'accounts', 'user_account']`
+     * The tables to include in generation e.g. `['users']`
      */
-    includeTablesAndViews?: string[];
+    includeTables?: string[];
     /**
      * The tables and/or views to exclude from generation.
      * e.g. `['agents', 'suppliers', 'agent_supplier']`
      */
     excludeTablesAndViews?: string[];
     /**
-     * Custom transformers that can be used to
-     * modify/extend the default generation data
-     * for the applicable table/view columns.
+     * Custom transformers that can be used to modify/extend
+     * the default generation data for the applicable table columns
      */
-    tableOrViewDefTransformers?: Array<TableOrViewDefTransformer>;
+    tableDefTransformers?: Array<TableDefTransformer>;
     /**
-     * The output directory for the generated files.
-     * e.g. `src/generated`
+     * The output directory for the generated files e.g. `src/generated`
      */
     outDir: string;
     /**
-     * A function to format the generated files,
-     * usually Prettier.
+     * A function to format the generated files, usually Prettier
      */
     formatter?: (str: string) => Promise<string>;
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation?: string;
@@ -72,9 +64,9 @@ export async function generate({
     connectionString,
     includeSchemas,
     defaultSchema,
-    includeTablesAndViews = [],
+    includeTables = [],
     excludeTablesAndViews = [],
-    tableOrViewDefTransformers = [],
+    tableDefTransformers = [],
     outDir,
     formatter = async (str) => str,
     SECRET_INTERNALS_DO_NOT_USE_queriesImportLocation = '@synthql/queries',
@@ -95,14 +87,14 @@ export async function generate({
             resolveViews: false,
             onProgressStart: (total) => {
                 stderr.write(
-                    `⏱️  Extracting ${total} types, this may take a while...`,
+                    `⏱️  Extracting ${total} types, this may take a while`,
                 );
                 stderr.write('\n');
             },
             onProgress: () => {
                 stderr.write('.');
             },
-            onProgressEnd: () => console.log('✅ Done extracting types!'),
+            onProgressEnd: () => console.log('✅ Done extracting types.'),
         },
     );
 
@@ -113,9 +105,9 @@ export async function generate({
     // Step 2: Convert the pg-extract-schema schema to a JSON Schema.
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
-        includeTablesAndViews,
+        includeTables,
         excludeTablesAndViews,
-        tableOrViewDefTransformers,
+        tableDefTransformers,
     });
 
     /**
@@ -165,15 +157,12 @@ export async function generate({
     };
 }
 
-function createTypeDefId(
-    type: {
-        fullName: string;
-        kind: TableColumnType['kind'];
-    },
-    expandedType?: string,
-) {
+function createTypeDefId(type: {
+    fullName: string;
+    kind: TableColumnType['kind'];
+}) {
     if (type.kind === 'base') {
-        return expandedType ?? type.fullName;
+        return type.fullName;
     }
 
     return `${type.fullName}.${type.kind}`;
@@ -189,7 +178,7 @@ function createTableDefId(type: TableOrView, defaultSchema: string) {
 
 function createTableJsonSchema(
     table: TableOrView,
-    tableOrViewDefTransformer?: TableOrViewDefTransformer,
+    tableDefTransformer?: TableDefTransformer,
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
@@ -202,7 +191,7 @@ function createTableJsonSchema(
             : isExpandedTypeAnArray(column.expandedType)
               ? createArrayDef(column.expandedType, column.type.fullName)
               : {
-                    $ref: `#/$defs/${createTypeDefId(column.type, column.expandedType)}`,
+                    $ref: `#/$defs/${createTypeDefId(column.type)}`,
                 };
 
         acc[column.name] = {
@@ -237,7 +226,7 @@ function createTableJsonSchema(
                 // For each column, we want to identify if any override
                 // properties were passed, and replace them if so
                 // Otherwise, we generate the property as usual
-                ...tableOrViewDefTransformer?.transform(column),
+                ...tableDefTransformer?.transform(column),
             },
             required: [
                 'type',
@@ -287,7 +276,7 @@ function createArrayDef(expandedType: string, fullName: string): JSONSchema {
     // create an array schema def,
     // and move leftwards
 
-    // 2. once the string left is
+    // 2. Once the string left is
     // an object pg type, embed
     // the object properties
 
@@ -313,14 +302,14 @@ function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
         defaultSchema,
-        includeTablesAndViews,
+        includeTables,
         excludeTablesAndViews,
-        tableOrViewDefTransformers,
+        tableDefTransformers,
     }: {
         defaultSchema: string;
-        includeTablesAndViews: string[];
+        includeTables: string[];
         excludeTablesAndViews: string[];
-        tableOrViewDefTransformers: Array<TableOrViewDefTransformer>;
+        tableDefTransformers: Array<TableDefTransformer>;
     },
 ): JSONSchema {
     const allTables: TableOrView[] = Object.values(schemas).flatMap(
@@ -336,8 +325,8 @@ function createRootJsonSchema(
     // The logic here is currently that `exclusion` takes precedence,
     // so if a table is both included & excluded, the exclude takes precedence,
     // so the table will NOT be included in the schema
-    const tablesAndViews =
-        includeTablesAndViews.length === 0
+    const tables =
+        includeTables.length === 0
             ? excludeTablesAndViews.length === 0
                 ? allTablesAndViews
                 : allTablesAndViews.filter(
@@ -346,7 +335,7 @@ function createRootJsonSchema(
                   )
             : allTablesAndViews.filter(
                   (tableOrView) =>
-                      includeTablesAndViews.includes(tableOrView.name) &&
+                      includeTables.includes(tableOrView.name) &&
                       !excludeTablesAndViews.includes(tableOrView.name),
               );
 
@@ -362,27 +351,21 @@ function createRootJsonSchema(
         $schema: 'https://json-schema.org/draft/2020-12/schema',
         type: 'object',
         description: "Your database's schema",
-        properties: tablesAndViews
-            .map((tableOrView) => {
+        properties: tables
+            .map((table) => {
                 return {
-                    [fullTableName(tableOrView, defaultSchema)]: {
-                        $ref: `#/$defs/${createTableDefId(tableOrView, defaultSchema)}`,
+                    [fullTableName(table, defaultSchema)]: {
+                        $ref: `#/$defs/${createTableDefId(table, defaultSchema)}`,
                     },
                 };
             })
             .reduce((acc, table) => {
                 return { ...acc, ...table };
             }, {}),
-        required: tablesAndViews.map((table) =>
-            fullTableName(table, defaultSchema),
-        ),
+        required: tables.map((table) => fullTableName(table, defaultSchema)),
         additionalProperties: false,
         $defs: {
-            ...createTableDefs(
-                tablesAndViews,
-                defaultSchema,
-                tableOrViewDefTransformers,
-            ),
+            ...createTableDefs(tables, defaultSchema, tableDefTransformers),
             ...createWellKnownDefs(),
             ...createEnumJsonSchema(enums),
             ...createDomainJsonSchema(domains),
@@ -401,19 +384,18 @@ function fullTableName(table: TableOrView, defaultSchema: string) {
 function createTableDefs(
     tables: TableOrView[],
     defaultSchema: string,
-    tableOrViewDefTransformers: Array<TableOrViewDefTransformer>,
+    tableDefTransformers: Array<TableDefTransformer>,
 ): Record<string, JSONSchema> {
     const empty: Record<string, JSONSchema> = {};
 
     return tables.reduce((acc, table) => {
-        const tableOrViewDefTransformer = tableOrViewDefTransformers.find(
-            (tableOrViewDefTransformer) =>
-                tableOrViewDefTransformer.test(table),
+        const tableDefTransformer = tableDefTransformers.find(
+            (tableDefTransformer) => tableDefTransformer.test(table),
         );
 
         acc[createTableDefId(table, defaultSchema)] = createTableJsonSchema(
             table,
-            tableOrViewDefTransformer,
+            tableDefTransformer,
         );
 
         return acc;
