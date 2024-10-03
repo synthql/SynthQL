@@ -17,7 +17,6 @@ describe('e2e', () => {
     test.skip(describeQuery(q), async () => {
         const pgExecutor = new PgExecutor({
             defaultSchema: 'public',
-            logging: true,
             pool,
         });
 

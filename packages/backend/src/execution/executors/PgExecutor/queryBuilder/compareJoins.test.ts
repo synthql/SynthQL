@@ -19,6 +19,7 @@ describe('compareJoins', () => {
                         otherColumn: store.column('manager_id'),
                     },
                 ],
+                where: {},
             },
             {
                 table: pet,
@@ -29,6 +30,7 @@ describe('compareJoins', () => {
                         otherColumn: person.column('id'),
                     },
                 ],
+                where: {},
             },
             {
                 table: pet,
@@ -39,6 +41,7 @@ describe('compareJoins', () => {
                         otherColumn: person.column('id'),
                     },
                 ],
+                where: {},
             },
         ];
 

@@ -1,7 +1,7 @@
 {
     "name": "@synthql/handler-next",
     "type": "module",
-    "version": "0.95.4",
+    "version": "0.98.4",
     "main": "build/src/index.cjs",
     "module": "build/src/index.js",
     "types": "build/types/src/index.d.ts",
@@ -27,8 +27,8 @@
         "format": "yarn prettier --config ../../prettier.config.js --write ./src/"
     },
     "dependencies": {
-        "@synthql/backend": "0.95.4",
-        "@synthql/queries": "0.95.4"
+        "@synthql/backend": "0.98.4",
+        "@synthql/queries": "0.98.4"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^1.2.2",

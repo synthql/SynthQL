@@ -194,6 +194,7 @@ describe('iterateQuery', () => {
                 where: {
                     film_id: 1,
                 },
+                cardinality: 'many',
             },
             expected: [
                 {
@@ -201,6 +202,7 @@ describe('iterateQuery', () => {
                         from: 'film',
                         select: {},
                         where: { film_id: 1 },
+                        cardinality: 'many',
                     },
                     insertionPath: [],
                 },

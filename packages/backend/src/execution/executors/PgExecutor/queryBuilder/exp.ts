@@ -358,24 +358,32 @@ export class SqlBuilder {
     leftJoin(join: Join) {
         const table = join.table;
 
+        const where = new SqlBuilder().expressionFromWhere({
+            table,
+            where: join.where,
+        });
+
         return this.add('left join ')
             .add(table.canonical())
             .space()
             .add(table.aliasQuoted())
             .add(' on ')
             .addInterleaved(
-                join.conditions.map((cond) => {
-                    const own = cond.ownColumn.aliasQuoted();
-                    const other = cond.otherColumn.aliasQuoted();
-                    const op = cond.op;
-                    return new SqlBuilder()
-                        .add(own)
-                        .space()
-                        .add(op)
-                        .space()
-                        .add(other)
-                        .space();
-                }),
+                [
+                    ...join.conditions.map((cond) => {
+                        const own = cond.ownColumn.aliasQuoted();
+                        const other = cond.otherColumn.aliasQuoted();
+                        const op = cond.op;
+                        return new SqlBuilder()
+                            .add(own)
+                            .space()
+                            .add(op)
+                            .space()
+                            .add(other)
+                            .space();
+                    }),
+                    where,
+                ].filter((b) => !b.isEmpty()),
                 SqlBuilder.and(),
             );
     }
