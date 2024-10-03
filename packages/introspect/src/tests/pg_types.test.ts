@@ -46,9 +46,8 @@ describe('pg_types', () => {
                 const columnType = (schema.properties?.[tableName] as any)
                     ?.properties?.columns?.properties?.[name]?.properties?.type;
 
-                delete columnType?.id;
-
-                const validateColumnTypeSchema = ajv.compile(columnType);
+                const { id, ...columnTypeWithoutId } = columnType || {};
+                const validateColumnTypeSchema = ajv.compile(columnTypeWithoutId);
 
                 expect(validateColumnTypeSchema(value)).toEqual(true);
             }
@@ -75,6 +74,7 @@ const createTable = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error creating table', err);
+        throw err;
     }
 };
 
@@ -99,6 +99,7 @@ const insertData = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error inserting record', err);
+        throw err;
     }
 };
 
@@ -122,6 +123,7 @@ const selectData = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error finding record', err);
+        throw err;
     }
 };
 
@@ -138,6 +140,7 @@ const dropTable = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error dropping table', err);
+        throw err;
     }
 };
 
