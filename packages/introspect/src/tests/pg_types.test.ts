@@ -74,6 +74,7 @@ const createTable = async () => {
         return results.rows[0];
     } catch (err) {
         console.error('Error creating table', err);
+        throw err;
     }
 };
 
