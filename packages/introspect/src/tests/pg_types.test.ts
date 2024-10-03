@@ -46,9 +46,8 @@ describe('pg_types', () => {
                 const columnType = (schema.properties?.[tableName] as any)
                     ?.properties?.columns?.properties?.[name]?.properties?.type;
 
-                delete columnType?.id;
-
-                const validateColumnTypeSchema = ajv.compile(columnType);
+                const { id, ...columnTypeWithoutId } = columnType || {};
+                const validateColumnTypeSchema = ajv.compile(columnTypeWithoutId);
 
                 expect(validateColumnTypeSchema(value)).toEqual(true);
             }
