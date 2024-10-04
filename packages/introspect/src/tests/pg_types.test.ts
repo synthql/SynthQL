@@ -3,11 +3,7 @@ import { Pool, types } from 'pg';
 import Ajv2020 from 'ajv/dist/2020';
 import { generate } from '../generate';
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-
-interface Column {
-    type: string;
-    examples: string[];
-}
+import { AnyDB, AnyTable, Schema } from '@synthql/queries';
 
 // Database connection configuration
 const client = new Pool({
@@ -44,7 +40,7 @@ describe('pg_types', () => {
                 outDir: '../introspect/src/tests/generated',
             });
 
-            for (const row of await selectData()) {
+            for (const row of await selectAllRows()) {
                 checkRowSchema(schema, tableName, row);
             }
         } finally {
@@ -62,7 +58,11 @@ function checkRowSchema(
         const columnType = (schema.properties?.[tableName] as any)?.properties
             ?.columns?.properties?.[name]?.properties?.type;
 
-        const { id, ...columnTypeWithoutId } = columnType || {};
+        if (!columnType) {
+            throw new Error(`Column type not found for ${name}`);
+        }
+
+        const { id, ...columnTypeWithoutId } = columnType;
 
         const validateColumnTypeSchema = ajv.compile(columnTypeWithoutId);
 
@@ -79,15 +79,7 @@ const createTable = async () => {
         );
     `;
 
-    try {
-        const results = await client.query(createTableQuery);
-        console.log('Table created successfully!');
-
-        return results.rows;
-    } catch (err) {
-        console.error('Error creating table', err);
-        throw err;
-    }
+    await client.query(createTableQuery);
 };
 
 const insertData = async () => {
@@ -102,19 +94,10 @@ const insertData = async () => {
                 .join(',')}
         );
     `;
-
-    try {
-        const results = await client.query(insertDataQuery);
-        console.log(`Record inserted successfully!`);
-
-        return results.rows;
-    } catch (err) {
-        console.error('Error inserting record', err);
-        throw err;
-    }
+    await client.query(insertDataQuery);
 };
 
-const selectData = async () => {
+const selectAllRows = async (): Promise<{}[]> => {
     const selectDataQuery = `
         SELECT
             ${allKnownTypes()
@@ -124,34 +107,25 @@ const selectData = async () => {
             all_data_types;
     `;
 
-    try {
-        const results = await client.query(selectDataQuery);
-        console.log(`Record found successfully!`);
-
-        return results.rows;
-    } catch (err) {
-        console.error('Error finding record', err);
-        throw err;
-    }
+    const { rows } = await client.query<{}>(selectDataQuery);
+    return rows;
 };
 
-const dropTable = async () => {
-    const dropTableQuery = `
-        DROP TABLE IF EXISTS all_data_types;
-    `;
-
-    try {
-        const results = await client.query(dropTableQuery);
-        console.log(`Table dropped successfully!`);
-
-        return results.rows;
-    } catch (err) {
-        console.error('Error dropping table', err);
-        throw err;
-    }
+const dropTable = async (): Promise<void> => {
+    await client.query(`DROP TABLE IF EXISTS all_data_types`);
 };
 
-function allKnownTypes(): Array<Column> {
+interface KnownTypes {
+    type: string;
+    examples: string[];
+}
+
+/**
+ * Returns a list of all known types and their examples. This is used to
+ * test that synthql's introspection correctly identifies the types and
+ * their values.
+ */
+function allKnownTypes(): Array<KnownTypes> {
     return [
         { type: 'SERIAL PRIMARY KEY', examples: ['1', '2147483647'] },
         {
