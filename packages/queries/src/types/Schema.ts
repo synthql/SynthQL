@@ -1,11 +1,11 @@
 import { Column } from './Column';
 import { Table } from './Table';
 
-export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
+export interface Schema<DB> {
     $schema: string;
     type: string;
     description: string;
-    properties: Record<TTable | string, TableDef<DB>>;
+    properties: Record<Table<DB>, TableDef<DB>>;
     required: string[];
     additionalProperties: boolean;
     $defs: {
