@@ -1,11 +1,11 @@
-import { Schema } from '@synthql/queries';
+import { Schema, Table } from '@synthql/queries';
 import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
 import { getTableDef } from './getTableDef';
 import { isSelectableColumn } from './isSelectableColumn';
 
 export function getTableSelectableColumns<DB>(
     schema: Schema<DB>,
-    table: string,
+    table: Table<DB>,
 ): string[] {
     const select: string[] = [];
 

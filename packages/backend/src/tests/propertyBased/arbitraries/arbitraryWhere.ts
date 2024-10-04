@@ -1,5 +1,5 @@
 import { fc } from '@fast-check/vitest';
-import { AnyDB, Schema, Where } from '@synthql/queries';
+import { AnyDB, Schema, Table, Where } from '@synthql/queries';
 import { arbitraryWhereValue } from './arbitraryWhereValue';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
 import { checkIfDateTimeColumn } from '../checkIfDateTimeColumn';
@@ -13,13 +13,13 @@ export function arbitraryWhere<DB>({
 }: {
     schema: Schema<DB>;
     allTablesRowsMap: AllTablesRowsMap;
-    tableName: string;
+    tableName: Table<DB>;
     validWhere: boolean;
 }): fc.Arbitrary<Where<AnyDB, string>> {
     return fc
         .constantFrom(...getTableWhereableColumns(schema, tableName))
         .filter(
-            (value) =>
+            (column) =>
                 // TODO: We should remove this check once we resolve the `date-time` issue
                 // When there's a mismatch between the timezone of the data stored in the
                 // database and the timezone of the machine that is running the database,
@@ -32,7 +32,7 @@ export function arbitraryWhere<DB>({
                 !checkIfDateTimeColumn({
                     schema,
                     table: tableName,
-                    column: value,
+                    column,
                 }),
         )
         .chain((columnName) => {

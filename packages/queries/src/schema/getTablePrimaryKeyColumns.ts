@@ -1,4 +1,5 @@
 import { Schema } from '../types/Schema';
+import { Table } from '../types/Table';
 import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
 import { getTableDef } from './getTableDef';
 import { isPrimaryKeyColumn } from './isPrimaryKeyColumn';
@@ -20,7 +21,7 @@ import { isPrimaryKeyColumn } from './isPrimaryKeyColumn';
 
 export function getTablePrimaryKeyColumns<DB>(
     schema: Schema<DB>,
-    table: string,
+    table: Table<DB>,
 ): Array<string> {
     const primaryKeys: Array<string> = [];
 

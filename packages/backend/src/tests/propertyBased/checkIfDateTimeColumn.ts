@@ -1,4 +1,4 @@
-import { Schema } from '@synthql/queries';
+import { Schema, Table } from '@synthql/queries';
 import { getTableDef } from './getTableDef';
 import { getColumnDef } from './getColumnDef';
 import { isDateTimeColumn } from './isDateTimeColumn';
@@ -9,7 +9,7 @@ export function checkIfDateTimeColumn<DB>({
     column,
 }: {
     schema: Schema<DB>;
-    table: string;
+    table: Table<DB>;
     column: string;
 }): boolean {
     const tableDef = getTableDef(schema, table);

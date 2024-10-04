@@ -67,6 +67,18 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                     type: 'string',
                                     nullable: true,
                                 },
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        type: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    nullable: true,
+                                    required: ['type'],
+                                    additionalProperties: true,
+                                },
+
                                 tsType: {
                                     type: 'string',
                                     nullable: true,
@@ -115,6 +127,17 @@ export const schemaDefOverridesSchema: JSONSchemaType<
                                                 title: {
                                                     type: 'string',
                                                     nullable: true,
+                                                },
+                                                items: {
+                                                    type: 'object',
+                                                    properties: {
+                                                        type: {
+                                                            type: 'string',
+                                                        },
+                                                    },
+                                                    nullable: true,
+                                                    required: ['type'],
+                                                    additionalProperties: true,
                                                 },
                                                 tsType: {
                                                     type: 'string',

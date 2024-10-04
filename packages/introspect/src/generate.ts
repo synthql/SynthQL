@@ -5,8 +5,10 @@ import {
     EnumDetails,
     extractSchemas,
     Schema,
+    TableColumn,
     TableColumnType,
     TableDetails,
+    ViewColumn,
     ViewDetails,
 } from 'extract-pg-schema';
 import { compile, JSONSchema } from 'json-schema-to-typescript';
@@ -14,12 +16,11 @@ import fs from 'fs';
 import path from 'path';
 
 type TableOrView = TableDetails | ViewDetails;
+type TableOrViewColumn = TableColumn | ViewColumn;
 
 interface TableDefTransformer {
     test: (tableDetails: TableOrView) => boolean;
-    transform: (
-        tableColumn: TableOrView['columns'][number],
-    ) => Partial<ColumnDefProperties>;
+    transform: (tableColumn: TableOrViewColumn) => Partial<ColumnDefProperties>;
 }
 
 interface GenerateProps {
@@ -39,6 +40,11 @@ interface GenerateProps {
      * The tables to include in generation e.g. `['users']`
      */
     includeTables?: string[];
+    /**
+     * The tables and/or views to exclude from generation.
+     * e.g. `['agents', 'suppliers', 'agent_supplier']`
+     */
+    excludeTablesAndViews?: string[];
     /**
      * Custom transformers that can be used to modify/extend
      * the default generation data for the applicable table columns
@@ -60,6 +66,7 @@ export async function generate({
     includeSchemas,
     defaultSchema,
     includeTables = [],
+    excludeTablesAndViews = [],
     tableDefTransformers = [],
     outDir,
     formatter = async (str) => str,
@@ -68,6 +75,7 @@ export async function generate({
     async function writeFormattedFile(path: string, content: string) {
         fs.writeFileSync(path, await formatter(content));
     }
+
     const { stderr } = process;
 
     // Step 1: Use pg-extract-schema to get the schema.
@@ -99,6 +107,7 @@ export async function generate({
     const schemaWithRefs: JSONSchema = createRootJsonSchema(pgExtractSchema, {
         defaultSchema,
         includeTables,
+        excludeTablesAndViews,
         tableDefTransformers,
     });
 
@@ -175,12 +184,7 @@ function createTableJsonSchema(
     const empty: Record<string, any> = {};
 
     const columns = table.columns.reduce((acc, column) => {
-        const isComposite = column.type.kind === 'composite';
-        // TODO(fhur): for now, when a type is composite use the "unknown" type.
-        // In the future we should add support for composite types.
-        const type = isComposite
-            ? {}
-            : { $ref: `#/$defs/${createTypeDefId(column.type)}` };
+        const type = createColumnTypeDefOrRef(column);
 
         acc[column.name] = {
             type: 'object',
@@ -253,19 +257,67 @@ function createTableJsonSchema(
     };
 }
 
+function isExpandedTypeAnArray(expandedType: string): boolean {
+    return expandedType.endsWith('[]');
+}
+
+function createArrayDef(expandedType: string, fullName: string): JSONSchema {
+    const items = expandedType.split('[]');
+
+    // 1. Starting at the rightmost,
+    // create an array schema def,
+    // and move leftwards
+
+    // 2. Once the string left is
+    // an object pg type, embed
+    // the object properties
+
+    if (items[items.length - 1] === fullName) {
+        return createWellKnownDefs()[fullName];
+    } else if (items[items.length - 1] === '') {
+        return {
+            id: expandedType,
+            type: 'array',
+            items: createArrayDef(items.slice(0, -1).join('[]'), fullName),
+        };
+    }
+
+    console.warn(
+        `No type definition found for the pg_type: ${items[items.length - 1]}`,
+    );
+
+    // return `unknown` otherwise
+    return {};
+}
+
+function createColumnTypeDefOrRef(column: TableOrViewColumn) {
+    // TODO(fhur): for now, when a type is composite use the "unknown" type.
+    // In the future we should add support for composite types.
+    if (column.type.kind === 'composite') {
+        return {};
+    } else if (isExpandedTypeAnArray(column.expandedType)) {
+        return createArrayDef(column.expandedType, column.type.fullName);
+    }
+
+    return {
+        $ref: `#/$defs/${createTypeDefId(column.type)}`,
+    };
+}
+
 function createRootJsonSchema(
     schemas: Record<string, Schema>,
     {
         defaultSchema,
         includeTables,
+        excludeTablesAndViews,
         tableDefTransformers,
     }: {
         defaultSchema: string;
         includeTables: string[];
+        excludeTablesAndViews: string[];
         tableDefTransformers: Array<TableDefTransformer>;
     },
 ): JSONSchema {
-    // Check if a list of tables is passed, and if so, use as filter
     const allTables: TableOrView[] = Object.values(schemas).flatMap(
         (schema) => schema.tables,
     );
@@ -273,14 +325,25 @@ function createRootJsonSchema(
         (schema) => schema.views,
     );
 
-    const tablesAndViews: TableOrView[] = allTables.concat(allViews);
+    const allTablesAndViews: TableOrView[] = allTables.concat(allViews);
 
-    const tables =
-        includeTables.length === 0
-            ? tablesAndViews
-            : tablesAndViews.filter((table) =>
-                  includeTables.includes(table.name),
-              );
+    // Check if a list of tables/views is passed, and if so, use as filter
+    // The logic here is currently that `exclusion` takes precedence,
+    // so if a table is both included & excluded, the exclude takes precedence,
+    // so the table will NOT be included in the schema
+    let tables: TableOrView[] = allTablesAndViews;
+
+    if (includeTables.length > 0) {
+        tables = tables.filter((tableOrView) =>
+            includeTables.includes(tableOrView.name),
+        );
+    }
+
+    if (excludeTablesAndViews.length > 0) {
+        tables = tables.filter(
+            (tableOrView) => !excludeTablesAndViews.includes(tableOrView.name),
+        );
+    }
 
     const enums = Object.values(schemas).flatMap((schema) => {
         return schema.enums;
@@ -413,46 +476,57 @@ function domainType(
 
 function createWellKnownDefs(): Record<string, JSONSchema> {
     return {
-        'pg_catalog.text': {
-            id: 'pg_catalog.text',
+        'pg_catalog.bit': {
+            id: 'pg_catalog.bit',
             type: 'string',
-            description: 'A PG text',
-        },
-        'pg_catalog.varchar': {
-            id: 'pg_catalog.varchar',
-            type: 'string',
-            description: 'A PG varchar',
+            description: 'A PG bit',
         },
         'pg_catalog.bool': {
             id: 'pg_catalog.bool',
             type: 'boolean',
             description: 'A PG bool',
         },
-        'pg_catalog.time': {
-            id: 'pg_catalog.time',
+        'pg_catalog.box': {
+            id: 'pg_catalog.box',
             type: 'string',
-            format: 'time',
-            description: [
-                'A PG time.',
-                'Note that values of the PG time type,',
-                'are returned as ISO 8601 strings from the database.',
-                'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript',
-            ].join('\n'),
+            description: 'A PG box',
         },
-        'pg_catalog.timetz': {
-            id: 'pg_catalog.timetz',
+        'pg_catalog.bpchar': {
+            id: 'pg_catalog.bpchar',
             type: 'string',
-            format: 'time',
-            description: [
-                'A PG timetz.',
-                'Note that values of the PG timetz type,',
-                'are returned as ISO 8601 strings from the database.',
-                'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript.',
-                'To convert the string into a `Date` object,',
-                'use `new Date(timeString)` or `Date.parse(timeString)`',
-            ].join('\n'),
+            description: 'A PG bpchar',
+        },
+        'pg_catalog.bytea': {
+            id: 'pg_catalog.bytea',
+            type: 'object',
+            description: 'A PG bytea',
+        },
+        'pg_catalog.char': {
+            id: 'pg_catalog.char',
+            type: 'string',
+            description: 'A PG char',
+        },
+        'pg_catalog.cidr': {
+            id: 'pg_catalog.cidr',
+            type: 'string',
+            description: 'A PG cidr',
+        },
+        'pg_catalog.circle': {
+            id: 'pg_catalog.circle',
+            type: 'object',
+            description: 'A PG circle',
+            properties: {
+                radius: {
+                    type: 'number',
+                },
+                x: {
+                    type: 'number',
+                },
+                y: {
+                    type: 'number',
+                },
+            },
+            required: ['radius', 'x', 'y'],
         },
         'pg_catalog.date': {
             id: 'pg_catalog.date',
@@ -466,6 +540,167 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'accurately processed in JavaScript/TypeScript.',
                 'To convert the string into a `Date` object,',
                 'use `new Date(dateString)` or `Date.parse(dateString)`',
+            ].join('\n'),
+        },
+        'pg_catalog.float4': {
+            id: 'pg_catalog.float4',
+            type: 'number',
+            description: 'A PG float4',
+        },
+        'pg_catalog.float8': {
+            id: 'pg_catalog.float8',
+            type: 'number',
+            description: 'A PG float8',
+        },
+        'pg_catalog.inet': {
+            id: 'pg_catalog.inet',
+            type: 'string',
+            description: 'A PG inet',
+        },
+        'pg_catalog.int2': {
+            id: 'pg_catalog.int2',
+            type: 'integer',
+            minimum: -32768,
+            maximum: 32767,
+            description: 'A PG int2',
+        },
+        'pg_catalog.int4': {
+            id: 'pg_catalog.int4',
+            type: 'integer',
+            minimum: -2147483648,
+            maximum: 2147483647,
+            description: 'A PG int4',
+        },
+        'pg_catalog.int8': {
+            id: 'pg_catalog.int8',
+            type: 'string',
+            description: 'A PG int8',
+        },
+        'pg_catalog.interval': {
+            id: 'pg_catalog.interval',
+            type: 'object',
+            description: 'A PG interval',
+        },
+        'pg_catalog.json': {
+            id: 'pg_catalog.json',
+            type: 'object',
+            description: 'A PG json',
+        },
+        'pg_catalog.jsonb': {
+            id: 'pg_catalog.jsonb',
+            type: 'object',
+            description: 'A PG jsonb',
+        },
+        'pg_catalog.line': {
+            id: 'pg_catalog.line',
+            type: 'string',
+            description: 'A PG line',
+        },
+        'pg_catalog.lseg': {
+            id: 'pg_catalog.lseg',
+            type: 'string',
+            description: 'A PG lseg',
+        },
+        'pg_catalog.macaddr': {
+            id: 'pg_catalog.macaddr',
+            type: 'string',
+            description: 'A PG macaddr',
+        },
+        'pg_catalog.macaddr8': {
+            id: 'pg_catalog.macaddr8',
+            type: 'string',
+            description: 'A PG macaddr8',
+        },
+        'pg_catalog.money': {
+            id: 'pg_catalog.money',
+            type: 'string',
+            description: [
+                'A PG money.',
+                'Note that values of the PG money type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
+        },
+        'pg_catalog.numeric': {
+            id: 'pg_catalog.numeric',
+            type: 'string',
+            description: [
+                'A PG numeric.',
+                'Note that values of the PG numeric type,',
+                'are returned as strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
+            ].join('\n'),
+        },
+        'pg_catalog.path': {
+            id: 'pg_catalog.path',
+            type: 'string',
+            description: 'A PG path',
+        },
+        'pg_catalog.pg_lsn': {
+            id: 'pg_catalog.pg_lsn',
+            type: 'string',
+            description: 'A PG pg_lsn',
+        },
+        'pg_catalog.pg_snapshot': {
+            id: 'pg_catalog.pg_snapshot',
+            type: 'string',
+            description: 'A PG pg_snapshot',
+        },
+        'pg_catalog.point': {
+            id: 'pg_catalog.point',
+            type: 'object',
+            description: 'A PG point',
+            properties: {
+                x: {
+                    type: 'number',
+                },
+                y: {
+                    type: 'number',
+                },
+            },
+            required: ['x', 'y'],
+        },
+        'pg_catalog.polygon': {
+            id: 'pg_catalog.polygon',
+            type: 'string',
+            description: 'A PG polygon',
+        },
+        'pg_catalog.serial2': {
+            id: 'pg_catalog.serial2',
+            type: 'integer',
+            minimum: 1,
+            maximum: 32767,
+            description: 'A PG serial2',
+        },
+        'pg_catalog.serial4': {
+            id: 'pg_catalog.serial4',
+            type: 'integer',
+            minimum: 1,
+            maximum: 2147483647,
+            description: 'A PG serial4',
+        },
+        'pg_catalog.serial8': {
+            id: 'pg_catalog.serial8',
+            type: 'string',
+            description: 'A PG serial8',
+        },
+        'pg_catalog.text': {
+            id: 'pg_catalog.text',
+            type: 'string',
+            description: 'A PG text',
+        },
+        'pg_catalog.time': {
+            id: 'pg_catalog.time',
+            type: 'string',
+            format: 'time',
+            description: [
+                'A PG time.',
+                'Note that values of the PG time type,',
+                'are returned as ISO 8601 strings from the database.',
+                'This is because that is how they can be best',
+                'accurately processed in JavaScript/TypeScript',
             ].join('\n'),
         },
         'pg_catalog.timestamp': {
@@ -496,62 +731,34 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
                 'use `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
             ].join('\n'),
         },
-        'pg_catalog.numeric': {
-            id: 'pg_catalog.numeric',
+        'pg_catalog.timetz': {
+            id: 'pg_catalog.timetz',
             type: 'string',
+            format: 'time',
             description: [
-                'A PG numeric.',
-                'Note that values of the PG numeric type,',
-                'are returned as strings from the database.',
+                'A PG timetz.',
+                'Note that values of the PG timetz type,',
+                'are returned as ISO 8601 strings from the database.',
                 'This is because that is how they can be best',
-                'accurately processed in JavaScript/TypeScript',
+                'accurately processed in JavaScript/TypeScript.',
+                'To convert the string into a `Date` object,',
+                'use `new Date(timeString)` or `Date.parse(timeString)`',
             ].join('\n'),
         },
-        'pg_catalog.int2': {
-            id: 'pg_catalog.int2',
-            type: 'integer',
-            minimum: -32768,
-            maximum: 32767,
-            description: 'A PG int2',
-        },
-        'pg_catalog.int4': {
-            id: 'pg_catalog.int4',
-            type: 'integer',
-            minimum: -2147483648,
-            maximum: 2147483647,
-            description: 'A PG int4',
-        },
-        'pg_catalog.int8': {
-            id: 'pg_catalog.int8',
-            type: 'integer',
-            minimum: -9223372036854775808,
-            maximum: 9223372036854775807,
-            description: 'A PG int8',
-        },
-        'pg_catalog.float4': {
-            id: 'pg_catalog.float4',
-            type: 'number',
-            description: 'A PG float4',
-        },
-        'pg_catalog.float8': {
-            id: 'pg_catalog.float8',
-            type: 'number',
-            description: 'A PG float8',
+        'pg_catalog.tsquery': {
+            id: 'pg_catalog.tsquery',
+            type: 'string',
+            description: 'A PG tsquery',
         },
         'pg_catalog.tsvector': {
             id: 'pg_catalog.tsvector',
             type: 'string',
             description: 'A PG tsvector',
         },
-        'pg_catalog.bpchar': {
-            id: 'pg_catalog.bpchar',
+        'pg_catalog.txid_snapshot': {
+            id: 'pg_catalog.txid_snapshot',
             type: 'string',
-            description: 'A PG bpchar',
-        },
-        'pg_catalog.bytea': {
-            id: 'pg_catalog.bytea',
-            type: 'string',
-            description: 'A PG bytea',
+            description: 'A PG txid_snapshot',
         },
         'pg_catalog.uuid': {
             id: 'pg_catalog.uuid',
@@ -559,15 +766,20 @@ function createWellKnownDefs(): Record<string, JSONSchema> {
             format: 'uuid',
             description: 'A PG uuid',
         },
-        'pg_catalog.json': {
-            id: 'pg_catalog.json',
-            type: 'object',
-            description: 'A PG json',
+        'pg_catalog.varbit': {
+            id: 'pg_catalog.varbit',
+            type: 'string',
+            description: 'A PG varbit',
         },
-        'pg_catalog.jsonb': {
-            id: 'pg_catalog.jsonb',
-            type: 'object',
-            description: 'A PG jsonb',
+        'pg_catalog.varchar': {
+            id: 'pg_catalog.varchar',
+            type: 'string',
+            description: 'A PG varchar',
+        },
+        'pg_catalog.xml': {
+            id: 'pg_catalog.xml',
+            type: 'string',
+            description: 'A PG xml',
         },
     };
 }

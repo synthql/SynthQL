@@ -63,6 +63,17 @@
                                             "type": "string",
                                             "nullable": true
                                         },
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "nullable": true,
+                                            "required": ["type"],
+                                            "additionalProperties": true
+                                        },
                                         "tsType": {
                                             "type": "string",
                                             "nullable": true
@@ -107,6 +118,19 @@
                                                         "title": {
                                                             "type": "string",
                                                             "nullable": true
+                                                        },
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "type": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "nullable": true,
+                                                            "required": [
+                                                                "type"
+                                                            ],
+                                                            "additionalProperties": true
                                                         },
                                                         "tsType": {
                                                             "type": "string",

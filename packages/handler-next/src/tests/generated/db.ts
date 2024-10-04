@@ -58,6 +58,11 @@ export type PgCatalogNumeric = string;
  */
 export type PublicMpaaRatingEnum = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 /**
+ * A PG text
+ */
+export type PgCatalogText2 = string;
+export type PgCatalogText1 = PgCatalogText2[];
+/**
  * A PG tsvector
  */
 export type PgCatalogTsvector = string;
@@ -65,10 +70,6 @@ export type PgCatalogTsvector = string;
  * A PG bpchar
  */
 export type PgCatalogBpchar = string;
-/**
- * A PG bytea
- */
-export type PgCatalogBytea = string;
 
 /**
  * Your database's schema
@@ -698,7 +699,7 @@ export interface TableFilm {
          * - Generated: NEVER
          */
         special_features: {
-            type: PgCatalogText;
+            type: PgCatalogText1;
             selectable: true;
             includable: true;
             whereable: true;
@@ -1814,6 +1815,10 @@ export interface TableStaff {
         };
     };
 }
+/**
+ * A PG bytea
+ */
+export interface PgCatalogBytea {}
 /**
  * Table details:
  *

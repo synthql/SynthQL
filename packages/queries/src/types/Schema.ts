@@ -1,11 +1,11 @@
 import { Column } from './Column';
 import { Table } from './Table';
 
-export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
+export interface Schema<DB> {
     $schema: string;
     type: string;
     description: string;
-    properties: Record<TTable | string, TableDef<DB>>;
+    properties: Record<Table<DB>, TableDef<DB>>;
     required: string[];
     additionalProperties: boolean;
     $defs: {
@@ -18,6 +18,9 @@ export interface Schema<DB, TTable extends Table<DB> = Table<DB>> {
             format?: string;
             additionalProperties?: boolean;
             title?: string;
+            items?: {
+                type: string;
+            };
             tsType?: string;
             minimum?: number;
             maximum?: number;
@@ -65,6 +68,9 @@ interface ColumnDefTypeDef {
     type: string;
     title?: string;
     description?: string;
+    items?: {
+        type: string;
+    };
     tsType?: string;
     minimum?: number;
     maximum?: number;
@@ -78,6 +84,9 @@ interface ColumnDefPropertyDef {
     id?: string;
     description?: string;
     title?: string;
+    items?: {
+        type: string;
+    };
     tsType?: string;
     minimum?: number;
     maximum?: number;

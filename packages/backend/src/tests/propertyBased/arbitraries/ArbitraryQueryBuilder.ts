@@ -151,7 +151,7 @@ export class ArbitraryQueryBuilder<DB> {
 
 function getPrimaryKeyColumns<DB>(
     schema: Schema<DB>,
-    table: string,
+    table: Table<DB>,
 ): Array<string> {
     const tableDef = getTableDef<DB>(schema, table);
 
