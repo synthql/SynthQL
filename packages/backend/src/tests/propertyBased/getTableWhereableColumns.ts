@@ -1,11 +1,11 @@
-import { Schema } from '@synthql/queries';
+import { Schema, Table } from '@synthql/queries';
 import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
 import { getTableDef } from './getTableDef';
 import { isWhereableColumn } from './isWhereableColumn';
 
 export function getTableWhereableColumns<DB>(
     schema: Schema<DB>,
-    table: string,
+    table: Table<DB>,
 ): string[] {
     const where: string[] = [];
 

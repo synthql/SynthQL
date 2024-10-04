@@ -1,6 +1,6 @@
 import { fc } from '@fast-check/vitest';
 import { AllTablesRowsMap } from '../getTableRowsByTableName';
-import { Schema } from '@synthql/queries';
+import { Schema, Table } from '@synthql/queries';
 import { getTableDef } from '../getTableDef';
 import { getColumnDef } from '../getColumnDef';
 import { getColumnPgType } from '../getColumnPgType';
@@ -14,7 +14,7 @@ export function arbitraryWhereValue<DB>({
 }: {
     schema: Schema<DB>;
     allTablesRowsMap: AllTablesRowsMap;
-    tableName: string;
+    tableName: Table<DB>;
     columnName: string;
     validWhere: boolean;
 }): fc.Arbitrary<unknown> {

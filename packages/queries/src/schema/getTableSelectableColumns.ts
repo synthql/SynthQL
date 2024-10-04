@@ -1,4 +1,5 @@
 import { Schema } from '../types/Schema';
+import { Table } from '../types/Table';
 import { getColumnNamesAndDefs } from './getColumnNamesAndDefs';
 import { getTableDef } from './getTableDef';
 import { isSelectableColumn } from './isSelectableColumn';
@@ -27,7 +28,7 @@ type SelectableColumnsRecordType = Record<string, true>;
 
 export function getTableSelectableColumns<DB>(
     schema: Schema<DB>,
-    table: string,
+    table: Table<DB>,
 ): SelectableColumnsRecordType {
     const select: SelectableColumnsRecordType = {};
 
