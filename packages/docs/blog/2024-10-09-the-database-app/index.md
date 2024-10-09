@@ -132,7 +132,9 @@ function UserProfileView({id}) {
 }
 ```
 
-### Secure by default: SynthQL has two security features that set it apart: Declarative role based access controls and query whitelisting.
+### Secure by default
+
+SynthQL has two security features that set it apart: Declarative role based access controls and query whitelisting.
 
 When you declare a query, you specify which roles are required to execute it. You also need to whitelist the query with the backend, so that the backend can check that the user has the necessary roles to execute the query.
 
