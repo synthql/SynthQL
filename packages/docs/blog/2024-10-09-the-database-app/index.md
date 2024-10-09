@@ -5,7 +5,7 @@ authors: [fhur]
 tags: [development]
 ---
 
-# The database app: a pattern
+## The database app: a pattern
 
 In my +12y journey as a software developer, I've "re-discovered" a interesting pattern: a surprising number of applications are, at their heart, sophisticated database interfaces. These apps typically serve two main purposes: they store data in a SQL database and offer an intuitive frontend for users to view and manipulate that data.
 
