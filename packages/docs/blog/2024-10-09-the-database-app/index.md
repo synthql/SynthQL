@@ -94,11 +94,15 @@ const {data: users} = useSynthQL({query, suspense: true})
 ```
 
 
-### Declarative: With SynthQL you describe what data you need, from which tables, which colums, etc. It's similar in spirit to GraphQL, but hopefully much simpler. My goal is to make the syntax close enough to SQL that it's intuitive for people with an existing SQL background.
+### Declarative
+
+With SynthQL you describe what data you need, from which tables, which colums, etc. It's similar in spirit to GraphQL, but hopefully much simpler. My goal is to make the syntax close enough to SQL that it's intuitive for people with an existing SQL background.
 
 In the example above, 
 
-### Frontend ORM: With SynthQL you can fetch data from your database directly from your React components. This means you can built mini-endpoints that are tightly coupled to the frontend, and so no over or under fetching.
+### Frontend ORM
+
+With SynthQL you can fetch data from your database directly from your React components. This means you can built mini-endpoints that are tightly coupled to the frontend, and so no over or under fetching.
 
 ```tsx
 function UserProfileView({id}) {
