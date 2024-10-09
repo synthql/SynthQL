@@ -128,11 +128,17 @@ const from = query<DbWithVirtualTables>(schemaWithVirtualTables).from;
 const defaultSchema = 'public';
 
 type ActorQueryProvider = QueryProvider<DbWithVirtualTables, 'actor'>;
+type AddressQueryProvider = QueryProvider<DbWithVirtualTables, 'address'>;
+type CityQueryProvider = QueryProvider<DbWithVirtualTables, 'city'>;
+type CustomerQueryProvider = QueryProvider<DbWithVirtualTables, 'customer'>;
 type FilmQueryProvider = QueryProvider<DbWithVirtualTables, 'film'>;
 type FilmRatingQueryProvider = QueryProvider<
     DbWithVirtualTables,
     'film_rating'
 >;
+type LanguageQueryProvider = QueryProvider<DbWithVirtualTables, 'language'>;
+type StaffQueryProvider = QueryProvider<DbWithVirtualTables, 'staff'>;
+type StoreQueryProvider = QueryProvider<DbWithVirtualTables, 'store'>;
 
 const actorProvider: ActorQueryProvider = {
     table: 'actor',
@@ -142,10 +148,90 @@ const actorProvider: ActorQueryProvider = {
             { actor_id: 2, first_name: 'Jane', last_name: 'Doe' },
             { actor_id: 3, first_name: 'John', last_name: 'Smith' },
         ];
+
         if (actorIds === undefined || actorIds.length === 0) {
             return actors;
         }
+
         return actors.filter((a) => actorIds.includes(a.actor_id));
+    },
+};
+
+const addressProvider: AddressQueryProvider = {
+    table: 'address',
+    execute: async ({ address_id: addressIds }) => {
+        const addresses = [
+            { address_id: 1, city_id: 1, address: '1 Abuja way' },
+            { address_id: 2, city_id: 2, address: '2 Enugu way' },
+            { address_id: 3, city_id: 3, address: '3 Jos way' },
+        ];
+
+        if (addressIds === undefined || addressIds.length === 0) {
+            return addresses;
+        }
+
+        return addresses.filter((a) => addressIds.includes(a.address_id));
+    },
+};
+
+const cityProvider: CityQueryProvider = {
+    table: 'city',
+    execute: async ({ city_id: cityIds }) => {
+        const cities = [
+            {
+                city_id: 1,
+                name: 'Abuja',
+            },
+            {
+                city_id: 2,
+                name: 'Enugu',
+            },
+            {
+                city_id: 3,
+                name: 'Jos',
+            },
+        ];
+
+        if (cityIds === undefined || cityIds.length === 0) {
+            return cities;
+        }
+
+        return cities.filter((l) => cityIds.includes(l.city_id));
+    },
+};
+
+const customerProvider: CustomerQueryProvider = {
+    table: 'customer',
+    execute: async ({ customer_id: customerIds }) => {
+        const customers = [
+            {
+                customer_id: 1,
+                address_id: 1,
+                store_id: 1,
+                first_name: 'Captain',
+                last_name: 'America',
+            },
+            {
+                customer_id: 2,
+                address_id: 2,
+                store_id: 2,
+                first_name: 'War',
+                last_name: 'Machine',
+            },
+            {
+                customer_id: 3,
+                address_id: 3,
+                store_id: 3,
+                first_name: 'Black',
+                last_name: 'Widow',
+            },
+        ];
+
+        if (customerIds === undefined || customerIds.length === 0) {
+            return customers;
+        }
+
+        return customers.filter((a) => customerIds.includes(a.customer_id));
     },
 };
 
@@ -209,7 +295,233 @@ const filmRatingProvider: FilmRatingQueryProvider = {
     },
 };
 
+const languageProvider: LanguageQueryProvider = {
+    table: 'language',
+    execute: async ({ language_id: languageIds }) => {
+        const languages = [
+            {
+                language_id: 1,
+                name: 'English',
+            },
+            {
+                language_id: 2,
+                name: 'German',
+            },
+            {
+                language_id: 3,
+                name: 'Spanish',
+            },
+            {
+                language_id: 4,
+                name: 'French',
+            },
+        ];
+
+        if (languageIds === undefined || languageIds.length === 0) {
+            return languages;
+        }
+
+        return languages.filter((l) => languageIds.includes(l.language_id));
+    },
+};
+
+const staffProvider: StaffQueryProvider = {
+    table: 'staff',
+    execute: async ({ staff_id: staffIds }) => {
+        const staffs = [
+            {
+                staff_id: 1,
+                first_name: 'Captain',
+                last_name: 'Cold',
+            },
+            {
+                staff_id: 2,
+                first_name: 'Martian',
+                last_name: 'Manhunter',
+            },
+            {
+                staff_id: 3,
+                first_name: 'Heat',
+                last_name: 'Wave',
+            },
+        ];
+
+        if (staffIds === undefined || staffIds.length === 0) {
+            return staffs;
+        }
+
+        return staffs.filter((l) => staffIds.includes(l.staff_id));
+    },
+};
+
+const storeProvider: StoreQueryProvider = {
+    table: 'store',
+    execute: async ({ store_id: storeIds }) => {
+        const stores = [
+            { store_id: 1, address_id: 1, manager_staff_id: 1 },
+            { store_id: 2, address_id: 2, manager_staff_id: 2 },
+            { store_id: 3, address_id: 3, manager_staff_id: 3 },
+        ];
+
+        if (storeIds === undefined || storeIds.length === 0) {
+            return stores;
+        }
+
+        return stores.filter((s) => storeIds.includes(s.store_id));
+    },
+};
+
 describe('execute', () => {
+    test('1 level deep deferred queries', async () => {
+        const store = from('store')
+            .where({
+                store_id: col('customer.store_id'),
+            })
+            .lazy()
+            .one();
+
+        const customer_address = from('address')
+            .where({
+                address_id: col('customer.address_id'),
+            })
+            .lazy()
+            .one();
+
+        const q = from('customer').include({ customer_address, store }).many();
+
+        const result = await collectLast(
+            execute<DbWithVirtualTables, typeof q>(q, {
+                executors: [
+                    new QueryProviderExecutor([
+                        addressProvider,
+                        customerProvider,
+                        storeProvider,
+                    ]),
+                ],
+                defaultSchema,
+            }),
+        );
+
+        expect(result).toEqual([
+            {
+                customer_id: 1,
+                address_id: 1,
+                store_id: 1,
+                first_name: 'Captain',
+                last_name: 'America',
+                customer_address: {
+                    status: 'done',
+                    data: {
+                        address_id: 1,
+                        city_id: 1,
+                        address: '1 Abuja way',
+                    },
+                },
+                store: {
+                    status: 'done',
+                    data: {
+                        store_id: 1,
+                        address_id: 1,
+                        manager_staff_id: 1,
+                    },
+                },
+            },
+            {
+                customer_id: 2,
+                address_id: 2,
+                store_id: 2,
+                first_name: 'War',
+                last_name: 'Machine',
+                customer_address: {
+                    status: 'done',
+                    data: {
+                        address_id: 2,
+                        city_id: 2,
+                        address: '2 Enugu way',
+                    },
+                },
+                store: {
+                    status: 'done',
+                    data: {
+                        store_id: 2,
+                        address_id: 2,
+                        manager_staff_id: 2,
+                    },
+                },
+            },
+            {
+                customer_id: 3,
+                address_id: 3,
+                store_id: 3,
+                first_name: 'Black',
+                last_name: 'Widow',
+                customer_address: {
+                    status: 'done',
+                    data: {
+                        address_id: 3,
+                        city_id: 3,
+                        address: '3 Jos way',
+                    },
+                },
+                store: {
+                    status: 'done',
+                    data: {
+                        store_id: 3,
+                        address_id: 3,
+                        manager_staff_id: 3,
+                    },
+                },
+            },
+        ]);
+    });
+
+    // TODO: fix the underlying setIn fn to get this to work
+    test.skip('2 level deep deferred queries', async () => {
+        const store_address = from('address')
+            .where({
+                address_id: col('store.address_id'),
+            })
+            .lazy()
+            .one();
+
+        const store = from('store')
+            .where({
+                store_id: col('customer.store_id'),
+            })
+            .include({ store_address })
+            .lazy()
+            .one();
+
+        const customer_city = from('city')
+            .where({
+                city_id: col('address.city_id'),
+            })
+            .lazy()
+            .one();
+
+        const customer_address = from('address')
+            .where({
+                address_id: col('customer.address_id'),
+            })
+            .include({ customer_city })
+            .lazy()
+            .one();
+
+        const q = from('customer').include({ customer_address, store }).many();
+
+        const result = execute<DbWithVirtualTables, typeof q>(q, {
+            executors: [
+                new QueryProviderExecutor([
+                    addressProvider,
+                    cityProvider,
+                    customerProvider,
+                    storeProvider,
+                ]),
+            ],
+            defaultSchema,
+        });
+    });
+
     test('single provider', async () => {
         const q = from('actor')
             .columns('actor_id', 'first_name', 'last_name')
