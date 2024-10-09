@@ -34,7 +34,7 @@ It is my belief that React solved the UI problem. It's not that React is perfect
 ### The database
 It is also my believe that Postgres has solved the database problem. In which sense? Well, Postgres has more features than most of your engineering team is even aware of, and it has proven itself at a scale that most of us will never reach. In case you weren't aware, Notion, Figma, Gitlab, Adyen, and many more use Postgres as their core datastore.  
 
-## The data-sync layer
+### The data-sync layer
 This layer deserves a bit of a definition: Most database apps need a way to get data from the DB into the UI. In most environments the DB doesn't fit in the client, so the data needs to be synced. Usually this is done with a REST API.
 
 The problem with the REST API approach is that it's not very "UI friendly". Backend developers usually like to expose nice, clean, "entity" based APIs, but that's not what the user wants. The user wants a mishmash of 20 different entities in one view. And so you end up usually with the frontend fetching 20 endpoints and joining the data, resulting in poor performance, or a custom backend endpoint tightly coupled to a single frontend view.
@@ -62,7 +62,7 @@ The typical way I see this implemented is essentially by spreading assertions an
 
 I think the smart people at Supabase realised that Postgres' Row-level-security (RLS) is maybe enough for many use cases. At least more manageable than a bespoke authorization layer. RLS at least gives you a declarative way to express what operations are allowed and what data is accessible, it's the performance part that seems hard to get right, or at least becomes more fragile if you abuse RLS.
 
-# Ok... but what about SynthQL?
+## Ok... but what about SynthQL?
 
 My goal with SynthQL is to make it easier to build database apps. I want to make it so that the average engineer can build a custom frontend for their users without having to worry about any of this complexity.
 
@@ -94,11 +94,11 @@ const {data: users} = useSynthQL({query, suspense: true})
 ```
 
 
-- **Declarative**: With SynthQL you describe what data you need, from which tables, which colums, etc. It's similar in spirit to GraphQL, but hopefully much simpler. My goal is to make the syntax close enough to SQL that it's intuitive for people with an existing SQL background.
+### Declarative: With SynthQL you describe what data you need, from which tables, which colums, etc. It's similar in spirit to GraphQL, but hopefully much simpler. My goal is to make the syntax close enough to SQL that it's intuitive for people with an existing SQL background.
 
 In the example above, 
 
-- **Frontend ORM**: With SynthQL you can fetch data from your database directly from your React components. This means you can built mini-endpoints that are tightly coupled to the frontend, and so no over or under fetching.
+### Frontend ORM: With SynthQL you can fetch data from your database directly from your React components. This means you can built mini-endpoints that are tightly coupled to the frontend, and so no over or under fetching.
 
 ```tsx
 function UserProfileView({id}) {
@@ -128,7 +128,7 @@ function UserProfileView({id}) {
 }
 ```
 
-- **Secure by default**: SynthQL has two security features that set it apart: Declarative role based access controls and query whitelisting.
+### Secure by default: SynthQL has two security features that set it apart: Declarative role based access controls and query whitelisting.
 
 When you declare a query, you specify which roles are required to execute it. You also need to whitelist the query with the backend, so that the backend can check that the user has the necessary roles to execute the query.
 
