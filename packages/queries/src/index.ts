@@ -14,6 +14,8 @@ export * from './types/Select';
 export * from './types/Table';
 export * from './types/Where';
 export * from './types/WhereClause';
+export * from './util/iterateRecursively';
+export * from './validators/isDeferredResult';
 export * from './validators/isQueryParam';
 export * from './validators/isRefOp';
 export { col } from './col';

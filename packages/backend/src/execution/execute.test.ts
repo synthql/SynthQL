@@ -1,4 +1,10 @@
-import { col, query } from '@synthql/queries';
+import {
+    col,
+    isDeferredResult,
+    iterateRecursively,
+    Query,
+    query,
+} from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '..';
 import { QueryProvider } from '../QueryProvider';
@@ -373,24 +379,18 @@ const storeProvider: StoreQueryProvider = {
 
 describe('execute', () => {
     test('1 level deep deferred queries', async () => {
-        const store = from('store')
-            .where({
-                store_id: col('customer.store_id'),
-            })
-            .lazy()
-            .one();
+        const query = createCustomerQuery(
+            createCustomerAddressQuery().one(),
+            createStoreQuery().one(),
+        ).many();
 
-        const customer_address = from('address')
-            .where({
-                address_id: col('customer.address_id'),
-            })
-            .lazy()
-            .one();
+        const queryWithDefer = createCustomerQuery(
+            createCustomerAddressQuery().defer().one(),
+            createStoreQuery().defer().one(),
+        ).many();
 
-        const q = from('customer').include({ customer_address, store }).many();
-
-        const result = await collectLast(
-            execute<DbWithVirtualTables, typeof q>(q, {
+        const queryResult = await collectLast(
+            execute<DbWithVirtualTables, typeof query>(query, {
                 executors: [
                     new QueryProviderExecutor([
                         addressProvider,
@@ -402,114 +402,50 @@ describe('execute', () => {
             }),
         );
 
-        expect(result).toEqual([
-            {
-                customer_id: 1,
-                address_id: 1,
-                store_id: 1,
-                first_name: 'Captain',
-                last_name: 'America',
-                customer_address: {
-                    status: 'done',
-                    data: {
-                        address_id: 1,
-                        city_id: 1,
-                        address: '1 Abuja way',
-                    },
+        const queryWithDeferResult = await collectLast(
+            execute<DbWithVirtualTables, typeof queryWithDefer>(
+                queryWithDefer,
+                {
+                    executors: [
+                        new QueryProviderExecutor([
+                            addressProvider,
+                            customerProvider,
+                            storeProvider,
+                        ]),
+                    ],
+                    defaultSchema,
                 },
-                store: {
-                    status: 'done',
-                    data: {
-                        store_id: 1,
-                        address_id: 1,
-                        manager_staff_id: 1,
-                    },
-                },
-            },
-            {
-                customer_id: 2,
-                address_id: 2,
-                store_id: 2,
-                first_name: 'War',
-                last_name: 'Machine',
-                customer_address: {
-                    status: 'done',
-                    data: {
-                        address_id: 2,
-                        city_id: 2,
-                        address: '2 Enugu way',
-                    },
-                },
-                store: {
-                    status: 'done',
-                    data: {
-                        store_id: 2,
-                        address_id: 2,
-                        manager_staff_id: 2,
-                    },
-                },
-            },
-            {
-                customer_id: 3,
-                address_id: 3,
-                store_id: 3,
-                first_name: 'Black',
-                last_name: 'Widow',
-                customer_address: {
-                    status: 'done',
-                    data: {
-                        address_id: 3,
-                        city_id: 3,
-                        address: '3 Jos way',
-                    },
-                },
-                store: {
-                    status: 'done',
-                    data: {
-                        store_id: 3,
-                        address_id: 3,
-                        manager_staff_id: 3,
-                    },
-                },
-            },
-        ]);
+            ),
+        );
+
+        iterateRecursively(queryWithDeferResult, (x, _) => {
+            if (isDeferredResult(x)) {
+                if (x.status === 'done') {
+                    setNestedValue(queryWithDeferResult, _, x.data);
+                }
+            }
+        });
+
+        expect(queryResult).toEqual(queryWithDeferResult);
     });
 
     // TODO: fix the underlying setIn fn to get this to work
     test.skip('2 level deep deferred queries', async () => {
-        const store_address = from('address')
-            .where({
-                address_id: col('store.address_id'),
-            })
-            .lazy()
-            .one();
+        const query = createCustomerQuery(
+            createCustomerAddressQuery(createCustomerCityQuery().one()).one(),
+            createStoreQuery(createStoreAddressQuery().one()).one(),
+        ).many();
 
-        const store = from('store')
-            .where({
-                store_id: col('customer.store_id'),
-            })
-            .include({ store_address })
-            .lazy()
-            .one();
+        const queryWithDefer = createCustomerQuery(
+            createCustomerAddressQuery(createCustomerCityQuery().defer().one())
+                .defer()
+                .one(),
+            createStoreQuery(createStoreAddressQuery().defer().one())
+                .defer()
+                .one(),
+        ).many();
 
-        const customer_city = from('city')
-            .where({
-                city_id: col('address.city_id'),
-            })
-            .lazy()
-            .one();
-
-        const customer_address = from('address')
-            .where({
-                address_id: col('customer.address_id'),
-            })
-            .include({ customer_city })
-            .lazy()
-            .one();
-
-        const q = from('customer').include({ customer_address, store }).many();
-
-        const result = execute<DbWithVirtualTables, typeof q>(q, {
+        const queryResult = execute<DbWithVirtualTables, typeof query>(query, {
             executors: [
                 new QueryProviderExecutor([
                     addressProvider,
@@ -520,6 +456,33 @@ describe('execute', () => {
             ],
             defaultSchema,
         });
+
+        const queryWithDeferResult = await collectLast(
+            execute<DbWithVirtualTables, typeof queryWithDefer>(
+                queryWithDefer,
+                {
+                    executors: [
+                        new QueryProviderExecutor([
+                            addressProvider,
+                            cityProvider,
+                            customerProvider,
+                            storeProvider,
+                        ]),
+                    ],
+                    defaultSchema,
+                },
+            ),
+        );
+
+        iterateRecursively(queryWithDeferResult, (x, _) => {
+            if (isDeferredResult(x)) {
+                if (x.status === 'done') {
+                    setNestedValue(queryWithDeferResult, _, x.data);
+                }
+            }
+        });
+
+        expect(queryResult).toEqual(queryWithDeferResult);
     });
 
     test('single provider', async () => {
@@ -601,3 +564,68 @@ describe('execute', () => {
         });
     });
 });
+
+function setNestedValue(obj: any, path: string[], value: unknown) {
+    for (let i = 0; i < path.length - 1; i++) {
+        if (!obj.hasOwnProperty(path[i])) {
+            obj[path[i]] = {};
+        }
+
+        obj = obj[path[i]];
+    }
+
+    obj[path[path.length - 1]] = value;
+}
+
+function createCustomerQuery<T>(
+    // where: Where<DbWithVirtualTables, Table<DbWithVirtualTables>>,
+    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
+) {
+    return from('customer')
+        .where({})
+        .include(Object.fromEntries(queriesToInclude.entries()));
+}
+
+function createCustomerAddressQuery(
+    // where: Where<DbWithVirtualTables, Table<DbWithVirtualTables>>,
+    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
+) {
+    return from('address')
+        .where({
+            address_id: col('customer.address_id'),
+        })
+        .include(Object.fromEntries(queriesToInclude.entries()));
+}
+
+function createCustomerCityQuery(
+    // where: Where<DbWithVirtualTables, Table<DbWithVirtualTables>>,
+    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
+) {
+    return from('city')
+        .where({
+            city_id: col('address.city_id'),
+        })
+        .include(Object.fromEntries(queriesToInclude.entries()));
+}
+
+function createStoreQuery(
+    // where: Where<DbWithVirtualTables, Table<DbWithVirtualTables>>,
+    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
+) {
+    return from('store')
+        .where({
+            store_id: col('customer.store_id'),
+        })
+        .include(Object.fromEntries(queriesToInclude.entries()));
+}
+
+function createStoreAddressQuery(
+    // where: Where<DbWithVirtualTables, Table<DbWithVirtualTables>>,
+    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
+) {
+    return from('address')
+        .where({
+            address_id: col('store.address_id'),
+        })
+        .include(Object.fromEntries(queriesToInclude.entries()));
+}
