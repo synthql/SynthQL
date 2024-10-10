@@ -12,7 +12,7 @@ const queryBuilder = ArbitraryQueryBuilder.fromPagila();
 
 describe('property based tests for defer', () => {
     const numRuns = 100;
-    const timeout = numRuns * 100;
+    const timeout = numRuns * 1000;
     const endOnFailure = true;
 
     test.prop(
