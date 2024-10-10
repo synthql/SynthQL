@@ -29,6 +29,8 @@ This behaviour can be disabled with the `allowUnknownQueries` option.
 const queryEngine = new QueryEngine({..., allowUnknownQueries:true});
 ```
 
+You can read more about registered queries [here](/docs/security/registered-queries).
+
 ## Restricting access to tables and columns
 
 You can use the `.requires` method to define what permissions are required to run the query.
