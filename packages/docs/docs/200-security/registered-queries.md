@@ -125,7 +125,7 @@ queryEngine.registerQuery(findUserById(0))
 
 If you try to register two different queries with the same hash, the QueryEngine will throw an error. 
 
-If a mallicious user tries to execute a query A with the hash of query B, it would be equivalent to simply trying to execute query B.
+If a malicious user tries to execute a query A with the hash of query B, it would be equivalent to simply trying to execute query B.
 
 ### How is the hash calculated?
 
