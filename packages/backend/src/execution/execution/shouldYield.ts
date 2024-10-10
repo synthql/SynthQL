@@ -8,10 +8,26 @@ function shouldYieldNode(node: ExecResultNode): boolean {
     const plannedChildren = node.planNode.children;
     const executedChildren = node.children;
 
-    const allChildrenExecuted =
+    const allPlannedChildrenAreLazyQueries =
+        plannedChildren.length > 0 &&
+        plannedChildren.every((node) => node.inputQuery.lazy === true);
+
+    if (allPlannedChildrenAreLazyQueries) {
+        return true;
+    }
+
+    const someExecutedChildrenAreNotLazyQueries =
+        plannedChildren.length > 0 &&
+        executedChildren.some((node) => node.inputQuery.lazy !== true);
+
+    if (someExecutedChildrenAreNotLazyQueries) {
+        return true;
+    }
+
+    const allPlannedChildrenHaveBeenExecuted =
         plannedChildren.length === executedChildren.length;
 
-    if (allChildrenExecuted) {
+    if (allPlannedChildrenHaveBeenExecuted) {
         return true;
     }
 

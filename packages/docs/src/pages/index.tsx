@@ -258,7 +258,7 @@ const query = from('store')
     })
 
 // Over the network, this results in two JSON lines
-[{ id: "store 1", name: "Fnacy store", products: { status: 'pending' } }]
+[{ id: "store 1", name: "Fancy store", products: { status: 'pending' } }]
 [{ id: "store 1", name: "Fancy store", products: { status: "done", data: [...] } }]
             `,
     },

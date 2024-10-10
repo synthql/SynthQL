@@ -117,12 +117,12 @@ export interface ExecResultNode {
      *
      * Example:
      * - A path of `[]` points to the root of the query result.
-     * - A path of `[star,'users']` indicates that at every item
+     * - A path of `[star, 'users']` indicates that at every item
      * in the root, a `users` key should be added.
      *
      *   Example:
      *   ```
-     *   [{id:1}, {id:2}] => [{id:1, users: [..]}, {id:2, users: [..]}]
+     *   [{id: 1}, {id: 2}] => [{id: 1, users: [...]}, {id: 2, users: [...]}]
      *   ```
      */
     path: Path;
