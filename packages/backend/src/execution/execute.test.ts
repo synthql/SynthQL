@@ -1,8 +1,4 @@
-import {
-    col,
-    Query,
-    query,
-} from '@synthql/queries';
+import { col, Query, query } from '@synthql/queries';
 import { describe, expect, test } from 'vitest';
 import { collectLast } from '..';
 import { QueryProvider } from '../QueryProvider';
@@ -10,7 +6,7 @@ import { DB, schema } from '../tests/generated';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 import { execute } from './execute';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
-import { flattenDeferredQueryResult } from '../tests/util/flattenDeferredQueryResultsResults';
+import { flattenDeferredQueryResult } from '../tests/util/flattenDeferredQueryResults';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {
@@ -436,10 +432,9 @@ const storeProvider: StoreQueryProvider = {
 
 describe('execute', () => {
     test('1 level deep deferred queries with one include', async () => {
-        const filmLanguageQuery = from('language')
-            .where({
-                language_id: col('film.language_id'),
-            })
+        const filmLanguageQuery = from('language').where({
+            language_id: col('film.language_id'),
+        });
         const query = createFilmQuery(filmLanguageQuery.one()).many();
 
         const queryWithDefer = createFilmQuery(
@@ -470,16 +465,13 @@ describe('execute', () => {
     });
 
     test('1 level deep deferred queries with two includes', async () => {
+        const customerAddressQuery = from('address').where({
+            address_id: col('customer.address_id'),
+        });
 
-        const customerAddressQuery = from('address')
-            .where({
-                address_id: col('customer.address_id'),
-            })
-
-        const customerStoreQuery = from('store')
-            .where({
-                store_id: col('customer.store_id'),
-            })
+        const customerStoreQuery = from('store').where({
+            store_id: col('customer.store_id'),
+        });
 
         const query = createCustomerQuery(
             customerAddressQuery.one(),
@@ -526,20 +518,17 @@ describe('execute', () => {
     });
 
     test('1 level deep deferred queries with three includes', async () => {
-        const paymentStaffQuery = from('staff')
-            .where({
-                staff_id: col('payment.staff_id'),
-            });
+        const paymentStaffQuery = from('staff').where({
+            staff_id: col('payment.staff_id'),
+        });
 
-        const paymentRentalQuery = from('rental')
-            .where({
-                rental_id: col('payment.rental_id'),
-            });
+        const paymentRentalQuery = from('rental').where({
+            rental_id: col('payment.rental_id'),
+        });
 
-        const paymentCustomerQuery = from('customer')
-            .where({
-                customer_id: col('payment.customer_id'),
-            })
+        const paymentCustomerQuery = from('customer').where({
+            customer_id: col('payment.customer_id'),
+        });
 
         const query = createPaymentQuery(
             paymentCustomerQuery.one(),
@@ -591,15 +580,13 @@ describe('execute', () => {
 
     // TODO: fix the underlying `setIn()` fn to get this to work
     test.skip('2 level deep deferred queries', async () => {
-        const addressCityQuery = from('city')
-            .where({
-                city_id: col('address.city_id'),
-            });
+        const addressCityQuery = from('city').where({
+            city_id: col('address.city_id'),
+        });
 
-        const storeAddressQuery = from('address')
-            .where({
-                address_id: col('store.address_id'),
-            })
+        const storeAddressQuery = from('address').where({
+            address_id: col('store.address_id'),
+        });
 
         const query = createCustomerQuery(
             createCustomerAddressQuery(addressCityQuery.one()).one(),
@@ -729,8 +716,6 @@ describe('execute', () => {
     });
 });
 
-
-
 function createCustomerQuery(
     ...queriesToInclude: Array<Query<DbWithVirtualTables>>
 ) {
@@ -774,6 +759,3 @@ function createPaymentQuery(
         .where({})
         .include(Object.fromEntries(queriesToInclude.entries()));
 }
-
-
-
