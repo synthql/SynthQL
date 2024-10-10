@@ -52,6 +52,24 @@ describe('PgExecutor', () => {
         `);
     });
 
+    it('limit sql injection', () => {
+        expect(() => {
+            const query = from('actor')
+                .limit(`1; drop table actor; --` as unknown as number)
+                .all();
+            executor.compile(query);
+        }).toThrow('Expected limit to be a number');
+    });
+
+    it('offset sql injection', () => {
+        expect(() => {
+            const query = from('actor')
+                .offset(`1; drop table actor; --` as unknown as number)
+                .all();
+            executor.compile(query);
+        }).toThrow('Expected offset to be a number');
+    });
+
     it('Film table SynthQL query executes to expected result', async () => {
         const result = await executor.execute(q1, executeProps);
 

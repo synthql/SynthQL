@@ -32,7 +32,7 @@ function assertPrimitive(x: unknown, msg?: string): asserts x is Primitive {
     if (!isPrimitive(x)) {
         throw new Error(
             msg ??
-                `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
+            `Expected ${JSON.stringify(x)} to be a primitive but was ${typeof x}`,
         );
     }
 }
@@ -352,7 +352,10 @@ export class SqlBuilder {
         if (limit === undefined) {
             return this;
         }
-        return this.add(`limit ${limit} `);
+        if (typeof limit !== 'number') {
+            throw new Error(`Expected limit to be a number`);
+        }
+        return this.add(`limit ${Number(limit)} `);
     }
 
     leftJoin(join: Join) {
@@ -401,7 +404,10 @@ export class SqlBuilder {
         if (offset === undefined) {
             return this;
         }
-        return this.add(`offset ${offset} `);
+        if (typeof offset !== 'number') {
+            throw new Error(`Expected offset to be a number`);
+        }
+        return this.add(`offset ${Number(offset)} `);
     }
 
     build() {
