@@ -1,7 +1,5 @@
 import {
     col,
-    isDeferredResult,
-    iterateRecursively,
     Query,
     query,
 } from '@synthql/queries';
@@ -12,6 +10,7 @@ import { DB, schema } from '../tests/generated';
 import { PgCatalogInt4, PgCatalogText } from '../tests/generated/db';
 import { execute } from './execute';
 import { QueryProviderExecutor } from './executors/QueryProviderExecutor';
+import { flattenDeferredQueryResult } from '../tests/util/flattenDeferredQueryResultsResults';
 
 interface DbWithVirtualTables extends DB {
     film_rating: {
@@ -437,10 +436,14 @@ const storeProvider: StoreQueryProvider = {
 
 describe('execute', () => {
     test('1 level deep deferred queries with one include', async () => {
-        const query = createFilmQuery(createFilmLanguageQuery().one()).many();
+        const filmLanguageQuery = from('language')
+            .where({
+                language_id: col('film.language_id'),
+            })
+        const query = createFilmQuery(filmLanguageQuery.one()).many();
 
         const queryWithDefer = createFilmQuery(
-            createFilmLanguageQuery().defer().one(),
+            filmLanguageQuery.defer().one(),
         ).many();
 
         const queryResult = await collectLast(
@@ -461,20 +464,31 @@ describe('execute', () => {
             }),
         );
 
-        flattenDeferResultsRecursively(queryWithDeferResult);
+        flattenDeferredQueryResult(queryWithDeferResult);
 
         expect(queryResult).toEqual(queryWithDeferResult);
     });
 
     test('1 level deep deferred queries with two includes', async () => {
+
+        const customerAddressQuery = from('address')
+            .where({
+                address_id: col('customer.address_id'),
+            })
+
+        const customerStoreQuery = from('store')
+            .where({
+                store_id: col('customer.store_id'),
+            })
+
         const query = createCustomerQuery(
-            createCustomerAddressQuery().one(),
-            createCustomerStoreQuery().one(),
+            customerAddressQuery.one(),
+            customerStoreQuery.one(),
         ).many();
 
         const queryWithDefer = createCustomerQuery(
-            createCustomerAddressQuery().defer().one(),
-            createCustomerStoreQuery().defer().one(),
+            customerAddressQuery.defer().one(),
+            customerStoreQuery.defer().one(),
         ).many();
 
         const queryResult = await collectLast(
@@ -506,22 +520,37 @@ describe('execute', () => {
             ),
         );
 
-        flattenDeferResultsRecursively(queryWithDeferResult);
+        flattenDeferredQueryResult(queryWithDeferResult);
 
         expect(queryResult).toEqual(queryWithDeferResult);
     });
 
     test('1 level deep deferred queries with three includes', async () => {
+        const paymentStaffQuery = from('staff')
+            .where({
+                staff_id: col('payment.staff_id'),
+            });
+
+        const paymentRentalQuery = from('rental')
+            .where({
+                rental_id: col('payment.rental_id'),
+            });
+
+        const paymentCustomerQuery = from('customer')
+            .where({
+                customer_id: col('payment.customer_id'),
+            })
+
         const query = createPaymentQuery(
-            createPaymentCustomerQuery().one(),
-            createPaymentRentalQuery().one(),
-            createPaymentStaffQuery().one(),
+            paymentCustomerQuery.one(),
+            paymentRentalQuery.one(),
+            paymentStaffQuery.one(),
         ).many();
 
         const queryWithDefer = createPaymentQuery(
-            createPaymentCustomerQuery().defer().one(),
-            createPaymentRentalQuery().defer().one(),
-            createPaymentStaffQuery().defer().one(),
+            paymentCustomerQuery.defer().one(),
+            paymentRentalQuery.defer().one(),
+            paymentStaffQuery.defer().one(),
         ).many();
 
         const queryResult = await collectLast(
@@ -555,23 +584,33 @@ describe('execute', () => {
             ),
         );
 
-        flattenDeferResultsRecursively(queryWithDeferResult);
+        flattenDeferredQueryResult(queryWithDeferResult);
 
         expect(queryResult).toEqual(queryWithDeferResult);
     });
 
     // TODO: fix the underlying `setIn()` fn to get this to work
     test.skip('2 level deep deferred queries', async () => {
+        const addressCityQuery = from('city')
+            .where({
+                city_id: col('address.city_id'),
+            });
+
+        const storeAddressQuery = from('address')
+            .where({
+                address_id: col('store.address_id'),
+            })
+
         const query = createCustomerQuery(
-            createCustomerAddressQuery(createAddressCityQuery().one()).one(),
-            createCustomerStoreQuery(createStoreAddressQuery().one()).one(),
+            createCustomerAddressQuery(addressCityQuery.one()).one(),
+            createCustomerStoreQuery(storeAddressQuery.one()).one(),
         ).many();
 
         const queryWithDefer = createCustomerQuery(
-            createCustomerAddressQuery(createAddressCityQuery().defer().one())
+            createCustomerAddressQuery(addressCityQuery.defer().one())
                 .defer()
                 .one(),
-            createCustomerStoreQuery(createStoreAddressQuery().defer().one())
+            createCustomerStoreQuery(storeAddressQuery.defer().one())
                 .defer()
                 .one(),
         ).many();
@@ -605,7 +644,7 @@ describe('execute', () => {
             ),
         );
 
-        flattenDeferResultsRecursively(queryWithDeferResult);
+        flattenDeferredQueryResult(queryWithDeferResult);
 
         expect(queryResult).toEqual(queryWithDeferResult);
     });
@@ -690,37 +729,7 @@ describe('execute', () => {
     });
 });
 
-function flattenDeferResultsRecursively(queryWithDeferResult: any) {
-    iterateRecursively(queryWithDeferResult, (x, _) => {
-        if (isDeferredResult(x)) {
-            if (x.status === 'done') {
-                setNestedValue(queryWithDeferResult, _, x.data);
-            }
-        }
-    });
-}
 
-function setNestedValue(obj: any, path: string[], value: unknown) {
-    for (let i = 0; i < path.length - 1; i++) {
-        if (!obj.hasOwnProperty(path[i])) {
-            obj[path[i]] = {};
-        }
-
-        obj = obj[path[i]];
-    }
-
-    obj[path[path.length - 1]] = value;
-}
-
-function createAddressCityQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('city')
-        .where({
-            city_id: col('address.city_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
 
 function createCustomerQuery(
     ...queriesToInclude: Array<Query<DbWithVirtualTables>>
@@ -758,16 +767,6 @@ function createFilmQuery(
         .include(Object.fromEntries(queriesToInclude.entries()));
 }
 
-function createFilmLanguageQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('language')
-        .where({
-            language_id: col('film.language_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
-
 function createPaymentQuery(
     ...queriesToInclude: Array<Query<DbWithVirtualTables>>
 ) {
@@ -776,42 +775,5 @@ function createPaymentQuery(
         .include(Object.fromEntries(queriesToInclude.entries()));
 }
 
-function createPaymentCustomerQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('customer')
-        .where({
-            customer_id: col('payment.customer_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
 
-function createPaymentRentalQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('rental')
-        .where({
-            rental_id: col('payment.rental_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
 
-function createPaymentStaffQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('staff')
-        .where({
-            staff_id: col('payment.staff_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
-
-function createStoreAddressQuery(
-    ...queriesToInclude: Array<Query<DbWithVirtualTables>>
-) {
-    return from('address')
-        .where({
-            address_id: col('store.address_id'),
-        })
-        .include(Object.fromEntries(queriesToInclude.entries()));
-}
