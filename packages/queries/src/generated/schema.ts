@@ -7,455 +7,6 @@ export const schema: Schema<DB> = {
     type: 'object',
     description: "Your database's schema",
     properties: {
-        customer: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: customer',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        customer_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        store_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        email: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        address_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        activebool: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bool',
-                                    type: 'boolean',
-                                    description: 'A PG bool',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        create_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.date',
-                                    type: 'string',
-                                    format: 'date',
-                                    description:
-                                        'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        active: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'customer_id',
-                        'store_id',
-                        'first_name',
-                        'last_name',
-                        'email',
-                        'address_id',
-                        'activebool',
-                        'create_date',
-                        'last_update',
-                        'active',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
         actor: {
             type: 'object',
             description: 'Table details:\n\n- Schema: public\n- Table: actor',
@@ -644,18 +195,245 @@ export const schema: Schema<DB> = {
             required: ['columns'],
             additionalProperties: false,
         },
-        category: {
+        actor_info: {
             type: 'object',
             description:
-                'Table details:\n\n- Schema: public\n- Table: category',
+                'Table details:\n\n- Schema: public\n- Table: actor_info',
             properties: {
                 columns: {
                     type: 'object',
                     properties: {
-                        category_id: {
+                        actor_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        film_info: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: film_info\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        first_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'actor_id',
+                        'film_info',
+                        'first_name',
+                        'last_name',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        address: {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: address',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        address: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        address_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -695,10 +473,94 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        name: {
+                        address2: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        city_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        district: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -724,6 +586,199 @@ export const schema: Schema<DB> = {
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        phone: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        postal_code: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'address',
+                        'address_id',
+                        'address2',
+                        'city_id',
+                        'district',
+                        'last_update',
+                        'phone',
+                        'postal_code',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        category: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: category',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        category_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
                                 },
                             },
                             required: [
@@ -779,8 +834,1224 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
-                    required: ['category_id', 'name', 'last_update'],
+                    required: ['category_id', 'last_update', 'name'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        city: {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: city',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        city: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        city_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        country_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['city', 'city_id', 'country_id', 'last_update'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        country: {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: country',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        country: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        country_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['country', 'country_id', 'last_update'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        customer: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: customer',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        active: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        activebool: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.bool',
+                                    type: 'boolean',
+                                    description: 'A PG bool',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        address_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        create_date: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.date',
+                                    type: 'string',
+                                    format: 'date',
+                                    description:
+                                        'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        customer_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        email: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        first_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        store_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'active',
+                        'activebool',
+                        'address_id',
+                        'create_date',
+                        'customer_id',
+                        'email',
+                        'first_name',
+                        'last_name',
+                        'last_update',
+                        'store_id',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        customer_list: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: customer_list',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        'address': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'city': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'country': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'id': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'name': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'notes': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: notes\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'phone': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'sid': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'zip code': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'address',
+                        'city',
+                        'country',
+                        'id',
+                        'name',
+                        'notes',
+                        'phone',
+                        'sid',
+                        'zip code',
+                    ],
                     additionalProperties: false,
                 },
             },
@@ -794,6 +2065,47 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
+                        description: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         film_id: {
                             type: 'object',
                             description:
@@ -837,15 +2149,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        title: {
+                        fulltext: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
+                                    id: 'pg_catalog.tsvector',
                                     type: 'string',
-                                    description: 'A PG text',
+                                    description: 'A PG tsvector',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -862,90 +2174,6 @@ export const schema: Schema<DB> = {
                                 nullable: {
                                     type: 'boolean',
                                     const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        release_year: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    title: 'public.year.domain',
-                                    type: 'integer',
-                                    description:
-                                        'The year domain from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -1005,6 +2233,92 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        length: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         original_language_id: {
                             type: 'object',
                             description:
@@ -1016,6 +2330,92 @@ export const schema: Schema<DB> = {
                                     minimum: -2147483648,
                                     maximum: 2147483647,
                                     description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        release_year: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
+                                    type: 'integer',
+                                    description:
+                                        'The year domain from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1133,49 +2533,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         replacement_cost: {
                             type: 'object',
                             description:
@@ -1186,92 +2543,6 @@ export const schema: Schema<DB> = {
                                     type: 'string',
                                     description:
                                         'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1349,15 +2620,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        fulltext: {
+                        title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.tsvector',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    description: 'A PG tsvector',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -1392,20 +2663,20 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'film_id',
-                        'title',
                         'description',
-                        'release_year',
+                        'film_id',
+                        'fulltext',
                         'language_id',
+                        'last_update',
+                        'length',
                         'original_language_id',
+                        'rating',
+                        'release_year',
                         'rental_duration',
                         'rental_rate',
-                        'length',
                         'replacement_cost',
-                        'rating',
-                        'last_update',
                         'special_features',
-                        'fulltext',
+                        'title',
                     ],
                     additionalProperties: false,
                 },
@@ -1566,10 +2837,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        film_id: {
+                        category_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -1609,10 +2880,10 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        category_id: {
+                        film_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -1696,67 +2967,25 @@ export const schema: Schema<DB> = {
                             additionalProperties: false,
                         },
                     },
-                    required: ['film_id', 'category_id', 'last_update'],
+                    required: ['category_id', 'film_id', 'last_update'],
                     additionalProperties: false,
                 },
             },
             required: ['columns'],
             additionalProperties: false,
         },
-        address: {
+        film_list: {
             type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: address',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: film_list',
             properties: {
                 columns: {
                     type: 'object',
                     properties: {
-                        address_id: {
+                        actors: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        address: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -1794,51 +3023,10 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        address2: {
+                        category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        district: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -1876,10 +3064,51 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        city_id: {
+                        description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        fid: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -1919,56 +3148,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        postal_code: {
+                        length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        phone: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2001,17 +3191,100 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
+                        price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        title: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2046,342 +3319,15 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'address_id',
-                        'address',
-                        'address2',
-                        'district',
-                        'city_id',
-                        'postal_code',
-                        'phone',
-                        'last_update',
+                        'actors',
+                        'category',
+                        'description',
+                        'fid',
+                        'length',
+                        'price',
+                        'rating',
+                        'title',
                     ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        city: {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: city',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        city_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        city: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        country_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['city_id', 'city', 'country_id', 'last_update'],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        country: {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: country',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        country_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        country: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['country_id', 'country', 'last_update'],
                     additionalProperties: false,
                 },
             },
@@ -2396,6 +3342,49 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
+                        film_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         inventory_id: {
                             type: 'object',
                             description:
@@ -2439,17 +3428,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        film_id: {
+                        last_update: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2525,55 +3514,12 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                     },
                     required: [
-                        'inventory_id',
                         'film_id',
-                        'store_id',
+                        'inventory_id',
                         'last_update',
+                        'store_id',
                     ],
                     additionalProperties: false,
                 },
@@ -2632,47 +3578,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bpchar',
-                                    type: 'string',
-                                    description: 'A PG bpchar',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         last_update: {
                             type: 'object',
                             description:
@@ -2716,8 +3621,409 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.bpchar',
+                                    type: 'string',
+                                    description: 'A PG bpchar',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
-                    required: ['language_id', 'name', 'last_update'],
+                    required: ['language_id', 'last_update', 'name'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        nicer_but_slower_film_list: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        actors: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        category: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        description: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        fid: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        length: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        price: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        title: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'actors',
+                        'category',
+                        'description',
+                        'fid',
+                        'length',
+                        'price',
+                        'rating',
+                        'title',
+                    ],
                     additionalProperties: false,
                 },
             },
@@ -2731,17 +4037,16 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        payment_id: {
+                        amount: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2817,10 +4122,53 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        staff_id: {
+                        payment_date: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        payment_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -2903,59 +4251,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        amount: {
+                        staff_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        payment_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -2990,12 +4296,12 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'payment_id',
-                        'customer_id',
-                        'staff_id',
-                        'rental_id',
                         'amount',
+                        'customer_id',
                         'payment_date',
+                        'payment_id',
+                        'rental_id',
+                        'staff_id',
                     ],
                     additionalProperties: false,
                 },
@@ -3010,10 +4316,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        rental_id: {
+                        customer_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -3021,49 +4327,6 @@ export const schema: Schema<DB> = {
                                     minimum: -2147483648,
                                     maximum: 2147483647,
                                     description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rental_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -3139,10 +4402,96 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        customer_id: {
+                        last_update: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rental_date: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rental_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -3169,7 +4518,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: false,
+                                    const: true,
                                 },
                             },
                             required: [
@@ -3268,17 +4617,81 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
+                    },
+                    required: [
+                        'customer_id',
+                        'inventory_id',
+                        'last_update',
+                        'rental_date',
+                        'rental_id',
+                        'return_date',
+                        'staff_id',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        sales_by_film_category: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: sales_by_film_category',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    format: 'date-time',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        total_sales: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
                                     description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -3312,15 +4725,147 @@ export const schema: Schema<DB> = {
                             additionalProperties: false,
                         },
                     },
-                    required: [
-                        'rental_id',
-                        'rental_date',
-                        'inventory_id',
-                        'customer_id',
-                        'return_date',
-                        'staff_id',
-                        'last_update',
-                    ],
+                    required: ['category', 'total_sales'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        sales_by_store: {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: sales_by_store',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        manager: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: manager\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        store: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: store\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        total_sales: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['manager', 'store', 'total_sales'],
                     additionalProperties: false,
                 },
             },
@@ -3334,99 +4879,15 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        staff_id: {
+                        active: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
+                                    description: 'A PG bool',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -3543,99 +5004,99 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        store_id: {
+                        first_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        active: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bool',
-                                    type: 'boolean',
-                                    description: 'A PG bool',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        username: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -3709,49 +5170,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         picture: {
                             type: 'object',
                             description:
@@ -3793,80 +5211,53 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                    },
-                    required: [
-                        'staff_id',
-                        'first_name',
-                        'last_name',
-                        'address_id',
-                        'email',
-                        'store_id',
-                        'active',
-                        'username',
-                        'password',
-                        'last_update',
-                        'picture',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        store: {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: store',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
+                        staff_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         store_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        manager_staff_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -3906,60 +5297,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        address_id: {
+                        username: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -3994,1556 +5340,18 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'store_id',
-                        'manager_staff_id',
+                        'active',
                         'address_id',
-                        'last_update',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        actor_info: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: actor_info',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        actor_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        film_info: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: film_info\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'actor_id',
+                        'email',
                         'first_name',
                         'last_name',
-                        'film_info',
+                        'last_update',
+                        'password',
+                        'picture',
+                        'staff_id',
+                        'store_id',
+                        'username',
                     ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        customer_list: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: customer_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        'id': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'name': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'address': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'zip code': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'phone': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'city': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'country': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'notes': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: notes\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'sid': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'id',
-                        'name',
-                        'address',
-                        'zip code',
-                        'phone',
-                        'city',
-                        'country',
-                        'notes',
-                        'sid',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        film_list: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: film_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        fid: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        title: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        price: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        actors: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'fid',
-                        'title',
-                        'description',
-                        'category',
-                        'price',
-                        'length',
-                        'rating',
-                        'actors',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        nicer_but_slower_film_list: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        fid: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        title: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        price: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        actors: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'fid',
-                        'title',
-                        'description',
-                        'category',
-                        'price',
-                        'length',
-                        'rating',
-                        'actors',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        sales_by_film_category: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: sales_by_film_category',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        total_sales: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['category', 'total_sales'],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        sales_by_store: {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: sales_by_store',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        store: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: store\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        manager: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: manager\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        total_sales: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['store', 'manager', 'total_sales'],
                     additionalProperties: false,
                 },
             },
@@ -5558,176 +5366,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        'id': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'name': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         'address': {
                             type: 'object',
                             description:
                                 'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'zip code': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'phone': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -5847,6 +5489,131 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        'id': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'name': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'phone': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         'sid': {
                             type: 'object',
                             description:
@@ -5890,16 +5657,57 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        'zip code': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
                     required: [
-                        'id',
-                        'name',
                         'address',
-                        'zip code',
-                        'phone',
                         'city',
                         'country',
+                        'id',
+                        'name',
+                        'phone',
                         'sid',
+                        'zip code',
                     ],
                     additionalProperties: false,
                 },
@@ -5907,254 +5715,17 @@ export const schema: Schema<DB> = {
             required: ['columns'],
             additionalProperties: false,
         },
-    },
-    required: [
-        'customer',
-        'actor',
-        'category',
-        'film',
-        'film_actor',
-        'film_category',
-        'address',
-        'city',
-        'country',
-        'inventory',
-        'language',
-        'payment',
-        'rental',
-        'staff',
-        'store',
-        'actor_info',
-        'customer_list',
-        'film_list',
-        'nicer_but_slower_film_list',
-        'sales_by_film_category',
-        'sales_by_store',
-        'staff_list',
-    ],
-    additionalProperties: false,
-    $defs: {
-        'table_customer': {
+        store: {
             type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: customer',
+            description: 'Table details:\n\n- Schema: public\n- Table: store',
             properties: {
                 columns: {
                     type: 'object',
                     properties: {
-                        customer_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        store_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        email: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         address_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -6162,90 +5733,6 @@ export const schema: Schema<DB> = {
                                     minimum: -2147483648,
                                     maximum: 2147483647,
                                     description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        activebool: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bool',
-                                    type: 'boolean',
-                                    description: 'A PG bool',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        create_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.date',
-                                    type: 'string',
-                                    format: 'date',
-                                    description:
-                                        'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -6281,7 +5768,7 @@ export const schema: Schema<DB> = {
                         last_update: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.timestamptz',
@@ -6304,7 +5791,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -6321,10 +5808,10 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        active: {
+                        manager_staff_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -6347,7 +5834,7 @@ export const schema: Schema<DB> = {
                                 },
                                 nullable: {
                                     type: 'boolean',
-                                    const: true,
+                                    const: false,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -6364,18 +5851,55 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        store_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
                     required: [
-                        'customer_id',
-                        'store_id',
-                        'first_name',
-                        'last_name',
-                        'email',
                         'address_id',
-                        'activebool',
-                        'create_date',
                         'last_update',
-                        'active',
+                        'manager_staff_id',
+                        'store_id',
                     ],
                     additionalProperties: false,
                 },
@@ -6383,6 +5907,33 @@ export const schema: Schema<DB> = {
             required: ['columns'],
             additionalProperties: false,
         },
+    },
+    required: [
+        'actor',
+        'actor_info',
+        'address',
+        'category',
+        'city',
+        'country',
+        'customer',
+        'customer_list',
+        'film',
+        'film_actor',
+        'film_category',
+        'film_list',
+        'inventory',
+        'language',
+        'nicer_but_slower_film_list',
+        'payment',
+        'rental',
+        'sales_by_film_category',
+        'sales_by_store',
+        'staff',
+        'staff_list',
+        'store',
+    ],
+    additionalProperties: false,
+    $defs: {
         'table_actor': {
             type: 'object',
             description: 'Table details:\n\n- Schema: public\n- Table: actor',
@@ -6571,18 +6122,245 @@ export const schema: Schema<DB> = {
             required: ['columns'],
             additionalProperties: false,
         },
-        'table_category': {
+        'table_actor_info': {
             type: 'object',
             description:
-                'Table details:\n\n- Schema: public\n- Table: category',
+                'Table details:\n\n- Schema: public\n- Table: actor_info',
             properties: {
                 columns: {
                     type: 'object',
                     properties: {
-                        category_id: {
+                        actor_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        film_info: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: film_info\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        first_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'actor_id',
+                        'film_info',
+                        'first_name',
+                        'last_name',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_address': {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: address',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        address: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        address_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -6622,10 +6400,94 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        name: {
+                        address2: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        city_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        district: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -6651,6 +6513,199 @@ export const schema: Schema<DB> = {
                                 isPrimaryKey: {
                                     type: 'boolean',
                                     const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        phone: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        postal_code: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'address',
+                        'address_id',
+                        'address2',
+                        'city_id',
+                        'district',
+                        'last_update',
+                        'phone',
+                        'postal_code',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_category': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: category',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        category_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
                                 },
                             },
                             required: [
@@ -6706,8 +6761,1224 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: category\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
-                    required: ['category_id', 'name', 'last_update'],
+                    required: ['category_id', 'last_update', 'name'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_city': {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: city',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        city: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        city_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        country_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['city', 'city_id', 'country_id', 'last_update'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_country': {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: country',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        country: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        country_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['country', 'country_id', 'last_update'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_customer': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: customer',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        active: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: active\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        activebool: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: activebool\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.bool',
+                                    type: 'boolean',
+                                    description: 'A PG bool',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        address_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        create_date: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: create_date\n- PG type: pg_catalog.date\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.date',
+                                    type: 'string',
+                                    format: 'date',
+                                    description:
+                                        'A PG date.\nNote that values of the PG date type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript.\nTo convert the string into a `Date` object,\nuse `new Date(dateString)` or `Date.parse(dateString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        customer_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        email: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: email\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        first_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        store_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'active',
+                        'activebool',
+                        'address_id',
+                        'create_date',
+                        'customer_id',
+                        'email',
+                        'first_name',
+                        'last_name',
+                        'last_update',
+                        'store_id',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_customer_list': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: customer_list',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        'address': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'city': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'country': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'id': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'name': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'notes': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: notes\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'phone': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'sid': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'zip code': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'address',
+                        'city',
+                        'country',
+                        'id',
+                        'name',
+                        'notes',
+                        'phone',
+                        'sid',
+                        'zip code',
+                    ],
                     additionalProperties: false,
                 },
             },
@@ -6721,6 +7992,47 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
+                        description: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         film_id: {
                             type: 'object',
                             description:
@@ -6764,15 +8076,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        title: {
+                        fulltext: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
+                                    id: 'pg_catalog.tsvector',
                                     type: 'string',
-                                    description: 'A PG text',
+                                    description: 'A PG tsvector',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -6789,90 +8101,6 @@ export const schema: Schema<DB> = {
                                 nullable: {
                                     type: 'boolean',
                                     const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        release_year: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    title: 'public.year.domain',
-                                    type: 'integer',
-                                    description:
-                                        'The year domain from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
@@ -6932,6 +8160,92 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        length: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         original_language_id: {
                             type: 'object',
                             description:
@@ -6943,6 +8257,92 @@ export const schema: Schema<DB> = {
                                     minimum: -2147483648,
                                     maximum: 2147483647,
                                     description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        release_year: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: release_year\n- PG type: public.year\n- PG kind: domain\n- Nullable: true\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    title: 'public.year.domain',
+                                    type: 'integer',
+                                    description:
+                                        'The year domain from the public schema',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7060,49 +8460,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         replacement_cost: {
                             type: 'object',
                             description:
@@ -7113,92 +8470,6 @@ export const schema: Schema<DB> = {
                                     type: 'string',
                                     description:
                                         'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7276,15 +8547,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        fulltext: {
+                        title: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: fulltext\n- PG type: pg_catalog.tsvector\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.tsvector',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    description: 'A PG tsvector',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7319,20 +8590,20 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'film_id',
-                        'title',
                         'description',
-                        'release_year',
+                        'film_id',
+                        'fulltext',
                         'language_id',
+                        'last_update',
+                        'length',
                         'original_language_id',
+                        'rating',
+                        'release_year',
                         'rental_duration',
                         'rental_rate',
-                        'length',
                         'replacement_cost',
-                        'rating',
-                        'last_update',
                         'special_features',
-                        'fulltext',
+                        'title',
                     ],
                     additionalProperties: false,
                 },
@@ -7493,10 +8764,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        film_id: {
+                        category_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -7536,10 +8807,10 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        category_id: {
+                        film_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: category_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_category\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -7623,67 +8894,25 @@ export const schema: Schema<DB> = {
                             additionalProperties: false,
                         },
                     },
-                    required: ['film_id', 'category_id', 'last_update'],
+                    required: ['category_id', 'film_id', 'last_update'],
                     additionalProperties: false,
                 },
             },
             required: ['columns'],
             additionalProperties: false,
         },
-        'table_address': {
+        'table_film_list': {
             type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: address',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: film_list',
             properties: {
                 columns: {
                     type: 'object',
                     properties: {
-                        address_id: {
+                        actors: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        address: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -7721,51 +8950,10 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        address2: {
+                        category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: address2\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        district: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: district\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -7803,10 +8991,51 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        city_id: {
+                        description: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        fid: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -7846,56 +9075,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        postal_code: {
+                        length: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: postal_code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: true\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        phone: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7928,17 +9118,100 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
+                        price: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: address\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.numeric',
                                     type: 'string',
-                                    format: 'date-time',
                                     description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        title: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -7973,342 +9246,15 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'address_id',
-                        'address',
-                        'address2',
-                        'district',
-                        'city_id',
-                        'postal_code',
-                        'phone',
-                        'last_update',
+                        'actors',
+                        'category',
+                        'description',
+                        'fid',
+                        'length',
+                        'price',
+                        'rating',
+                        'title',
                     ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_city': {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: city',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        city_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        city: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        country_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: city\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['city_id', 'city', 'country_id', 'last_update'],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_country': {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: country',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        country_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        country: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: country\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['country_id', 'country', 'last_update'],
                     additionalProperties: false,
                 },
             },
@@ -8323,6 +9269,49 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
+                        film_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         inventory_id: {
                             type: 'object',
                             description:
@@ -8366,17 +9355,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        film_id: {
+                        last_update: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: film_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -8452,55 +9441,12 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: inventory\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                     },
                     required: [
-                        'inventory_id',
                         'film_id',
-                        'store_id',
+                        'inventory_id',
                         'last_update',
+                        'store_id',
                     ],
                     additionalProperties: false,
                 },
@@ -8559,47 +9505,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bpchar',
-                                    type: 'string',
-                                    description: 'A PG bpchar',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         last_update: {
                             type: 'object',
                             description:
@@ -8643,8 +9548,409 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: language\n- Column: name\n- PG type: pg_catalog.bpchar\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.bpchar',
+                                    type: 'string',
+                                    description: 'A PG bpchar',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
-                    required: ['language_id', 'name', 'last_update'],
+                    required: ['language_id', 'last_update', 'name'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_nicer_but_slower_film_list': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        actors: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        category: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        description: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        fid: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        length: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int2',
+                                    type: 'integer',
+                                    minimum: -32768,
+                                    maximum: 32767,
+                                    description: 'A PG int2',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        price: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rating: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'public.mpaa_rating.enum',
+                                    type: 'string',
+                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
+                                    description:
+                                        'The mpaa_rating enum from the public schema',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        title: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'actors',
+                        'category',
+                        'description',
+                        'fid',
+                        'length',
+                        'price',
+                        'rating',
+                        'title',
+                    ],
                     additionalProperties: false,
                 },
             },
@@ -8658,17 +9964,16 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        payment_id: {
+                        amount: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -8744,10 +10049,53 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        staff_id: {
+                        payment_date: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        payment_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -8830,59 +10178,17 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        amount: {
+                        staff_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: amount\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        payment_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: payment\n- Column: payment_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -8917,12 +10223,12 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'payment_id',
-                        'customer_id',
-                        'staff_id',
-                        'rental_id',
                         'amount',
+                        'customer_id',
                         'payment_date',
+                        'payment_id',
+                        'rental_id',
+                        'staff_id',
                     ],
                     additionalProperties: false,
                 },
@@ -8937,10 +10243,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        rental_id: {
+                        customer_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -8948,49 +10254,6 @@ export const schema: Schema<DB> = {
                                     minimum: -2147483648,
                                     maximum: 2147483647,
                                     description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rental_date: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -9066,10 +10329,96 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        customer_id: {
+                        last_update: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: customer_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rental_date: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_date\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        rental_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: rental_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -9096,7 +10445,7 @@ export const schema: Schema<DB> = {
                                 },
                                 isPrimaryKey: {
                                     type: 'boolean',
-                                    const: false,
+                                    const: true,
                                 },
                             },
                             required: [
@@ -9195,17 +10544,81 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
+                    },
+                    required: [
+                        'customer_id',
+                        'inventory_id',
+                        'last_update',
+                        'rental_date',
+                        'rental_id',
+                        'return_date',
+                        'staff_id',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_sales_by_film_category': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: sales_by_film_category',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        category: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: rental\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    format: 'date-time',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        total_sales: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
                                     description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -9239,15 +10652,147 @@ export const schema: Schema<DB> = {
                             additionalProperties: false,
                         },
                     },
-                    required: [
-                        'rental_id',
-                        'rental_date',
-                        'inventory_id',
-                        'customer_id',
-                        'return_date',
-                        'staff_id',
-                        'last_update',
-                    ],
+                    required: ['category', 'total_sales'],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_sales_by_store': {
+            type: 'object',
+            description:
+                'Table details:\n\n- Schema: public\n- Table: sales_by_store',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        manager: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: manager\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        store: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: store\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        total_sales: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.numeric',
+                                    type: 'string',
+                                    description:
+                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: ['manager', 'store', 'total_sales'],
                     additionalProperties: false,
                 },
             },
@@ -9261,99 +10806,15 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        staff_id: {
+                        active: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
+                                    id: 'pg_catalog.bool',
                                     type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
+                                    description: 'A PG bool',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -9470,99 +10931,99 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        store_id: {
+                        first_name: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        active: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: active\n- PG type: pg_catalog.bool\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.bool',
-                                    type: 'boolean',
-                                    description: 'A PG bool',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        username: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
                                     type: 'string',
                                     description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_name: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -9636,49 +11097,6 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
-                                    type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         picture: {
                             type: 'object',
                             description:
@@ -9720,80 +11138,53 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                    },
-                    required: [
-                        'staff_id',
-                        'first_name',
-                        'last_name',
-                        'address_id',
-                        'email',
-                        'store_id',
-                        'active',
-                        'username',
-                        'password',
-                        'last_update',
-                        'picture',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_store': {
-            type: 'object',
-            description: 'Table details:\n\n- Schema: public\n- Table: store',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
+                        staff_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         store_id: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        manager_staff_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.int4',
@@ -9833,60 +11224,15 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
-                        address_id: {
+                        username: {
                             type: 'object',
                             description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                                'Column details:\n\n- Schema: public\n- Table: staff\n- Column: username\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
                             properties: {
                                 type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_update: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.timestamptz',
+                                    id: 'pg_catalog.text',
                                     type: 'string',
-                                    format: 'date-time',
-                                    description:
-                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                    description: 'A PG text',
                                 },
                                 selectable: {
                                     type: 'boolean',
@@ -9921,1556 +11267,18 @@ export const schema: Schema<DB> = {
                         },
                     },
                     required: [
-                        'store_id',
-                        'manager_staff_id',
+                        'active',
                         'address_id',
-                        'last_update',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_actor_info': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: actor_info',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        actor_id: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: actor_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        first_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: first_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        last_name: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: last_name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        film_info: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: actor_info\n- Column: film_info\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'actor_id',
+                        'email',
                         'first_name',
                         'last_name',
-                        'film_info',
+                        'last_update',
+                        'password',
+                        'picture',
+                        'staff_id',
+                        'store_id',
+                        'username',
                     ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_customer_list': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: customer_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        'id': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'name': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'address': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'zip code': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'phone': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'city': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: city\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'country': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: country\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'notes': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: notes\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'sid': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: customer_list\n- Column: sid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'id',
-                        'name',
-                        'address',
-                        'zip code',
-                        'phone',
-                        'city',
-                        'country',
-                        'notes',
-                        'sid',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_film_list': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: film_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        fid: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        title: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        price: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        actors: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'fid',
-                        'title',
-                        'description',
-                        'category',
-                        'price',
-                        'length',
-                        'rating',
-                        'actors',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_nicer_but_slower_film_list': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        fid: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: fid\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        title: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: title\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        description: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: description\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        price: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: price\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        length: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: length\n- PG type: pg_catalog.int2\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int2',
-                                    type: 'integer',
-                                    minimum: -32768,
-                                    maximum: 32767,
-                                    description: 'A PG int2',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        rating: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: rating\n- PG type: public.mpaa_rating\n- PG kind: enum\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'public.mpaa_rating.enum',
-                                    type: 'string',
-                                    enum: ['G', 'PG', 'PG-13', 'R', 'NC-17'],
-                                    description:
-                                        'The mpaa_rating enum from the public schema',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        actors: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: nicer_but_slower_film_list\n- Column: actors\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: [
-                        'fid',
-                        'title',
-                        'description',
-                        'category',
-                        'price',
-                        'length',
-                        'rating',
-                        'actors',
-                    ],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_sales_by_film_category': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: sales_by_film_category',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        category: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: category\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        total_sales: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_film_category\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['category', 'total_sales'],
-                    additionalProperties: false,
-                },
-            },
-            required: ['columns'],
-            additionalProperties: false,
-        },
-        'table_sales_by_store': {
-            type: 'object',
-            description:
-                'Table details:\n\n- Schema: public\n- Table: sales_by_store',
-            properties: {
-                columns: {
-                    type: 'object',
-                    properties: {
-                        store: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: store\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        manager: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: manager\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        total_sales: {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: sales_by_store\n- Column: total_sales\n- PG type: pg_catalog.numeric\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.numeric',
-                                    type: 'string',
-                                    description:
-                                        'A PG numeric.\nNote that values of the PG numeric type,\nare returned as strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                    },
-                    required: ['store', 'manager', 'total_sales'],
                     additionalProperties: false,
                 },
             },
@@ -11485,176 +11293,10 @@ export const schema: Schema<DB> = {
                 columns: {
                     type: 'object',
                     properties: {
-                        'id': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.int4',
-                                    type: 'integer',
-                                    minimum: -2147483648,
-                                    maximum: 2147483647,
-                                    description: 'A PG int4',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'name': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
                         'address': {
                             type: 'object',
                             description:
                                 'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: address\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'zip code': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
-                            properties: {
-                                type: {
-                                    id: 'pg_catalog.text',
-                                    type: 'string',
-                                    description: 'A PG text',
-                                },
-                                selectable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                includable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                whereable: {
-                                    type: 'boolean',
-                                    const: true,
-                                },
-                                nullable: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                                isPrimaryKey: {
-                                    type: 'boolean',
-                                    const: false,
-                                },
-                            },
-                            required: [
-                                'type',
-                                'selectable',
-                                'includable',
-                                'whereable',
-                                'nullable',
-                                'isPrimaryKey',
-                            ],
-                            additionalProperties: false,
-                        },
-                        'phone': {
-                            type: 'object',
-                            description:
-                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
                             properties: {
                                 type: {
                                     id: 'pg_catalog.text',
@@ -11774,6 +11416,131 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        'id': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'name': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: name\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        'phone': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: phone\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                         'sid': {
                             type: 'object',
                             description:
@@ -11817,16 +11584,249 @@ export const schema: Schema<DB> = {
                             ],
                             additionalProperties: false,
                         },
+                        'zip code': {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: staff_list\n- Column: zip code\n- PG type: pg_catalog.text\n- PG kind: base\n- Nullable: undefined\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.text',
+                                    type: 'string',
+                                    description: 'A PG text',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
                     },
                     required: [
-                        'id',
-                        'name',
                         'address',
-                        'zip code',
-                        'phone',
                         'city',
                         'country',
+                        'id',
+                        'name',
+                        'phone',
                         'sid',
+                        'zip code',
+                    ],
+                    additionalProperties: false,
+                },
+            },
+            required: ['columns'],
+            additionalProperties: false,
+        },
+        'table_store': {
+            type: 'object',
+            description: 'Table details:\n\n- Schema: public\n- Table: store',
+            properties: {
+                columns: {
+                    type: 'object',
+                    properties: {
+                        address_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: address_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        last_update: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: last_update\n- PG type: pg_catalog.timestamptz\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.timestamptz',
+                                    type: 'string',
+                                    format: 'date-time',
+                                    description:
+                                        'A PG timestamptz.\nNote that values of the PG timestamptz type,\nare returned as ISO 8601 strings from the database.\nThis is because that is how they can be best\naccurately processed in JavaScript/TypeScript\nTo convert the string into a `Date` object,\nuse `new Date(dateTimeString)` or `Date.parse(dateTimeString)`',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        manager_staff_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: manager_staff_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                        store_id: {
+                            type: 'object',
+                            description:
+                                'Column details:\n\n- Schema: public\n- Table: store\n- Column: store_id\n- PG type: pg_catalog.int4\n- PG kind: base\n- Nullable: false\n- Generated: NEVER',
+                            properties: {
+                                type: {
+                                    id: 'pg_catalog.int4',
+                                    type: 'integer',
+                                    minimum: -2147483648,
+                                    maximum: 2147483647,
+                                    description: 'A PG int4',
+                                },
+                                selectable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                includable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                whereable: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                                nullable: {
+                                    type: 'boolean',
+                                    const: false,
+                                },
+                                isPrimaryKey: {
+                                    type: 'boolean',
+                                    const: true,
+                                },
+                            },
+                            required: [
+                                'type',
+                                'selectable',
+                                'includable',
+                                'whereable',
+                                'nullable',
+                                'isPrimaryKey',
+                            ],
+                            additionalProperties: false,
+                        },
+                    },
+                    required: [
+                        'address_id',
+                        'last_update',
+                        'manager_staff_id',
+                        'store_id',
                     ],
                     additionalProperties: false,
                 },

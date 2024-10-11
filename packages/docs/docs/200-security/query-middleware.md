@@ -41,4 +41,3 @@ const queryEngine = new QueryEngine<DB>({
 When a query is executed, the ID check is performed first, and then the parameters are substituted. Then the middleware is executed.
 
 This ensures that the middleware can inject additional parameters to the query as it's now happening in a safe context.
-

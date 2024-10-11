@@ -183,56 +183,58 @@ function createTableJsonSchema(
 ): JSONSchema {
     const empty: Record<string, any> = {};
 
-    const columns = table.columns.reduce((acc, column) => {
-        const type = createColumnTypeDefOrRef(column);
+    const columns = table.columns
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .reduce((acc, column) => {
+            const type = createColumnTypeDefOrRef(column);
 
-        acc[column.name] = {
-            type: 'object',
-            description:
-                column.comment ??
-                [
-                    'Column details:',
-                    '',
-                    `- Schema: ${table.schemaName}`,
-                    `- Table: ${table.name}`,
-                    `- Column: ${column.name}`,
-                    `- PG type: ${column.type.fullName}`,
-                    `- PG kind: ${column.type.kind}`,
-                    `- Nullable: ${column.isNullable}`,
-                    `- Generated: ${column.generated}`,
-                ].join('\n'),
-            properties: {
-                type,
-                // A constant value of true
-                selectable: { type: 'boolean', const: true },
-                includable: { type: 'boolean', const: true },
-                whereable: { type: 'boolean', const: true },
-                nullable: {
-                    type: 'boolean',
-                    const: column.isNullable ?? false,
+            acc[column.name] = {
+                type: 'object',
+                description:
+                    column.comment ??
+                    [
+                        'Column details:',
+                        '',
+                        `- Schema: ${table.schemaName}`,
+                        `- Table: ${table.name}`,
+                        `- Column: ${column.name}`,
+                        `- PG type: ${column.type.fullName}`,
+                        `- PG kind: ${column.type.kind}`,
+                        `- Nullable: ${column.isNullable}`,
+                        `- Generated: ${column.generated}`,
+                    ].join('\n'),
+                properties: {
+                    type,
+                    // A constant value of true
+                    selectable: { type: 'boolean', const: true },
+                    includable: { type: 'boolean', const: true },
+                    whereable: { type: 'boolean', const: true },
+                    nullable: {
+                        type: 'boolean',
+                        const: column.isNullable ?? false,
+                    },
+                    isPrimaryKey: {
+                        type: 'boolean',
+                        const: column.isPrimaryKey ?? false,
+                    },
+                    // For each column, we want to identify if any override
+                    // properties were passed, and replace them if so
+                    // Otherwise, we generate the property as usual
+                    ...tableDefTransformer?.transform(column),
                 },
-                isPrimaryKey: {
-                    type: 'boolean',
-                    const: column.isPrimaryKey ?? false,
-                },
-                // For each column, we want to identify if any override
-                // properties were passed, and replace them if so
-                // Otherwise, we generate the property as usual
-                ...tableDefTransformer?.transform(column),
-            },
-            required: [
-                'type',
-                'selectable',
-                'includable',
-                'whereable',
-                'nullable',
-                'isPrimaryKey',
-            ],
-            additionalProperties: false,
-        };
+                required: [
+                    'type',
+                    'selectable',
+                    'includable',
+                    'whereable',
+                    'nullable',
+                    'isPrimaryKey',
+                ],
+                additionalProperties: false,
+            };
 
-        return acc;
-    }, empty);
+            return acc;
+        }, empty);
 
     return {
         type: 'object',
@@ -340,18 +342,25 @@ function createRootJsonSchema(
     }
 
     if (excludeTablesAndViews.length > 0) {
-        tables = tables.filter(
-            (tableOrView) => !excludeTablesAndViews.includes(tableOrView.name),
-        );
+        tables = tables
+            .filter(
+                (tableOrView) =>
+                    !excludeTablesAndViews.includes(tableOrView.name),
+            )
+            .sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    const enums = Object.values(schemas).flatMap((schema) => {
-        return schema.enums;
-    });
+    const enums = Object.values(schemas)
+        .flatMap((schema) => {
+            return schema.enums;
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
 
-    const domains = Object.values(schemas).flatMap((schema) => {
-        return schema.domains;
-    });
+    const domains = Object.values(schemas)
+        .flatMap((schema) => {
+            return schema.domains;
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     return {
         $schema: 'https://json-schema.org/draft/2020-12/schema',
