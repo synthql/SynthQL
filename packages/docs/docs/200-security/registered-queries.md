@@ -40,7 +40,7 @@ const findUserById = (id: number) => from('users')
 
 const queryEngine = new QueryEngine({...})
 
-// Notice that we are passing a placeholder value of `0` for the 
+// Notice that we are passing a placeholder value of `0` for the
 // `id` parameter. We could have passed any value, it is essentially
 // telling the QueryEngine that the `id` is a parameter for the
 // query, and can be replaced with any value.
@@ -57,18 +57,18 @@ Some queries may have conditional logic. For example, you may want to alter the 
 ```ts
 const findUsersByStatus = (status: 'active' | 'inactive') => {
     const query = from('users')
-        .columns('id','name','email')
-        .filter({status})
+        .columns('id', 'name', 'email')
+        .filter({ status });
 
     if (status === 'active') {
         // If the user is active, we want to return all users
-        return query.all()
+        return query.all();
     } else {
-        // If the user is not active, we want to return only 
+        // If the user is not active, we want to return only
         // the first 100 users as there might be too many.
-        return query.take(100)
+        return query.take(100);
     }
-}
+};
 ```
 
 The problem with these types of queries is that they actually return two different query instances depending on the value of the `status` parameter.
@@ -90,7 +90,7 @@ queryEngine.registerQueries([
 
 As a lot of the security of SynthQL depends on the registered queries, it is important to understand how they work.
 
-The high level idea is simple: 
+The high level idea is simple:
 
 1. Identifying queries: When a query is registered, we calculate a hash of the query. This hash is then used to identify the query.
 2. Checking queries: When a query is executed, the QueryEngine will check the hash of the query to ensure that it has been registered.
@@ -113,17 +113,15 @@ When a query is executed, the QueryEngine will substitute the parameter values i
 Example:
 
 ```ts
-const findUserById = (id: number) => from('users').filter({id}).first()
+const findUserById = (id: number) => from('users').filter({ id }).first();
 
 // The QueryEngine will substitute the parameter values into the query and execute it.
-queryEngine.registerQuery(findUserById(0))
-
-
+queryEngine.registerQuery(findUserById(0));
 ```
 
 ### What happens in case of a hash collision?
 
-If you try to register two different queries with the same hash, the QueryEngine will throw an error. 
+If you try to register two different queries with the same hash, the QueryEngine will throw an error.
 
 If a malicious user tries to execute a query A with the hash of query B, it would be equivalent to simply trying to execute query B.
 
@@ -134,16 +132,18 @@ The hash is calculated by `JSON.stringify`ing the query, and then hashing the re
 So for example, the following two queries will have the same hash:
 
 ```ts
-const queryA = from('users').filter({active: true}).all()
-const queryB = from('users').filter({active: false}).all()
+const queryA = from('users').filter({ active: true }).all();
+const queryB = from('users').filter({ active: false }).all();
 ```
 
 But these two will not:
 
 ```ts
-const queryC = from('users').columns('id','name','email').filter({active: true}).all()
-const queryD = from('users').columns('email').filter({active: true}).all()
+const queryC = from('users')
+    .columns('id', 'name', 'email')
+    .filter({ active: true })
+    .all();
+const queryD = from('users').columns('email').filter({ active: true }).all();
 ```
 
-The Query hash is calculated by the [`hashQuery`](https://github.com/synthql/SynthQL/blob/master/packages/queries/src/util/hashQuery.ts#L9) function. 
-
+The Query hash is calculated by the [`hashQuery`](https://github.com/synthql/SynthQL/blob/master/packages/queries/src/util/hashQuery.ts#L9) function.

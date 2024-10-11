@@ -9,17 +9,13 @@ With SynthQL you don't need to sprinkle your code with permission assertions or 
 The `.requires()` method is used to define what permissions are required to run a query.
 
 ```ts
-from('users')
-    .requires('users:read')
-    .all()
+from('users').requires('users:read').all();
 ```
 
 The `.requires(...roles:string[])` method takes a list of roles. Roles can be any string.
 
 ```ts
-from('users')
-    .requires('users:read', 'users:write')
-    .all()
+from('users').requires('users:read', 'users:write').all();
 ```
 
 You can use an TypeScript enum to define the list of permissions and get extra type safety:
@@ -30,9 +26,7 @@ enum Permissions {
     usersWrite = 'users:write',
 }
 
-from('users')
-    .requires(Roles.usersRead, Roles.usersWrite)
-    .all()
+from('users').requires(Roles.usersRead, Roles.usersWrite).all();
 ```
 
 ## Role inheritance
@@ -43,12 +37,9 @@ When you include a sub-query, the permissions add up. This means the user needs 
 const pets = from('pets')
     .requires('pets:read')
     .where({ owner_id: col('users.id') })
-    .all()
+    .all();
 
-from('users')
-    .requires('users:read')
-    .include({ pets })
-    .all()
+from('users').requires('users:read').include({ pets }).all();
 ```
 
 In this example, the user needs to have the `users:read` and `pets:read` permissions to execute the query.
