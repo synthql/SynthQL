@@ -6,9 +6,9 @@ Effectively this means that it is impossible to share SQL fragments between quer
 
 SynthQL is designed for composition and lets you achieve this in several ways. Let's see a few examples:
 
-## Defining views
+## Defining fragments
 
-The first step towards reusable queries is to be able to give a name to a table + columns. I call these `views` and they can be defined as follows
+The first step towards reusable queries is to be able to give a name to a table + columns. I call these `fragments` and they can be defined as follows
 
 ```ts
 // A view over the pets table

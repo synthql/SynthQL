@@ -1,12 +1,12 @@
-# Custom Query Executors
+# Custom query providers
 
-Although SynthQL provides great support for fetching data from your database, not all data comes from databases. Custom query executors let you execute parts of a query tree using a custom executor function.
+While SynthQL is designed for database queries, it can also work with other data sources. Custom query providers allow you to use specific functions to fetch data from non-database sources as part of your query.
 
-This can be used to fetch data from a source other than your database, such as a REST endpoint, a file or any other data source you can imagine.
+This can be used to fetch data from a REST endpoint, a file or any other data source you can imagine.
 
-## How can I configure a custom executor
+## How can I configure a custom provider
 
-When constructing a `QueryEngine` you may pass a list of `executors`. In this example we're configuring a custom executor for the `rotten_tomatoes_rating` table.
+When constructing a `QueryEngine` you may pass a list of `providers`. In this example we're configuring a custom provider for the `rotten_tomatoes_rating` table.
 
 ```ts
 import { QueryProvider } from "@synthql/backend";

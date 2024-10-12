@@ -1,7 +1,7 @@
 ---
 ---
 
-# Security
+# Introduction
 
 Letting clients make arbitrary queries, even if read-only comes with a set of security challenges. SynthQL comes with built in mechanisms to implement robust authorization logic so you can limit what queries clients can make.
 

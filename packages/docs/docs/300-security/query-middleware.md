@@ -2,11 +2,11 @@
 
 Query middlewares are functions that are executed before a query is executed. They can be used to add additional functionality to the query, such as logging, caching, or authentication.
 
-In the context of security, query middlewares can be used to add additional checks on every query, or add additional filters to the query to limit the result set.
+In the context of security, query middlewares can be used to add additional checks on every query, or limit the result set.
 
 ## Adding a middleware
 
-You can add a middleware to the query engine using the `.use()` method.
+You can add a middleware to the query engine as follows:
 
 ```ts
 import { DB } from './db';

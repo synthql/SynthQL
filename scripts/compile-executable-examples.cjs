@@ -116,8 +116,8 @@ async function main() {
     );
     const outputFilePath = path.join(
         __dirname,
-        '../packages/docs/docs',
-        '350-examples.md',
+        '../packages/docs/docs/200-query-language',
+        '100-examples.md',
     );
     fs.writeFileSync(outputFilePath, markdown);
     console.log(`Markdown generated at ${outputFilePath}`);

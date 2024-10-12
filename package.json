@@ -12,6 +12,7 @@
         "format": "yarn prettier --write .",
         "typecheck": "yarn nx run-many -t typecheck",
         "test:ci": "yarn nx run-many -t test:ci",
+        "docs:start": "yarn --cwd ./packages/docs start",
         "build": "yarn nx run-many -t build",
         "ci": "yarn nx run-many -t typecheck test:ci build format",
         "ci:force": "yarn nx run-many --skip-nx-cache -t typecheck test:ci build",

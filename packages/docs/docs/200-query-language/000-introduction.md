@@ -1,6 +1,6 @@
-# Query language
+# Introduction
 
-SynthQL comes with a very basic query language. Let's see a few examples:
+SynthQL comes with a simple, but powerful query language. Let's see a few examples:
 
 ## Find user by ID
 
