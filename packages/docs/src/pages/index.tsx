@@ -93,15 +93,15 @@ export default function Home(): JSX.Element {
                             <CodeBlock language="typescript">
                                 {[
                                     `const q = from('movies')`,
-                                    `  .columns('id', 'title', 'release_date')`,
+                                    `  .columns('id', 'title')`,
                                     `  .filter({ id: 1 })`,
                                     `  .take(10);`,
                                     ``,
                                     `// Execute the query`,
                                     `const { data: movies } = useSynthql(q);`,
                                     ``,
-                                    `// movies is now an array of movies with id, title and release_date`,
-                                    `// properties`,
+                                    `// movies is now `,
+                                    `// Array<{id: string, title:string}> `,
                                     `console.log(movies[0].id)`,
                                 ].join('\n')}
                             </CodeBlock>
@@ -219,7 +219,6 @@ const features: Array<{
     },
     {
         title: 'Built-in pagination & streaming',
-        link: '/docs/pagination',
         code: [
             `
 const query = from('users')
@@ -240,7 +239,7 @@ const {data, fetchNextPage} = useSynthql(query)`,
             'In the following example, we use a lazy query to load a store and its products separately. This means the store can load quickly and the products can load in the background.',
             'This is especially useful when the products are not immediately visible on the page.',
         ].join('\n'),
-        link: '/docs/lazy-queries',
+        link: '/docs/deferred-queries',
         code: `
 const products = from('products')
     .column('id', 'name', 'price')
@@ -291,7 +290,7 @@ const findPersonByIds = (ids) => {
 
     {
         title: 'Custom query providers',
-        link: '/docs/custom-query-executors',
+        link: '/docs/custom-providers',
         description:
             'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
         code: `
