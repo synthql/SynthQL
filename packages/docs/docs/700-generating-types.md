@@ -25,7 +25,7 @@ You can also get help by running `npx @synthql/cli generate --help`.
 
 ## synthql.config.json
 
-You can also generate types from a configuration file by running 
+You can also generate types from a configuration file by running
 
 ```bash
 npx @synthql/cli generate --configFile ./synthql.config.json --url DATABASE_URL
