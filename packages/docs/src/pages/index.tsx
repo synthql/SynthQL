@@ -290,7 +290,7 @@ const findPersonByIds = (ids) => {
 
         {
             title: 'Custom query providers',
-            link: '/docs/custom-query-providers',
+            link: '/docs/custom-providers',
             description:
                 'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
             code: `
