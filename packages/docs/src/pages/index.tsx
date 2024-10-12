@@ -191,56 +191,56 @@ const features: Array<{
     link?: string;
     code: string;
 }> = [
-        {
-            title: 'End-to-end type safety',
-            description:
-                'Generate types from your schema with a single command. Run in on your CI to ensure types are always up to date.',
-            link: '/docs/getting-started#generate-types',
-            code: [`npx @synthql/cli generate --url $DATABASE_URL`].join('\n'),
-        },
-        {
-            title: 'Composable query language',
-            description:
-                'Build complex queries by composing smaller queries together. The SynthQL query language is designed for easy composition and re-use.',
-            code: [
-                `const findPetsByOwner = (owner) =>`,
-                `    from('pets')`,
-                `        .filter({ owner })`,
-                `        .many();`,
-                ``,
-                `const findPersonById = (id) => {`,
-                `    const pets = findPetsByOwner(id)`,
-                `    return from('people')`,
-                `        .filter({ id })`,
-                `        .include({ pets })`,
-                `        .one()`,
-                `    }`,
-            ].join('\n'),
-        },
-        {
-            title: 'Built-in pagination & streaming',
-            code: [
-                `
+    {
+        title: 'End-to-end type safety',
+        description:
+            'Generate types from your schema with a single command. Run in on your CI to ensure types are always up to date.',
+        link: '/docs/getting-started#generate-types',
+        code: [`npx @synthql/cli generate --url $DATABASE_URL`].join('\n'),
+    },
+    {
+        title: 'Composable query language',
+        description:
+            'Build complex queries by composing smaller queries together. The SynthQL query language is designed for easy composition and re-use.',
+        code: [
+            `const findPetsByOwner = (owner) =>`,
+            `    from('pets')`,
+            `        .filter({ owner })`,
+            `        .many();`,
+            ``,
+            `const findPersonById = (id) => {`,
+            `    const pets = findPetsByOwner(id)`,
+            `    return from('people')`,
+            `        .filter({ id })`,
+            `        .include({ pets })`,
+            `        .one()`,
+            `    }`,
+        ].join('\n'),
+    },
+    {
+        title: 'Built-in pagination & streaming',
+        code: [
+            `
 const query = from('users')
     .filter({age: {gt:18}})
     .take(100) // set the size of the page
 
 const {data, fetchNextPage} = useSynthql(query)`,
-            ].join('\n'),
-            description: [
-                `Pagination in SynthQL just works! You don't need to do anything special to enable it!`,
-            ].join('\n'),
-        },
-        {
-            title: 'Lazy queries',
-            description: [
-                `As queries become bigger, latency also grows. Lazy queries help you split large object graphs to optimize page load.`,
-                '',
-                'In the following example, we use a lazy query to load a store and its products separately. This means the store can load quickly and the products can load in the background.',
-                'This is especially useful when the products are not immediately visible on the page.',
-            ].join('\n'),
-            link: '/docs/deferred-queries',
-            code: `
+        ].join('\n'),
+        description: [
+            `Pagination in SynthQL just works! You don't need to do anything special to enable it!`,
+        ].join('\n'),
+    },
+    {
+        title: 'Lazy queries',
+        description: [
+            `As queries become bigger, latency also grows. Lazy queries help you split large object graphs to optimize page load.`,
+            '',
+            'In the following example, we use a lazy query to load a store and its products separately. This means the store can load quickly and the products can load in the background.',
+            'This is especially useful when the products are not immediately visible on the page.',
+        ].join('\n'),
+        link: '/docs/deferred-queries',
+        code: `
 const products = from('products')
     .column('id', 'name', 'price')
     .filter({
@@ -260,14 +260,14 @@ const query = from('store')
 [{ id: "store 1", name: "Fancy store", products: { status: 'pending' } }]
 [{ id: "store 1", name: "Fancy store", products: { status: "done", data: [...] } }]
             `,
-        },
+    },
 
-        {
-            title: 'Security',
-            link: '/docs/security',
-            description:
-                'SynthQL offers a number of security features to help you secure your application. This includes built-in authentication, query whitelisting, and more.',
-            code: `
+    {
+        title: 'Security',
+        link: '/docs/security',
+        description:
+            'SynthQL offers a number of security features to help you secure your application. This includes built-in authentication, query whitelisting, and more.',
+        code: `
 const findPetsByOwner = (ownerId) => {
     return from('pets')
         .column('name','id')
@@ -286,14 +286,14 @@ const findPersonByIds = (ids) => {
         })
         .many()
 }`,
-        },
+    },
 
-        {
-            title: 'Custom query providers',
-            link: '/docs/custom-providers',
-            description:
-                'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
-            code: `
+    {
+        title: 'Custom query providers',
+        link: '/docs/custom-providers',
+        description:
+            'Not all data comes from the database. Use custom providers to join your DB tables with data from 3rd party APIs using a predictable performance model.',
+        code: `
 const findFilmsWithRatings = () => {
     const ratings = from('rotten_tomatoes_ratings')
         .filter({
@@ -306,5 +306,5 @@ const findFilmsWithRatings = () => {
         .include({ ratings })
         .many()
 }`,
-        },
-    ];
+    },
+];
