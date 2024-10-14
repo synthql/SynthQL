@@ -1,7 +1,7 @@
 import { describe } from 'node:test';
 import { ArbitraryQueryBuilder } from '../arbitraries/ArbitraryQueryBuilder';
 import { test } from '@fast-check/vitest';
-import { queryEngine } from '../../queryEngine';
+import { createQueryEngine } from '../../queryEngine';
 import { expect } from 'vitest';
 import { queryHeight } from '../../util/queryHeight';
 import { flattenDeferredQueryResult } from '../../util/flattenDeferredQueryResults';
@@ -9,6 +9,7 @@ import { Query } from '@synthql/queries';
 import { DB } from '../../generated';
 
 const queryBuilder = ArbitraryQueryBuilder.fromPagila();
+const queryEngine = createQueryEngine();
 
 describe('property based tests for defer', () => {
     const numRuns = 100;

@@ -1,14 +1,16 @@
-import { col } from '@synthql/queries';
 import { describe, test } from 'vitest';
+import { col } from '@synthql/queries';
 import { collectLast } from '../..';
 import { from } from '../generated';
-import { queryEngine } from '../queryEngine';
+import { createQueryEngine } from '../queryEngine';
 import Benchmark from 'benchmark';
 import fs from 'fs';
 import path from 'path';
 
 describe('Benchmark tests', () => {
     test(`Find matching rows`, async () => {
+        const queryEngine = createQueryEngine();
+
         const suite = new Benchmark.Suite();
         const lines: Array<string> = [];
 
@@ -17,9 +19,13 @@ describe('Benchmark tests', () => {
                 const q = from('actor').where({ actor_id: 1 }).one();
 
                 await collectLast(
-                    queryEngine.execute(q, {
-                        returnLastOnly: true,
-                    }),
+                    queryEngine.execute(
+                        q,
+                        {},
+                        {
+                            returnLastOnly: true,
+                        },
+                    ),
                 );
             })
             .add(
@@ -61,9 +67,13 @@ describe('Benchmark tests', () => {
                         .one();
 
                     await collectLast(
-                        queryEngine.execute(q, {
-                            returnLastOnly: true,
-                        }),
+                        queryEngine.execute(
+                            q,
+                            {},
+                            {
+                                returnLastOnly: true,
+                            },
+                        ),
                     );
                 },
             )

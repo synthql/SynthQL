@@ -4,7 +4,9 @@ import { collectLast } from '../..';
 import { DB } from '../generated';
 import { sql } from '../postgres';
 import { findActorById, findCityById, from, movie } from '../queries';
-import { queryEngine } from '../queryEngine';
+import { createQueryEngine } from '../queryEngine';
+
+const queryEngine = createQueryEngine();
 
 describe('select', () => {
     function run<TTable extends Table<DB>, T extends Query<DB, TTable>>(

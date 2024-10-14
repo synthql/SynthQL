@@ -1,9 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { Pool, types } from 'pg';
 import Ajv2020 from 'ajv/dist/2020';
-import { generate } from '../generate';
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { AnyDB, AnyTable, Schema } from '@synthql/queries';
+import { generate } from '../generate';
 
 // Database connection configuration
 const client = new Pool({
@@ -12,8 +11,9 @@ const client = new Pool({
 });
 
 // Use the OIDs imported from pg.types to set custom type parsers
-// We're replicating the bheaviour here so it matches the
-// adjustments we made in wellKnownDefs for values of these types
+// We're replicating the behaviour in the PgExecutor
+// here so it matches the adjustments we made in
+// wellKnownDefs for values of these types
 types.setTypeParser(types.builtins.DATE, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMP, (value) => value);
 types.setTypeParser(types.builtins.TIMESTAMPTZ, (value) => value);

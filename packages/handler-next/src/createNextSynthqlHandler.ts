@@ -86,7 +86,7 @@ async function tryExecuteQuery<DB>(
     query: any,
     returnLastOnly: boolean,
 ) {
-    return queryEngine.execute(query, { returnLastOnly });
+    return queryEngine.execute(query, {}, { returnLastOnly });
 }
 
 async function writeBody(

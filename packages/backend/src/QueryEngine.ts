@@ -1,12 +1,13 @@
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
-import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { QueryPlan, collectLast } from '.';
+import { QueryExecutor } from './execution/types';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
-import { QueryExecutor } from './execution/types';
-import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { Middleware } from './execution/middleware';
 import { PgExecutor } from './execution/executors/PgExecutor';
+import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
 
@@ -30,6 +31,40 @@ export interface QueryEngineProps<DB> {
      * e.g `SELECT version();`
      */
     prependSql?: string;
+    /**
+     * A list of middlewares that you want to be used
+     * to transform any matching queries before execution
+     *
+     * e.g:
+     *
+     * ```ts
+     * // Create type/interface for context
+     * type UserRole = 'user' | 'admin' | 'super';
+     *
+     * interface Session {
+     *     id: number;
+     *     email: string;
+     *     roles: UserRole[];
+     *     isActive: boolean;
+     * }
+     *
+     * // Create middleware
+     * const restrictPaymentsByCustomer = middleware<Query<DB, 'payment'>, Session>({
+     *     predicate: ({ query, context }) =>
+     *         query.from === 'payment' &&
+     *         context.roles.includes('user') &&
+     *         context.isActive,
+     *     transformQuery: ({ query, context }) => ({
+     *         ...query,
+     *         where: {
+     *             ...query.where,
+     *             customer_id: context.id,
+     *         },
+     *     }),
+     * });
+     * ```
+     */
+    middlewares?: Array<Middleware<any, any>>;
     /**
      * A list of providers that you want to be used
      * to execute your SynthQL queries against.
@@ -71,7 +106,8 @@ export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
     private prependSql?: string;
-    private executors: Array<QueryExecutor> = [];
+    private middlewares: Array<Middleware>;
+    private executors: Array<QueryExecutor>;
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
@@ -82,6 +118,7 @@ export class QueryEngine<DB> {
                 connectionString: config.url,
                 max: 10,
             });
+        this.middlewares = config.middlewares ?? [];
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
@@ -96,8 +133,13 @@ export class QueryEngine<DB> {
         ];
     }
 
-    execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
+    execute<
+        TTable extends Table<DB>,
+        TQuery extends Query<DB, TTable>,
+        TContext,
+    >(
         query: TQuery,
+        context?: TContext,
         opts?: {
             /**
              * The name of the database schema to execute
@@ -113,7 +155,23 @@ export class QueryEngine<DB> {
             returnLastOnly?: boolean;
         },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        const gen = execute<DB, TQuery>(query, {
+        let transformedQuery: any = query;
+
+        for (const middleware of this.middlewares) {
+            if (
+                middleware.predicate({
+                    query,
+                    context: context,
+                })
+            ) {
+                transformedQuery = middleware.transformQuery({
+                    query: transformedQuery,
+                    context: context,
+                });
+            }
+        }
+
+        const gen = execute<DB, TQuery>(transformedQuery as TQuery, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
             prependSql: this.prependSql,
@@ -129,8 +187,10 @@ export class QueryEngine<DB> {
     async executeAndWait<
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
+        TContext,
     >(
         query: TQuery,
+        context?: TContext,
         opts?: {
             /**
              * The name of the database schema to execute
@@ -141,18 +201,15 @@ export class QueryEngine<DB> {
             schema?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
-        return await collectLast(
-            generateLast(
-                execute<DB, TQuery>(query, {
-                    executors: this.executors,
-                    defaultSchema: opts?.schema ?? this.schema,
-                    prependSql: this.prependSql,
-                }),
-            ),
+        return collectLast(
+            this.execute(query, context, {
+                schema: opts?.schema ?? this.schema,
+                returnLastOnly: true,
+            }),
         );
     }
 
-    compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {
+    compile<T>(query: T extends Query<DB> ? T : never): {
         sql: string;
         params: any[];
     } {
@@ -178,6 +235,7 @@ export class QueryEngine<DB> {
 
         try {
             const result = await this.pool.query(explainQuery, params);
+
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
             throw SynthqlError.createSqlExecutionError({

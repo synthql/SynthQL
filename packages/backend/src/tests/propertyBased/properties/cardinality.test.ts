@@ -1,9 +1,10 @@
 import { test } from '@fast-check/vitest';
 import { ArbitraryQueryBuilder } from '../arbitraries/ArbitraryQueryBuilder';
-import { queryEngine } from '../../queryEngine';
+import { createQueryEngine } from '../../queryEngine';
 import { describe, expect } from 'vitest';
 
 const queryBuilder = ArbitraryQueryBuilder.fromPagila();
+const queryEngine = createQueryEngine();
 
 describe('No results', () => {
     const numRuns = 1000;
