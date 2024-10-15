@@ -19,13 +19,9 @@ describe('Benchmark tests', () => {
                 const q = from('actor').where({ actor_id: 1 }).one();
 
                 await collectLast(
-                    queryEngine.execute(
-                        q,
-                        {},
-                        {
-                            returnLastOnly: true,
-                        },
-                    ),
+                    queryEngine.execute(q, {
+                        returnLastOnly: true,
+                    }),
                 );
             })
             .add(
@@ -67,13 +63,9 @@ describe('Benchmark tests', () => {
                         .one();
 
                     await collectLast(
-                        queryEngine.execute(
-                            q,
-                            {},
-                            {
-                                returnLastOnly: true,
-                            },
-                        ),
+                        queryEngine.execute(q, {
+                            returnLastOnly: true,
+                        }),
                     );
                 },
             )

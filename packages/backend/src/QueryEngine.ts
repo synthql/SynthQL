@@ -13,29 +13,37 @@ import { SynthqlError } from './SynthqlError';
 
 export interface QueryEngineProps<DB> {
     /**
-     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`.
+     * The database connection string.
      *
-     * If you use this option, SynthQL will create a conection pool for you internally.
+     * e.g. `postgresql://user:password@localhost:5432/db`.
+     *
+     * If you use this option, SynthQL will create
+     * a conection pool for you internally.
      */
     url?: string;
     /**
      * The name of the database schema to
      * execute your SynthQL queries against.
      *
-     * e.g `public`
+     * e.g. `public`
      */
     schema?: string;
     /**
-     * An optional SQL statement that will be sent before every SynthQL query.
+     * An optional SQL statement that will
+     * be sent before every SynthQL query.
      *
-     * e.g `SELECT version();`
+     * e.g.:
+     *
+     * ```sql
+     * SELECT version();
+     * ```
      */
     prependSql?: string;
     /**
-     * A list of middlewares that you want to be used
-     * to transform any matching queries before execution
+     * A list of middlewares that you want to be used to
+     * transform any matching queries, before execution.
      *
-     * e.g:
+     * e.g.:
      *
      * ```ts
      * // Create type/interface for context
@@ -46,10 +54,11 @@ export interface QueryEngineProps<DB> {
      *     email: string;
      *     roles: UserRole[];
      *     isActive: boolean;
-     * }
+     * };
      *
      * // Create middleware
-     * const restrictPaymentsByCustomer = middleware<Query<DB, 'payment'>, Session>({
+     * const restrictPaymentsByCustomer =
+     *  middleware<Query<DB, 'payment'>, Session>({
      *     predicate: ({ query, context }) =>
      *         query.from === 'payment' &&
      *         context.roles.includes('user') &&
@@ -69,7 +78,7 @@ export interface QueryEngineProps<DB> {
      * A list of providers that you want to be used
      * to execute your SynthQL queries against.
      *
-     * e.g:
+     * e.g.:
      *
      * ```ts
      *      const films = [{
@@ -82,17 +91,21 @@ export interface QueryEngineProps<DB> {
      *
      *      const filmProvider = {
      *          table: 'film',
-     *          execute: async ({ film_id: filmIds }): Promise<{ film_id: number }[]> => {
-     *              return films.filter((f) => filmIds.includes(f.film_id));
+     *          execute: async ({ film_id: filmIds }):
+     *              Promise<{ film_id: number }[]> => {
+     *              return films.filter((f) =>
+     *                  filmIds.includes(f.film_id));
      *          },
      *      };
      * ```
      */
     providers?: Array<QueryProvider<DB, Table<DB>>>;
     /**
-     * The connection pool to which the executor will send SQL queries to.
+     * The connection pool to which the
+     * executor will send SQL queries to.
      *
-     * You can use this instead of passing a connection string.
+     * You can use this instead of
+     * passing a connection string.
      */
     pool?: Pool;
 
@@ -139,11 +152,11 @@ export class QueryEngine<DB> {
         TContext,
     >(
         query: TQuery,
-        context?: TContext,
         opts?: {
+            context?: TContext;
             /**
-             * The name of the database schema to execute
-             * your SynthQL query against
+             * The name of the database schema to
+             * execute your SynthQL query against
              *
              * e.g `public`
              */
@@ -161,12 +174,12 @@ export class QueryEngine<DB> {
             if (
                 middleware.predicate({
                     query,
-                    context: context,
+                    context: opts?.context,
                 })
             ) {
                 transformedQuery = middleware.transformQuery({
                     query: transformedQuery,
-                    context: context,
+                    context: opts?.context,
                 });
             }
         }
@@ -190,19 +203,49 @@ export class QueryEngine<DB> {
         TContext,
     >(
         query: TQuery,
-        context?: TContext,
         opts?: {
             /**
-             * The name of the database schema to execute
-             * your SynthQL query against
+             * When using middlewares (via the `QueryEngine` options),
+             * pass the data that should be used to transform
+             * the query, via this option
              *
-             * e.g `public`
+             * e.g.:
+             *
+             * ```ts
+             * // Create type/interface for context
+             * type UserRole = 'user' | 'admin' | 'super';
+             *
+             * interface Session {
+             *     id: number;
+             *     email: string;
+             *     roles: UserRole[];
+             *     isActive: boolean;
+             * };
+             *
+             * // Create context
+             * // This would usually be an object generated from a server
+             * // request handler (e.g a parsed cookie/token)
+             * const context: Session = {
+             *     id: 1,
+             *     email: 'user@example.com',
+             *     roles: ['user', 'admin', 'super'],
+             *     isActive: true,
+             * };
+             * ```
+             */
+            context?: TContext;
+            /**
+             * The name of the database schema to
+             * execute your SynthQL query against
+             *
+             * e.g. `public`
              */
             schema?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
         return collectLast(
-            this.execute(query, context, {
+            this.execute(query, {
+                context: opts?.context,
                 schema: opts?.schema ?? this.schema,
                 returnLastOnly: true,
             }),
@@ -235,7 +278,6 @@ export class QueryEngine<DB> {
 
         try {
             const result = await this.pool.query(explainQuery, params);
-
             return result.rows[0]['QUERY PLAN'][0];
         } catch (err) {
             throw SynthqlError.createSqlExecutionError({

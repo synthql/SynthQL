@@ -33,7 +33,7 @@ describe('createExpressSynthqlHandler', async () => {
         const queryEngine = createQueryEngine([restrictPaymentsByCustomer]);
 
         // Create context
-        // This would be an object generated from a server
+        // This would usually be an object generated from a server
         // request handler (e.g a parsed cookie/token)
         const context: Session = {
             id: 1,
@@ -51,7 +51,7 @@ describe('createExpressSynthqlHandler', async () => {
             })
             .one();
 
-        const result = await queryEngine.executeAndWait(q, context);
+        const result = await queryEngine.executeAndWait(q, { context });
 
         const resultFromQueryWithContextManuallyAdded =
             await queryEngine.executeAndWait(queryWithContextManuallyAdded);
