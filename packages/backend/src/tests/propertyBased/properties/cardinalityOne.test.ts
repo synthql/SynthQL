@@ -2,10 +2,12 @@ import { it } from '@fast-check/vitest';
 import { describe, expect } from 'vitest';
 import { Query } from '@synthql/queries';
 import { DB, schema } from '../../generated';
-import { pool, queryEngine } from '../../queryEngine';
+import { pool, createQueryEngine } from '../../queryEngine';
 import { arbitraryQuery } from '../arbitraries/arbitraryQuery';
 import { getTableRowsByTableName } from '../getTableRowsByTableName';
 import { SynthqlError } from '../../../SynthqlError';
+
+const queryEngine = createQueryEngine();
 
 describe('cardinalityOne', async () => {
     const validWhereArbitraryQuery = arbitraryQuery<DB>({

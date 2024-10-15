@@ -1,40 +1,84 @@
 import { Pool } from 'pg';
 import { Query, QueryResult, Table } from '@synthql/queries';
-import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { QueryPlan, collectLast } from '.';
+import { QueryExecutor } from './execution/types';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
-import { QueryExecutor } from './execution/types';
-import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { Middleware } from './execution/middleware';
 import { PgExecutor } from './execution/executors/PgExecutor';
+import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
+import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
 
 export interface QueryEngineProps<DB> {
     /**
-     * The database connection string e.g. `postgresql://user:password@localhost:5432/db`.
+     * The database connection string.
      *
-     * If you use this option, SynthQL will create a conection pool for you internally.
+     * e.g. `postgresql://user:password@localhost:5432/db`.
+     *
+     * If you use this option, SynthQL will create
+     * a conection pool for you internally.
      */
     url?: string;
     /**
      * The name of the database schema to
      * execute your SynthQL queries against.
      *
-     * e.g `public`
+     * e.g. `public`
      */
     schema?: string;
     /**
-     * An optional SQL statement that will be sent before every SynthQL query.
+     * An optional SQL statement that will
+     * be sent before every SynthQL query.
      *
-     * e.g `SELECT version();`
+     * e.g.:
+     *
+     * ```sql
+     * SELECT version();
+     * ```
      */
     prependSql?: string;
+    /**
+     * A list of middlewares that you want to be used to
+     * transform any matching queries, before execution.
+     *
+     * e.g.:
+     *
+     * ```ts
+     * // Create type/interface for context
+     * type UserRole = 'user' | 'admin' | 'super';
+     *
+     * interface Session {
+     *     id: number;
+     *     email: string;
+     *     roles: UserRole[];
+     *     isActive: boolean;
+     * };
+     *
+     * // Create middleware
+     * const restrictPaymentsByCustomer =
+     *  middleware<Query<DB, 'payment'>, Session>({
+     *     predicate: ({ query, context }) =>
+     *         query.from === 'payment' &&
+     *         context.roles.includes('user') &&
+     *         context.isActive,
+     *     transformQuery: ({ query, context }) => ({
+     *         ...query,
+     *         where: {
+     *             ...query.where,
+     *             customer_id: context.id,
+     *         },
+     *     }),
+     * });
+     * ```
+     */
+    middlewares?: Array<Middleware<any, any>>;
     /**
      * A list of providers that you want to be used
      * to execute your SynthQL queries against.
      *
-     * e.g:
+     * e.g.:
      *
      * ```ts
      *      const films = [{
@@ -47,17 +91,21 @@ export interface QueryEngineProps<DB> {
      *
      *      const filmProvider = {
      *          table: 'film',
-     *          execute: async ({ film_id: filmIds }): Promise<{ film_id: number }[]> => {
-     *              return films.filter((f) => filmIds.includes(f.film_id));
+     *          execute: async ({ film_id: filmIds }):
+     *              Promise<{ film_id: number }[]> => {
+     *              return films.filter((f) =>
+     *                  filmIds.includes(f.film_id));
      *          },
      *      };
      * ```
      */
     providers?: Array<QueryProvider<DB, Table<DB>>>;
     /**
-     * The connection pool to which the executor will send SQL queries to.
+     * The connection pool to which the
+     * executor will send SQL queries to.
      *
-     * You can use this instead of passing a connection string.
+     * You can use this instead of
+     * passing a connection string.
      */
     pool?: Pool;
 
@@ -71,7 +119,8 @@ export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
     private prependSql?: string;
-    private executors: Array<QueryExecutor> = [];
+    private middlewares: Array<Middleware>;
+    private executors: Array<QueryExecutor>;
 
     constructor(config: QueryEngineProps<DB>) {
         this.schema = config.schema ?? 'public';
@@ -82,6 +131,7 @@ export class QueryEngine<DB> {
                 connectionString: config.url,
                 max: 10,
             });
+        this.middlewares = config.middlewares ?? [];
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
@@ -96,12 +146,17 @@ export class QueryEngine<DB> {
         ];
     }
 
-    execute<TTable extends Table<DB>, TQuery extends Query<DB, TTable>>(
+    execute<
+        TTable extends Table<DB>,
+        TQuery extends Query<DB, TTable>,
+        TContext,
+    >(
         query: TQuery,
         opts?: {
+            context?: TContext;
             /**
-             * The name of the database schema to execute
-             * your SynthQL query against
+             * The name of the database schema to
+             * execute your SynthQL query against
              *
              * e.g `public`
              */
@@ -113,7 +168,23 @@ export class QueryEngine<DB> {
             returnLastOnly?: boolean;
         },
     ): AsyncGenerator<QueryResult<DB, TQuery>> {
-        const gen = execute<DB, TQuery>(query, {
+        let transformedQuery: any = query;
+
+        for (const middleware of this.middlewares) {
+            if (
+                middleware.predicate({
+                    query,
+                    context: opts?.context,
+                })
+            ) {
+                transformedQuery = middleware.transformQuery({
+                    query: transformedQuery,
+                    context: opts?.context,
+                });
+            }
+        }
+
+        const gen = execute<DB, TQuery>(transformedQuery as TQuery, {
             executors: this.executors,
             defaultSchema: opts?.schema ?? this.schema,
             prependSql: this.prependSql,
@@ -129,30 +200,59 @@ export class QueryEngine<DB> {
     async executeAndWait<
         TTable extends Table<DB>,
         TQuery extends Query<DB, TTable>,
+        TContext,
     >(
         query: TQuery,
         opts?: {
             /**
-             * The name of the database schema to execute
-             * your SynthQL query against
+             * When using middlewares (via the `QueryEngine` options),
+             * pass the data that should be used to transform
+             * the query, via this option
              *
-             * e.g `public`
+             * e.g.:
+             *
+             * ```ts
+             * // Create type/interface for context
+             * type UserRole = 'user' | 'admin' | 'super';
+             *
+             * interface Session {
+             *     id: number;
+             *     email: string;
+             *     roles: UserRole[];
+             *     isActive: boolean;
+             * };
+             *
+             * // Create context
+             * // This would usually be an object generated from a server
+             * // request handler (e.g a parsed cookie/token)
+             * const context: Session = {
+             *     id: 1,
+             *     email: 'user@example.com',
+             *     roles: ['user', 'admin', 'super'],
+             *     isActive: true,
+             * };
+             * ```
+             */
+            context?: TContext;
+            /**
+             * The name of the database schema to
+             * execute your SynthQL query against
+             *
+             * e.g. `public`
              */
             schema?: string;
         },
     ): Promise<QueryResult<DB, TQuery>> {
-        return await collectLast(
-            generateLast(
-                execute<DB, TQuery>(query, {
-                    executors: this.executors,
-                    defaultSchema: opts?.schema ?? this.schema,
-                    prependSql: this.prependSql,
-                }),
-            ),
+        return collectLast(
+            this.execute(query, {
+                context: opts?.context,
+                schema: opts?.schema ?? this.schema,
+                returnLastOnly: true,
+            }),
         );
     }
 
-    compile<T>(query: T extends Query<DB, infer TTable> ? T : never): {
+    compile<T>(query: T extends Query<DB> ? T : never): {
         sql: string;
         params: any[];
     } {

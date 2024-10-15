@@ -109,7 +109,6 @@ async function writeBody(
             return new NextResponse(stream, {
                 // This is a streaming request, so albeit
                 // counterintuitively, we always need to return 2xx
-
                 status: 200,
                 headers: { 'Content-Type': 'application/x-ndjson' },
             });
@@ -130,7 +129,6 @@ async function writeBody(
             // The `e` can be of any type, but in case its an error,
             // we want to preserve the stack trace and any other
             // information that might be useful for debugging
-
             const error = SynthqlError.createResponseStreamingError({
                 error: e,
                 query,
@@ -138,7 +136,6 @@ async function writeBody(
 
             // We need to catch errors here and write them to the streaming response
             // We can't throw them because that would break the stream
-
             return new NextResponse(
                 JSON.stringify({
                     type: error.type,
