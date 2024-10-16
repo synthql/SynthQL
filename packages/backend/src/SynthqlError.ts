@@ -135,6 +135,18 @@ export class SynthqlError extends Error {
 
         return new SynthqlError(new Error(), type, lines.join('\n'), 404);
     }
+
+    static createPermissionsError() {
+        const type = 'PermissionsError';
+
+        const lines = [
+            'A query with a permissions list (ACL) included,',
+            'is missing matching permissions in the',
+            'context object permissions list',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'), 404);
+    }
 }
 
 function printError(err: any): string {

@@ -1,21 +1,28 @@
 import { Pool } from 'pg';
-import { Query, QueryResult, Table } from '@synthql/queries';
+import {
+    AnyContext,
+    AnyQuery,
+    Query,
+    QueryResult,
+    Table,
+} from '@synthql/queries';
 import { QueryPlan, collectLast } from '.';
 import { QueryExecutor } from './execution/types';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
-import { Middleware } from './execution/middleware';
+import { middleware, Middleware } from './execution/middleware';
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
+import { mapRecursive } from './util/tree/mapRecursive';
 
 export interface QueryEngineProps<DB> {
     /**
      * The database connection string.
      *
-     * e.g. `postgresql://user:password@localhost:5432/db`.
+     * e.g. `postgresql://user:password@localhost:5432/db`
      *
      * If you use this option, SynthQL will create
      * a conection pool for you internally.
@@ -39,6 +46,12 @@ export interface QueryEngineProps<DB> {
      * ```
      */
     prependSql?: string;
+    /**
+     * If true, the executor will execute queries that don't
+     * have the listed permissions in `query.permissions`
+     * passed via the query context permissions list.
+     */
+    dangerouslyAllowNoPermissions?: boolean;
     /**
      * A list of middlewares that you want to be used to
      * transform any matching queries, before execution.
@@ -115,11 +128,15 @@ export interface QueryEngineProps<DB> {
     logging?: boolean;
 }
 
+function isQueryWithPermissions(x: any): x is AnyQuery {
+    return Array.isArray(x?.permissions);
+}
+
 export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
     private prependSql?: string;
-    private middlewares: Array<Middleware>;
+    private middlewares: Array<Middleware<any, any>>;
     private executors: Array<QueryExecutor>;
 
     constructor(config: QueryEngineProps<DB>) {
@@ -131,7 +148,34 @@ export class QueryEngine<DB> {
                 connectionString: config.url,
                 max: 10,
             });
-        this.middlewares = config.middlewares ?? [];
+        this.middlewares = [
+            ...(config.middlewares ?? []),
+            middleware<AnyQuery, AnyContext>({
+                predicate: ({ query, context }) => {
+                    const permissions: string[] = [];
+
+                    mapRecursive(query, (node) => {
+                        if (isQueryWithPermissions(node)) {
+                            permissions.push(...(node?.permissions ?? []));
+                        }
+
+                        return node;
+                    });
+
+                    if (
+                        config.dangerouslyAllowNoPermissions ||
+                        permissions?.every((item) =>
+                            context?.permissions?.includes(item),
+                        )
+                    ) {
+                        return true;
+                    } else {
+                        throw SynthqlError.createPermissionsError();
+                    }
+                },
+                transformQuery: ({ query }) => query,
+            }),
+        ];
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
@@ -158,7 +202,7 @@ export class QueryEngine<DB> {
              * The name of the database schema to
              * execute your SynthQL query against
              *
-             * e.g `public`
+             * e.g. `public`
              */
             schema?: string;
             /**

@@ -1,4 +1,9 @@
-export interface Middleware<TQuery = unknown, TContext = unknown> {
+import { AnyContext, AnyQuery } from '@synthql/queries';
+
+export interface Middleware<
+    TQuery extends AnyQuery,
+    TContext extends AnyContext,
+> {
     predicate: ({
         query,
         context,
@@ -15,7 +20,10 @@ export interface Middleware<TQuery = unknown, TContext = unknown> {
     }) => TQuery;
 }
 
-export function middleware<TQuery = unknown, TContext = unknown>({
+export function middleware<
+    TQuery extends AnyQuery,
+    TContext extends AnyContext,
+>({
     predicate,
     transformQuery,
 }: {
