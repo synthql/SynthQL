@@ -35,7 +35,7 @@ describe('middleware', async () => {
     test('Query middleware is correctly executed', async () => {
         const queryEngine = createQueryEngine({
             middlewares: [restrictPaymentsByCustomer],
-            dangerouslyAllowNoPermissions: false,
+            dangerouslyIgnorePermissions: false,
         });
 
         // Create context

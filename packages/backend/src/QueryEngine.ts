@@ -1,22 +1,15 @@
 import { Pool } from 'pg';
-import {
-    AnyContext,
-    AnyQuery,
-    Query,
-    QueryResult,
-    Table,
-} from '@synthql/queries';
+import { Query, QueryResult, Table } from '@synthql/queries';
 import { QueryPlan, collectLast } from '.';
 import { QueryExecutor } from './execution/types';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
-import { middleware, Middleware } from './execution/middleware';
+import { Middleware, aclMiddleware } from './execution/middleware';
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
 import { generateLast } from './util/generators/generateLast';
 import { SynthqlError } from './SynthqlError';
-import { mapRecursive } from './util/tree/mapRecursive';
 
 export interface QueryEngineProps<DB> {
     /**
@@ -51,7 +44,7 @@ export interface QueryEngineProps<DB> {
      * have the listed permissions in `query.permissions`
      * passed via the query context permissions list.
      */
-    dangerouslyAllowNoPermissions?: boolean;
+    dangerouslyIgnorePermissions?: boolean;
     /**
      * A list of middlewares that you want to be used to
      * transform any matching queries, before execution.
@@ -128,10 +121,6 @@ export interface QueryEngineProps<DB> {
     logging?: boolean;
 }
 
-function isQueryWithPermissions(x: any): x is AnyQuery {
-    return Array.isArray(x?.permissions);
-}
-
 export class QueryEngine<DB> {
     private pool: Pool;
     private schema: string;
@@ -148,34 +137,9 @@ export class QueryEngine<DB> {
                 connectionString: config.url,
                 max: 10,
             });
-        this.middlewares = [
-            ...(config.middlewares ?? []),
-            middleware<AnyQuery, AnyContext>({
-                predicate: ({ query, context }) => {
-                    const permissions: string[] = [];
-
-                    mapRecursive(query, (node) => {
-                        if (isQueryWithPermissions(node)) {
-                            permissions.push(...(node?.permissions ?? []));
-                        }
-
-                        return node;
-                    });
-
-                    if (
-                        config.dangerouslyAllowNoPermissions ||
-                        permissions?.every((item) =>
-                            context?.permissions?.includes(item),
-                        )
-                    ) {
-                        return true;
-                    } else {
-                        throw SynthqlError.createPermissionsError();
-                    }
-                },
-                transformQuery: ({ query }) => query,
-            }),
-        ];
+        this.middlewares = config.dangerouslyIgnorePermissions
+            ? config.middlewares ?? []
+            : [...(config.middlewares ?? []), aclMiddleware];
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [
@@ -218,12 +182,12 @@ export class QueryEngine<DB> {
             if (
                 middleware.predicate({
                     query,
-                    context: opts?.context,
+                    context: opts?.context ?? {},
                 })
             ) {
                 transformedQuery = middleware.transformQuery({
                     query: transformedQuery,
-                    context: opts?.context,
+                    context: opts?.context ?? {},
                 });
             }
         }

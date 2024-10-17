@@ -92,7 +92,7 @@ export class SynthqlError extends Error {
             '',
             JSON.stringify(query, null, 2),
             '',
-            'Check your query and make sure you have `read` access to all included',
+            'Check your query and make sure you have`read` access to all included',
             'tables and columns, and have registered all queries via the QueryEngine',
         ];
 
@@ -136,16 +136,30 @@ export class SynthqlError extends Error {
         return new SynthqlError(new Error(), type, lines.join('\n'), 404);
     }
 
-    static createPermissionsError() {
+    static createPermissionsError({
+        node,
+        missingPermissions,
+        contextPermissions,
+    }: {
+        node: AnyQuery;
+        missingPermissions: string[];
+        contextPermissions: string[];
+    }) {
         const type = 'PermissionsError';
 
         const lines = [
-            'A query with a permissions list (ACL) included,',
-            'is missing matching permissions in the',
-            'context object permissions list',
+            `The query '${node?.name}' with a permissions list (ACL) included:`,
+            `${JSON.stringify(node?.permissions, null, 2)}`,
+            '',
+            'is missing the required matching permissions:',
+            `${JSON.stringify(missingPermissions, null, 2)}`,
+            '',
+            'in the passed context object permissions list:',
+            `${JSON.stringify(contextPermissions, null, 2)}`,
+            '',
         ];
 
-        return new SynthqlError(new Error(), type, lines.join('\n'), 404);
+        return new SynthqlError(new Error(), type, lines.join('\n'), 403);
     }
 }
 

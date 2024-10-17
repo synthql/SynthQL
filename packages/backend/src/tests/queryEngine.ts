@@ -13,13 +13,13 @@ export const pool = new Pool({
 
 export function createQueryEngine(data?: {
     middlewares?: Array<Middleware<any, any>>;
-    dangerouslyAllowNoPermissions?: boolean;
+    dangerouslyIgnorePermissions?: boolean;
 }) {
     return new QueryEngine<DB>({
         pool,
         schema: 'public',
         middlewares: data?.middlewares,
-        dangerouslyAllowNoPermissions:
-            data?.dangerouslyAllowNoPermissions ?? true,
+        dangerouslyIgnorePermissions:
+            data?.dangerouslyIgnorePermissions ?? true,
     });
 }
