@@ -14,6 +14,7 @@ export type Query<DB, TTable extends Table<DB> = Table<DB>> = {
     cardinality?: Cardinality;
     lazy?: true;
     groupBy?: string[];
+    permissions?: string[];
     hash?: string;
     name?: string;
 };
