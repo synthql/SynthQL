@@ -4,7 +4,7 @@ import { QueryPlan, collectLast } from '.';
 import { QueryExecutor } from './execution/types';
 import { QueryProvider } from './QueryProvider';
 import { execute } from './execution/execute';
-import { Middleware, aclMiddleware } from './execution/middleware';
+import { Middleware, permissionsMiddleware } from './execution/middleware';
 import { PgExecutor } from './execution/executors/PgExecutor';
 import { QueryProviderExecutor } from './execution/executors/QueryProviderExecutor';
 import { composeQuery } from './execution/executors/PgExecutor/composeQuery';
@@ -139,7 +139,7 @@ export class QueryEngine<DB> {
             });
         this.middlewares = config.dangerouslyIgnorePermissions
             ? config.middlewares ?? []
-            : [...(config.middlewares ?? []), aclMiddleware];
+            : [...(config.middlewares ?? []), permissionsMiddleware];
 
         const qpe = new QueryProviderExecutor(config.providers ?? []);
         this.executors = [

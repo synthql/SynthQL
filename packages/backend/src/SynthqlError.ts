@@ -137,25 +137,24 @@ export class SynthqlError extends Error {
     }
 
     static createPermissionsError({
-        node,
+        query,
         missingPermissions,
         contextPermissions,
     }: {
-        node: AnyQuery;
+        query: AnyQuery;
         missingPermissions: string[];
         contextPermissions: string[];
     }) {
         const type = 'PermissionsError';
 
         const lines = [
-            `The query '${node?.name}' with a permissions list (ACL) included:`,
-            `${JSON.stringify(node?.permissions, null, 2)}`,
+            `The query ${query?.name} is missing the following permissions: ${missingPermissions.join(', ')}`,
             '',
-            'is missing the required matching permissions:',
-            `${JSON.stringify(missingPermissions, null, 2)}`,
-            '',
-            'in the passed context object permissions list:',
+            'in the passed context permissions list:',
             `${JSON.stringify(contextPermissions, null, 2)}`,
+            '',
+            'from its list of required permissions defined:',
+            `${JSON.stringify(query?.permissions, null, 2)}`,
             '',
         ];
 
@@ -187,6 +186,7 @@ function composeMessage(err: any, props: SqlExecutionErrorProps): string {
         '',
         'And which was composed from the following SynthQL query:',
         JSON.stringify(props.query, null, 2),
+        '',
     ];
 
     return lines.join('\n');

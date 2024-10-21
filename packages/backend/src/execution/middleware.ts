@@ -50,38 +50,42 @@ export function middleware<
     };
 }
 
-export const aclMiddleware = middleware<AnyQuery, AnyContext>({
-    predicate: ({ query, context }) => {
-        const missingPermissions: string[] = [];
+export const permissionsMiddleware = middleware<AnyQuery, AnyContext>({
+    predicate: () => true,
+    transformQuery: ({ query, context }) => {
+        throwIfPermissionsMissing(query, context?.permissions);
 
-        mapRecursive(query, (node) => {
-            if (isQueryWithPermissions(node)) {
-                if (
-                    !(node?.permissions ?? []).every((item) => {
-                        if (context?.permissions?.includes(item)) {
-                            return true;
-                        } else {
-                            missingPermissions.push(item);
-                            return false;
-                        }
-                    })
-                ) {
-                    throw SynthqlError.createPermissionsError({
-                        node,
-                        missingPermissions,
-                        contextPermissions: context?.permissions ?? [],
-                    });
-                }
-            }
-
-            return node;
-        });
-
-        return true;
+        return query;
     },
-    transformQuery: ({ query }) => query,
 });
 
-function isQueryWithPermissions(x: any): x is AnyQuery {
+function throwIfPermissionsMissing(
+    query: AnyQuery,
+    contextPermissions: AnyContext['permissions'] = [],
+) {
+    mapRecursive(query, (node) => {
+        if (isQueryWithPermissions(node)) {
+            const missingPermissions = node?.permissions
+                ? node?.permissions.filter(
+                      (permission) => !contextPermissions.includes(permission),
+                  )
+                : [];
+
+            if (missingPermissions.length > 0) {
+                throw SynthqlError.createPermissionsError({
+                    query: node,
+                    missingPermissions,
+                    contextPermissions,
+                });
+            }
+        }
+
+        return node;
+    });
+}
+
+function isQueryWithPermissions(
+    x: any,
+): x is AnyQuery & { permissions: string[] } {
     return Array.isArray(x?.permissions);
 }
