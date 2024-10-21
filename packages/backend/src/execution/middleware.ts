@@ -1,4 +1,11 @@
-export interface Middleware<TQuery = unknown, TContext = unknown> {
+import { AnyContext, AnyQuery } from '@synthql/queries';
+import { mapRecursive } from '../util/tree/mapRecursive';
+import { SynthqlError } from '../SynthqlError';
+
+export interface Middleware<
+    TQuery extends AnyQuery,
+    TContext extends AnyContext,
+> {
     predicate: ({
         query,
         context,
@@ -15,7 +22,10 @@ export interface Middleware<TQuery = unknown, TContext = unknown> {
     }) => TQuery;
 }
 
-export function middleware<TQuery = unknown, TContext = unknown>({
+export function middleware<
+    TQuery extends AnyQuery,
+    TContext extends AnyContext,
+>({
     predicate,
     transformQuery,
 }: {
@@ -38,4 +48,44 @@ export function middleware<TQuery = unknown, TContext = unknown>({
         predicate,
         transformQuery,
     };
+}
+
+export const permissionsMiddleware = middleware<AnyQuery, AnyContext>({
+    predicate: () => true,
+    transformQuery: ({ query, context }) => {
+        throwIfPermissionsMissing(query, context?.permissions);
+
+        return query;
+    },
+});
+
+function throwIfPermissionsMissing(
+    query: AnyQuery,
+    contextPermissions: AnyContext['permissions'] = [],
+) {
+    mapRecursive(query, (node) => {
+        if (isQueryWithPermissions(node)) {
+            const missingPermissions = node?.permissions
+                ? node?.permissions.filter(
+                      (permission) => !contextPermissions.includes(permission),
+                  )
+                : [];
+
+            if (missingPermissions.length > 0) {
+                throw SynthqlError.createPermissionsError({
+                    query: node,
+                    missingPermissions,
+                    contextPermissions,
+                });
+            }
+        }
+
+        return node;
+    });
+}
+
+function isQueryWithPermissions(
+    x: any,
+): x is AnyQuery & { permissions: string[] } {
+    return Array.isArray(x?.permissions);
 }

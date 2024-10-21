@@ -11,10 +11,15 @@ export const pool = new Pool({
         'postgres://postgres:postgres@localhost:5432/postgres',
 });
 
-export function createQueryEngine(middlewares?: Array<Middleware<any, any>>) {
+export function createQueryEngine(data?: {
+    middlewares?: Array<Middleware<any, any>>;
+    dangerouslyIgnorePermissions?: boolean;
+}) {
     return new QueryEngine<DB>({
         pool,
         schema: 'public',
-        middlewares,
+        middlewares: data?.middlewares,
+        dangerouslyIgnorePermissions:
+            data?.dangerouslyIgnorePermissions ?? true,
     });
 }
