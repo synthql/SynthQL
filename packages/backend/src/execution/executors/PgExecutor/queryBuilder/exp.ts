@@ -455,6 +455,10 @@ export class SqlBuilder {
                         `Expected value ${JSON.stringify(value)} to be a primitive in ${JSON.stringify(op)}`,
                     );
 
+                    if (value === null) {
+                        return ['op', opName, quotedColumn, ['const', null]];
+                    }
+
                     if (opName === 'in') {
                         return ['op', '= any', quotedColumn, ['param', value]];
                     }
