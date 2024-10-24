@@ -252,7 +252,7 @@ export async function POST(request: Request) {
 
 #### React usage
 
-For client-side execution, you want use the `SynthqlProvider` inside an instance of the `QueryClientProvider` exported by [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/installation), then wrap your app at the level you want the provider to be available, as shown below:
+For client-side execution, you want to use the `SynthqlProvider` inside an instance of the `QueryClientProvider` exported by [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/installation), then wrap your app at the level you want the provider to be available, as shown below:
 
 ```tsx
 import React from 'react';
