@@ -74,7 +74,7 @@ pnpm add @synthql/backend
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install @handler-express
+npm install @synthql/handler-express
 ```
 
 </TabItem>
@@ -82,7 +82,7 @@ npm install @handler-express
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add @handler-express
+yarn add @synthql/handler-express
 ```
 
 </TabItem>
@@ -90,7 +90,7 @@ yarn add @handler-express
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm add @handler-express
+pnpm add @synthql/handler-express
 ```
 
 </TabItem>
@@ -102,7 +102,7 @@ pnpm add @handler-express
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install @handler-next
+npm install @synthql/handler-next
 ```
 
 </TabItem>
@@ -110,7 +110,7 @@ npm install @handler-next
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add @handler-next
+yarn add @synthql/handler-next
 ```
 
 </TabItem>
@@ -118,7 +118,7 @@ yarn add @handler-next
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm add @handler-next
+pnpm add @synthql/handler-next
 ```
 
 </TabItem>
@@ -156,7 +156,7 @@ pnpm add @synthql/react
 
 ## Generate database types
 
-Then generate the types and schema definitions from your database, using the `@synthql/cli`.
+Then generate the types and schema definitions from your database, using the `@synthql/cli`:
 
 ```bash
 npx @synthql/cli generate \
@@ -171,9 +171,11 @@ This will generate a types file at `src/generated/db.ts`, a schema definitions f
 ## Write your first query
 
 ```ts
-import { from } from 'src/generated';
+// src/queries.ts
+import { Query } from '@synthql/queries';
+import { DB, from } from 'src/generated';
 
-const findUserByIds = (ids: string[]) => {
+const findUserByIds = (ids: string[]): Query<DB> => {
     return (
         from('users')
             // Select which columns you want
@@ -255,16 +257,15 @@ export async function POST(request: Request) {
 For client-side execution, you want to use the `SynthqlProvider` inside an instance of the `QueryClientProvider` exported by [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/installation), then wrap your app at the level you want the provider to be available, as shown below:
 
 ```tsx
+// Create a provider
+// src/providers/AppProvider.tsx
+// prettier-ignore
+'use client'; // Use in React Server Components app to specify that it is a client component
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SynthqlProvider } from '@synthql/react';
 
 const queryClient = new QueryClient();
-
-// Create a provider
-// src/providers/AppProvider.tsx
-// prettier-ignore
-'use client'; // Use in React Server Components app to specify that it is a client component
 
 export function AppProvider(
     props: React.PropsWithChildren<{ endpoint: string }>,
@@ -287,6 +288,8 @@ export function AppProvider(
 
 // Use the provider to wrap your app
 // src/app/layout.tsx
+import React from 'react';
+
 export default function RootLayout({
     server,
     children,
@@ -308,7 +311,6 @@ export default function RootLayout({
 // src/app/page.tsx
 // prettier-ignore
 'use client'; // Use in React Server Components app to specify that it is a client component
-
 import { useSynthql } from '@synthql/react';
 import { DB } from '@/generated';
 import { User } from '@/components/User';
