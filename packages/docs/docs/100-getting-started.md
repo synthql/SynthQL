@@ -188,7 +188,7 @@ const findUserByIds = (ids: string[]) => {
 };
 ```
 
-## Setup the query engine
+## Set up the query engine
 
 The `QueryEngine` compiles SynthQL queries into plain SQL and sends them to the database.
 
