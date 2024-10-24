@@ -16,7 +16,7 @@ SynthQL is composed of 6 packages:
 
 1.  `@synthql/handler-next`: contains a handler function that you can use in Next.js apps to parse and execute SynthQL queries sent over HTTP.
 
-1.  `@synthql/cli`: the CLI that allow you to generate the TypeScript types and schema files for your database.
+1.  `@synthql/cli`: the CLI that allows you to generate the TypeScript types and schema files for your database.
 
 These are the dependencies between the packages:
 
