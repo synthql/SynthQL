@@ -105,6 +105,54 @@ describe('PgExecutor', () => {
         ]);
     });
 
+    it('single provider is null', async () => {
+        const q = from('film')
+            .columns('film_id', 'original_language_id', 'title', 'rating')
+            .where({ original_language_id: { is: null } })
+            .take(2);
+
+        const result = await executor.execute(q, executeProps);
+
+        expect(result).toEqual([
+            {
+                film_id: 1,
+                original_language_id: null,
+                title: 'ACADEMY DINOSAUR',
+                rating: 'PG',
+            },
+            {
+                film_id: 2,
+                original_language_id: null,
+                title: 'ACE GOLDFINGER',
+                rating: 'G',
+            },
+        ]);
+    });
+
+    it('single provider is not null', async () => {
+        const q = from('customer')
+            .columns('customer_id', 'email', 'first_name', 'last_name')
+            .where({ email: { 'is not': null } })
+            .take(2);
+
+        const result = await executor.execute(q, executeProps);
+
+        expect(result).toEqual([
+            {
+                customer_id: 1,
+                email: 'MARY.SMITH@sakilacustomer.org',
+                first_name: 'MARY',
+                last_name: 'SMITH',
+            },
+            {
+                customer_id: 2,
+                email: 'PATRICIA.JOHNSON@sakilacustomer.org',
+                first_name: 'PATRICIA',
+                last_name: 'JOHNSON',
+            },
+        ]);
+    });
+
     const language = from('language')
         .columns('language_id', 'name')
         .where({

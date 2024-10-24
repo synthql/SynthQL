@@ -32,6 +32,7 @@ export class QueryBuilder<
         private _cardinality: TCardinality,
         private _lazy: TLazy,
         private _groupBy: TGroupBy,
+        private _permissions?: string[],
         private _name?: string,
     ) {
         validateNestedQueriesHaveAValidRefOp<DB>({
@@ -44,15 +45,18 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            permissions: this._permissions,
             name: this._name,
         });
     }
 
     private defaultName() {
         const whereName = Object.keys(this._where).join('-and-');
+
         if (whereName === '') {
             return `${this._from}-all`;
         }
+
         return `${this._from}-by-${whereName}`;
     }
 
@@ -66,6 +70,7 @@ export class QueryBuilder<
         cardinality: TCardinality;
         lazy: TLazy;
         groupBy: TGroupBy;
+        permissions: string[];
         hash: string;
         name: string;
     } {
@@ -81,6 +86,7 @@ export class QueryBuilder<
             cardinality: this._cardinality ?? 'many',
             lazy: this._lazy,
             groupBy: this._groupBy,
+            permissions: this._permissions ?? [],
             hash: '',
             name: this._name ?? defaultName,
         };
@@ -115,6 +121,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -188,6 +195,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -235,6 +243,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -286,6 +295,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -312,6 +322,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -338,6 +349,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -371,6 +383,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -410,6 +423,7 @@ export class QueryBuilder<
             this._cardinality,
             true,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -436,6 +450,7 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             id,
+            this._permissions,
             this._name,
         );
     }
@@ -464,6 +479,7 @@ export class QueryBuilder<
             cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             this._name,
         );
     }
@@ -502,7 +518,35 @@ export class QueryBuilder<
             this._cardinality,
             this._lazy,
             this._groupBy,
+            this._permissions,
             name,
+        );
+    }
+
+    permissions(...permissions: string[]) {
+        return new QueryBuilder<
+            DB,
+            TTable,
+            TWhere,
+            TSelect,
+            TInclude,
+            TLimit,
+            TOffset,
+            TCardinality,
+            TLazy,
+            TGroupBy
+        >(
+            this._from,
+            this._where,
+            this._select,
+            this._include,
+            this._limit,
+            this._offset,
+            this._cardinality,
+            this._lazy,
+            this._groupBy,
+            permissions,
+            this._name,
         );
     }
 }
@@ -535,6 +579,7 @@ export function query<DB>(schema: Schema<DB>) {
                 'many',
                 undefined,
                 primaryKeys,
+                undefined,
                 undefined,
             );
         },

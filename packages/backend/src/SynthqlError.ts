@@ -92,7 +92,7 @@ export class SynthqlError extends Error {
             '',
             JSON.stringify(query, null, 2),
             '',
-            'Check your query and make sure you have `read` access to all included',
+            'Check your query and make sure you have`read` access to all included',
             'tables and columns, and have registered all queries via the QueryEngine',
         ];
 
@@ -135,6 +135,31 @@ export class SynthqlError extends Error {
 
         return new SynthqlError(new Error(), type, lines.join('\n'), 404);
     }
+
+    static createPermissionsError({
+        query,
+        missingPermissions,
+        contextPermissions,
+    }: {
+        query: AnyQuery;
+        missingPermissions: string[];
+        contextPermissions: string[];
+    }) {
+        const type = 'PermissionsError';
+
+        const lines = [
+            `The query ${query?.name} is missing the following permissions: ${missingPermissions.join(', ')}`,
+            '',
+            'in the passed context permissions list:',
+            `${JSON.stringify(contextPermissions, null, 2)}`,
+            '',
+            'from its list of required permissions defined:',
+            `${JSON.stringify(query?.permissions, null, 2)}`,
+            '',
+        ];
+
+        return new SynthqlError(new Error(), type, lines.join('\n'), 403);
+    }
 }
 
 function printError(err: any): string {
@@ -161,6 +186,7 @@ function composeMessage(err: any, props: SqlExecutionErrorProps): string {
         '',
         'And which was composed from the following SynthQL query:',
         JSON.stringify(props.query, null, 2),
+        '',
     ];
 
     return lines.join('\n');
